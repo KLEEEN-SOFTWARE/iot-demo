@@ -1,0 +1,239 @@
+{
+  "NAVIGATION": {
+    "CHILDREN": {
+      "SITEMAPDETAILS": {
+        "PERMISSIONS": {
+          "ADMIN": "SHOW",
+          "GUEST": "SHOW"
+        }
+      },
+      "NODES": {
+        "PERMISSIONS": {
+          "ADMIN": "SHOW",
+          "GUEST": "SHOW"
+        }
+      },
+      "CONFIGURESENSOR/NODE": {
+        "PERMISSIONS": {
+          "ADMIN": "SHOW",
+          "GUEST": "SHOW"
+        }
+      },
+      "EVENTS": {
+        "PERMISSIONS": {
+          "ADMIN": "SHOW",
+          "GUEST": "SHOW"
+        }
+      },
+      "PRODUCTIONKPIS": {
+        "PERMISSIONS": {
+          "ADMIN": "SHOW",
+          "GUEST": "SHOW"
+        }
+      },
+      "SENSORS": {
+        "PERMISSIONS": {
+          "ADMIN": "SHOW",
+          "GUEST": "SHOW"
+        }
+      },
+      "SYSTEM": {
+        "PERMISSIONS": {
+          "ADMIN": "SHOW",
+          "GUEST": "SHOW"
+        }
+      },
+      "SENSORDETAILS": {
+        "PERMISSIONS": {
+          "ADMIN": "SHOW",
+          "GUEST": "SHOW"
+        }
+      },
+      "NODEDETAILS": {
+        "PERMISSIONS": {
+          "ADMIN": "SHOW",
+          "GUEST": "SHOW"
+        }
+      }
+    }
+  },
+  "SITEMAPDETAILS": {
+    "CHILDREN": {
+      "VIEWS": {
+        "CHILDREN": {}
+      }
+    }
+  },
+  "NODES": {
+    "CHILDREN": {
+      "VIEWS": {
+        "CHILDREN": {}
+      }
+    }
+  },
+  "CONFIGURESENSOR/NODE": {
+    "CHILDREN": {
+      "WIDGETS": {
+        "CHILDREN": {
+          "1E31BD22-DA1F-4CAF-8F46-421982EACAD6": {
+            "PERMISSIONS": {
+              "ADMIN": "SHOW",
+              "GUEST": "SHOW"
+            }
+          },
+          "5CB3E084-759A-484A-8BEA-4DB978E3C656": {
+            "PERMISSIONS": {
+              "ADMIN": "SHOW",
+              "GUEST": "SHOW"
+            }
+          }
+        }
+      }
+    }
+  },
+  "SENSORS": {
+    "CHILDREN": {
+      "VIEWS": {
+        "CHILDREN": {}
+      }
+    }
+  },
+  "SYSTEM": {
+    "CHILDREN": {
+      "WIDGETS": {
+        "CHILDREN": {
+          "0EE0FC44-015D-44D8-9D75-21C5A38778A4": {
+            "PERMISSIONS": {
+              "ADMIN": "SHOW",
+              "GUEST": "SHOW"
+            }
+          },
+          "A765AACF-2974-46D8-8DF3-2F8CBEE6C3E7": {
+            "PERMISSIONS": {
+              "ADMIN": "SHOW",
+              "GUEST": "SHOW"
+            }
+          },
+          "AA0A9086-9DDA-4214-9F54-56FCC4E21D7E": {
+            "PERMISSIONS": {
+              "ADMIN": "SHOW",
+              "GUEST": "SHOW"
+            }
+          },
+          "BF07F4F0-21B2-4D3E-A890-76FFE849F9E6": {
+            "PERMISSIONS": {
+              "ADMIN": "SHOW",
+              "GUEST": "SHOW"
+            }
+          },
+          "CC6D1107-019B-4A80-8C6E-0B6D67C8CC1C": {
+            "PERMISSIONS": {
+              "ADMIN": "SHOW",
+              "GUEST": "SHOW"
+            }
+          }
+        }
+      },
+      "VIEWS": {
+        "CHILDREN": {
+          "DASHBOARD": {
+            "PERMISSIONS": {
+              "ADMIN": "SHOW",
+              "GUEST": "SHOW"
+            }
+          }
+        }
+      }
+    }
+  },
+  "SENSORDETAILS": {
+    "CHILDREN": {
+      "WIDGETS": {
+        "CHILDREN": {
+          "3B73ADBB-D755-414B-B017-1D964567AA2D": {
+            "PERMISSIONS": {
+              "ADMIN": "SHOW",
+              "GUEST": "SHOW"
+            }
+          },
+          "592242B4-67A8-4D1F-A98E-45527EBD46C3": {
+            "PERMISSIONS": {
+              "ADMIN": "SHOW",
+              "GUEST": "SHOW"
+            }
+          },
+          "86AE65F8-0D94-499F-86E2-60C17BC48F2C": {
+            "PERMISSIONS": {
+              "ADMIN": "SHOW",
+              "GUEST": "SHOW"
+            }
+          },
+          "F2E76B4E-B7AB-4A57-BB13-6E7C3C783E88": {
+            "PERMISSIONS": {
+              "ADMIN": "SHOW",
+              "GUEST": "SHOW"
+            }
+          }
+        }
+      },
+      "VIEWS": {
+        "CHILDREN": {
+          "DASHBOARD": {
+            "PERMISSIONS": {
+              "ADMIN": "SHOW",
+              "GUEST": "SHOW"
+            }
+          }
+        }
+      }
+    }
+  },
+  "NODEDETAILS": {
+    "CHILDREN": {
+      "WIDGETS": {
+        "CHILDREN": {
+          "00153AFA-2F0F-4546-96DF-D414CB711227": {
+            "PERMISSIONS": {
+              "ADMIN": "SHOW",
+              "GUEST": "SHOW"
+            }
+          },
+          "8441A32B-CD6C-4187-9B57-B36D6DFE8489": {
+            "PERMISSIONS": {
+              "ADMIN": "SHOW",
+              "GUEST": "SHOW"
+            }
+          },
+          "CA30DD1C-541F-447C-9A35-1335699F33F9": {
+            "PERMISSIONS": {
+              "ADMIN": "SHOW",
+              "GUEST": "SHOW"
+            }
+          },
+          "D3DF6C8C-EE91-45E1-AF8E-3B1EF9343FBE": {
+            "PERMISSIONS": {
+              "ADMIN": "SHOW",
+              "GUEST": "SHOW"
+            }
+          },
+          "E95096B2-8851-4330-A0ED-276C81EBE69E": {
+            "PERMISSIONS": {
+              "ADMIN": "SHOW",
+              "GUEST": "SHOW"
+            }
+          }
+        }
+      },
+      "VIEWS": {
+        "CHILDREN": {
+          "DASHBOARD": {
+            "PERMISSIONS": {
+              "ADMIN": "SHOW",
+              "GUEST": "SHOW"
+            }
+          }
+        }
+      }
+    }
+  }
+}
