@@ -82,9 +82,9 @@ export const dataViewDisplaySectionAtomicSingleTableWidgets = [
           dateTime: null,
           examples: null,
           valueLabels: [
-            { label: 'High', value: 1 },
-            { label: 'Medium', value: 2 },
-            { label: 'Low', value: 3 },
+            { label: 'Bad', value: 1 },
+            { label: 'Ok', value: 2 },
+            { label: 'Excellent', value: 3 },
           ],
           max: 3,
           min: 1,

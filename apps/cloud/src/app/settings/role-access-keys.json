@@ -60,7 +60,32 @@
   "SITEMAPDETAILS": {
     "CHILDREN": {
       "VIEWS": {
-        "CHILDREN": {}
+        "CHILDREN": {
+          "SITEMAPLIST": {
+            "PERMISSIONS": {
+              "ADMIN": "SHOW",
+              "GUEST": "SHOW"
+            }
+          },
+          "SITESTATUSLIST": {
+            "PERMISSIONS": {
+              "ADMIN": "SHOW",
+              "GUEST": "SHOW"
+            }
+          },
+          "SENSORLIST": {
+            "PERMISSIONS": {
+              "ADMIN": "SHOW",
+              "GUEST": "SHOW"
+            }
+          },
+          "NODELIST": {
+            "PERMISSIONS": {
+              "ADMIN": "SHOW",
+              "GUEST": "SHOW"
+            }
+          }
+        }
       }
     }
   },
@@ -103,6 +128,18 @@
       "WIDGETS": {
         "CHILDREN": {
           "0EE0FC44-015D-44D8-9D75-21C5A38778A4": {
+            "PERMISSIONS": {
+              "ADMIN": "SHOW",
+              "GUEST": "SHOW"
+            }
+          },
+          "815CC1B3-74E5-4E82-8527-26E37F227DBD": {
+            "PERMISSIONS": {
+              "ADMIN": "SHOW",
+              "GUEST": "SHOW"
+            }
+          },
+          "9A34E9B1-361A-4679-8FBC-3B3D8B19DDE8": {
             "PERMISSIONS": {
               "ADMIN": "SHOW",
               "GUEST": "SHOW"
@@ -178,6 +215,18 @@
       },
       "VIEWS": {
         "CHILDREN": {
+          "SENSORLIST": {
+            "PERMISSIONS": {
+              "ADMIN": "SHOW",
+              "GUEST": "SHOW"
+            }
+          },
+          "SITEMAPLIST": {
+            "PERMISSIONS": {
+              "ADMIN": "SHOW",
+              "GUEST": "SHOW"
+            }
+          },
           "DASHBOARD": {
             "PERMISSIONS": {
               "ADMIN": "SHOW",
@@ -226,6 +275,18 @@
       },
       "VIEWS": {
         "CHILDREN": {
+          "NODELIST": {
+            "PERMISSIONS": {
+              "ADMIN": "SHOW",
+              "GUEST": "SHOW"
+            }
+          },
+          "SITEMAPLIST": {
+            "PERMISSIONS": {
+              "ADMIN": "SHOW",
+              "GUEST": "SHOW"
+            }
+          },
           "DASHBOARD": {
             "PERMISSIONS": {
               "ADMIN": "SHOW",

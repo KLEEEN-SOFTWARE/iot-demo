@@ -479,15 +479,15 @@
           "examples": null,
           "valueLabels": [
             {
-              "label": "High",
+              "label": "Bad",
               "value": 1
             },
             {
-              "label": "Medium",
+              "label": "Ok",
               "value": 2
             },
             {
-              "label": "Low",
+              "label": "Excellent",
               "value": 3
             }
           ],
@@ -531,15 +531,15 @@
           "examples": null,
           "valueLabels": [
             {
-              "label": "High",
+              "label": "Bad",
               "value": 1
             },
             {
-              "label": "Medium",
+              "label": "Ok",
               "value": 2
             },
             {
-              "label": "Low",
+              "label": "Excellent",
               "value": 3
             }
           ],
@@ -633,15 +633,15 @@
           "examples": null,
           "valueLabels": [
             {
-              "label": "High",
+              "label": "Bad",
               "value": 1
             },
             {
-              "label": "Medium",
+              "label": "Ok",
               "value": 2
             },
             {
-              "label": "Low",
+              "label": "Excellent",
               "value": 3
             }
           ],
@@ -669,15 +669,15 @@
             "severityLevels": 3,
             "valueLabels": [
               {
-                "label": "High",
+                "label": "Bad",
                 "value": 1
               },
               {
-                "label": "Medium",
+                "label": "Ok",
                 "value": 2
               },
               {
-                "label": "Low",
+                "label": "Excellent",
                 "value": 3
               }
             ]
@@ -796,15 +796,15 @@
           "examples": null,
           "valueLabels": [
             {
-              "label": "High",
+              "label": "Bad",
               "value": 1
             },
             {
-              "label": "Medium",
+              "label": "Ok",
               "value": 2
             },
             {
-              "label": "Low",
+              "label": "Excellent",
               "value": 3
             }
           ],
@@ -832,15 +832,15 @@
             "severityLevels": 3,
             "valueLabels": [
               {
-                "label": "High",
+                "label": "Bad",
                 "value": 1
               },
               {
-                "label": "Medium",
+                "label": "Ok",
                 "value": 2
               },
               {
-                "label": "Low",
+                "label": "Excellent",
                 "value": 3
               }
             ]
@@ -1060,15 +1060,15 @@
           "examples": null,
           "valueLabels": [
             {
-              "label": "High",
+              "label": "Bad",
               "value": 1
             },
             {
-              "label": "Medium",
+              "label": "Ok",
               "value": 2
             },
             {
-              "label": "Low",
+              "label": "Excellent",
               "value": 3
             }
           ],
@@ -1231,15 +1231,15 @@
           "examples": null,
           "valueLabels": [
             {
-              "label": "High",
+              "label": "Bad",
               "value": 1
             },
             {
-              "label": "Medium",
+              "label": "Ok",
               "value": 2
             },
             {
-              "label": "Low",
+              "label": "Excellent",
               "value": 3
             }
           ],
@@ -1283,15 +1283,15 @@
           "examples": null,
           "valueLabels": [
             {
-              "label": "High",
+              "label": "Bad",
               "value": 1
             },
             {
-              "label": "Medium",
+              "label": "Ok",
               "value": 2
             },
             {
-              "label": "Low",
+              "label": "Excellent",
               "value": 3
             }
           ],
@@ -1385,15 +1385,15 @@
           "examples": null,
           "valueLabels": [
             {
-              "label": "High",
+              "label": "Bad",
               "value": 1
             },
             {
-              "label": "Medium",
+              "label": "Ok",
               "value": 2
             },
             {
-              "label": "Low",
+              "label": "Excellent",
               "value": 3
             }
           ],
@@ -1421,15 +1421,15 @@
             "severityLevels": 3,
             "valueLabels": [
               {
-                "label": "High",
+                "label": "Bad",
                 "value": 1
               },
               {
-                "label": "Medium",
+                "label": "Ok",
                 "value": 2
               },
               {
-                "label": "Low",
+                "label": "Excellent",
                 "value": 3
               }
             ]
@@ -1548,15 +1548,15 @@
           "examples": null,
           "valueLabels": [
             {
-              "label": "High",
+              "label": "Bad",
               "value": 1
             },
             {
-              "label": "Medium",
+              "label": "Ok",
               "value": 2
             },
             {
-              "label": "Low",
+              "label": "Excellent",
               "value": 3
             }
           ],
@@ -1584,15 +1584,15 @@
             "severityLevels": 3,
             "valueLabels": [
               {
-                "label": "High",
+                "label": "Bad",
                 "value": 1
               },
               {
-                "label": "Medium",
+                "label": "Ok",
                 "value": 2
               },
               {
-                "label": "Low",
+                "label": "Excellent",
                 "value": 3
               }
             ]
@@ -1711,15 +1711,15 @@
           "examples": null,
           "valueLabels": [
             {
-              "label": "High",
+              "label": "Bad",
               "value": 1
             },
             {
-              "label": "Medium",
+              "label": "Ok",
               "value": 2
             },
             {
-              "label": "Low",
+              "label": "Excellent",
               "value": 3
             }
           ],
@@ -1747,15 +1747,15 @@
             "severityLevels": 3,
             "valueLabels": [
               {
-                "label": "High",
+                "label": "Bad",
                 "value": 1
               },
               {
-                "label": "Medium",
+                "label": "Ok",
                 "value": 2
               },
               {
-                "label": "Low",
+                "label": "Excellent",
                 "value": 3
               }
             ]
@@ -1869,15 +1869,15 @@
           "examples": null,
           "valueLabels": [
             {
-              "label": "High",
+              "label": "Bad",
               "value": 1
             },
             {
-              "label": "Medium",
+              "label": "Ok",
               "value": 2
             },
             {
-              "label": "Low",
+              "label": "Excellent",
               "value": 3
             }
           ],
@@ -1905,15 +1905,15 @@
             "severityLevels": 3,
             "valueLabels": [
               {
-                "label": "High",
+                "label": "Bad",
                 "value": 1
               },
               {
-                "label": "Medium",
+                "label": "Ok",
                 "value": 2
               },
               {
-                "label": "Low",
+                "label": "Excellent",
                 "value": 3
               }
             ]

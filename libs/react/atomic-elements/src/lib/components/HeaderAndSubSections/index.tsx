@@ -82,8 +82,6 @@ function HeaderAndSubSectionsComponent({
           <ButtonSummary
             displayTaskName={withSummarySection.displayTaskName}
             entityDetails={withSummarySection.entityDetails}
-            entityName={withSummarySection.entityName}
-            headerTitle={HeaderTitle(props, false)}
             isEditable={withSummarySection.isEditable}
             outContainer={setOutContainer}
             taskName={withSummarySection.taskName}

@@ -337,6 +337,30 @@ export const widgetResolvers: IResolvers = {
         : result;
     },
 
+    widget_815cc1b3_74e5_4e82_8527_26e37f227dbd: async (
+      _parent: any,
+      args: { input: DataAggregationArgs },
+      { dataSources, ...rest },
+    ) => {
+      const result = await dataSources.widgetApi.widget_815cc1b3_74e5_4e82_8527_26e37f227dbd(args.input);
+
+      return result === 'not implemented'
+        ? dataSources.widgetFakeApi.widget_815cc1b3_74e5_4e82_8527_26e37f227dbd(args.input, { ...rest })
+        : result;
+    },
+
+    widget_9a34e9b1_361a_4679_8fbc_3b3d8b19dde8: async (
+      _parent: any,
+      args: { input: DataAggregationArgs },
+      { dataSources, ...rest },
+    ) => {
+      const result = await dataSources.widgetApi.widget_9a34e9b1_361a_4679_8fbc_3b3d8b19dde8(args.input);
+
+      return result === 'not implemented'
+        ? dataSources.widgetFakeApi.widget_9a34e9b1_361a_4679_8fbc_3b3d8b19dde8(args.input, { ...rest })
+        : result;
+    },
+
     widget_d3df6c8c_ee91_45e1_af8e_3b1ef9343fbe: async (
       _parent: any,
       args: { input: DataAggregationArgs },

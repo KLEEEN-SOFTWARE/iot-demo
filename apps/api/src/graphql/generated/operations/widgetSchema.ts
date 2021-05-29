@@ -154,6 +154,22 @@ export const widgetSchema = gql`
     # Chart type: [WIDGET] COLUMN_BAR
     widget_0ee0fc44_015d_44d8_9d75_21c5a38778a4(input: DataAggregationArgs): GraphResult
 
+    # View: System --- Widget: Node Status
+    # Group by: timestamp
+    # No Aggregation
+    # Value: nodeStatus
+    # Value aggregated by: Total Unique
+    # Chart type: [WIDGET] AREA_GRADIENT
+    widget_815cc1b3_74e5_4e82_8527_26e37f227dbd(input: DataAggregationArgs): GraphResult
+
+    # View: System --- Widget: Sensor Status
+    # Group by: timestamp
+    # No Aggregation
+    # Value: sensorStatus
+    # Value aggregated by: Total Unique
+    # Chart type: [WIDGET] AREA_GRADIENT
+    widget_9a34e9b1_361a_4679_8fbc_3b3d8b19dde8(input: DataAggregationArgs): GraphResult
+
     # View: Node Details --- Widget: Sensors
     # Group by: node
     # No Aggregation

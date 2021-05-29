@@ -66,16 +66,16 @@ export const entityDetailsSectionEntityDetails = [
       {
         id: 120428,
         statisticalType: 'Data - Categorical - ordered - Severity Ranking',
-        canAddValues: true,
+        canAddValues: false,
         canEditValues: true,
         format: {
           aggregations: null,
           dateTime: null,
           examples: null,
           valueLabels: [
-            { label: 'High', value: 1 },
-            { label: 'Medium', value: 2 },
-            { label: 'Low', value: 3 },
+            { label: 'Bad', value: 1 },
+            { label: 'Ok', value: 2 },
+            { label: 'Excellent', value: 3 },
           ],
           max: 3,
           min: 1,
@@ -114,9 +114,9 @@ export const entityDetailsSectionEntityDetails = [
           dateTime: null,
           examples: null,
           valueLabels: [
-            { label: 'High', value: 1 },
-            { label: 'Medium', value: 2 },
-            { label: 'Low', value: 3 },
+            { label: 'Bad', value: 1 },
+            { label: 'Ok', value: 2 },
+            { label: 'Excellent', value: 3 },
           ],
           max: 3,
           min: 1,
