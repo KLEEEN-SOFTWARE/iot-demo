@@ -2,20 +2,16 @@ import './EntityDetailsSection.scss';
 
 import { AttributeInputEvents, useEntityDetailsEventHandler, useKleeenActions } from '@kleeen/react/hooks';
 import { KsButton, KsMenuContainer } from '@kleeen/react/components';
-import React, { ReactElement, useEffect, useState } from 'react';
+import { ReactElement, useEffect, useState } from 'react';
 import { makeStyles, styled } from '@material-ui/core';
 
 import ArrowLeftIcon from '@material-ui/icons/ArrowLeft';
-import { ConfigInputWidget } from '../Widgets';
 import EditOutlinedIcon from '@material-ui/icons/EditOutlined';
-import { HeaderTitle } from '../HeaderTitle';
 import { KUIConnect } from '@kleeen/core-react';
 import { KsSummaryPanel } from '../summary-panel';
 import MuiButton from '@material-ui/core/Button';
 import MuiToolbar from '@material-ui/core/Toolbar';
 import MuiTooltip from '@material-ui/core/Tooltip';
-import MuiTypography from '@material-ui/core/Typography';
-import ReadOnlyTextField from '../ReadOnlyTextField/ReadOnlyTextField';
 import { Slot } from '../DetailSummary/DetailSummary.model';
 import { Translate } from '@kleeen/types';
 import { getUpdateRequestPayload } from '../../utils';
@@ -23,8 +19,6 @@ import { getUpdateRequestPayload } from '../../utils';
 export interface EntityDetailsSectionProps {
   displayTaskName: string;
   entityDetails: any[]; // TODO: @cafe add better types here
-  entityName: string;
-  headerTitle?: ReactElement;
   isEditable: boolean;
   onChangeFilterVisible?: (isVisible: boolean) => void;
   slots?: Slot[];
@@ -77,74 +71,12 @@ const useStyles = makeStyles(() => ({
   },
 }));
 
-const Typography = styled(MuiTypography)({
-  color: 'var(--page-intro-text-color)',
-}) as typeof MuiTypography;
-
-// TODO: @cafe add types to props
-export function AttributesEditor(props) {
-  return (
-    <div className="attributes-editor">
-      <div className="attributes-editor-header">
-        <Typography className="L2TitleSection">{props.entityName}</Typography>
-        <Typography className="L3TitleSection">{props.entityDescription}</Typography>
-      </div>
-      <div className="attributes-editor-body">
-        {props.entityDetails.map((widget) => {
-          const { readOnly, statisticalType } = widget;
-
-          return (
-            <div
-              className={`config-widget-container ${widget.fullWidth ? 'full-width-cell' : ''}`}
-              key={widget.id}
-            >
-              {readOnly ? (
-                <ReadOnlyTextField
-                  attributes={widget.attributes}
-                  params={widget.params}
-                  taskName={props.taskName}
-                  widgetId={widget.id}
-                />
-              ) : (
-                <ConfigInputWidget
-                  attributes={widget.attributes}
-                  disabled={!props.isEditing}
-                  hideSaveAndClose={true}
-                  hideTitle={true}
-                  icon={false}
-                  inSummaryDetails={true}
-                  params={widget.params}
-                  registerEvents={props.registerEvents}
-                  statisticalType={statisticalType}
-                  taskName={props.taskName}
-                  title={'test' + widget.params.value.name}
-                  widgetId={widget.id}
-                />
-              )}
-            </div>
-          );
-        })}
-      </div>
-    </div>
-  );
-}
-
-export const EntityDetailsSectionBase = ({
-  translate,
-  ...props
-}: EntityDetailsSectionProps): ReactElement => {
+export function EntityDetailsSectionBase({ translate, ...props }: EntityDetailsSectionProps): ReactElement {
   const { updateRequest } = useKleeenActions(props.taskName);
   const [attributeEventList, { addEvent, clearEventList }] = useEntityDetailsEventHandler();
   const [open, setOpen] = useState(true);
   const [isEditing, setEditing] = useState(false);
   const classes = useStyles();
-
-  const propsHeader = {
-    objectValue: props.slots[0].params.baseModel,
-    slots: props.slots,
-    taskName: props.taskName,
-    title: props.displayTaskName,
-  };
 
   useEffect(() => {
     return clearEventList;
@@ -218,14 +150,6 @@ export const EntityDetailsSectionBase = ({
             registerEvents={registerEvents}
             taskName={props.taskName}
           />
-          {/* <AttributesEditor
-            entityDescription={props.entityName}
-            entityDetails={props.entityDetails}
-            entityName={HeaderTitle(propsHeader, false)}
-            isEditing={isEditing}
-            registerEvents={registerEvents}
-            taskName={props.taskName}
-          /> */}
         </div>
         {isEditing && (
           <Toolbar>
@@ -243,6 +167,6 @@ export const EntityDetailsSectionBase = ({
       </MuiTooltip>
     </Paper>
   );
-};
+}
 
 export const EntityDetailsSection = KUIConnect(({ translate }) => ({ translate }))(EntityDetailsSectionBase);

@@ -1,14 +1,11 @@
 import './ButtonSummary.scss';
 
-import {
-  AttributesEditor,
-  EntityDetailsSectionProps,
-} from '../../../EntityDetailsSection/EntityDetailsSection';
 import { ReactElement, useEffect, useState } from 'react';
 import { useEntityDetailsEventHandler, useKleeenActions } from '@kleeen/react/hooks';
 
 import { ButtonSubHeader } from '../ButtonHeader/ButtonSubHeader';
 import { ContainerHeader } from '../ContainerHeader/ContainerHeader';
+import { EntityDetailsSectionProps } from '../../../EntityDetailsSection/EntityDetailsSection';
 import { KsSummaryPanel } from '../../../summary-panel';
 import { OutContainerProps } from '../ContainerHeader/ContainerHeader.model';
 import { TranslateProps } from '../../../../../types';
@@ -16,8 +13,6 @@ import { getUpdateRequestPayload } from '../../../../utils';
 
 export function ButtonSummary({
   entityDetails,
-  entityName,
-  headerTitle,
   isEditable,
   outContainer,
   taskName,
@@ -61,22 +56,12 @@ export function ButtonSummary({
       <ContainerHeader
         className="button-container-summary-actions"
         container={
-          <>
-            <KsSummaryPanel
-              entityDetails={entityDetails}
-              isEditing={editOn}
-              registerEvents={addEvent}
-              taskName={taskName}
-            />
-            {/* <AttributesEditor
-              entityDescription={entityName}
-              entityDetails={entityDetails}
-              entityName={headerTitle}
-              isEditing={editOn}
-              registerEvents={addEvent}
-              taskName={taskName}
-            /> */}
-          </>
+          <KsSummaryPanel
+            entityDetails={entityDetails}
+            isEditing={editOn}
+            registerEvents={addEvent}
+            taskName={taskName}
+          />
         }
         editOn={editOn}
         filtersAdded={attributeEventList}

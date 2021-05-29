@@ -33,7 +33,7 @@ export function BaseToken(props: BaseTokenProps) {
         }
       }}
       options={props.options}
-      placeholder={''}
+      placeholder={''} // TODO: @cafe set this as optional
       value={inputValue}
     />
   );

@@ -28,6 +28,8 @@ import { summary_title_e376073d_113e_42f3_a34b_c14829f152c7 } from '../../custom
 import { summary_title_f991e457_5522_4e72_ba6b_9f8811f612af } from '../../custom/widgetResolvers/summary_title_f991e457_5522_4e72_ba6b_9f8811f612af';
 import { widget_00153afa_2f0f_4546_96df_d414cb711227 } from '../../custom/widgetResolvers/widget_00153afa_2f0f_4546_96df_d414cb711227';
 import { widget_0ee0fc44_015d_44d8_9d75_21c5a38778a4 } from '../../custom/widgetResolvers/widget_0ee0fc44_015d_44d8_9d75_21c5a38778a4';
+import { widget_815cc1b3_74e5_4e82_8527_26e37f227dbd } from '../../custom/widgetResolvers/widget_815cc1b3_74e5_4e82_8527_26e37f227dbd';
+import { widget_9a34e9b1_361a_4679_8fbc_3b3d8b19dde8 } from '../../custom/widgetResolvers/widget_9a34e9b1_361a_4679_8fbc_3b3d8b19dde8';
 import { widget_d3df6c8c_ee91_45e1_af8e_3b1ef9343fbe } from '../../custom/widgetResolvers/widget_d3df6c8c_ee91_45e1_af8e_3b1ef9343fbe';
 import { widget_f2e76b4e_b7ab_4a57_bb13_6e7c3c783e88 } from '../../custom/widgetResolvers/widget_f2e76b4e_b7ab_4a57_bb13_6e7c3c783e88';
 import { widget_statistics592242b4_67a8_4d1f_a98e_45527ebd46c3 } from '../../custom/widgetResolvers/widget_statistics592242b4_67a8_4d1f_a98e_45527ebd46c3';
@@ -122,6 +124,14 @@ export class WidgetApi extends RESTDataSource {
 
   async widget_0ee0fc44_015d_44d8_9d75_21c5a38778a4(args: DataAggregationArgs) {
     return widget_0ee0fc44_015d_44d8_9d75_21c5a38778a4(args, this.context);
+  }
+
+  async widget_815cc1b3_74e5_4e82_8527_26e37f227dbd(args: DataAggregationArgs) {
+    return widget_815cc1b3_74e5_4e82_8527_26e37f227dbd(args, this.context);
+  }
+
+  async widget_9a34e9b1_361a_4679_8fbc_3b3d8b19dde8(args: DataAggregationArgs) {
+    return widget_9a34e9b1_361a_4679_8fbc_3b3d8b19dde8(args, this.context);
   }
 
   async widget_d3df6c8c_ee91_45e1_af8e_3b1ef9343fbe(args: DataAggregationArgs) {

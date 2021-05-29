@@ -27,7 +27,6 @@ export * from './lib/components/NavLeft/NavLeft';
 export * from './lib/components/NavTop/NavTop';
 export * from './lib/components/PageIntroSection/PageIntroSection';
 export * from './lib/components/Pie/Pie';
-export * from './lib/components/ReadOnlyTextField/ReadOnlyTextField';
 export * from './lib/components/RefreshControlSection/RefreshControlSection';
 export * from './lib/components/SecondaryCardSection01/SecondaryCardSection01';
 export * from './lib/components/SecondaryCardSection02/SecondaryCardSection02';

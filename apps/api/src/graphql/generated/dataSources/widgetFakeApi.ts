@@ -98,6 +98,14 @@ export class WidgetFakeApi extends DataSource {
     return getWidgetData(args);
   }
 
+  async widget_815cc1b3_74e5_4e82_8527_26e37f227dbd(args: DataAggregationArgs) {
+    return getWidgetData(args);
+  }
+
+  async widget_9a34e9b1_361a_4679_8fbc_3b3d8b19dde8(args: DataAggregationArgs) {
+    return getWidgetData(args);
+  }
+
   async widget_d3df6c8c_ee91_45e1_af8e_3b1ef9343fbe(args: DataAggregationArgs) {
     return getWidgetData(args);
   }
