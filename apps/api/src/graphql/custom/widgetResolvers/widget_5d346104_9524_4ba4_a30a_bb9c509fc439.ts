@@ -3,10 +3,10 @@ import { GetWidgetDataResult, DataAggregationArgs, AuthContext } from '../../../
 // View: System --- Widget: Node Status
 // Group by: timestamp
 // No Aggregation
-// Value: nodeStatus
-// Value aggregated by: Total Unique
+// Value: node
+// Value aggregated by: Total Count
 // Chart type: [WIDGET] AREA_GRADIENT
-export const widget_815cc1b3_74e5_4e82_8527_26e37f227dbd = async (
+export const widget_5d346104_9524_4ba4_a30a_bb9c509fc439 = async (
   input: DataAggregationArgs,
   context: AuthContext,
 ): Promise<GetWidgetDataResult | 'not implemented'> => {

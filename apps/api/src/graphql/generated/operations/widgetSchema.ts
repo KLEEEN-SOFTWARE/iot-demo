@@ -146,29 +146,13 @@ export const widgetSchema = gql`
     # Chart type: Positive Negative Area
     widget_00153afa_2f0f_4546_96df_d414cb711227(input: DataAggregationArgs): GraphResult
 
-    # View: System --- Widget: Site Map
-    # Group by: siteMap
-    # No Aggregation
-    # Value: siteStatus
-    # Value aggregated by: No Aggregation
-    # Chart type: [WIDGET] COLUMN_BAR
-    widget_0ee0fc44_015d_44d8_9d75_21c5a38778a4(input: DataAggregationArgs): GraphResult
-
     # View: System --- Widget: Node Status
     # Group by: timestamp
     # No Aggregation
-    # Value: nodeStatus
-    # Value aggregated by: Total Unique
+    # Value: node
+    # Value aggregated by: Total Count
     # Chart type: [WIDGET] AREA_GRADIENT
-    widget_815cc1b3_74e5_4e82_8527_26e37f227dbd(input: DataAggregationArgs): GraphResult
-
-    # View: System --- Widget: Sensor Status
-    # Group by: timestamp
-    # No Aggregation
-    # Value: sensorStatus
-    # Value aggregated by: Total Unique
-    # Chart type: [WIDGET] AREA_GRADIENT
-    widget_9a34e9b1_361a_4679_8fbc_3b3d8b19dde8(input: DataAggregationArgs): GraphResult
+    widget_5d346104_9524_4ba4_a30a_bb9c509fc439(input: DataAggregationArgs): GraphResult
 
     # View: Node Details --- Widget: Sensors
     # Group by: node
@@ -178,6 +162,22 @@ export const widgetSchema = gql`
     # Chart type: [WIDGET] SIMPLE_LIST_RANKED
     widget_d3df6c8c_ee91_45e1_af8e_3b1ef9343fbe(input: DataAggregationArgs): GraphResult
 
+    # View: System --- Widget: Site Map
+    # Group by: siteMap
+    # No Aggregation
+    # Value: siteStatus
+    # Value aggregated by: No Aggregation
+    # Chart type: [WIDGET] COLUMN_BAR
+    widget_ec00ac75_6320_4963_abcd_4c1aea91727b(input: DataAggregationArgs): GraphResult
+
+    # View: System --- Widget: Sensor Status
+    # Group by: timestamp
+    # No Aggregation
+    # Value: sensor
+    # Value aggregated by: Total Count
+    # Chart type: [WIDGET] AREA_GRADIENT
+    widget_ec36d0ef_f9c6_4345_bc1d_552b19ceeccd(input: DataAggregationArgs): GraphResult
+
     # View: Sensor Details --- Widget: Sensor Status
     # Group by: timestamp
     # No Aggregation
@@ -185,6 +185,18 @@ export const widgetSchema = gql`
     # Value aggregated by: Change (in count)
     # Chart type: Positive Negative Area
     widget_f2e76b4e_b7ab_4a57_bb13_6e7c3c783e88(input: DataAggregationArgs): GraphResult
+
+    # View: System --- Widget: Sensor Overall Status
+    # Value: sensorOverallStatus
+    # Value aggregated by: 
+    # Chart type: Summary Statistics
+    widget_statistics15d23aa3_6f00_4505_9199_85c2e2662aaa(input: MultiTransFormationArgs): [MultiTransFormationResults]
+
+    # View: System --- Widget: System Health
+    # Value: systemHealth
+    # Value aggregated by: 
+    # Chart type: [WIDGET] GAUGE_SEVERITY_LEVEL
+    widget_statistics324888f3_eb8c_4097_ba9f_21aa8cf6be4f(input: MultiTransFormationArgs): [MultiTransFormationResults]
 
     # View: Sensor Details --- Widget: Site Status
     # Value: siteStatus
@@ -202,19 +214,7 @@ export const widgetSchema = gql`
     # Value: nodeOverallStatus
     # Value aggregated by: 
     # Chart type: Summary Statistics
-    widget_statisticsa765aacf_2974_46d8_8df3_2f8cbee6c3e7(input: MultiTransFormationArgs): [MultiTransFormationResults]
-
-    # View: System --- Widget: System Health
-    # Value: systemHealth
-    # Value aggregated by: 
-    # Chart type: [WIDGET] GAUGE_SEVERITY_LEVEL
-    widget_statisticsbf07f4f0_21b2_4d3e_a890_76ffe849f9e6(input: MultiTransFormationArgs): [MultiTransFormationResults]
-
-    # View: System --- Widget: Sensor Overall Status
-    # Value: sensorOverallStatus
-    # Value aggregated by: 
-    # Chart type: Summary Statistics
-    widget_statisticscc6d1107_019b_4a80_8c6e_0b6d67c8cc1c(input: MultiTransFormationArgs): [MultiTransFormationResults]
+    widget_statisticscd7fa114_5174_423f_9fdd_b14fc75dd1f1(input: MultiTransFormationArgs): [MultiTransFormationResults]
 
     # View: Node Details --- Widget: Status
     # Value: nodeStatus

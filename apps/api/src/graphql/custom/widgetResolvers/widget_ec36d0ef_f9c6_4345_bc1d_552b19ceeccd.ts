@@ -1,12 +1,12 @@
 import { GetWidgetDataResult, DataAggregationArgs, AuthContext } from '../../../types';
 
-// View: System --- Widget: Site Map
-// Group by: siteMap
+// View: System --- Widget: Sensor Status
+// Group by: timestamp
 // No Aggregation
-// Value: siteStatus
-// Value aggregated by: No Aggregation
-// Chart type: [WIDGET] COLUMN_BAR
-export const widget_0ee0fc44_015d_44d8_9d75_21c5a38778a4 = async (
+// Value: sensor
+// Value aggregated by: Total Count
+// Chart type: [WIDGET] AREA_GRADIENT
+export const widget_ec36d0ef_f9c6_4345_bc1d_552b19ceeccd = async (
   input: DataAggregationArgs,
   context: AuthContext,
 ): Promise<GetWidgetDataResult | 'not implemented'> => {

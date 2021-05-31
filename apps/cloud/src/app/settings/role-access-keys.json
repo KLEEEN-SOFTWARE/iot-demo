@@ -127,43 +127,43 @@
     "CHILDREN": {
       "WIDGETS": {
         "CHILDREN": {
-          "0EE0FC44-015D-44D8-9D75-21C5A38778A4": {
+          "0666F639-8EC2-4AA6-8DAE-59B9E6611047": {
             "PERMISSIONS": {
               "ADMIN": "SHOW",
               "GUEST": "SHOW"
             }
           },
-          "815CC1B3-74E5-4E82-8527-26E37F227DBD": {
+          "15D23AA3-6F00-4505-9199-85C2E2662AAA": {
             "PERMISSIONS": {
               "ADMIN": "SHOW",
               "GUEST": "SHOW"
             }
           },
-          "9A34E9B1-361A-4679-8FBC-3B3D8B19DDE8": {
+          "324888F3-EB8C-4097-BA9F-21AA8CF6BE4F": {
             "PERMISSIONS": {
               "ADMIN": "SHOW",
               "GUEST": "SHOW"
             }
           },
-          "A765AACF-2974-46D8-8DF3-2F8CBEE6C3E7": {
+          "5D346104-9524-4BA4-A30A-BB9C509FC439": {
             "PERMISSIONS": {
               "ADMIN": "SHOW",
               "GUEST": "SHOW"
             }
           },
-          "AA0A9086-9DDA-4214-9F54-56FCC4E21D7E": {
+          "CD7FA114-5174-423F-9FDD-B14FC75DD1F1": {
             "PERMISSIONS": {
               "ADMIN": "SHOW",
               "GUEST": "SHOW"
             }
           },
-          "BF07F4F0-21B2-4D3E-A890-76FFE849F9E6": {
+          "EC00AC75-6320-4963-ABCD-4C1AEA91727B": {
             "PERMISSIONS": {
               "ADMIN": "SHOW",
               "GUEST": "SHOW"
             }
           },
-          "CC6D1107-019B-4A80-8C6E-0B6D67C8CC1C": {
+          "EC36D0EF-F9C6-4345-BC1D-552B19CEECCD": {
             "PERMISSIONS": {
               "ADMIN": "SHOW",
               "GUEST": "SHOW"

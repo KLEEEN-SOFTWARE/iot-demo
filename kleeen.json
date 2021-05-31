@@ -163,7 +163,14 @@
     "apps/api/src/graphql/custom/widgetResolvers/widget_statisticse95096b2_8851_4330_a0ed_276c81ebe69e.ts",
     "apps/api/src/assets/entities.json",
     "apps/api/src/graphql/custom/widgetResolvers/widget_815cc1b3_74e5_4e82_8527_26e37f227dbd.ts",
-    "apps/api/src/graphql/custom/widgetResolvers/widget_9a34e9b1_361a_4679_8fbc_3b3d8b19dde8.ts"
+    "apps/api/src/graphql/custom/widgetResolvers/widget_9a34e9b1_361a_4679_8fbc_3b3d8b19dde8.ts",
+    "apps/cloud/src/app/modules/custom/system/components/widget-1-m-rt-kro-sqr-egddn-es-9-cj-dv.js",
+    "apps/api/src/graphql/custom/widgetResolvers/widget_5d346104_9524_4ba4_a30a_bb9c509fc439.ts",
+    "apps/api/src/graphql/custom/widgetResolvers/widget_ec00ac75_6320_4963_abcd_4c1aea91727b.ts",
+    "apps/api/src/graphql/custom/widgetResolvers/widget_ec36d0ef_f9c6_4345_bc1d_552b19ceeccd.ts",
+    "apps/api/src/graphql/custom/widgetResolvers/widget_statistics15d23aa3_6f00_4505_9199_85c2e2662aaa.ts",
+    "apps/api/src/graphql/custom/widgetResolvers/widget_statistics324888f3_eb8c_4097_ba9f_21aa8cf6be4f.ts",
+    "apps/api/src/graphql/custom/widgetResolvers/widget_statisticscd7fa114_5174_423f_9fdd_b14fc75dd1f1.ts"
   ],
   "template": [
     ".husky/.gitignore",
@@ -1236,7 +1243,7 @@
       "prepare": "husky install",
       "start": "run-p start:client start:api",
       "start:api": "nx serve api",
-      "start:client": "nx serve --port 4201 cloud",
+      "start:client": "nx serve --port=4201 --maxWorkers=4 --memoryLimit=1024 cloud",
       "test": "nx test",
       "versiongen": "node ./tools/build/version.js",
       "workspace-generator": "nx workspace-generator"

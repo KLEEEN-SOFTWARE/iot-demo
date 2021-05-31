@@ -1,10 +1,10 @@
 import { MultiTransFormationResults, MultiTransFormationArgs, AuthContext } from '../../../types';
 
-// View: System --- Widget: System Health
-// Value: systemHealth
+// View: System --- Widget: Sensor Overall Status
+// Value: sensorOverallStatus
 // Value aggregated by:
-// Chart type: [WIDGET] GAUGE_SEVERITY_LEVEL
-export const widget_statisticsbf07f4f0_21b2_4d3e_a890_76ffe849f9e6 = async (
+// Chart type: Summary Statistics
+export const widget_statistics15d23aa3_6f00_4505_9199_85c2e2662aaa = async (
   input: MultiTransFormationArgs,
   context: AuthContext,
 ): Promise<MultiTransFormationResults | 'not implemented'> => {

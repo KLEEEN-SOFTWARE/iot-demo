@@ -325,39 +325,15 @@ export const widgetResolvers: IResolvers = {
         : result;
     },
 
-    widget_0ee0fc44_015d_44d8_9d75_21c5a38778a4: async (
+    widget_5d346104_9524_4ba4_a30a_bb9c509fc439: async (
       _parent: any,
       args: { input: DataAggregationArgs },
       { dataSources, ...rest },
     ) => {
-      const result = await dataSources.widgetApi.widget_0ee0fc44_015d_44d8_9d75_21c5a38778a4(args.input);
+      const result = await dataSources.widgetApi.widget_5d346104_9524_4ba4_a30a_bb9c509fc439(args.input);
 
       return result === 'not implemented'
-        ? dataSources.widgetFakeApi.widget_0ee0fc44_015d_44d8_9d75_21c5a38778a4(args.input, { ...rest })
-        : result;
-    },
-
-    widget_815cc1b3_74e5_4e82_8527_26e37f227dbd: async (
-      _parent: any,
-      args: { input: DataAggregationArgs },
-      { dataSources, ...rest },
-    ) => {
-      const result = await dataSources.widgetApi.widget_815cc1b3_74e5_4e82_8527_26e37f227dbd(args.input);
-
-      return result === 'not implemented'
-        ? dataSources.widgetFakeApi.widget_815cc1b3_74e5_4e82_8527_26e37f227dbd(args.input, { ...rest })
-        : result;
-    },
-
-    widget_9a34e9b1_361a_4679_8fbc_3b3d8b19dde8: async (
-      _parent: any,
-      args: { input: DataAggregationArgs },
-      { dataSources, ...rest },
-    ) => {
-      const result = await dataSources.widgetApi.widget_9a34e9b1_361a_4679_8fbc_3b3d8b19dde8(args.input);
-
-      return result === 'not implemented'
-        ? dataSources.widgetFakeApi.widget_9a34e9b1_361a_4679_8fbc_3b3d8b19dde8(args.input, { ...rest })
+        ? dataSources.widgetFakeApi.widget_5d346104_9524_4ba4_a30a_bb9c509fc439(args.input, { ...rest })
         : result;
     },
 
@@ -373,6 +349,30 @@ export const widgetResolvers: IResolvers = {
         : result;
     },
 
+    widget_ec00ac75_6320_4963_abcd_4c1aea91727b: async (
+      _parent: any,
+      args: { input: DataAggregationArgs },
+      { dataSources, ...rest },
+    ) => {
+      const result = await dataSources.widgetApi.widget_ec00ac75_6320_4963_abcd_4c1aea91727b(args.input);
+
+      return result === 'not implemented'
+        ? dataSources.widgetFakeApi.widget_ec00ac75_6320_4963_abcd_4c1aea91727b(args.input, { ...rest })
+        : result;
+    },
+
+    widget_ec36d0ef_f9c6_4345_bc1d_552b19ceeccd: async (
+      _parent: any,
+      args: { input: DataAggregationArgs },
+      { dataSources, ...rest },
+    ) => {
+      const result = await dataSources.widgetApi.widget_ec36d0ef_f9c6_4345_bc1d_552b19ceeccd(args.input);
+
+      return result === 'not implemented'
+        ? dataSources.widgetFakeApi.widget_ec36d0ef_f9c6_4345_bc1d_552b19ceeccd(args.input, { ...rest })
+        : result;
+    },
+
     widget_f2e76b4e_b7ab_4a57_bb13_6e7c3c783e88: async (
       _parent: any,
       args: { input: DataAggregationArgs },
@@ -382,6 +382,38 @@ export const widgetResolvers: IResolvers = {
 
       return result === 'not implemented'
         ? dataSources.widgetFakeApi.widget_f2e76b4e_b7ab_4a57_bb13_6e7c3c783e88(args.input, { ...rest })
+        : result;
+    },
+
+    widget_statistics15d23aa3_6f00_4505_9199_85c2e2662aaa: async (
+      _parent: any,
+      args: { input: MultiTransFormationArgs },
+      { dataSources, ...rest },
+    ) => {
+      const result = await dataSources.widgetApi.widget_statistics15d23aa3_6f00_4505_9199_85c2e2662aaa(
+        args.input,
+      );
+
+      return result === 'not implemented'
+        ? dataSources.widgetFakeApi.widget_statistics15d23aa3_6f00_4505_9199_85c2e2662aaa(args.input, {
+            ...rest,
+          })
+        : result;
+    },
+
+    widget_statistics324888f3_eb8c_4097_ba9f_21aa8cf6be4f: async (
+      _parent: any,
+      args: { input: MultiTransFormationArgs },
+      { dataSources, ...rest },
+    ) => {
+      const result = await dataSources.widgetApi.widget_statistics324888f3_eb8c_4097_ba9f_21aa8cf6be4f(
+        args.input,
+      );
+
+      return result === 'not implemented'
+        ? dataSources.widgetFakeApi.widget_statistics324888f3_eb8c_4097_ba9f_21aa8cf6be4f(args.input, {
+            ...rest,
+          })
         : result;
     },
 
@@ -417,49 +449,17 @@ export const widgetResolvers: IResolvers = {
         : result;
     },
 
-    widget_statisticsa765aacf_2974_46d8_8df3_2f8cbee6c3e7: async (
+    widget_statisticscd7fa114_5174_423f_9fdd_b14fc75dd1f1: async (
       _parent: any,
       args: { input: MultiTransFormationArgs },
       { dataSources, ...rest },
     ) => {
-      const result = await dataSources.widgetApi.widget_statisticsa765aacf_2974_46d8_8df3_2f8cbee6c3e7(
+      const result = await dataSources.widgetApi.widget_statisticscd7fa114_5174_423f_9fdd_b14fc75dd1f1(
         args.input,
       );
 
       return result === 'not implemented'
-        ? dataSources.widgetFakeApi.widget_statisticsa765aacf_2974_46d8_8df3_2f8cbee6c3e7(args.input, {
-            ...rest,
-          })
-        : result;
-    },
-
-    widget_statisticsbf07f4f0_21b2_4d3e_a890_76ffe849f9e6: async (
-      _parent: any,
-      args: { input: MultiTransFormationArgs },
-      { dataSources, ...rest },
-    ) => {
-      const result = await dataSources.widgetApi.widget_statisticsbf07f4f0_21b2_4d3e_a890_76ffe849f9e6(
-        args.input,
-      );
-
-      return result === 'not implemented'
-        ? dataSources.widgetFakeApi.widget_statisticsbf07f4f0_21b2_4d3e_a890_76ffe849f9e6(args.input, {
-            ...rest,
-          })
-        : result;
-    },
-
-    widget_statisticscc6d1107_019b_4a80_8c6e_0b6d67c8cc1c: async (
-      _parent: any,
-      args: { input: MultiTransFormationArgs },
-      { dataSources, ...rest },
-    ) => {
-      const result = await dataSources.widgetApi.widget_statisticscc6d1107_019b_4a80_8c6e_0b6d67c8cc1c(
-        args.input,
-      );
-
-      return result === 'not implemented'
-        ? dataSources.widgetFakeApi.widget_statisticscc6d1107_019b_4a80_8c6e_0b6d67c8cc1c(args.input, {
+        ? dataSources.widgetFakeApi.widget_statisticscd7fa114_5174_423f_9fdd_b14fc75dd1f1(args.input, {
             ...rest,
           })
         : result;
