@@ -54,7 +54,7 @@ export function RadioGroupComponent(props: RadioGroupProps): ReactElement {
     return value || id || displayValue;
   };
 
-  const formattedOptions = data.map((option) => ({
+  const formattedOptions = data.filter(Boolean).map((option) => ({
     value: getValue(option),
     label: option.displayValue,
     id: option.id,

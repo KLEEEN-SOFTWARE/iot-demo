@@ -5,6 +5,6 @@ export const dataViewControlSectionViewOptions = [
     modalAttributes: [],
     name: 'Dashboard',
     type: 'grid',
-    viewId: 'ks-view-atZwu14Z5jwnTyGbpSvgcd',
+    viewId: 'ks-view-6M9TLFSHnbMdsMp9tJGEeA',
   },
 ];

@@ -10,7 +10,7 @@ export default {
   // View Icon for Experience: Table of Sensor on Workflow: Sensors
   'ks-view-gnRpJXqsZaxnoEGRxQVSY4': { path: './assets/icons/alarm-clock-1-alternate.svg', alt: 'Listing' },
   // View Icon for Experience: Dashboard on Workflow: System
-  'ks-view-atZwu14Z5jwnTyGbpSvgcd': { path: './assets/icons/pie-line-graph-desktop.svg', alt: 'Grid' },
+  'ks-view-6M9TLFSHnbMdsMp9tJGEeA': { path: './assets/icons/wifi-signal-2.svg', alt: 'Grid' },
   // View Icon for Experience: Dashboard on Workflow: Sensor Details
   'ks-view-5ehycKcM5CKMLjBnhE2GcB': { path: './assets/icons/pie-line-graph-desktop.svg', alt: 'Grid' },
   // View Icon for Experience: Dashboard on Workflow: Node Details

@@ -27,7 +27,7 @@
     "prepare": "husky install",
     "start": "run-p start:client start:api",
     "start:api": "nx serve api",
-    "start:client": "nx serve --port 4201 cloud",
+    "start:client": "nx serve --port=4201 --maxWorkers=4 --memoryLimit=1024 cloud",
     "test": "nx test",
     "versiongen": "node ./tools/build/version.js",
     "workspace-generator": "nx workspace-generator"
