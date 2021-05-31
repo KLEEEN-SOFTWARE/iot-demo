@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="26px" height="26px" viewBox="0 0 26 26" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 49.1 (51147) - http://www.bohemiancoding.com/sketch -->
+    <title>star</title>
+    <desc>Created with Sketch.</desc>
+    <defs>
+        <polygon id="path-1" points="858 416.5 848.807612 419.192388 851.5 410 848.807612 400.807612 858 403.5 867.192388 400.807612 864.5 410 867.192388 419.192388"></polygon>
+        <filter x="-26.9%" y="-19.2%" width="153.8%" height="153.8%" filterUnits="objectBoundingBox" id="filter-2">
+            <feOffset dx="0" dy="2" in="SourceAlpha" result="shadowOffsetOuter1"></feOffset>
+            <feGaussianBlur stdDeviation="2" in="shadowOffsetOuter1" result="shadowBlurOuter1"></feGaussianBlur>
+            <feColorMatrix values="0.90 0 0 0 0.2
+                                   0 0.86 0 0 0.9
+                                   0 0 0.79 0 0
+                                   0 0 0 1 0" type="matrix" in="shadowBlurOuter1"></feColorMatrix>
+        </filter>
+    </defs>
+    <g id="Dashboard-Waterfall" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="alertPreview-V1-currentAlertRow-Copy-6a" transform="translate(-845.000000, -399.000000)">
+            <g id="star">
+                <use fill="black" fill-opacity="1" filter="url(#filter-2)" xlink:href="#path-1"></use>
+                <use fill="#32db64" fill-rule="evenodd" xlink:href="#path-1"></use>
+            </g>
+        </g>
+    </g>
+</svg>

@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="30px" height="34px" viewBox="0 0 30 34" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 49.1 (51147) - http://www.bohemiancoding.com/sketch -->
+    <title>hex</title>
+    <desc>Created with Sketch.</desc>
+    <defs>
+        <polygon id="path-1" points="704 397 715 403.5 715 416.5 704 423 693 416.5 693 403.5"></polygon>
+        <filter x="-31.8%" y="-19.2%" width="163.6%" height="153.8%" filterUnits="objectBoundingBox" id="filter-2">
+            <feOffset dx="0" dy="2" in="SourceAlpha" result="shadowOffsetOuter1"></feOffset>
+            <feGaussianBlur stdDeviation="2" in="shadowOffsetOuter1" result="shadowBlurOuter1"></feGaussianBlur>
+            <feColorMatrix values="0 0 0 0 0.215686275   0 0 0 0 0.666666667   0 0 0 0 0.850980392  0 0 0 1 0" type="matrix" in="shadowBlurOuter1"></feColorMatrix>
+        </filter>
+    </defs>
+    <g id="Dashboard-Waterfall" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="alertPreview-V1-currentAlertRow-Copy-6a" transform="translate(-689.000000, -395.000000)">
+            <g id="hex">
+                <use fill="black" fill-opacity="1" filter="url(#filter-2)" xlink:href="#path-1"></use>
+                <use fill="#37AAD9" fill-rule="evenodd" xlink:href="#path-1"></use>
+            </g>
+        </g>
+    </g>
+</svg>

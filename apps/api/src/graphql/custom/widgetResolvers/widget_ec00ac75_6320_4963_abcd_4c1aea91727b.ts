@@ -1,5 +1,7 @@
 import { GetWidgetDataResult, DataAggregationArgs, AuthContext } from '../../../types';
 
+import fetch from 'node-fetch';
+
 // View: System --- Widget: Site Map
 // Group by: siteMap
 // No Aggregation
@@ -10,8 +12,12 @@ export const widget_ec00ac75_6320_4963_abcd_4c1aea91727b = async (
   input: DataAggregationArgs,
   context: AuthContext,
 ): Promise<GetWidgetDataResult | 'not implemented'> => {
-  // TODO: add your code here.
-  // If you need to access the current user, the token and data sources,
-  // you can get them from 'context'
-  return 'not implemented';
+  return fetch('http://localhost:3009/system/site-map')
+    .then((res) => res.json())
+    .then((res) => {
+      return res;
+    })
+    .catch((err) => {
+      return 'not implemented';
+    });
 };

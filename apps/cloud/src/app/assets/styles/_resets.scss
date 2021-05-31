@@ -1,0 +1,13 @@
+.app,
+.generated-new,
+#root,
+body,
+html
+// *[class*="Mui"],
+// *[class*="makeStyles"],
+*[class*="header"],
+*[class*="makeStyles-appBarContainer"] {
+  background: none !important;
+  border: none !important;
+  box-shadow: none !important;
+}
