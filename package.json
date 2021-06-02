@@ -25,7 +25,7 @@
     "nx": "nx",
     "postinstall": "npm run versiongen",
     "prepare": "husky install",
-    "start": "run-p start:client start:api",
+    "start": "run-p start:client start:api start:iot",
     "start:iot": "nx serve iot",
     "start:api": "nx serve api",
     "start:client": "nx serve --port=4201 --maxWorkers=4 --memoryLimit=1024 cloud",
