@@ -6,7 +6,7 @@ import {
   SiteMap,
   NodeStatus,
   SensorStatus,
-} from '../models/system/index.js';
+} from '../models';
 
 import { sheets, spreadsheetId } from '../googleapis/client.js';
 

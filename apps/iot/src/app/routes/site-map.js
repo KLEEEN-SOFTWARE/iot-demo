@@ -6,7 +6,7 @@ export function siteMapById(req, res) {
       spreadsheetId,
       range: 'site-map!all',
     },
-    (err, response) => {
+    (_, response) => {
       const { values } = response?.data;
       res.send(values.filter(([site]) => site == req.body.site));
     },

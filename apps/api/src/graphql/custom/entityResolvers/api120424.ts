@@ -5,7 +5,7 @@ import { AutoCompleteParams, CustomActionArgs, DispatchCustomActionResults } fro
 export class ApiSiteMap extends RESTDataSource {
   constructor() {
     super();
-    this.baseURL = 'http://put.your.api.here/';
+    this.baseURL = 'http://localhost:3009/';
     // If you need to access the current user, the token and data sources,
     // you can get them from 'this.context'
   }
@@ -20,6 +20,8 @@ export class ApiSiteMap extends RESTDataSource {
   // add SiteMap
   async addEntity(entity: { [key: string]: unknown }, parent?: { id: string; entity: string }) {
     if (parent) console.log('parent', parent);
+    console.log(entity);
+
     return KapiCrud.add('siteMap', entity);
 
     // an example making an HTTP POST request.
