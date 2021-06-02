@@ -1,13 +1,15 @@
 // Color Scheme
-$color-primary-05: rgb(45, 123, 229, 0.05);
-$color-primary-10: rgb(45, 123, 229, 0.1);
-$color-primary-20: rgb(45, 123, 229, 0.2);
-$color-primary-30: rgb(45, 123, 229, 0.3);
-$color-primary-40: rgb(45, 123, 229, 0.4);
-$color-primary-50: rgb(45, 123, 229, 0.5);
+$color-primary-05-b: rgba(124, 223, 193, 0.01);
+$color-primary-20-b: rgba(194, 75, 218, 0.08);
+$color-primary-05: rgba(140, 45, 229, 0.05);
+$color-primary-10: rgb(100, 45, 229, 0.1);
+$color-primary-20: rgb(100, 45, 229, 0.2);
+$color-primary-30: rgb(100, 45, 229, 0.3);
+$color-primary-40: rgb(100, 45, 229, 0.4);
+$color-primary-50: rgba(100, 45, 229, 0.5);
 $color-primary: #2d7be5;
 $color-secondary: #738293;
-$color-success: #01d27a;
+$color-success: #ffb3ea;
 $color-info: #28bcfd;
 $color-warning: #f5803d;
 $color-danger: #e63856;

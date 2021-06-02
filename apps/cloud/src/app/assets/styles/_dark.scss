@@ -2,9 +2,15 @@
 @import 'mixins';
 
 div[class*='-dark'] {
-  // &:first-child {
-  //   background: $color-dark !important;
-  // }
+  *[class*='makeStyles-dashboardTask'] {
+    background-image: url('assets/iot.png') !important;
+    background-repeat: no-repeat, repeat;
+    background-size: cover;
+  }
+
+  .summary-statistics > .MuiGrid-root.statistics-secondary {
+    @include gradient($color-primary-05, $color-primary-20);
+  }
 
   & * {
     @include transitions();

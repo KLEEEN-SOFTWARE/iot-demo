@@ -2,19 +2,24 @@
 @import 'mixins';
 
 div[class*='-light'] {
+
+  *[class*='makeStyles-dashboardTask'] {
+    background-image: url('assets/iot-light.jpeg') !important;
+    background-repeat: no-repeat, repeat;
+    background-size: cover;
+  }
+
+  .summary-statistics > .MuiGrid-root.statistics-secondary {
+    @include gradient($color-primary-05-b, $color-primary-20-b);
+  }
+
   &:first-child {
     background: $color-light !important;
   }
 
   & * {
     @include transitions();
-    // @include getColor($color-dark);
   }
-
-  // & a:hover,
-  // span:hover {
-  // color: $color-dark !important;
-  // }
 
   & .card-section {
     width: 100% !important;
