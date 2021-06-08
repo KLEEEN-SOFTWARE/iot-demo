@@ -111,6 +111,12 @@
               "ADMIN": "SHOW",
               "GUEST": "SHOW"
             }
+          },
+          "F51934F0-C79E-4BBA-998B-0D8E381CF5F1": {
+            "PERMISSIONS": {
+              "ADMIN": "SHOW",
+              "GUEST": "SHOW"
+            }
           }
         }
       }
@@ -140,6 +146,18 @@
             }
           },
           "324888F3-EB8C-4097-BA9F-21AA8CF6BE4F": {
+            "PERMISSIONS": {
+              "ADMIN": "SHOW",
+              "GUEST": "SHOW"
+            }
+          },
+          "3A3B0785-D65D-4156-8025-0691DA0CF99C": {
+            "PERMISSIONS": {
+              "ADMIN": "SHOW",
+              "GUEST": "SHOW"
+            }
+          },
+          "423FF13B-DE6B-451C-95C3-23288E4EDCED": {
             "PERMISSIONS": {
               "ADMIN": "SHOW",
               "GUEST": "SHOW"

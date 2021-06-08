@@ -46,6 +46,9 @@ function HeaderAndSubSectionsComponent({
     title,
   };
 
+  const hasSubHeader = () =>
+    orderedViewProps.length > 1 || withDateFilter || withFilterSection || withSummarySection;
+
   return (
     <>
       <KsHeader
@@ -60,35 +63,38 @@ function HeaderAndSubSectionsComponent({
         subTitle={subTitle}
         title={HeaderTitle(props)}
         upText={upText}
+        withoutSubHeader={!hasSubHeader()}
       />
-      <SubHeader>
-        <ButtonSelect
-          handleChangeTab={handleChangeTab}
-          taskName={taskName}
-          translate={translate}
-          value={value}
-          viewOptions={orderedViewProps}
-        />
-        {withDateFilter && <ButtonDate translate={translate} hasDateFilter={true} />}
-        {withFilterSection && (
-          <ButtonFilter
-            filters={filters}
-            outContainer={setOutContainer}
+      {hasSubHeader() && (
+        <SubHeader>
+          <ButtonSelect
+            handleChangeTab={handleChangeTab}
             taskName={taskName}
             translate={translate}
+            value={value}
+            viewOptions={orderedViewProps}
           />
-        )}
-        {withSummarySection && (
-          <ButtonSummary
-            displayTaskName={withSummarySection.displayTaskName}
-            entityDetails={withSummarySection.entityDetails}
-            isEditable={withSummarySection.isEditable}
-            outContainer={setOutContainer}
-            taskName={withSummarySection.taskName}
-            translate={translate}
-          />
-        )}
-      </SubHeader>
+          {withDateFilter && <ButtonDate translate={translate} hasDateFilter={true} />}
+          {withFilterSection && (
+            <ButtonFilter
+              filters={filters}
+              outContainer={setOutContainer}
+              taskName={taskName}
+              translate={translate}
+            />
+          )}
+          {withSummarySection && (
+            <ButtonSummary
+              displayTaskName={withSummarySection.displayTaskName}
+              entityDetails={withSummarySection.entityDetails}
+              isEditable={withSummarySection.isEditable}
+              outContainer={setOutContainer}
+              taskName={withSummarySection.taskName}
+              translate={translate}
+            />
+          )}
+        </SubHeader>
+      )}
       {outContainer}
     </>
   );

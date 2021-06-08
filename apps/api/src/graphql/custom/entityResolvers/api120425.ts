@@ -5,7 +5,7 @@ import { AutoCompleteParams, CustomActionArgs, DispatchCustomActionResults } fro
 export class ApiSensor extends RESTDataSource {
   constructor() {
     super();
-    this.baseURL = 'http://localhost:3009/';
+    this.baseURL = 'http://put.your.api.here/';
     // If you need to access the current user, the token and data sources,
     // you can get them from 'this.context'
   }
@@ -20,7 +20,7 @@ export class ApiSensor extends RESTDataSource {
   // add Sensor
   async addEntity(entity: { [key: string]: unknown }, parent?: { id: string; entity: string }) {
     if (parent) console.log('parent', parent);
-    return this.post('sensor', entity);
+    return KapiCrud.add('sensor', entity);
 
     // an example making an HTTP POST request.
     // return this.post('sensor', entity);
@@ -36,7 +36,7 @@ export class ApiSensor extends RESTDataSource {
 
   // list Sensor
   async listEntity(params: any) {
-    return this.get('sensor', params);
+    return KapiCrud.list('sensor', params);
 
     // an example making an HTTP GET request.
     // return this.get('sensor', params);
@@ -65,7 +65,7 @@ export class ApiSensor extends RESTDataSource {
     return results.map((obj: { sensor: { displayValue: string; value?: any } }) => ({ ...obj.sensor }));
   }
 
-  // Reboot action for Sensor
+  // reboot action for Sensor
   async customAction_reboot(args: CustomActionArgs): Promise<DispatchCustomActionResults> {
     return dispatchCustomAction(args);
   }

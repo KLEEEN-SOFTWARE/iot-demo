@@ -23,7 +23,7 @@ export interface BaseInputComponentProps extends BaseComponentProps {
 //#region DisplayComponentProps
 export interface DisplayComponentProps extends BaseDisplayComponentsProps {
   attribute: Attribute;
-  element: ElementDisplayType;
+  element?: ElementDisplayType;
 }
 
 export type DisplayElement = (props: DisplayComponentProps) => JSX.Element;
@@ -46,7 +46,7 @@ export interface ElementComponents {
 export interface InputComponentProps extends BaseInputComponentProps {
   attribute: Attribute;
   autoCompleteValues: ListItem[];
-  element: ElementInputType;
+  element?: ElementInputType;
   getInputElement: (inputComponent: string) => InputElement;
   rules: ElementComponentRules[];
 }

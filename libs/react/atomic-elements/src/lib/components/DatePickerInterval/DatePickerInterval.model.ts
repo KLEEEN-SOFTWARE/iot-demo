@@ -1,5 +1,6 @@
 import { Dispatch, SetStateAction } from 'react';
 
+import { Maybe } from '@kleeen/types';
 import { Moment } from 'moment';
 
 export type DateProps = Moment;
@@ -9,9 +10,9 @@ export interface DatePickerProps {
   relativeDate: string;
 }
 export interface DatePickerStateObject extends DatePickerProps {
-  setFrom: Dispatch<SetStateAction<DateProps>>;
-  setTo: Dispatch<SetStateAction<DateProps>>;
-  setRelativeDate: Dispatch<SetStateAction<string>>;
+  setFrom: Dispatch<SetStateAction<Maybe<DateProps>>>;
+  setRelativeDate: Dispatch<SetStateAction<Maybe<string>>>;
+  setTo: Dispatch<SetStateAction<Maybe<DateProps>>>;
 }
 export interface DatePickerIntervalProps {
   datePickerState: DatePickerStateObject;

@@ -476,7 +476,11 @@
         "format": {
           "aggregations": null,
           "dateTime": null,
-          "examples": null,
+          "examples": [
+            "Bad",
+            "Ok",
+            "Excellent"
+          ],
           "valueLabels": [
             {
               "label": "Bad",
@@ -528,7 +532,11 @@
         "format": {
           "aggregations": null,
           "dateTime": null,
-          "examples": null,
+          "examples": [
+            "Bad",
+            "Ok",
+            "Excellent"
+          ],
           "valueLabels": [
             {
               "label": "Bad",
@@ -630,7 +638,11 @@
         "format": {
           "aggregations": null,
           "dateTime": null,
-          "examples": null,
+          "examples": [
+            "Bad",
+            "Ok",
+            "Excellent"
+          ],
           "valueLabels": [
             {
               "label": "Bad",
@@ -793,7 +805,11 @@
         "format": {
           "aggregations": null,
           "dateTime": null,
-          "examples": null,
+          "examples": [
+            "Bad",
+            "Ok",
+            "Excellent"
+          ],
           "valueLabels": [
             {
               "label": "Bad",
@@ -989,6 +1005,62 @@
           ]
         ]
       },
+      "systemHealth": {
+        "dataType": "SystemHealth",
+        "formatType": "severity_level",
+        "deepDataType": "severity_level",
+        "description": "",
+        "hasMany": false,
+        "id": 120429,
+        "isComplexObject": null,
+        "isNullable": false,
+        "isXor": null,
+        "multiple": true,
+        "name": "systemHealth",
+        "statisticalType": "Data - Categorical - ordered - Severity Ranking",
+        "prototypeId": null,
+        "format": {
+          "aggregations": null,
+          "dateTime": null,
+          "examples": [
+            "Bad",
+            "Ok",
+            "Excellent"
+          ],
+          "valueLabels": [
+            {
+              "label": "Bad",
+              "value": 1
+            },
+            {
+              "label": "Ok",
+              "value": 2
+            },
+            {
+              "label": "Excellent",
+              "value": 3
+            }
+          ],
+          "max": 3,
+          "min": 1,
+          "prefix": null,
+          "severityBad": 1,
+          "severityGood": 3,
+          "severityLevels": 3,
+          "suffix": null,
+          "isNumericType": false
+        },
+        "outbounds": null,
+        "settings": {
+          "isEditable": true,
+          "isFilledByEU": true
+        },
+        "type": "SystemHealth",
+        "params": [
+          1,
+          3
+        ]
+      },
       "sensor": {
         "dataType": "Sensor",
         "formatType": "prime",
@@ -1057,7 +1129,11 @@
         "format": {
           "aggregations": null,
           "dateTime": null,
-          "examples": null,
+          "examples": [
+            "Bad",
+            "Ok",
+            "Excellent"
+          ],
           "valueLabels": [
             {
               "label": "Bad",
@@ -1228,7 +1304,11 @@
         "format": {
           "aggregations": null,
           "dateTime": null,
-          "examples": null,
+          "examples": [
+            "Bad",
+            "Ok",
+            "Excellent"
+          ],
           "valueLabels": [
             {
               "label": "Bad",
@@ -1280,7 +1360,11 @@
         "format": {
           "aggregations": null,
           "dateTime": null,
-          "examples": null,
+          "examples": [
+            "Bad",
+            "Ok",
+            "Excellent"
+          ],
           "valueLabels": [
             {
               "label": "Bad",
@@ -1382,7 +1466,11 @@
         "format": {
           "aggregations": null,
           "dateTime": null,
-          "examples": null,
+          "examples": [
+            "Bad",
+            "Ok",
+            "Excellent"
+          ],
           "valueLabels": [
             {
               "label": "Bad",
@@ -1545,7 +1633,11 @@
         "format": {
           "aggregations": null,
           "dateTime": null,
-          "examples": null,
+          "examples": [
+            "Bad",
+            "Ok",
+            "Excellent"
+          ],
           "valueLabels": [
             {
               "label": "Bad",
@@ -1708,7 +1800,11 @@
         "format": {
           "aggregations": null,
           "dateTime": null,
-          "examples": null,
+          "examples": [
+            "Bad",
+            "Ok",
+            "Excellent"
+          ],
           "valueLabels": [
             {
               "label": "Bad",
@@ -1866,7 +1962,11 @@
         "format": {
           "aggregations": null,
           "dateTime": null,
-          "examples": null,
+          "examples": [
+            "Bad",
+            "Ok",
+            "Excellent"
+          ],
           "valueLabels": [
             {
               "label": "Bad",
@@ -1918,6 +2018,52 @@
               }
             ]
           }
+        ]
+      },
+      "siteMap": {
+        "dataType": "SiteMap",
+        "formatType": "prime",
+        "deepDataType": "string",
+        "description": "",
+        "hasMany": true,
+        "id": 120424,
+        "isComplexObject": null,
+        "isNullable": false,
+        "isXor": null,
+        "multiple": true,
+        "name": "siteMap",
+        "statisticalType": "Data - Categorical",
+        "prototypeId": null,
+        "format": {
+          "aggregations": null,
+          "dateTime": null,
+          "examples": [
+            "Site 1",
+            "Site 2",
+            "Site 3",
+            "Site 4",
+            "Site 5"
+          ],
+          "valueLabels": null,
+          "max": null,
+          "min": null,
+          "prefix": null,
+          "severityBad": null,
+          "severityGood": null,
+          "severityLevels": null,
+          "suffix": null,
+          "isNumericType": false
+        },
+        "outbounds": null,
+        "settings": {
+          "isEditable": true,
+          "isFilledByEU": true
+        },
+        "type": "arrayOf",
+        "params": [
+          "SiteMap",
+          20,
+          []
         ]
       }
     }

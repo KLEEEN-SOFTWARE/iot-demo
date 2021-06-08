@@ -1,49 +1,31 @@
-import React, { ReactElement, useEffect } from 'react';
-import { ValuesProps, VizCommonParams } from '../../../../types';
+import { ReactElement, useEffect } from 'react';
 import { useMasonry, useWidgetContext } from '@kleeen/react/hooks';
 
-import { Attribute } from '@kleeen/types';
 import { Loader } from '@kleeen/react/components';
-import SummaryStatistics from '../../SummaryStatistics/SummaryStatistics';
-import { pathOr } from 'ramda';
+import { SummaryStatistics } from '../../summary-statistics';
+import { SummaryStatisticsWidgetProps } from './summary-statistic-widget.model';
 
-interface SummaryStatisticsWidgetProps extends VizCommonParams {
-  attributes?: Attribute[];
-  isWidget?: boolean;
-  taskName: string;
-  widgetId: string | number;
-}
-
-export const SummaryStatisticsWidget = ({
+export function SummaryStatisticsWidget({
   attributes,
-  isWidget = false,
   params,
   taskName,
   widgetId,
-}: SummaryStatisticsWidgetProps): ReactElement => {
-  const values: ValuesProps = pathOr({}, ['value'], params);
-  const attribute = pathOr({}, ['0'], attributes);
+}: SummaryStatisticsWidgetProps): ReactElement {
   const widgetData = useWidgetContext({ taskName, widgetId, params });
   const { updateLayout } = useMasonry();
+
+  const { data, isLoading } = widgetData;
 
   useEffect(() => {
     const minCardHeight = 60;
     updateLayout(minCardHeight);
   }, [widgetData]);
 
-  if (!widgetData) {
+  if (isLoading) {
     return <Loader />;
   }
 
-  return (
-    <div>
-      <SummaryStatistics
-        attribute={attribute}
-        context={widgetData}
-        isWidget={isWidget}
-        values={values}
-      ></SummaryStatistics>
-    </div>
-  );
-};
+  return <SummaryStatistics attributes={attributes} data={data} />;
+}
+
 export default SummaryStatisticsWidget;

@@ -34,7 +34,7 @@ export const DatePickerInterval = ({
   className,
   handleFilter,
 }: DatePickerIntervalProps): JSX.Element => {
-  const [open, setOpen] = useState(false);
+  const [open, setOpen] = useState<boolean | undefined>(false);
   const [openCustomRange, setOpenCustomRange] = useState(false);
   const { themeClass } = useTheme();
   const isApply = !isNil(handleFilter);
@@ -49,7 +49,7 @@ export const DatePickerInterval = ({
     if (e?.path[0].classList.contains(ButtonSubHeaderEnum.elementButtonGenericHeader)) return;
 
     if (open) {
-      if (isApply) {
+      if (isApply && isSetOpen) {
         isSetOpen(false);
       }
       setOpen(false);

@@ -13,6 +13,7 @@ export function KsHeader(props: {
   subTitle?: string;
   title: string | JSX.Element;
   upText?: string;
+  withoutSubHeader?: boolean;
 }): ReactElement {
   const { KsActionDialogs, KsActionsSection } = useKsActionsManager(props.actionsProps);
   const classes = useStyles(props);
@@ -20,7 +21,11 @@ export function KsHeader(props: {
 
   return (
     <>
-      <header className={`main-header ${classes.header} dataview`}>
+      <header
+        className={`main-header ${classes.header} ${
+          props.withoutSubHeader && classes.withoutSubHeader
+        } dataview`}
+      >
         <div className={classes.infoContainer}>
           <h5 className={classes.withoutMargin}>{props.upText}</h5>
           <h3 className={classes.mainTitle}>{props.title}</h3>

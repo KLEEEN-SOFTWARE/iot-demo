@@ -17,7 +17,11 @@ export const SubHeader = ({ ...props }: SubHeaderProps): React.ReactElement => {
   }, [element]);
 
   return (
-    <div ref={(el) => el && setElement(el)} className={`element-sub-header dataview ${classes.header}`}>
+    <div
+      ref={(el) => el && setElement(el)}
+      className={`element-sub-header dataview ${classes.header}`}
+      id={'sub-header-element-id'}
+    >
       {props.children}
     </div>
   );

@@ -11,6 +11,9 @@ export const useStyles = makeStyles({
     marginBottom: 'var(--sub-header-margin-bottom)',
     padding: 'var(--pm-L)',
   },
+  withoutSubHeader: {
+    borderRadius: 'var(--card-border-radius)',
+  },
   infoContainer: {
     flex: '3',
     width: '100%',
