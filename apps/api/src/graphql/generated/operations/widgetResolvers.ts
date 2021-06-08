@@ -233,6 +233,22 @@ export const widgetResolvers: IResolvers = {
         : result;
     },
 
+    object_listing_f51934f0_c79e_4bba_998b_0d8e381cf5f1: async (
+      _parent: any,
+      args: { input: DataListingArgs },
+      { dataSources, ...rest },
+    ) => {
+      const result = await dataSources.widgetApi.object_listing_f51934f0_c79e_4bba_998b_0d8e381cf5f1(
+        args.input,
+      );
+
+      return result === 'not implemented'
+        ? dataSources.widgetFakeApi.object_listing_f51934f0_c79e_4bba_998b_0d8e381cf5f1(args.input, {
+            ...rest,
+          })
+        : result;
+    },
+
     summary_title_09522661_c6e8_4161_a1cf_8c1e2e499824: async (
       _parent: any,
       args: { input: DataListingArgs },
@@ -412,6 +428,38 @@ export const widgetResolvers: IResolvers = {
 
       return result === 'not implemented'
         ? dataSources.widgetFakeApi.widget_statistics324888f3_eb8c_4097_ba9f_21aa8cf6be4f(args.input, {
+            ...rest,
+          })
+        : result;
+    },
+
+    widget_statistics3a3b0785_d65d_4156_8025_0691da0cf99c: async (
+      _parent: any,
+      args: { input: MultiTransFormationArgs },
+      { dataSources, ...rest },
+    ) => {
+      const result = await dataSources.widgetApi.widget_statistics3a3b0785_d65d_4156_8025_0691da0cf99c(
+        args.input,
+      );
+
+      return result === 'not implemented'
+        ? dataSources.widgetFakeApi.widget_statistics3a3b0785_d65d_4156_8025_0691da0cf99c(args.input, {
+            ...rest,
+          })
+        : result;
+    },
+
+    widget_statistics423ff13b_de6b_451c_95c3_23288e4edced: async (
+      _parent: any,
+      args: { input: MultiTransFormationArgs },
+      { dataSources, ...rest },
+    ) => {
+      const result = await dataSources.widgetApi.widget_statistics423ff13b_de6b_451c_95c3_23288e4edced(
+        args.input,
+      );
+
+      return result === 'not implemented'
+        ? dataSources.widgetFakeApi.widget_statistics423ff13b_de6b_451c_95c3_23288e4edced(args.input, {
             ...rest,
           })
         : result;

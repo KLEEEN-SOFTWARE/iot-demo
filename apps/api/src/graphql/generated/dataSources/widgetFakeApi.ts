@@ -70,6 +70,10 @@ export class WidgetFakeApi extends DataSource {
     return getListingData(args);
   }
 
+  async object_listing_f51934f0_c79e_4bba_998b_0d8e381cf5f1(args: DataListingArgs) {
+    return getListingData(args);
+  }
+
   async summary_title_09522661_c6e8_4161_a1cf_8c1e2e499824(args: DataListingArgs) {
     return getListingData(args);
   }
@@ -119,6 +123,14 @@ export class WidgetFakeApi extends DataSource {
   }
 
   async widget_statistics324888f3_eb8c_4097_ba9f_21aa8cf6be4f(args: MultiTransFormationArgs) {
+    return getMultiTransFormationData(args);
+  }
+
+  async widget_statistics3a3b0785_d65d_4156_8025_0691da0cf99c(args: MultiTransFormationArgs) {
+    return getMultiTransFormationData(args);
+  }
+
+  async widget_statistics423ff13b_de6b_451c_95c3_23288e4edced(args: MultiTransFormationArgs) {
     return getMultiTransFormationData(args);
   }
 

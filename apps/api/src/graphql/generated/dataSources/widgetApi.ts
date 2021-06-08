@@ -21,6 +21,7 @@ import { object_listing_3d3baa6b_4237_4e39_bc34_7f22976f16e7 } from '../../custo
 import { object_listing_5cb3e084_759a_484a_8bea_4db978e3c656 } from '../../custom/widgetResolvers/object_listing_5cb3e084_759a_484a_8bea_4db978e3c656';
 import { object_listing_7c86260d_a5b0_407c_8546_2e0be73aada3 } from '../../custom/widgetResolvers/object_listing_7c86260d_a5b0_407c_8546_2e0be73aada3';
 import { object_listing_b6dcf2f6_6cc1_418f_b027_34d3e60bb8c4 } from '../../custom/widgetResolvers/object_listing_b6dcf2f6_6cc1_418f_b027_34d3e60bb8c4';
+import { object_listing_f51934f0_c79e_4bba_998b_0d8e381cf5f1 } from '../../custom/widgetResolvers/object_listing_f51934f0_c79e_4bba_998b_0d8e381cf5f1';
 import { summary_title_09522661_c6e8_4161_a1cf_8c1e2e499824 } from '../../custom/widgetResolvers/summary_title_09522661_c6e8_4161_a1cf_8c1e2e499824';
 import { summary_title_3e93db18_fe67_43a2_be09_6ecf9873ee74 } from '../../custom/widgetResolvers/summary_title_3e93db18_fe67_43a2_be09_6ecf9873ee74';
 import { summary_title_ccd4b585_b8d5_4315_817f_bae7060c22e5 } from '../../custom/widgetResolvers/summary_title_ccd4b585_b8d5_4315_817f_bae7060c22e5';
@@ -34,6 +35,8 @@ import { widget_ec36d0ef_f9c6_4345_bc1d_552b19ceeccd } from '../../custom/widget
 import { widget_f2e76b4e_b7ab_4a57_bb13_6e7c3c783e88 } from '../../custom/widgetResolvers/widget_f2e76b4e_b7ab_4a57_bb13_6e7c3c783e88';
 import { widget_statistics15d23aa3_6f00_4505_9199_85c2e2662aaa } from '../../custom/widgetResolvers/widget_statistics15d23aa3_6f00_4505_9199_85c2e2662aaa';
 import { widget_statistics324888f3_eb8c_4097_ba9f_21aa8cf6be4f } from '../../custom/widgetResolvers/widget_statistics324888f3_eb8c_4097_ba9f_21aa8cf6be4f';
+import { widget_statistics3a3b0785_d65d_4156_8025_0691da0cf99c } from '../../custom/widgetResolvers/widget_statistics3a3b0785_d65d_4156_8025_0691da0cf99c';
+import { widget_statistics423ff13b_de6b_451c_95c3_23288e4edced } from '../../custom/widgetResolvers/widget_statistics423ff13b_de6b_451c_95c3_23288e4edced';
 import { widget_statistics592242b4_67a8_4d1f_a98e_45527ebd46c3 } from '../../custom/widgetResolvers/widget_statistics592242b4_67a8_4d1f_a98e_45527ebd46c3';
 import { widget_statistics86ae65f8_0d94_499f_86e2_60c17bc48f2c } from '../../custom/widgetResolvers/widget_statistics86ae65f8_0d94_499f_86e2_60c17bc48f2c';
 import { widget_statisticscd7fa114_5174_423f_9fdd_b14fc75dd1f1 } from '../../custom/widgetResolvers/widget_statisticscd7fa114_5174_423f_9fdd_b14fc75dd1f1';
@@ -98,6 +101,10 @@ export class WidgetApi extends RESTDataSource {
     return object_listing_b6dcf2f6_6cc1_418f_b027_34d3e60bb8c4(args, this.context);
   }
 
+  async object_listing_f51934f0_c79e_4bba_998b_0d8e381cf5f1(args: DataListingArgs) {
+    return object_listing_f51934f0_c79e_4bba_998b_0d8e381cf5f1(args, this.context);
+  }
+
   async summary_title_09522661_c6e8_4161_a1cf_8c1e2e499824(args: DataListingArgs) {
     return summary_title_09522661_c6e8_4161_a1cf_8c1e2e499824(args, this.context);
   }
@@ -148,6 +155,14 @@ export class WidgetApi extends RESTDataSource {
 
   async widget_statistics324888f3_eb8c_4097_ba9f_21aa8cf6be4f(args: MultiTransFormationArgs) {
     return widget_statistics324888f3_eb8c_4097_ba9f_21aa8cf6be4f(args, this.context);
+  }
+
+  async widget_statistics3a3b0785_d65d_4156_8025_0691da0cf99c(args: MultiTransFormationArgs) {
+    return widget_statistics3a3b0785_d65d_4156_8025_0691da0cf99c(args, this.context);
+  }
+
+  async widget_statistics423ff13b_de6b_451c_95c3_23288e4edced(args: MultiTransFormationArgs) {
+    return widget_statistics423ff13b_de6b_451c_95c3_23288e4edced(args, this.context);
   }
 
   async widget_statistics592242b4_67a8_4d1f_a98e_45527ebd46c3(args: MultiTransFormationArgs) {

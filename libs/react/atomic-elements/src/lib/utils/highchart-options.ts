@@ -1,4 +1,4 @@
-export const getOptions = (baseOptions: Highcharts.Options) => {
+export function getOptions(baseOptions: Highcharts.Options) {
   return {
     ...baseOptions,
     chart: {
@@ -20,4 +20,4 @@ export const getOptions = (baseOptions: Highcharts.Options) => {
       },
     },
   };
-};
+}

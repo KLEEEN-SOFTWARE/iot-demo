@@ -63,6 +63,7 @@ export const styles = () =>
       '& .ReactVirtualized__Grid ': {
         borderBottomLeftRadius: 'var(--card-border-radius)',
         borderBottomRightRadius: 'var(--card-border-radius)',
+        paddingBottom: 'var(--pm-L)',
       },
       '& .header-container': {
         display: 'flex',
