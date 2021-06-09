@@ -29,6 +29,8 @@ export const ButtonSelect = ({
     handleChangeTab(optionValue);
   };
 
+  if (viewOptions.length < 2) return null;
+
   return (
     <ButtonSubHeader
       icon={iconView}

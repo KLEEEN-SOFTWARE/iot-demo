@@ -31,6 +31,7 @@ function ThemeWrapper({ children }) {
     <div
       className={`generated-new ${themeClass} ${position} ks-global-font ${classes.appContainer}`}
       data-testid="app-container"
+      id={'theme-wrapper-id'}
     >
       {children}
     </div>

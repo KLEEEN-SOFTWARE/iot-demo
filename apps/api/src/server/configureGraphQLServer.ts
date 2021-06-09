@@ -1,6 +1,13 @@
 import { ApolloServer, AuthenticationError } from 'apollo-server-express';
-import { baseResolvers, baseSchema, dataSources, generatedResolvers, generatedSchema } from '../graphql';
-import { customResolvers, customSchema } from '../graphql/custom/operations';
+import {
+  baseResolvers,
+  baseSchema,
+  customResolvers,
+  customSchema,
+  dataSources,
+  generatedResolvers,
+  generatedSchema,
+} from '../graphql';
 
 import { Express } from 'express';
 import { getUser } from '../utils';

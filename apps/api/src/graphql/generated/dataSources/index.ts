@@ -12,12 +12,13 @@ import { ApiSensorOverallStatus } from '../../custom/entityResolvers/api120426';
 import { ApiSensorStatus } from '../../custom/entityResolvers/api120427';
 import { ApiSiteStatus } from '../../custom/entityResolvers/api120428';
 import { ApiSystemHealth } from '../../custom/entityResolvers/api120429';
+import { DataSource } from 'apollo-datasource';
 import { FiltersApi } from '../../custom/filtersResolver/filtersApi';
 import { FiltersFakeApi } from './filtersFakeApi';
 import { WidgetApi } from './widgetApi';
 import { WidgetFakeApi } from './widgetFakeApi';
 
-export const dataSources = () => ({
+export const dataSources = (): Record<string, DataSource> => ({
   filtersFakeApi: new FiltersFakeApi(),
   filtersApi: new FiltersApi(),
   widgetApi: new WidgetApi(),

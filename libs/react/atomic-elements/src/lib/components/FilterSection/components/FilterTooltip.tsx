@@ -42,7 +42,7 @@ export const filterTooltipFunc = (
     badgeContent: filterTitles.length,
     title: (
       <ul>
-        <li>{`${filterTitles.length} Filters Applied`}</li>
+        <li>{`${filterTitles.length} ${translate('app.subHeader.buttonFilter.currentFilters')}`}</li>
 
         {filterTitles.map((title, i) => (
           <>

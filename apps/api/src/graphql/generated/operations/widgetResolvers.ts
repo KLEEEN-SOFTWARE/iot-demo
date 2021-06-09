@@ -169,6 +169,22 @@ export const widgetResolvers: IResolvers = {
         : result;
     },
 
+    object_listing_2a6ed2a4_cef2_4fcb_bd9e_da6a07398686: async (
+      _parent: any,
+      args: { input: DataListingArgs },
+      { dataSources, ...rest },
+    ) => {
+      const result = await dataSources.widgetApi.object_listing_2a6ed2a4_cef2_4fcb_bd9e_da6a07398686(
+        args.input,
+      );
+
+      return result === 'not implemented'
+        ? dataSources.widgetFakeApi.object_listing_2a6ed2a4_cef2_4fcb_bd9e_da6a07398686(args.input, {
+            ...rest,
+          })
+        : result;
+    },
+
     object_listing_3d3baa6b_4237_4e39_bc34_7f22976f16e7: async (
       _parent: any,
       args: { input: DataListingArgs },
@@ -233,6 +249,22 @@ export const widgetResolvers: IResolvers = {
         : result;
     },
 
+    object_listing_f51934f0_c79e_4bba_998b_0d8e381cf5f1: async (
+      _parent: any,
+      args: { input: DataListingArgs },
+      { dataSources, ...rest },
+    ) => {
+      const result = await dataSources.widgetApi.object_listing_f51934f0_c79e_4bba_998b_0d8e381cf5f1(
+        args.input,
+      );
+
+      return result === 'not implemented'
+        ? dataSources.widgetFakeApi.object_listing_f51934f0_c79e_4bba_998b_0d8e381cf5f1(args.input, {
+            ...rest,
+          })
+        : result;
+    },
+
     summary_title_09522661_c6e8_4161_a1cf_8c1e2e499824: async (
       _parent: any,
       args: { input: DataListingArgs },
@@ -260,6 +292,22 @@ export const widgetResolvers: IResolvers = {
 
       return result === 'not implemented'
         ? dataSources.widgetFakeApi.summary_title_3e93db18_fe67_43a2_be09_6ecf9873ee74(args.input, {
+            ...rest,
+          })
+        : result;
+    },
+
+    summary_title_72392202_fc97_4e82_9075_3434f87a6ff9: async (
+      _parent: any,
+      args: { input: DataListingArgs },
+      { dataSources, ...rest },
+    ) => {
+      const result = await dataSources.widgetApi.summary_title_72392202_fc97_4e82_9075_3434f87a6ff9(
+        args.input,
+      );
+
+      return result === 'not implemented'
+        ? dataSources.widgetFakeApi.summary_title_72392202_fc97_4e82_9075_3434f87a6ff9(args.input, {
             ...rest,
           })
         : result;
@@ -310,6 +358,18 @@ export const widgetResolvers: IResolvers = {
         ? dataSources.widgetFakeApi.summary_title_f991e457_5522_4e72_ba6b_9f8811f612af(args.input, {
             ...rest,
           })
+        : result;
+    },
+
+    widget_0003e6cf_785f_4680_829b_ac54360a79aa: async (
+      _parent: any,
+      args: { input: DataAggregationArgs },
+      { dataSources, ...rest },
+    ) => {
+      const result = await dataSources.widgetApi.widget_0003e6cf_785f_4680_829b_ac54360a79aa(args.input);
+
+      return result === 'not implemented'
+        ? dataSources.widgetFakeApi.widget_0003e6cf_785f_4680_829b_ac54360a79aa(args.input, { ...rest })
         : result;
     },
 
@@ -401,6 +461,22 @@ export const widgetResolvers: IResolvers = {
         : result;
     },
 
+    widget_statistics2cf3e953_eaa2_4461_9347_7a921a525fad: async (
+      _parent: any,
+      args: { input: MultiTransFormationArgs },
+      { dataSources, ...rest },
+    ) => {
+      const result = await dataSources.widgetApi.widget_statistics2cf3e953_eaa2_4461_9347_7a921a525fad(
+        args.input,
+      );
+
+      return result === 'not implemented'
+        ? dataSources.widgetFakeApi.widget_statistics2cf3e953_eaa2_4461_9347_7a921a525fad(args.input, {
+            ...rest,
+          })
+        : result;
+    },
+
     widget_statistics324888f3_eb8c_4097_ba9f_21aa8cf6be4f: async (
       _parent: any,
       args: { input: MultiTransFormationArgs },
@@ -412,6 +488,38 @@ export const widgetResolvers: IResolvers = {
 
       return result === 'not implemented'
         ? dataSources.widgetFakeApi.widget_statistics324888f3_eb8c_4097_ba9f_21aa8cf6be4f(args.input, {
+            ...rest,
+          })
+        : result;
+    },
+
+    widget_statistics3a3b0785_d65d_4156_8025_0691da0cf99c: async (
+      _parent: any,
+      args: { input: MultiTransFormationArgs },
+      { dataSources, ...rest },
+    ) => {
+      const result = await dataSources.widgetApi.widget_statistics3a3b0785_d65d_4156_8025_0691da0cf99c(
+        args.input,
+      );
+
+      return result === 'not implemented'
+        ? dataSources.widgetFakeApi.widget_statistics3a3b0785_d65d_4156_8025_0691da0cf99c(args.input, {
+            ...rest,
+          })
+        : result;
+    },
+
+    widget_statistics423ff13b_de6b_451c_95c3_23288e4edced: async (
+      _parent: any,
+      args: { input: MultiTransFormationArgs },
+      { dataSources, ...rest },
+    ) => {
+      const result = await dataSources.widgetApi.widget_statistics423ff13b_de6b_451c_95c3_23288e4edced(
+        args.input,
+      );
+
+      return result === 'not implemented'
+        ? dataSources.widgetFakeApi.widget_statistics423ff13b_de6b_451c_95c3_23288e4edced(args.input, {
             ...rest,
           })
         : result;

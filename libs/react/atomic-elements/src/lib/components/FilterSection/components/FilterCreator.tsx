@@ -131,7 +131,6 @@ const FilterCreator = ({
       }}
       options={getOptions(options)}
       groupBy={({ section }) => section}
-      textFieldProps={{ label }}
     />
   );
 };

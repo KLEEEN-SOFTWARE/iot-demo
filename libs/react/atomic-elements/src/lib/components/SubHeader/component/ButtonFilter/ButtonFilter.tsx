@@ -70,7 +70,7 @@ export const ButtonFilter = ({
 
   const categoryFilterOptions = availableAttributesToFilter.map(({ name, statisticalType }) => ({
     name,
-    section: FilterSectionEnum.FilterBy,
+    section: translate('app.subHeader.filterSection.filterBy'),
     statisticalType,
   }));
 
@@ -135,6 +135,7 @@ export const ButtonFilter = ({
             setIsApplyDisabled={setIsApplyWithoutTime}
             removeValue={removeValue}
             removeCategory={removeCategory}
+            translate={translate}
           />
         }
       />

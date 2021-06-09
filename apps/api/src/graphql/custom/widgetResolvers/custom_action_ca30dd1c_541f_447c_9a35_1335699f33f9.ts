@@ -1,6 +1,6 @@
 import { DispatchCustomActionResults, CustomActionArgs, AuthContext } from '../../../types';
 
-//  Widget: Reboot Node
+// Widget: Reboot Node
 // Chart type: [WIDGET] CUSTOM_ACTION
 export const custom_action_ca30dd1c_541f_447c_9a35_1335699f33f9 = async (
   input: CustomActionArgs,
