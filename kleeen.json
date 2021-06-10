@@ -1141,13 +1141,12 @@
   ],
   "exclude": {
     "directories": [
-      "apps/api/src/graphql/custom",
+      "apps/api/src/graphql/custom/entityResolvers",
+      "apps/api/src/graphql/custom/widgetResolvers",
       "apps/cloud/src/app/assets",
       "apps/cloud/src/app/modules/custom"
     ],
-    "files": [
-      ".vscode/settings.json"
-    ]
+    "files": [".vscode/settings.json"]
   },
   "packageApplied": {
     "name": "template",
