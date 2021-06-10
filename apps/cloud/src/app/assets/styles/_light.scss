@@ -2,8 +2,11 @@
 @import 'mixins';
 
 div[class*='-light'] {
+  *[class*='makeStyles-gridPageIntro-'] {
+    @include gradient($shade-white, $shade-200);
+  }
   *[class*='makeStyles-dashboardTask'] {
-    background-image: url('assets/iot-light.jpeg') !important;
+    background-image: url('assets/white.png') !important;
     background-repeat: no-repeat, repeat;
     background-size: cover;
   }

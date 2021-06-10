@@ -21,3 +21,8 @@
     margin: auto;
   }
 }
+[class*='makeStyles-dashboardArea-'] {
+  .main-header {
+    display: none !important;
+  }
+}

@@ -3,7 +3,7 @@
 
 div[class*='-dark'] {
   *[class*='makeStyles-dashboardTask'] {
-    background-image: url('assets/iot.png') !important;
+    background-image: url('assets/dark.png') !important;
     background-repeat: no-repeat, repeat;
     background-size: cover;
   }
@@ -30,7 +30,6 @@ div[class*='-dark'] {
     @include animate();
     @include borderRadius();
     @include boxShadow();
-    @include gradient($color-primary-05, $color-primary-20);
     @include transitions();
 
     & .cardTitle {
