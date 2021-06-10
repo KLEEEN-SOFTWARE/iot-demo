@@ -1,18 +1,11 @@
 {
+  "npmScope": "kleeen",
   "implicitDependencies": {
     "nx.json": "*",
     "package.json": { "dependencies": "*", "devDependencies": "*" },
     "workspace.json": "*",
     "tsconfig.base.json": "*",
     ".eslintrc.json": "*"
-  },
-  "affected": { "defaultBase": "develop" },
-  "npmScope": "kleeen",
-  "tasksRunnerOptions": {
-    "default": {
-      "runner": "@nrwl/workspace/tasks-runners/default",
-      "options": { "cacheableOperations": ["build", "lint", "test", "e2e"] }
-    }
   },
   "projects": {
     "api": { "tags": [] },
@@ -30,7 +23,13 @@
     "react-state-management": { "tags": [] },
     "render-utils": { "tags": [] },
     "styles": { "tags": [] },
-    "types": { "tags": [] },
-    "iot": { "tags": [] }
-  }
+    "types": { "tags": [] }
+  },
+  "tasksRunnerOptions": {
+    "default": {
+      "runner": "@nrwl/workspace/tasks-runners/default",
+      "options": { "cacheableOperations": ["build", "lint", "test", "e2e"] }
+    }
+  },
+  "affected": { "defaultBase": "develop" }
 }

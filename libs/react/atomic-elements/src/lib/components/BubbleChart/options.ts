@@ -1,5 +1,5 @@
 import { CrossLinking, FormatProps } from '@kleeen/types';
-import { getColor, getSeveritiesFn } from '@kleeen/frontend/utils';
+import { getColor, getSeveritiesFn, vizColorsFormatted } from '@kleeen/frontend/utils';
 
 import _ from 'lodash';
 import { pathOr } from 'ramda';
@@ -103,6 +103,8 @@ export const getOptions = (
   const yAxis = pathOr({}, ['yAxis'], format);
   const [formatterGroupBy, formatterGroupByForTooltip, formatterValue] = useTextFormattersForViz(params);
   const formattedResults = transformToObjectFormat(results, xAxis, crossLinkingValuesForAxis);
+  const { bottomColor, topColor } = vizColorsFormatted();
+
   const defaultOptions: Highcharts.Options = {
     ...baseOptions,
     chart: {
@@ -129,6 +131,25 @@ export const getOptions = (
         ...baseOptions.yAxis['labels'],
         formatter(this) {
           return formatterValue(this.value);
+        },
+      },
+    },
+    legend: {
+      align: 'center',
+      verticalAlign: 'bottom',
+      layout: 'horizontal',
+    },
+    colorAxis: {
+      minColor: topColor,
+      maxColor: bottomColor,
+      labels: {
+        formatter(this) {
+          return formatterValue(this.value) as string;
+        },
+        style: {
+          color: 'var(--on-surface-color)',
+          fontSize: 'var(--tx-S)',
+          fontWeight: 'light',
         },
       },
     },

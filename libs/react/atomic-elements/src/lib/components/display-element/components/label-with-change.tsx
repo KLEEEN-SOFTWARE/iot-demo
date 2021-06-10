@@ -1,7 +1,7 @@
 import { Arrow } from '../../Arrow/Arrow';
 import { DisplayComponentProps } from '@kleeen/types';
 import classNames from 'classnames';
-import { useStyles } from './label.styles';
+import { useStyles } from '../styles/label.styles';
 
 export function LabelWithChange({ attribute, transformation, value }: DisplayComponentProps) {
   const classes = useStyles();

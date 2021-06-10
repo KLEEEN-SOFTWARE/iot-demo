@@ -6,8 +6,8 @@ import { useEntityDetailsEventHandler, useKleeenActions } from '@kleeen/react/ho
 import { ButtonSubHeader } from '../ButtonHeader/ButtonSubHeader';
 import { ContainerHeader } from '../ContainerHeader/ContainerHeader';
 import { EntityDetailsSectionProps } from '../../../EntityDetailsSection/EntityDetailsSection';
-import { KsSummaryPanel } from '../../../summary-panel';
 import { OutContainerProps } from '../ContainerHeader/ContainerHeader.model';
+import { SummaryPanel } from '../../../summary-panel';
 import { TranslateProps } from '../../../../../types';
 import { getUpdateRequestPayload } from '../../../../utils';
 
@@ -56,9 +56,10 @@ export function ButtonSummary({
       <ContainerHeader
         className="button-container-summary-actions"
         container={
-          <KsSummaryPanel
+          <SummaryPanel
             entityDetails={entityDetails}
             isEditing={editOn}
+            isFromButtonSummary={true}
             registerEvents={addEvent}
             taskName={taskName}
           />

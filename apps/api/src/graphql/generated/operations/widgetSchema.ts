@@ -40,11 +40,11 @@ export const widgetSchema = gql`
   }
 
   extend type Query {
-    #  Widget: Reboot Sensor
+    # Widget: Reboot Sensor
     # Chart type: [WIDGET] CUSTOM_ACTION
     custom_action_3b73adbb_d755_414b_b017_1d964567aa2d(input: CustomActionArgs): CustomActionResults
 
-    #  Widget: Reboot Node
+    # Widget: Reboot Node
     # Chart type: [WIDGET] CUSTOM_ACTION
     custom_action_ca30dd1c_541f_447c_9a35_1335699f33f9(input: CustomActionArgs): CustomActionResults
 
@@ -92,6 +92,10 @@ export const widgetSchema = gql`
     # Chart type: [WIDGET] FULL_TABLE
     object_listing_1f20697a_3aa6_4ce4_a14a_8d50d486ce36(input: DataListingArgs): ListingResult
 
+    # View: listadoDeEventos
+    # Chart type: [WIDGET] FULL_TABLE
+    object_listing_2a6ed2a4_cef2_4fcb_bd9e_da6a07398686(input: DataListingArgs): ListingResult
+
     # View: nodes
     # Chart type: [WIDGET] FULL_TABLE
     object_listing_3d3baa6b_4237_4e39_bc34_7f22976f16e7(input: DataListingArgs): ListingResult
@@ -108,6 +112,10 @@ export const widgetSchema = gql`
     # Chart type: [WIDGET] FULL_TABLE
     object_listing_b6dcf2f6_6cc1_418f_b027_34d3e60bb8c4(input: DataListingArgs): ListingResult
 
+    # View: configureSensorNode --- Widget: Sites
+    # Chart type: [WIDGET] CONFIG_TABLE
+    object_listing_f51934f0_c79e_4bba_998b_0d8e381cf5f1(input: DataListingArgs): ListingResult
+
     # View: Site Map Details
     # Value: siteMap
     # Value aggregated by: No Aggregation
@@ -119,6 +127,12 @@ export const widgetSchema = gql`
     # Value aggregated by: No Aggregation
     # Chart type: [WIDGET] SUMMARY_TITLE
     summary_title_3e93db18_fe67_43a2_be09_6ecf9873ee74(input: DataListingArgs): ListingResult
+
+    # View: Listado de Eventos
+    # Value: event
+    # Value aggregated by: No Aggregation
+    # Chart type: [WIDGET] SUMMARY_TITLE
+    summary_title_72392202_fc97_4e82_9075_3434f87a6ff9(input: DataListingArgs): ListingResult
 
     # View: Sensors
     # Value: sensor
@@ -137,6 +151,14 @@ export const widgetSchema = gql`
     # Value aggregated by: No Aggregation
     # Chart type: [WIDGET] SUMMARY_TITLE
     summary_title_f991e457_5522_4e72_ba6b_9f8811f612af(input: DataListingArgs): ListingResult
+
+    # View: Listado de Eventos --- Widget: Eventos Raros
+    # Group by: timestamp
+    # No Aggregation
+    # Value: event
+    # Value aggregated by: Total Unique
+    # Chart type: Scatter
+    widget_0003e6cf_785f_4680_829b_ac54360a79aa(input: DataAggregationArgs): GraphResult
 
     # View: Node Details --- Widget: Site Status
     # Group by: timestamp
@@ -192,11 +214,29 @@ export const widgetSchema = gql`
     # Chart type: Summary Statistics
     widget_statistics15d23aa3_6f00_4505_9199_85c2e2662aaa(input: MultiTransFormationArgs): [MultiTransFormationResults]
 
+    # View: Listado de Eventos --- Widget: Detalle de eventos
+    # Value: event
+    # Value aggregated by: 
+    # Chart type: Summary Statistics
+    widget_statistics2cf3e953_eaa2_4461_9347_7a921a525fad(input: MultiTransFormationArgs): [MultiTransFormationResults]
+
     # View: System --- Widget: System Health
     # Value: systemHealth
     # Value aggregated by: 
     # Chart type: [WIDGET] GAUGE_SEVERITY_LEVEL
     widget_statistics324888f3_eb8c_4097_ba9f_21aa8cf6be4f(input: MultiTransFormationArgs): [MultiTransFormationResults]
+
+    # View: System --- Widget: Sensors
+    # Value: sensorStatus
+    # Value aggregated by: 
+    # Chart type: Summary Statistics
+    widget_statistics3a3b0785_d65d_4156_8025_0691da0cf99c(input: MultiTransFormationArgs): [MultiTransFormationResults]
+
+    # View: System --- Widget: Nodes
+    # Value: nodeStatus
+    # Value aggregated by: 
+    # Chart type: Summary Statistics
+    widget_statistics423ff13b_de6b_451c_95c3_23288e4edced(input: MultiTransFormationArgs): [MultiTransFormationResults]
 
     # View: Sensor Details --- Widget: Site Status
     # Value: siteStatus

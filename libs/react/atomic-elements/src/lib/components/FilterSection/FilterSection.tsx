@@ -24,21 +24,21 @@ import { Loader } from '@kleeen/react/components';
 import MuiTypography from '@material-ui/core/Typography';
 import { DatePickerInterval } from '../DatePickerInterval/index';
 
-const parseToFilterOptions = (options: string[]): FilterOption[] =>
+const parseToFilterOptions = (options: string[], translate): FilterOption[] =>
   options.map((option) => ({
     name: option,
-    section: FilterSectionEnum.Values,
+    section: translate ? translate('app.subHeader.filterSection.values') : FilterSectionEnum.Values,
     operator: Operator.in,
   }));
 
-export const FilterSection = (props: FilterSectionProps): ReactElement => {
+const FilterSectionComponent = ({ translate, ...props }: FilterSectionProps): ReactElement => {
   const classes = useStyles();
   const [open, setOpen] = React.useState(false);
   const availableAttributesToFilter = props.filters;
   const categoryFilterOptions: FilterOption[] = availableAttributesToFilter.map(
     ({ name, statisticalType }) => ({
       name,
-      section: FilterSectionEnum.FilterBy,
+      section: translate ? translate('app.subHeader.filterSection.filterBy') : FilterSectionEnum.FilterBy,
       statisticalType,
     }),
   );
@@ -52,7 +52,7 @@ export const FilterSection = (props: FilterSectionProps): ReactElement => {
   const { results: filters }: Filter = (widgetData && widgetData.data) || {};
   const filterOptionsByCategory = filters
     ? filters.reduce(
-        (acc, [filterName, options]) => ((acc[filterName] = parseToFilterOptions(options)), acc),
+        (acc, [filterName, options]) => ((acc[filterName] = parseToFilterOptions(options, translate)), acc),
         {},
       )
     : {};
@@ -86,7 +86,9 @@ export const FilterSection = (props: FilterSectionProps): ReactElement => {
           <div className="filter-container">
             <Grid container spacing={6}>
               <Grid item xs={6}>
-                <MuiTypography className="L2TitleSection">FILTERS</MuiTypography>
+                <MuiTypography className="L2TitleSection">
+                  {translate('app.filterSection.title')}
+                </MuiTypography>
               </Grid>
               <Grid item xs={6}>
                 <Button
@@ -96,7 +98,7 @@ export const FilterSection = (props: FilterSectionProps): ReactElement => {
                   onClick={handleFilter}
                   disabled={isApplyDisabled}
                 >
-                  APPLY
+                  {translate('app.filterSection.apply')}
                 </Button>
               </Grid>
             </Grid>
@@ -143,4 +145,6 @@ export const FilterSection = (props: FilterSectionProps): ReactElement => {
   );
 };
 
-export default KUIConnect(({ translate }) => ({ translate }))(FilterSection);
+export const FilterSection = KUIConnect(({ translate }) => ({ translate }))(FilterSectionComponent);
+
+export default KUIConnect(({ translate }) => ({ translate }))(FilterSectionComponent);

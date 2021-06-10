@@ -1,10 +1,11 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { makeStyles } from '@material-ui/core';
 import { useGetWidgetsAmount } from '@kleeen/react/hooks';
 
 const useStyles = makeStyles({
   dataViewDisplaySection: {
-    height: '100%',
+    height: (props: { withoutSubHeader: boolean }) =>
+      props.withoutSubHeader ? 'calc(100% + var(--wh-1XS))' : '100%',
     width: '100%',
     // TODO find a more robust mechanism to turn these paddings on/off
     '.nav-left &': {
@@ -36,7 +37,7 @@ interface TabPanelProps {
 }
 
 const TabPanel = React.memo((props: TabPanelProps) => {
-  const classes = useStyles();
+  const classes = useStyles({ withoutSubHeader: false });
   const { children, value, index, ...other } = props;
 
   return (
@@ -55,7 +56,18 @@ const TabPanel = React.memo((props: TabPanelProps) => {
 });
 
 export const DataViewDisplaySection = React.memo((props: DataViewDisplaySectionProps) => {
-  const classes = useStyles();
+  const [withouSubHeader, setWithoutSubHeader] = useState(false);
+
+  useEffect(() => {
+    const subHeader = document.getElementById('sub-header-element-id');
+    const themeWrapper = document.getElementById('theme-wrapper-id');
+    const isNavLeft = themeWrapper.classList.contains('nav-left');
+    if (!subHeader && isNavLeft) {
+      setWithoutSubHeader(true);
+    }
+  }, []);
+
+  const classes = useStyles({ withoutSubHeader: withouSubHeader });
   useGetWidgetsAmount(props.setCardsNumber);
   return (
     <div className={classes.dataViewDisplaySection}>

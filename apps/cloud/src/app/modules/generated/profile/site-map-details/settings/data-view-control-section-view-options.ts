@@ -14,7 +14,7 @@ export const dataViewControlSectionViewOptions = [
         areYouSure: true,
         component: undefined,
         description: undefined,
-        displayName: `Reboot`,
+        displayName: `reboot`,
         name: `reboot`,
         type: `custom`,
       },

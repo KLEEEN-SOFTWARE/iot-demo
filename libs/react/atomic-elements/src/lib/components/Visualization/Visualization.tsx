@@ -1,5 +1,6 @@
+/* eslint-disable complexity */
 import { Loader, RankedListItem, SimpleList } from '@kleeen/react/components';
-import React, { ReactElement, ReactText, useState } from 'react';
+import { ReactElement, ReactText, useState } from 'react';
 import { formatDataList, formatSeverity, parseAttributes } from '@kleeen/frontend/utils';
 
 import { AccessControl } from '@kleeen/core-react';
@@ -20,7 +21,7 @@ import ReadOnlyText from '../ReadOnlyText/ReadOnlyText';
 import Scatter from '../Scatter/Scatter';
 import SingleBarHighlightMax from '../SingleBarHighlightMax/SingleBarHighlightMax';
 import StepLineWidget from '../StepLine/StepLine';
-import SummaryStatistics from '../SummaryStatistics/SummaryStatistics';
+import { SummaryStatistics } from '../summary-statistics';
 import { VizCommonParams } from '../../../types/types';
 import Waterfall from '../Waterfall/Waterfall';
 import { WidgetTypes } from '../../../enums';
@@ -34,10 +35,6 @@ const useStyles = makeStyles({
     height: '100%',
     width: '100%',
   },
-  // TODO: @cafe we need to add props depending on if the viz is Full View or sub widget
-  // simpleListContainer: {
-  //   margin: '0 calc(-1 * var(--pm-L))',
-  // },
 });
 
 export interface Widget extends VizCommonParams {
@@ -137,7 +134,8 @@ const renderChildren = (selectedChartType: string, widget: Widget, widgetData: a
       return <StepLineWidget context={widgetData} base={params.baseModel} params={params} />;
 
     case WidgetTypes.SUMMARY_STATISTICS:
-      return <SummaryStatistics context={widgetData} values={params.value} />;
+      return <SummaryStatistics attributes={widget.attributes} data={widgetData.data} />;
+
     case WidgetTypes.TABLE: {
       const { format, crossLinking, results } = widgetData.data || {};
       const parsedAttributes = parseAttributes(widget.attributes, format);

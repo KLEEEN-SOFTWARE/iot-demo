@@ -1,7 +1,4 @@
 import { ApiTimestamp } from '../../custom/entityResolvers/api96096';
-import { ApiZDeleteCountry } from '../../custom/entityResolvers/api96098';
-import { ApiZDeletePopulation } from '../../custom/entityResolvers/api96099';
-import { ApiZDeleteGdp } from '../../custom/entityResolvers/api96100';
 import { ApiEvent } from '../../custom/entityResolvers/api120420';
 import { ApiNode } from '../../custom/entityResolvers/api120421';
 import { ApiNodeOverallStatus } from '../../custom/entityResolvers/api120422';
@@ -12,20 +9,18 @@ import { ApiSensorOverallStatus } from '../../custom/entityResolvers/api120426';
 import { ApiSensorStatus } from '../../custom/entityResolvers/api120427';
 import { ApiSiteStatus } from '../../custom/entityResolvers/api120428';
 import { ApiSystemHealth } from '../../custom/entityResolvers/api120429';
+import { DataSource } from 'apollo-datasource';
 import { FiltersApi } from '../../custom/filtersResolver/filtersApi';
 import { FiltersFakeApi } from './filtersFakeApi';
 import { WidgetApi } from './widgetApi';
 import { WidgetFakeApi } from './widgetFakeApi';
 
-export const dataSources = () => ({
+export const dataSources = (): Record<string, DataSource> => ({
   filtersFakeApi: new FiltersFakeApi(),
   filtersApi: new FiltersApi(),
   widgetApi: new WidgetApi(),
   widgetFakeApi: new WidgetFakeApi(),
   api96096: new ApiTimestamp(),
-  api96098: new ApiZDeleteCountry(),
-  api96099: new ApiZDeletePopulation(),
-  api96100: new ApiZDeleteGdp(),
   api120420: new ApiEvent(),
   api120421: new ApiNode(),
   api120422: new ApiNodeOverallStatus(),

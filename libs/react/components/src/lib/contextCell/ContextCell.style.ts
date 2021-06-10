@@ -7,12 +7,11 @@ export const useStyles = makeStyles({
     cursor: 'pointer',
     fontWeight: 'bold',
   },
-  
   contextCellArrow: {
     '> svg.arrow-neutral': {
       display: 'block',
       opacity: 0,
-    }
+    },
   },
   textAlignRight: {
     display: 'flex',
@@ -26,5 +25,8 @@ export const useStyles = makeStyles({
     whiteSpace: 'nowrap',
     overflow: 'hidden',
     textOverflow: 'ellipsis',
-  }
+  },
+  displayMedia: {
+    marginRight: 'var(--pm-S)',
+  },
 });

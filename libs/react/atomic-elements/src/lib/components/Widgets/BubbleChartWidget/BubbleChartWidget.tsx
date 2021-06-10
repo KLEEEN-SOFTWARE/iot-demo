@@ -1,10 +1,10 @@
-import React, { ReactElement } from 'react';
+import React, { ReactElement, useEffect } from 'react';
 
 import BubbleChart from '../../BubbleChart/BubbleChart';
 import { BubbleChartWidgetProps } from './BubbleChartWidget.model';
 import { Loader } from '@kleeen/react/components';
 import { makeStyles } from '@material-ui/core';
-import { useWidgetContext } from '@kleeen/react/hooks';
+import { useMasonry, useWidgetContext } from '@kleeen/react/hooks';
 
 const useStyles = makeStyles({
   widgetContent: {
@@ -20,6 +20,12 @@ export function BubbleChartWidget({
 }: BubbleChartWidgetProps): ReactElement {
   const widgetData = useWidgetContext({ taskName, widgetId, params });
   const classes = useStyles();
+  const { updateLayout } = useMasonry();
+
+  useEffect(() => {
+    const cardHeight = 548;
+    updateLayout(cardHeight);
+  }, [widgetData]);
 
   if (!widgetData) {
     return <Loader />;
