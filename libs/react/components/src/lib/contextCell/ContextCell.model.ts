@@ -18,4 +18,5 @@ export interface LabelResultsProps extends ChangeDirectionsProps {
   format?: FormatProps;
   formatType?: string;
   hasDisplayMedia?: boolean;
+  cell?: Cell | Cell[];
 }

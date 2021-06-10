@@ -11,7 +11,7 @@ import {
   optionsByStatisticalType,
 } from '../FilterSection.model';
 import React, { ReactElement, useEffect, useState } from 'react';
-import { TimestampKey } from '@kleeen/types';
+import { TimestampKey, Translate } from '@kleeen/types';
 
 import { ChipsGroupByCategoryProps } from './FilterCreatorWithChips.model';
 import CloseIcon from '@material-ui/icons/Close';
@@ -115,12 +115,14 @@ const FilterCreatorWithChips = ({
   filtersAdded,
   removeValue,
   removeCategory,
+  translate,
 }: {
   categoryFilterOptions: FilterOption[];
   filterOptionsByCategory: Record<string, FilterOption[]>;
   addFilter: (category: string, operator: Operator, value: string | number) => void;
   setIsApplyDisabled: (value: boolean) => void;
   filtersAdded: FiltersAddedState;
+  translate: Translate;
   removeValue;
   removeCategory;
 }): ReactElement => {
@@ -252,7 +254,7 @@ const FilterCreatorWithChips = ({
       options={getOptions(options)}
       groupBy={({ section }) => section}
       noHelperText={true}
-      placeholder={'Add filters'}
+      placeholder={translate('app.subHeader.filterSection.addFilters')}
     />
   );
 };

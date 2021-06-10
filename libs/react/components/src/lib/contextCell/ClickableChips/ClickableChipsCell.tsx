@@ -2,11 +2,11 @@ import './ClickableChipsCell.scss';
 
 import { Attribute, Cell, FormatProps } from '@kleeen/types';
 import { ClickableChipsCellProps, PreviewChipsProps } from './clickable-chips-cell.model';
+import { ContextMenu, isLinkFilterableByEntityType } from '../../contextMenu/ContextMenu';
+import { useAnchorElement, useCrosslinking } from '@kleeen/react/hooks';
 
 import { BootstrapTooltip } from '../bootstrap-tooltip';
 import { KUIConnect } from '@kleeen/core-react';
-import { useCrosslinking } from '@kleeen/react/hooks';
-import { isLinkFilterableByEntityType } from '../../contextMenu/ContextMenu';
 import { KsChip } from '../../chip';
 import React from 'react';
 import TextFormatter from '../../textFormatter/TextFormatter';
@@ -34,11 +34,25 @@ const generateFormattedElements = ({
   );
 };
 
-const PreviewChips = ({ items, attribute, format, translate, crossLink }: PreviewChipsProps) => {
+const PreviewChips = ({ items, attribute, format, translate, validCrosslinks }: PreviewChipsProps) => {
+  const { crosslink } = useCrosslinking();
+  const hasCrossLink = validCrosslinks.length >= 1 && !attribute?.isFilterable?.in;
+
   return (
     <div className="chips-container">
       {items.length ? (
         items.map((label, i) => {
+          const { anchorEl, handleClick, handleClose } = useAnchorElement();
+
+          function onCrosslinkClick(item) {
+            if (validCrosslinks.length === 1 && !attribute?.isFilterable?.in) {
+              const [onlyValidLink] = validCrosslinks;
+              crosslink(onlyValidLink.slug, item, attribute);
+            } else {
+              handleClick(item);
+            }
+          }
+
           if (isNil(label)) return;
           const FormattedElements = generateFormattedElements({
             label: label.displayValue as string,
@@ -47,19 +61,19 @@ const PreviewChips = ({ items, attribute, format, translate, crossLink }: Previe
           });
           return (
             label && (
-              <BootstrapTooltip key={i} placement="top" title={FormattedElements}>
-                <KsChip
-                  label={FormattedElements}
-                  className={crossLink.hasCrossLink && 'clickable'}
-                  onClick={
-                    crossLink.onClick
-                      ? () => {
-                          crossLink.onClick(label);
-                        }
-                      : () => null
-                  }
-                />
-              </BootstrapTooltip>
+              <>
+                <BootstrapTooltip key={i} placement="top" title={FormattedElements}>
+                  <KsChip
+                    label={FormattedElements}
+                    className={hasCrossLink && 'clickable'}
+                    onClick={validCrosslinks.length > 1 ? onCrosslinkClick : () => onCrosslinkClick(items[i])}
+                  />
+                </BootstrapTooltip>
+
+                {Boolean(anchorEl) && (
+                  <ContextMenu attr={attribute} cell={label} handleClose={handleClose} anchorEl={anchorEl} />
+                )}
+              </>
             )
           );
         })
@@ -81,19 +95,12 @@ const ClickableChipsCellBase = ({
   cellEntityType,
   isIdTemporary,
 }: ClickableChipsCellProps) => {
-  const { crosslink } = useCrosslinking();
   const validCrosslinks =
     (!isIdTemporary &&
       Array.isArray(attribute?.crossLinking) &&
       attribute?.crossLinking?.length > 0 &&
       attribute.crossLinking.filter((link) => isLinkFilterableByEntityType(cellEntityType, link))) ||
     [];
-  function onCrosslinkClick(item) {
-    if (validCrosslinks.length === 1 && !attribute?.isFilterable?.in) {
-      const [onlyValidLink] = validCrosslinks;
-      crosslink(onlyValidLink.slug, item, attribute);
-    }
-  }
   const cellItemsArray = cellItems as Cell[];
   const [firstPreviewItem, secondPreviewItem] = cellItemsArray;
   const onClick = () => {
@@ -122,10 +129,7 @@ const ClickableChipsCellBase = ({
         attribute={attribute}
         format={format}
         translate={translate}
-        crossLink={{
-          onClick: onCrosslinkClick,
-          hasCrossLink: validCrosslinks.length === 1 && !attribute?.isFilterable?.in,
-        }}
+        validCrosslinks={validCrosslinks}
       />
       <div className="show-more-label" onClick={onClick}>
         <div className="numbers-label-container">{cellItemsArray.length}</div>

@@ -8,6 +8,11 @@ export default {
   'ks-navigation-8JbMyUSafgnTLTWAtqBXWC': { path: './assets/icons/layout-3.svg', alt: 'Navigation Icon' },
   // Navigation Icon for Configure Sensor/Node
   'ks-navigation-9bqPxguVQuFBVXU6TeZXYJ': { path: './assets/icons/rss-feed.svg', alt: 'Navigation Icon' },
+  // Navigation Icon for Listado de Eventos
+  'ks-navigation-f75qQAfaT4knTfzj6fqEdH': {
+    path: './assets/icons/tv-flat-screen.svg',
+    alt: 'Navigation Icon',
+  },
   // Navigation Icon for Events
   'ks-navigation-naX8kq49HS9GMz3ASo7AaH': {
     path: './assets/icons/app-window-settings.svg',

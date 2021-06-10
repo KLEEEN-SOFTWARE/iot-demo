@@ -1,4 +1,5 @@
 import { Timestamp } from 'rxjs/internal/operators/timestamp';
+import { Translate } from '@kleeen/types';
 
 export interface Filter {
   results: [string, string[]][];
@@ -70,4 +71,5 @@ export interface FilterSectionProps {
   taskName: string;
   onChangeFilterVisible?: (e: boolean) => void;
   hasDateFilter?: boolean;
+  translate: Translate;
 }

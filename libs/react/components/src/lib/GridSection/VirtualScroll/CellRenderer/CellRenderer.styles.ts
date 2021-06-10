@@ -5,7 +5,4 @@ export const useStyles = makeStyles({
     display: 'flex',
     alignItems: 'center',
   },
-  displayMedia: {
-    marginRight: 'var(--pm-S)',
-  },
 });

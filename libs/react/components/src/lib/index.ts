@@ -15,9 +15,7 @@ export { default as KsVirtualTable } from './GridSection/VirtualScroll';
 export { default as RefreshControl } from './refreshControl';
 export { default as useKsActionsManager } from './ActionDialogs/ActionManager';
 
-export * from './ActionDialogs/ActionDialogs';
-export * from './ActionDialogs/ActionDialogs.model';
-export * from './ActionDialogs/ActionManager';
+export * from './ActionDialogs';
 export * from './ActionsMenu/ActionsMenu';
 export * from './Icon';
 export * from './Loader/Loader';

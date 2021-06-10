@@ -7,12 +7,14 @@ import { Grid } from '@material-ui/core';
 import { KsButton } from '../button';
 import { KsButtonText } from './ActionSection.styles';
 import { isNilOrEmpty } from '@kleeen/common/utils';
+import { KUIConnect } from '@kleeen/core-react';
 
 function ActionsSection({
   actions,
   entity,
   handleAddClick,
   skinny = false,
+  translate,
 }: ActionsSectionProps): ReactElement | null {
   if (isNilOrEmpty(actions)) {
     return null;
@@ -37,7 +39,7 @@ function ActionsSection({
                   startIcon={skinny && <AddCircleIcon fontSize="small" />}
                   variant={variant}
                 >
-                  {displayName} new {entity}
+                  {translate('app.actions.add')} {entity}
                 </Button>
               </Grid>
             );
@@ -45,7 +47,7 @@ function ActionsSection({
             return (
               <Grid item key={name}>
                 <Button color="primary" size={size} variant={variant}>
-                  {displayName} {entity}
+                  {translate('app.actions.delete')} {entity}
                 </Button>
               </Grid>
             );
@@ -79,4 +81,4 @@ function getComponentAndProps(skinny: boolean): { component: any; size: string; 
   };
 }
 
-export default ActionsSection;
+export default KUIConnect(({ translate }) => ({ translate }))(ActionsSection);

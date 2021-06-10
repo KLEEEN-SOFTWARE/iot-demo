@@ -1,4 +1,4 @@
-import React, { MouseEvent, ReactElement } from 'react';
+import { MouseEvent, ReactElement } from 'react';
 
 import { ActionDialogsProps } from './ActionDialogs.model';
 import { ActionType } from '@kleeen/types';
@@ -37,7 +37,7 @@ function ActionDialogsComponent({
     <>
       {areYouSure && (
         <ConfirmationActionDialog
-          description={`${translate && translate("app.dialog.confirmation")} ${action.displayName}?`}
+          description={`${translate && translate('app.dialog.confirmation')} ${action.displayName}?`}
           key={`${action.name}-confirmation`}
           open={isConfirmationOpen || false}
           onAction={(e: MouseEvent) => dispatchAction(action, e)}
@@ -49,7 +49,7 @@ function ActionDialogsComponent({
         <CustomDialog
           attributes={attributes}
           context={context}
-          description={`${translate && translate("app.dialog.confirmation")} ${action.displayName}?`}
+          description={`${translate && translate('app.dialog.confirmation')} ${action.displayName}?`}
           key={`${action.name}-custom`}
           open={isCustomOpen || false}
           onAction={(e: MouseEvent, payload: AddDialogPayload) => {

@@ -1,8 +1,10 @@
 import './ContextCell.scss';
 
-import { AggregationType, Attribute, Cell, LabelResultsReturnProps } from '@kleeen/types';
+import { AggregationType, Attribute, Cell, DisplayMediaType, LabelResultsReturnProps } from '@kleeen/types';
 import { ContextMenu, isLinkFilterableByEntityType } from '../contextMenu/ContextMenu';
 import { ContextMenuProps, LabelResultsProps } from './ContextCell.model';
+import { useStyles } from './ContextCell.style';
+import KsDisplayMedia from '../KsDisplayMedia/KsDisplayMedia';
 import React, { ReactElement } from 'react';
 import { isEmpty, isNil, pathOr } from 'ramda';
 import { useAnchorElement, useCrosslinking } from '@kleeen/react/hooks';
@@ -20,6 +22,7 @@ const MAX_TEXT_LENGTH = 15;
 export function ContextCell(props: ContextMenuProps): ReactElement {
   const { anchorEl, handleClick, handleClose } = useAnchorElement();
   const { crosslink } = useCrosslinking();
+  const classes = useStyles();
 
   const cell = props.cell as Cell;
 
@@ -67,6 +70,7 @@ export function ContextCell(props: ContextMenuProps): ReactElement {
     results: showAppliedFormat,
     transformation: props.attr?.aggregation,
     hasDisplayMedia: props.hasDisplayMedia,
+    cell,
   });
   const isNumericType = isAttributeNumericType(props.attr);
   const textClasses = {
@@ -87,6 +91,14 @@ export function ContextCell(props: ContextMenuProps): ReactElement {
 
   return (
     <>
+      {props.hasDisplayMedia && cell.displayMedia.type !== DisplayMediaType.Svg && (
+        <KsDisplayMedia
+          className={classes.displayMedia}
+          value={cell.displayMedia.value}
+          type={cell.displayMedia.type}
+          size={21}
+        />
+      )}
       {validCrosslinks.length > 0 || props.attr?.isFilterable?.in ? (
         <BootstrapTooltip placement="top" title={tooltipTitle}>
           <div className={classNames('context-menu-button', textClasses)}>
@@ -131,6 +143,7 @@ function labelResults({
   results,
   transformation,
   hasDisplayMedia,
+  cell,
 }: LabelResultsProps): LabelResultsReturnProps {
   const labelReturn: LabelResultsReturnProps = {
     results,
@@ -141,6 +154,7 @@ function labelResults({
         formatType={formatType}
         textAlignment="flex-end"
         hasDisplayMedia={hasDisplayMedia}
+        cell={cell}
       >
         {results}
       </TextFormatter>

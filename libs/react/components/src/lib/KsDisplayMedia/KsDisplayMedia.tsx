@@ -4,8 +4,9 @@ import { DisplayMediaType } from '@kleeen/types';
 import { KsDisplayMediaProps } from './KsDisplayMedia.model';
 import UserAvatar from 'react-user-avatar';
 import { useStyles } from './KsDisplayMedia.styles';
+import SVG from 'react-inlinesvg';
 
-export const KsDisplayMedia = ({ value, type, size, ...props }: KsDisplayMediaProps) => {
+export const KsDisplayMedia = ({ value, type, size, color, ...props }: KsDisplayMediaProps) => {
   const classes = useStyles();
   const classType = `${props.className} ${classes[type]} ${type}`;
   const splitedArray = value ? value.split(' ') : [' '];
@@ -29,7 +30,6 @@ export const KsDisplayMedia = ({ value, type, size, ...props }: KsDisplayMediaPr
         />
       );
     case DisplayMediaType.Flag:
-    case DisplayMediaType.Svg:
       return (
         <UserAvatar
           size={size}
@@ -39,6 +39,16 @@ export const KsDisplayMedia = ({ value, type, size, ...props }: KsDisplayMediaPr
           borderRadius={0}
           color={'var(--transparent)'}
         />
+      );
+    case DisplayMediaType.Svg:
+      return (
+        <div className={classes[type]}>
+          <SVG
+            className={classes[type]}
+            style={{ color: color, height: `${size}px`, width: `${size}px` }}
+            src={value}
+          />
+        </div>
       );
     case DisplayMediaType.Emoji:
       return <UserAvatar size={size} name={finalValue} className={classType} color={'var(--transparent)'} />;

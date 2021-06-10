@@ -4,7 +4,7 @@ import { KsDisplayMedia } from '@kleeen/react/components';
 import MuiTooltip from '@material-ui/core/Tooltip';
 import classNames from 'classnames';
 import { getColorForSeverityValues } from '@kleeen/frontend/utils';
-import { useStyles } from './label.styles';
+import { useStyles } from '../styles/label.styles';
 import { useTextFormatter } from '@kleeen/react/hooks';
 
 export function Label({ attribute, format, formatType, transformation, value }: DisplayComponentProps) {
@@ -23,6 +23,7 @@ export function Label({ attribute, format, formatType, transformation, value }: 
       {value?.displayMedia && (
         <KsDisplayMedia
           className={classNames('ks-label__display-media', classes.displayMedia)}
+          color={color}
           size={16}
           type={value?.displayMedia.type}
           value={value?.displayMedia.value}

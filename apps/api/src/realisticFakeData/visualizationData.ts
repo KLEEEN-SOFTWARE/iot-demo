@@ -52,8 +52,9 @@ const noAggregationWithGroupByCategorical = (
     };
   }
 
-  const results = groupBy.list.map((_, i) => [i, getRandomNumber(value.list.length) as number]);
+  const max = Math.max(...(value.list as []), 1);
 
+  const results = groupBy.list.map((_, i) => [i, getRandomNumber(max)]);
   return {
     format: {
       xAxis: { categories: groupBy.list, type: groupBy.type, ...groupByFormat },

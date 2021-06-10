@@ -1,4 +1,4 @@
-import { FormatProps } from '@kleeen/types';
+import { Cell, FormatProps } from '@kleeen/types';
 import { ReactNode } from 'react';
 
 export interface RestrictionProps {
@@ -11,4 +11,5 @@ export interface TextFormatterProps {
   transformation?: string;
   formatType?: string;
   hasDisplayMedia?: boolean;
+  cell?: Cell | Cell[];
 }
