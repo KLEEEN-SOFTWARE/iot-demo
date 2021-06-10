@@ -3,6 +3,7 @@ import './TextFormatter.scss';
 import { AggregationType, FormatProps, SameSDTAggregations } from '@kleeen/types';
 
 import KsFilledCircle from '../ksFilledCircle/ksFilledCircle';
+import KsDisplayMedia from '../KsDisplayMedia/KsDisplayMedia';
 import React from 'react';
 import { TextFormatterProps } from './TextFormat.model';
 import { getColorForSeverityValues } from '@kleeen/frontend/utils';
@@ -24,6 +25,7 @@ const FormattedSeverityValue = ({
   formatType,
   formatter,
   hasDisplayMedia,
+  cell,
 }): JSX.Element => {
   const { severityLevels, severityGood, severityBad } = format;
   const hasSeverityColorFormat =
@@ -37,11 +39,20 @@ const FormattedSeverityValue = ({
 
   return (
     <div className={'text-formatter-root'} style={{ justifyContent: textAlignment }}>
-      {!hasDisplayMedia && (
+      {!hasDisplayMedia ? (
         <KsFilledCircle
           color={color}
           percentage={formatType?.toString() === 'severity_score' ? getPercentage(children, format) : 100}
         />
+      ) : (
+        <div className={'text-formatter-display-media'}>
+          <KsDisplayMedia
+            color={color}
+            value={cell.displayMedia.value}
+            type={cell.displayMedia.type}
+            size={21}
+          />
+        </div>
       )}
       <span className={'text-formatter'} style={{ color, textTransform: 'capitalize' }}>
         {formatter(children)}
@@ -57,6 +68,7 @@ export const TextFormatter = ({
   formatType = '',
   textAlignment = 'left',
   hasDisplayMedia = false,
+  cell,
 }: TextFormatterProps): JSX.Element => {
   if (isNilOrEmpty(format)) return <>{children}</>;
 
@@ -71,6 +83,7 @@ export const TextFormatter = ({
         formatType={formatType}
         formatter={formatter}
         hasDisplayMedia={hasDisplayMedia}
+        cell={cell}
       >
         {children}
       </FormattedSeverityValue>

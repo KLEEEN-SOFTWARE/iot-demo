@@ -1,6 +1,6 @@
-import { CrossLinkingProps, useCrossLinkingMenuOnViz, useTextFormattersForViz } from '@kleeen/react/hooks';
+import { CrossLinkingProps, useCrossLinkingMenuOnViz } from '@kleeen/react/hooks';
 import { clone, has, pathOr } from 'ramda';
-
+import HighchartsColorAxis from 'highcharts/modules/coloraxis';
 import Highcharts from 'highcharts';
 import HighchartsReact from 'highcharts-react-official';
 import { Loader } from '@kleeen/react/components';
@@ -8,15 +8,15 @@ import React from 'react';
 import { generalBaseOptions } from '../generalBaseOptions';
 import { getOptions } from './options';
 import more from 'highcharts/highcharts-more';
-
 more(Highcharts);
+HighchartsColorAxis(Highcharts);
 
 export const BubbleChart = ({ translate, ...props }: HighchartsReact.Props): React.ReactElement => {
   const widgetId = pathOr('', ['widgetId'], props);
   const results = pathOr([], ['context', 'data', 'results'], props);
   const format = pathOr({}, ['context', 'data', 'format'], props);
   const xAxis = clone(pathOr({}, ['xAxis'], format));
-
+  const { isLoading } = pathOr(false, ['context'], props);
   if (!has('key', xAxis)) {
     xAxis['key'] = widgetId;
   }
@@ -39,17 +39,19 @@ export const BubbleChart = ({ translate, ...props }: HighchartsReact.Props): Rea
 
   const containerPropsPlus = { ...props, style: { height: '100%', width: '100%' } };
 
-  if (props.isLoading) {
-    return <Loader />;
-  }
-
   return (
-    <HighchartsReact
-      containerProps={containerPropsPlus}
-      highcharts={Highcharts}
-      options={clone(options)}
-      {...props}
-    />
+    <>
+      {isLoading ? (
+        <Loader />
+      ) : (
+        <HighchartsReact
+          containerProps={containerPropsPlus}
+          highcharts={Highcharts}
+          options={clone(options)}
+          {...props}
+        />
+      )}
+    </>
   );
 };
 

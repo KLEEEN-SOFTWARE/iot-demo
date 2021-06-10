@@ -14,9 +14,9 @@ export interface ClickableChipsCellProps {
   isIdTemporary?: boolean;
 }
 
-interface crossLinkModel {
-  onClick: any;
-  hasCrossLink: boolean;
+interface ValidCrosslink {
+  slug: string;
+  title: string;
 }
 
 export interface PreviewChipsProps {
@@ -24,5 +24,5 @@ export interface PreviewChipsProps {
   attribute: Attribute;
   format: FormatProps;
   translate: Translate;
-  crossLink?: crossLinkModel;
+  validCrosslinks?: ValidCrosslink[];
 }

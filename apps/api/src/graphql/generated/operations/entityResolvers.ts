@@ -17,48 +17,6 @@ export const entityResolvers: IResolvers = {
       data: dataSources.api96096.getAutoCompleteValues(params.input),
     }),
 
-    // ZDeleteCountry Resolvers
-    add96098: (_parent, { input }, { dataSources }) => ({
-      data: dataSources.api96098.addEntity(input.entity, input.parent),
-    }),
-    list96098: (_parent, args, { dataSources }) => ({ data: dataSources.api96098.listEntity(args) }),
-    get96098: (_parent, { id }, { dataSources }) => ({ data: dataSources.api96098.getEntity(id) }),
-    delete96098: (_parent, { id }, { dataSources }) => ({ data: dataSources.api96098.deleteEntity(id) }),
-    update96098: (_parent, { entity }, { dataSources }) => ({
-      data: dataSources.api96098.updateEntity(entity),
-    }),
-    autoComplete96098: (_parent, params, { dataSources }) => ({
-      data: dataSources.api96098.getAutoCompleteValues(params.input),
-    }),
-
-    // ZDeletePopulation Resolvers
-    add96099: (_parent, { input }, { dataSources }) => ({
-      data: dataSources.api96099.addEntity(input.entity, input.parent),
-    }),
-    list96099: (_parent, args, { dataSources }) => ({ data: dataSources.api96099.listEntity(args) }),
-    get96099: (_parent, { id }, { dataSources }) => ({ data: dataSources.api96099.getEntity(id) }),
-    delete96099: (_parent, { id }, { dataSources }) => ({ data: dataSources.api96099.deleteEntity(id) }),
-    update96099: (_parent, { entity }, { dataSources }) => ({
-      data: dataSources.api96099.updateEntity(entity),
-    }),
-    autoComplete96099: (_parent, params, { dataSources }) => ({
-      data: dataSources.api96099.getAutoCompleteValues(params.input),
-    }),
-
-    // ZDeleteGdp Resolvers
-    add96100: (_parent, { input }, { dataSources }) => ({
-      data: dataSources.api96100.addEntity(input.entity, input.parent),
-    }),
-    list96100: (_parent, args, { dataSources }) => ({ data: dataSources.api96100.listEntity(args) }),
-    get96100: (_parent, { id }, { dataSources }) => ({ data: dataSources.api96100.getEntity(id) }),
-    delete96100: (_parent, { id }, { dataSources }) => ({ data: dataSources.api96100.deleteEntity(id) }),
-    update96100: (_parent, { entity }, { dataSources }) => ({
-      data: dataSources.api96100.updateEntity(entity),
-    }),
-    autoComplete96100: (_parent, params, { dataSources }) => ({
-      data: dataSources.api96100.getAutoCompleteValues(params.input),
-    }),
-
     // Event Resolvers
     add120420: (_parent, { input }, { dataSources }) => ({
       data: dataSources.api120420.addEntity(input.entity, input.parent),

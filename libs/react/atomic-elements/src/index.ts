@@ -38,7 +38,7 @@ export * from './lib/components/SubHeader/SubHeader';
 export * from './lib/components/Switch/Switch';
 export * from './lib/components/ToastNotification/ToastNotification';
 export * from './lib/components/Visualization/Visualization';
-export * from './lib/components/Widgets';
 export * from './lib/components/WidgetSection01/WidgetSection01';
 export * from './lib/components/WidgetSection02/WidgetSection02';
 export * from './lib/components/WidgetSection03/WidgetSection03';
+export * from './lib/components/Widgets';

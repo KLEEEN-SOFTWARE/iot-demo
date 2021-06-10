@@ -24,22 +24,5 @@
   },
   "eslint.run": "onSave",
   "files.eol": "\n",
-  "sort-imports.on-save": true,
-  "workbench.colorCustomizations": {
-    "activityBar.activeBackground": "#877dbf",
-    "activityBar.activeBorder": "#dfc4bf",
-    "activityBar.background": "#877dbf",
-    "activityBar.foreground": "#15202b",
-    "activityBar.inactiveForeground": "#15202b99",
-    "activityBarBadge.background": "#dfc4bf",
-    "activityBarBadge.foreground": "#15202b",
-    "statusBar.background": "#675bae",
-    "statusBar.foreground": "#e7e7e7",
-    "statusBarItem.hoverBackground": "#877dbf",
-    "titleBar.activeBackground": "#675bae",
-    "titleBar.activeForeground": "#e7e7e7",
-    "titleBar.inactiveBackground": "#675bae99",
-    "titleBar.inactiveForeground": "#e7e7e799"
-  },
-  "peacock.color": "#675bae"
+  "sort-imports.on-save": true
 }

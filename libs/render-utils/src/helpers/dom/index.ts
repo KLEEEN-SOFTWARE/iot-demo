@@ -8,7 +8,7 @@ export function getAppComputedStylePropertyValue(propertyName: string): string {
       return primaryColor.trim();
     }
   }
-  return null;
+  return '';
 }
 
 export function getAppPrimaryColor(): string {

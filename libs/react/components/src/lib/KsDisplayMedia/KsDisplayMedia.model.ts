@@ -1,6 +1,7 @@
 export interface KsDisplayMediaProps {
-  value: string;
-  type: string;
+  color?: string;
   className?: string;
   size: number;
+  type: string;
+  value: string;
 }

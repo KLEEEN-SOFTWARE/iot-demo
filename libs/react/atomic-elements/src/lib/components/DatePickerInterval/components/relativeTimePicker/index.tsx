@@ -7,6 +7,7 @@ import Paper from '@material-ui/core/Paper';
 import React from 'react';
 import { RelativeTimePickerProps } from './RelativeTimePicker.model';
 import { isNil } from 'ramda';
+import { isNilOrEmpty } from '@kleeen/common/utils';
 import { useStyles } from './RelativeTimePicker.style';
 
 export const RelativeTimePickerBase = ({
@@ -34,7 +35,7 @@ export const RelativeTimePickerBase = ({
   };
 
   const actionButton = (): void => {
-    if (isApply) {
+    if (!isNilOrEmpty(handleFilter)) {
       handleFilter();
     } else {
       datePickerState.setTo(undefined);

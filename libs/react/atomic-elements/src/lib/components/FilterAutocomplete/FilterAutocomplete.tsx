@@ -5,6 +5,7 @@ import { makeStyles, styled } from '@material-ui/core/styles';
 
 import { AutocompleteProps } from '@material-ui/lab/Autocomplete';
 import { useTheme } from '@kleeen/react/hooks';
+import { KUIConnect } from '@kleeen/core-react';
 
 interface FilterAutocompleteProps
   extends Omit<AutocompleteProps<any, boolean, boolean, boolean>, 'renderInput'> {
@@ -14,6 +15,7 @@ interface FilterAutocompleteProps
   defaultSelectedValue?: any[];
   options: any[];
   noHelperText?: boolean;
+  translate?: any;
 }
 
 const TextField = styled(MuiTextField)({
@@ -78,6 +80,7 @@ const FilterAutocomplete = ({
   noHelperText,
   placeholder,
   withoutMenuTransform,
+  translate,
   ...restProps
 }: FilterAutocompleteProps): ReactElement => {
   const { themeClass } = useTheme();
@@ -90,9 +93,10 @@ const FilterAutocomplete = ({
       disableClearable={false}
       renderInput={(params) => (
         <TextField
-          helperText={!noHelperText ? 'Click Here to Add a New Filter.' : ''}
+          helperText={!noHelperText ? translate('app.filterSection.helperText') : ''}
           placeholder={placeholder ? placeholder : ''}
           variant="filled"
+          label={translate('app.filterSection.inputLabel')}
           {...params}
           {...textFieldProps}
         />
@@ -100,9 +104,10 @@ const FilterAutocomplete = ({
       PaperComponent={({ children }) => (
         <KsMenuContainer className={`${themeClass} ${classes.menu}`}>{children}</KsMenuContainer>
       )}
+      noOptionsText={translate('app.subHeader.filterSection.noOptions')}
       {...restProps}
     />
   );
 };
 
-export default FilterAutocomplete;
+export default KUIConnect(({ translate }) => ({ translate }))(FilterAutocomplete);

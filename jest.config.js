@@ -14,6 +14,5 @@ module.exports = {
     '<rootDir>/libs/react/state-management',
     '<rootDir>/libs/render-utils',
     '<rootDir>/libs/types',
-    '<rootDir>/apps/iot',
   ],
 };

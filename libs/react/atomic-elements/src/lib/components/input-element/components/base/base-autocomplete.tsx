@@ -20,7 +20,6 @@ export function BaseAutocomplete(props: BaseAutocompleteProps) {
 
   return (
     <KsAutocomplete
-      disableCloseOnSelect
       freeSolo={props.freeSolo}
       getOptionLabel={getOptionLabel}
       getOptionSelected={(option: ListItem, value: string) =>

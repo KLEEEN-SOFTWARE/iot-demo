@@ -54,6 +54,10 @@ export class WidgetFakeApi extends DataSource {
     return getListingData(args);
   }
 
+  async object_listing_2a6ed2a4_cef2_4fcb_bd9e_da6a07398686(args: DataListingArgs) {
+    return getListingData(args);
+  }
+
   async object_listing_3d3baa6b_4237_4e39_bc34_7f22976f16e7(args: DataListingArgs) {
     return getListingData(args);
   }
@@ -70,11 +74,19 @@ export class WidgetFakeApi extends DataSource {
     return getListingData(args);
   }
 
+  async object_listing_f51934f0_c79e_4bba_998b_0d8e381cf5f1(args: DataListingArgs) {
+    return getListingData(args);
+  }
+
   async summary_title_09522661_c6e8_4161_a1cf_8c1e2e499824(args: DataListingArgs) {
     return getListingData(args);
   }
 
   async summary_title_3e93db18_fe67_43a2_be09_6ecf9873ee74(args: DataListingArgs) {
+    return getListingData(args);
+  }
+
+  async summary_title_72392202_fc97_4e82_9075_3434f87a6ff9(args: DataListingArgs) {
     return getListingData(args);
   }
 
@@ -88,6 +100,10 @@ export class WidgetFakeApi extends DataSource {
 
   async summary_title_f991e457_5522_4e72_ba6b_9f8811f612af(args: DataListingArgs) {
     return getListingData(args);
+  }
+
+  async widget_0003e6cf_785f_4680_829b_ac54360a79aa(args: DataAggregationArgs) {
+    return getWidgetData(args);
   }
 
   async widget_00153afa_2f0f_4546_96df_d414cb711227(args: DataAggregationArgs) {
@@ -118,7 +134,19 @@ export class WidgetFakeApi extends DataSource {
     return getMultiTransFormationData(args);
   }
 
+  async widget_statistics2cf3e953_eaa2_4461_9347_7a921a525fad(args: MultiTransFormationArgs) {
+    return getMultiTransFormationData(args);
+  }
+
   async widget_statistics324888f3_eb8c_4097_ba9f_21aa8cf6be4f(args: MultiTransFormationArgs) {
+    return getMultiTransFormationData(args);
+  }
+
+  async widget_statistics3a3b0785_d65d_4156_8025_0691da0cf99c(args: MultiTransFormationArgs) {
+    return getMultiTransFormationData(args);
+  }
+
+  async widget_statistics423ff13b_de6b_451c_95c3_23288e4edced(args: MultiTransFormationArgs) {
     return getMultiTransFormationData(args);
   }
 

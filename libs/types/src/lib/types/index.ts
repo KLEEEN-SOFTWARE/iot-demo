@@ -1,10 +1,13 @@
+import React, { Key } from 'react';
 import { StatisticalDataType, AggregationType as Transformation } from '../enums';
 
-import React from 'react';
+import { ElementComponents } from './elements';
 
 /**
  * Interfaces
  */
+
+export type Maybe<T> = T | undefined;
 
 // TODO: @Guaria decide where is the best place to keep shared prop types
 export interface AttributeProps {
@@ -110,9 +113,11 @@ export interface Attribute {
   crossLinking: Link[];
   dataType?: string;
   deepDataType: string;
+  elements?: ElementComponents;
   format?: FormatProps;
   formatType?: string;
   hasMany?: boolean;
+  id?: Key;
   isDisplayValue?: boolean;
   isFilterable: { in: boolean; out: boolean };
   label?: string;
@@ -128,7 +133,7 @@ export interface Attribute {
 }
 
 export interface ResultsProps {
-  results: string[] | number[] | number | string;
+  results: Results;
 }
 
 export interface LabelResultsReturnProps extends ResultsProps {
@@ -176,6 +181,8 @@ export type FormatMessage = (message: { id: string }, interpolation: { [key: str
 export type GenericFunction = (...params: any[]) => void;
 
 export type Result = Cell;
+
+export type Results = number[] | string[] | number | string;
 
 export type Translate = (key: string) => string;
 

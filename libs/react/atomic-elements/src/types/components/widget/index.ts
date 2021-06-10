@@ -11,10 +11,6 @@ export interface Widget extends VizCommonParams {
   chartType: WidgetTypes;
   component: CustomWidget | undefined;
   entityId?: string;
-  flags: {
-    download: boolean;
-    navigation: boolean;
-  };
   id: string | number;
   statisticalType?: StatisticalType;
   title: string;

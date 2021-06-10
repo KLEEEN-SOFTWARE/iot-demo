@@ -1,3 +1,4 @@
+/* eslint-disable max-lines */
 import {
   AggregationType,
   Attribute,
@@ -6,6 +7,7 @@ import {
   DataListResult,
   FormatProps,
   SameSDTAggregations,
+  TrendFormat,
 } from '@kleeen/types';
 import { GetSeveritiesResultProps, ValueLabelsProps, ValueResultProps } from './ResultFormatters.model';
 
@@ -51,22 +53,28 @@ export const getColor = (
   return color;
 };
 
-const categoryColorsParsed = (colorsLevels, severityLevels): [string] => {
+const getVizColor = (key) =>
+  getComputedStyle(document.getElementsByClassName('generated-new')[0]).getPropertyValue(key).split(',');
+
+export const vizColorsFormatted = () => {
   const parsedColor = (value) => value.replace(' ', '').replace('%', '');
 
-  const colorBottom = getComputedStyle(document.getElementsByClassName('generated-new')[0])
-    .getPropertyValue('--viz2')
-    .split(',');
+  const topColor = getVizColor('--viz4');
 
-  const colorTop = getComputedStyle(document.getElementsByClassName('generated-new')[0])
-    .getPropertyValue('--viz4')
-    .split(',');
+  const bottomColor = getVizColor('--viz2');
+  return {
+    bottomColor: parsedHSL(
+      parsedColor(bottomColor[0]),
+      parsedColor(bottomColor[1]),
+      parsedColor(bottomColor[2]),
+    ),
+    topColor: parsedHSL(parsedColor(topColor[0]), parsedColor(topColor[1]), parsedColor(topColor[2])),
+  };
+};
 
-  return colorsLevels(
-    parsedHSL(parsedColor(colorBottom[0]), parsedColor(colorBottom[1]), parsedColor(colorBottom[2])),
-    parsedHSL(parsedColor(colorTop[0]), parsedColor(colorTop[1]), parsedColor(colorTop[2])),
-    severityLevels,
-  );
+const categoryColorsParsed = (colorsLevels, severityLevels): [string] => {
+  const { topColor, bottomColor } = vizColorsFormatted();
+  return colorsLevels(bottomColor, topColor, severityLevels);
 };
 
 export const getSeveritiesFn = (yAxis: FormatProps, colorsLevels?: any): GetSeveritiesResultProps[] => {
@@ -311,15 +319,15 @@ export const parseAttributes = (attributes: Attribute[], format: any): Attribute
   return parsedAttributes;
 };
 
-export const trendFormatter = ({
+export function trendFormatter({
   values,
   highlightMinMax = false,
   highlightStart = false,
   highlightEnd = false,
-}): (number | any)[] => {
+}): TrendFormat[] {
   const min = Math.min(...values);
   const max = Math.max(...values);
-  const highlightedPoint = { color: 'hsl(var(--viz1))', marker: { enabled: true, radius: 3 } };
+  const highlightedPoint = { color: 'hsl(var(--viz1))', marker: { enabled: true, radius: 2 } };
 
   return values.map((value, i) => {
     if (highlightMinMax && (value === min || value === max)) {
@@ -333,7 +341,7 @@ export const trendFormatter = ({
     }
     return value;
   });
-};
+}
 
 export const isAttributeNumericType = (attribute: Attribute): boolean => {
   const selfAggregations = [AggregationType.SelfMulti, AggregationType.SelfSingle];

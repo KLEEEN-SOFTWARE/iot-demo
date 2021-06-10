@@ -80,7 +80,7 @@ export const dataViewDisplaySectionAtomicSingleTableWidgets = [
         format: {
           aggregations: null,
           dateTime: null,
-          examples: null,
+          examples: ['Bad', 'Ok', 'Excellent'],
           valueLabels: [
             { label: 'Bad', value: 1 },
             { label: 'Ok', value: 2 },
