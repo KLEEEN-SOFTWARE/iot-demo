@@ -143,6 +143,11 @@
     "apps/api/src/assets/entities.json",
     "apps/api/src/environments/environment.prod.ts",
     "apps/api/src/environments/environment.ts",
+    "apps/api/src/graphql/custom/filtersResolver/filtersApi.ts",
+    "apps/api/src/graphql/custom/operations/custom-resolvers.ts",
+    "apps/api/src/graphql/custom/operations/custom-schema.ts",
+    "apps/api/src/graphql/custom/operations/index.ts",
+    "apps/api/src/graphql/custom/index.ts",
     "apps/api/src/graphql/generated/dataSources/filtersFakeApi.ts",
     "apps/api/src/graphql/generated/dataSources/index.ts",
     "apps/api/src/graphql/generated/dataSources/widgetApi.ts",
@@ -1146,7 +1151,9 @@
       "apps/cloud/src/app/assets",
       "apps/cloud/src/app/modules/custom"
     ],
-    "files": [".vscode/settings.json"]
+    "files": [
+      ".vscode/settings.json"
+    ]
   },
   "packageApplied": {
     "name": "template",
