@@ -3,7 +3,6 @@ import ConfirmForm from '../../ConfirmForm';
 import { ContextCell } from '../../../contextCell';
 import { DataViewRowProps } from './CellRenderer.model';
 import DragIndicatorIcon from '@material-ui/icons/DragIndicator';
-import KsDisplayMedia from '../../../KsDisplayMedia/KsDisplayMedia';
 import React from 'react';
 import { SortableHandle } from 'react-sortable-hoc';
 import { TableCell } from '../../components/index';
@@ -87,14 +86,6 @@ function DataViewRow({
             row.displayMedia && classes.tableCellContainer
           }`}
         >
-          {row.displayMedia && (
-            <KsDisplayMedia
-              className={classes.displayMedia}
-              value={row.displayMedia.value}
-              type={row.displayMedia.type}
-              size={21}
-            />
-          )}
           <ContextCell
             attr={attr}
             cell={row}
@@ -122,14 +113,6 @@ function DataViewRow({
   } else {
     return (
       <TableCell key={rowKey} className={`${row.displayMedia && classes.tableCellContainer}`}>
-        {row.displayMedia && (
-          <KsDisplayMedia
-            className={classes.displayMedia}
-            value={row.displayMedia.value}
-            type={row.displayMedia.type}
-            size={21}
-          />
-        )}
         <ContextCell
           attr={attr}
           cell={row}

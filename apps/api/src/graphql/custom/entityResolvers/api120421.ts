@@ -5,7 +5,7 @@ import { AutoCompleteParams, CustomActionArgs, DispatchCustomActionResults } fro
 export class ApiNode extends RESTDataSource {
   constructor() {
     super();
-    this.baseURL = 'http://localhost:3009/';
+    this.baseURL = 'http://put.your.api.here/';
     // If you need to access the current user, the token and data sources,
     // you can get them from 'this.context'
   }
@@ -36,7 +36,7 @@ export class ApiNode extends RESTDataSource {
 
   // list Node
   async listEntity(params: any) {
-    return this.get('node', params);
+    return KapiCrud.list('node', params);
 
     // an example making an HTTP GET request.
     // return this.get('node', params);

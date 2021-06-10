@@ -14,8 +14,7 @@ export function KsSvgIcon({ icon, size = KsSvgIconSize.Medium, style }: KsSvgIco
           style={style}
           className={classnames('ks-svg-icon', size)}
           src={getIcon(icon).path}
-          alt={getIcon(icon).alt}
-        ></SVG>
+        />
       )}
     </IconRegistryConsumer>
   );

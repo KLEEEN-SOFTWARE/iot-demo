@@ -4,6 +4,7 @@ import { Language, useLocalization } from './useLocalization';
 
 import { ReactNode } from 'react';
 import { isNilOrEmpty } from '@kleeen/common/utils';
+import { omit } from 'ramda';
 
 interface UseTextFormatterProps {
   format: FormatProps;
@@ -48,6 +49,8 @@ const formatByTransformation = {
   [AggregationType.MaxSparkline]: FormatTypes.number,
 };
 
+const decimalOptions = { style: 'decimal', maximumFractionDigits: 2 };
+
 export const formatByType = {
   USD: {
     transformations: formatByTransformation,
@@ -60,19 +63,27 @@ export const formatByType = {
   },
   double: {
     transformations: formatByTransformation,
-    options: { style: 'decimal', maximumFractionDigits: 2 },
+    options: decimalOptions,
   },
   random: {
     transformations: formatByTransformation,
-    options: { style: 'decimal', maximumFractionDigits: 2 },
+    options: decimalOptions,
   },
   latitude: {
     transformations: formatByTransformation,
-    options: { style: 'decimal', maximumFractionDigits: 2 },
+    options: decimalOptions,
   },
   longitude: {
     transformations: formatByTransformation,
-    options: { style: 'decimal', maximumFractionDigits: 2 },
+    options: decimalOptions,
+  },
+  integer: {
+    transformations: omit([AggregationType.SelfSingle, AggregationType.SelfMulti], formatByTransformation),
+    options: decimalOptions,
+  },
+  severity_score: {
+    transformations: formatByTransformation,
+    options: decimalOptions,
   },
   timestamp: {
     defaultFormat: FormatTypes.date,

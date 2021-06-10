@@ -10,7 +10,4 @@ export const entityMap = {
   SiteStatus: 120428,
   SystemHealth: 120429,
   Timestamp: 96096,
-  ZDeleteCountry: 96098,
-  ZDeleteGdp: 96100,
-  ZDeletePopulation: 96099,
 };

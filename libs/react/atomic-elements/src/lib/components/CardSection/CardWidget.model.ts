@@ -4,12 +4,12 @@ import { Widget } from '../../../types';
 
 interface CardWidgetProps {
   children: ReactNode;
+  disabled?: boolean;
   hideTitle?: boolean;
   icon: boolean;
   selectedViz?: number;
   title: string | JSX.Element;
   widgetSelector?: null | JSX.Element;
-  disabled?: boolean;
 }
 
 interface CardTitleProps {
@@ -27,35 +27,35 @@ type GridJustification =
 
 interface CardSectionProps {
   children?: ReactNode;
-  hideTOC?: boolean;
+  containerId?: string;
   fullWidth?: boolean;
+  hideSaveAndClose?: boolean;
+  hideTOC?: boolean;
   justifyContent?: GridJustification;
+  onInputChange?: (hasChanged: boolean) => void;
+  registerEvents?: (event: AttributeInputEvents) => void;
+  skipAccessControlCheck?: boolean;
   taskName?: string;
   widgets?: Widget[];
-  registerEvents?: (event: AttributeInputEvents) => void;
-  hideSaveAndClose?: boolean;
-  onInputChange?: (hasChanged: boolean) => void;
-  containerId?: string;
-  skipAccessControlCheck?: boolean;
 }
 
 interface RenderChildrenProps {
-  taskName: string;
-  widgets?: Widget[];
   children?: ReactNode;
-  registerEvents?: (event: AttributeInputEvents) => void;
   hideSaveAndClose?: boolean;
   onInputChange?: (hasChanged: boolean) => void;
+  registerEvents?: (event: AttributeInputEvents) => void;
+  taskName: string;
+  widgets?: Widget[];
   widgetsRefs?: any;
 }
 
 interface RenderWidgetProps {
-  preferredWidget: string;
-  widget: Widget;
-  taskName: string;
-  registerEvents?: (event: AttributeInputEvents) => void;
   hideSaveAndClose?: boolean;
   onInputChange?: (hasChanged: boolean) => void;
+  preferredWidget: string;
+  registerEvents?: (event: AttributeInputEvents) => void;
+  taskName: string;
+  widget: Widget;
 }
 
 export { CardSectionProps, CardTitleProps, CardWidgetProps, RenderWidgetProps, RenderChildrenProps, Widget };

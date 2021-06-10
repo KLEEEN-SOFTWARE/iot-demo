@@ -1,6 +1,6 @@
 import { DispatchCustomActionResults, CustomActionArgs, AuthContext } from '../../../types';
 
-//  Widget: Reboot Sensor
+// Widget: Reboot Sensor
 // Chart type: [WIDGET] CUSTOM_ACTION
 export const custom_action_3b73adbb_d755_414b_b017_1d964567aa2d = async (
   input: CustomActionArgs,

@@ -5,7 +5,7 @@ export const dataViewDisplaySectionAtomicSingleTableWidgets = [
         areYouSure: true,
         component: undefined,
         description: undefined,
-        displayName: `Reboot`,
+        displayName: `reboot`,
         name: `reboot`,
         type: `custom`,
       },
@@ -70,7 +70,7 @@ export const dataViewDisplaySectionAtomicSingleTableWidgets = [
         format: {
           aggregations: null,
           dateTime: null,
-          examples: null,
+          examples: ['Bad', 'Ok', 'Excellent'],
           valueLabels: [
             { label: 'Bad', value: 1 },
             { label: 'Ok', value: 2 },
@@ -192,7 +192,7 @@ export const dataViewDisplaySectionAtomicSingleTableWidgets = [
         format: {
           aggregations: null,
           dateTime: null,
-          examples: null,
+          examples: ['Bad', 'Ok', 'Excellent'],
           valueLabels: [
             { label: 'Bad', value: 1 },
             { label: 'Ok', value: 2 },

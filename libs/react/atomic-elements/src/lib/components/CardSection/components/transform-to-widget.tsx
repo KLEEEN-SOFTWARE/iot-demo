@@ -22,7 +22,7 @@ import {
   SummaryStatisticsWidget,
   TableWidget,
 } from '../../Widgets';
-import React, { ReactElement, useState } from 'react';
+import { ReactElement, useState } from 'react';
 
 import { AttributeInputEvents } from '@kleeen/react/hooks';
 import CardWidget from '../CardWidget';
@@ -33,21 +33,81 @@ import { Widget } from '../../../../types';
 import { WidgetTypes } from '../../../../enums';
 import { isNilOrEmpty } from '@kleeen/common/utils';
 
-const renderWidget = ({
-  preferredWidget,
-  widget,
-  taskName,
-  registerEvents,
+export function TransformToWidgetComponent({
+  CardWidgetElement = CardWidget,
   hideSaveAndClose,
   onInputChange,
-}: RenderWidgetProps): ReactElement => {
+  registerEvents,
+  taskName,
+  widget,
+}: {
+  CardWidgetElement?: any;
+  hideSaveAndClose?: boolean;
+  onInputChange?: (hasChanged: boolean) => void;
+  registerEvents?: (event: AttributeInputEvents) => void;
+  taskName: string;
+  widget: Widget;
+}): ReactElement {
+  const { viableSolutions } = widget;
+  const hasViableSolutions = !isNilOrEmpty(viableSolutions);
+  const [preferredWidgetIndex, setPreferredWidgetIndex] = useState(0);
+
+  function getChartTypeToRender(): WidgetTypes {
+    if (
+      hasViableSolutions &&
+      preferredWidgetIndex < viableSolutions.length &&
+      viableSolutions[preferredWidgetIndex]
+    ) {
+      return viableSolutions[preferredWidgetIndex];
+    }
+    return widget.chartType;
+  }
+
+  return widget.chartType === WidgetTypes.CUSTOM ? (
+    renderWidget({ preferredWidget: getChartTypeToRender(), widget, taskName, onInputChange, registerEvents })
+  ) : (
+    <CardWidgetElement
+      icon={false}
+      selectedViz={preferredWidgetIndex}
+      title={widget.title}
+      widgetSelector={
+        hasViableSolutions ? (
+          <VisualizationSelector
+            items={viableSolutions}
+            onItemPress={setPreferredWidgetIndex}
+            preferredWidgetIndex={preferredWidgetIndex}
+          />
+        ) : null
+      }
+    >
+      {renderWidget({
+        hideSaveAndClose,
+        onInputChange,
+        preferredWidget: getChartTypeToRender(),
+        registerEvents,
+        taskName,
+        widget,
+      })}
+    </CardWidgetElement>
+  );
+}
+
+//#region Private members
+function renderWidget({
+  hideSaveAndClose,
+  onInputChange,
+  preferredWidget,
+  registerEvents,
+  taskName,
+  widget,
+}: RenderWidgetProps): ReactElement {
   const { statisticalType } = widget;
 
   switch (preferredWidget) {
-    case WidgetTypes.AREA:
-    case WidgetTypes.AREA_MASTER_DETAIL:
-    case WidgetTypes.AREA_MACRO_MICRO:
     case WidgetTypes.AREA_GRADIENT:
+    case WidgetTypes.AREA_MACRO_MICRO:
+    case WidgetTypes.AREA_MASTER_DETAIL:
+    case WidgetTypes.AREA:
       return (
         <AreaWidget
           chartType={preferredWidget}
@@ -56,6 +116,7 @@ const renderWidget = ({
           widgetId={widget.id}
         />
       );
+
     case WidgetTypes.BUBBLE_CHART:
       return (
         <BubbleChartWidget
@@ -66,29 +127,17 @@ const renderWidget = ({
         />
       );
 
-    /** TODO: Add subtype as in COLUMN_BAR */
-    case WidgetTypes.SINGLE_BAR_HIGHLIGHT_MAX:
-      return (
-        <SingleBarHighlightMaxWidget
-          chartType={WidgetTypes.SINGLE_BAR_HIGHLIGHT_MAX}
-          params={widget.params}
-          taskName={taskName}
-          widgetId={widget.id}
-          attributes={widget.attributes}
-        />
-      );
-
-    case WidgetTypes.COLUMN_BAR:
-    case WidgetTypes.COLUMN_BAR_SEGMENTED:
     case WidgetTypes.COLUMN_BAR_DOUBLE_BAR:
     case WidgetTypes.COLUMN_BAR_MACRO_MICRO:
+    case WidgetTypes.COLUMN_BAR_SEGMENTED:
+    case WidgetTypes.COLUMN_BAR:
       return (
         <ColumnBarWidget
+          attributes={widget.attributes}
           chartType={preferredWidget}
           params={widget.params}
           taskName={taskName}
           widgetId={widget.id}
-          attributes={widget.attributes}
         />
       );
 
@@ -96,15 +145,15 @@ const renderWidget = ({
       return (
         <ConfigInputWidget
           attributes={widget.attributes}
+          hideSaveAndClose={hideSaveAndClose}
           icon={false}
+          onInputChange={onInputChange}
           params={widget.params}
+          registerEvents={registerEvents}
+          statisticalType={statisticalType}
           taskName={taskName}
           title={widget.title}
           widgetId={widget.id}
-          statisticalType={statisticalType}
-          hideSaveAndClose={hideSaveAndClose}
-          registerEvents={registerEvents}
-          onInputChange={onInputChange}
         />
       );
 
@@ -156,9 +205,9 @@ const renderWidget = ({
         />
       );
 
-    case WidgetTypes.GAUGE:
     case WidgetTypes.GAUGE_SEVERITY_LEVEL:
     case WidgetTypes.GAUGE_SEVERITY_SCORE:
+    case WidgetTypes.GAUGE:
       return <GaugeWidget params={widget.params} taskName={taskName} widgetId={widget.id} />;
 
     case WidgetTypes.LINE:
@@ -177,8 +226,8 @@ const renderWidget = ({
     case WidgetTypes.POLAR_AREA:
       return (
         <PolarAreaWidget
-          params={widget.params}
           attributes={widget.attributes}
+          params={widget.params}
           taskName={taskName}
           widgetId={widget.id}
         />
@@ -193,6 +242,28 @@ const renderWidget = ({
     case WidgetTypes.SCATTER:
       return <ScatterWidget params={widget.params} taskName={taskName} widgetId={widget.id} />;
 
+    case WidgetTypes.SIMPLE_LIST_RANKED:
+      return (
+        <RankedListWidget
+          attributes={widget.attributes}
+          params={widget.params}
+          taskName={taskName}
+          widgetId={widget.id}
+        />
+      );
+
+    /** TODO: Add subtype as in COLUMN_BAR */
+    case WidgetTypes.SINGLE_BAR_HIGHLIGHT_MAX:
+      return (
+        <SingleBarHighlightMaxWidget
+          attributes={widget.attributes}
+          chartType={WidgetTypes.SINGLE_BAR_HIGHLIGHT_MAX}
+          params={widget.params}
+          taskName={taskName}
+          widgetId={widget.id}
+        />
+      );
+
     case WidgetTypes.STEP_LINE:
       return <StepLineWidget params={widget.params} taskName={taskName} widgetId={widget.id} />;
 
@@ -200,10 +271,9 @@ const renderWidget = ({
       return (
         <SummaryStatisticsWidget
           attributes={widget.attributes}
+          params={widget.params}
           taskName={taskName}
           widgetId={widget.id}
-          params={widget.params}
-          isWidget={true}
         />
       );
 
@@ -216,78 +286,9 @@ const renderWidget = ({
           widgetId={widget.id}
         />
       );
-    case WidgetTypes.SIMPLE_LIST_RANKED:
-      return (
-        <RankedListWidget
-          attributes={widget.attributes}
-          params={widget.params}
-          taskName={taskName}
-          widgetId={widget.id}
-        />
-      );
 
     case WidgetTypes.WATERFALL:
       return <WaterfallWidget params={widget.params} taskName={taskName} widgetId={widget.id} />;
   }
-};
-
-export function TransformToWidgetComponent({
-  taskName,
-  widget,
-  registerEvents,
-  hideSaveAndClose,
-  onInputChange,
-  CardWidgetElement = CardWidget,
-}: {
-  taskName: string;
-  widget: Widget;
-  registerEvents?: (event: AttributeInputEvents) => void;
-  hideSaveAndClose?: boolean;
-  onInputChange?: (hasChanged: boolean) => void;
-  CardWidgetElement?: any;
-}): ReactElement {
-  const { viableSolutions } = widget;
-
-  const hasViableSolutions = !isNilOrEmpty(viableSolutions);
-
-  const [preferredWidgetIndex, setPreferredWidgetIndex] = useState(0);
-
-  function getChartTypeToRender(): WidgetTypes {
-    if (
-      hasViableSolutions &&
-      preferredWidgetIndex < viableSolutions.length &&
-      viableSolutions[preferredWidgetIndex]
-    ) {
-      return viableSolutions[preferredWidgetIndex];
-    }
-    return widget.chartType;
-  }
-
-  return widget.chartType === WidgetTypes.CUSTOM ? (
-    renderWidget({ preferredWidget: getChartTypeToRender(), widget, taskName, onInputChange, registerEvents })
-  ) : (
-    <CardWidgetElement
-      title={widget.title}
-      icon={false}
-      selectedViz={preferredWidgetIndex}
-      widgetSelector={
-        hasViableSolutions ? (
-          <VisualizationSelector
-            items={viableSolutions}
-            onItemPress={setPreferredWidgetIndex}
-            preferredWidgetIndex={preferredWidgetIndex}
-          />
-        ) : null
-      }
-    >
-      {renderWidget({
-        preferredWidget: getChartTypeToRender(),
-        widget,
-        taskName,
-        registerEvents,
-        hideSaveAndClose,
-        onInputChange,
-      })}
-    </CardWidgetElement>
-  );
 }
+//#endregion

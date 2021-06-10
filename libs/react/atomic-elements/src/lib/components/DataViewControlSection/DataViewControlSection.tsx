@@ -88,15 +88,17 @@ export function DataViewControlSection(props: DataViewControlSectionProps): Reac
             )}
           </Grid>
         </Grid>
-        <Grid className="options" container alignItems="center">
-          <ViewSwitcher
-            handleChangeTab={props.handleChangeTab}
-            showDropDown={props.showDropDown}
-            taskName={props.taskName}
-            value={props.value}
-            viewOptions={orderedViewProps}
-          />
-        </Grid>
+        {orderedViewProps.length > 1 && (
+          <Grid className="options" container alignItems="center">
+            <ViewSwitcher
+              handleChangeTab={props.handleChangeTab}
+              showDropDown={props.showDropDown}
+              taskName={props.taskName}
+              value={props.value}
+              viewOptions={orderedViewProps}
+            />
+          </Grid>
+        )}
         <Grid className="actions" container alignItems="center">
           {!props.hideRefreshControl && <RefreshControl onRefresh={refreshPage} taskName={props.taskName} />}
           {!isEmpty(addActions) && (

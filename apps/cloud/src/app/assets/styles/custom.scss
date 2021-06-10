@@ -2,22 +2,3 @@
   "Design is intelligence made visible..."
   start building your custom SASS code here
 */
-
-@import 'resets';
-@import 'login';
-@import 'dark';
-@import 'light';
-
-#region {
-  display: flex;
-  justify-content: center;
-  height: 100%;
-  background: var(--application-background);
-  iframe {
-    display: block;
-    width: 1365px;
-    height: 796px;
-    position: relative;
-    margin: auto;
-  }
-}

@@ -1,7 +1,5 @@
 import { GetWidgetDataResult, DataAggregationArgs, AuthContext } from '../../../types';
 
-import fetch from 'node-fetch';
-
 // View: Sensor Details --- Widget: Sensor Status
 // Group by: timestamp
 // No Aggregation
@@ -11,13 +9,9 @@ import fetch from 'node-fetch';
 export const widget_f2e76b4e_b7ab_4a57_bb13_6e7c3c783e88 = async (
   input: DataAggregationArgs,
   context: AuthContext,
-): Promise<any | 'not implemented'> => {
-  return fetch('http://localhost:3009/sensor/change')
-    .then((res) => res.json())
-    .then((res) => {
-      return res;
-    })
-    .catch((err) => {
-      return 'not implemented';
-    });
+): Promise<GetWidgetDataResult | 'not implemented'> => {
+  // TODO: add your code here.
+  // If you need to access the current user, the token and data sources,
+  // you can get them from 'context'
+  return 'not implemented';
 };

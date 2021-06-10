@@ -8,11 +8,11 @@ import { makeStyles, styled } from '@material-ui/core';
 import ArrowLeftIcon from '@material-ui/icons/ArrowLeft';
 import EditOutlinedIcon from '@material-ui/icons/EditOutlined';
 import { KUIConnect } from '@kleeen/core-react';
-import { KsSummaryPanel } from '../summary-panel';
 import MuiButton from '@material-ui/core/Button';
 import MuiToolbar from '@material-ui/core/Toolbar';
 import MuiTooltip from '@material-ui/core/Tooltip';
 import { Slot } from '../DetailSummary/DetailSummary.model';
+import { SummaryPanel } from '../summary-panel';
 import { Translate } from '@kleeen/types';
 import { getUpdateRequestPayload } from '../../utils';
 
@@ -137,7 +137,7 @@ export function EntityDetailsSectionBase({ translate, ...props }: EntityDetailsS
               </KsButton>
             )}
           </div>
-          <KsSummaryPanel
+          <SummaryPanel
             entityDetails={props.entityDetails}
             isEditing={isEditing}
             layoutProps={{

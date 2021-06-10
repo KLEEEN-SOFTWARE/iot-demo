@@ -210,7 +210,6 @@ export function TransformToElement(props: TransformToElementProps): JSX.Element 
           setInputValue(option?.displayValue || '');
         }}
         disabled={disabled}
-        disableCloseOnSelect
         renderInput={(params) => (
           <KsTextField
             variant={!canAddValues && !disabled ? 'outlined' : 'standard'}
