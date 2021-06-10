@@ -169,22 +169,6 @@ export const widgetResolvers: IResolvers = {
         : result;
     },
 
-    object_listing_2a6ed2a4_cef2_4fcb_bd9e_da6a07398686: async (
-      _parent: any,
-      args: { input: DataListingArgs },
-      { dataSources, ...rest },
-    ) => {
-      const result = await dataSources.widgetApi.object_listing_2a6ed2a4_cef2_4fcb_bd9e_da6a07398686(
-        args.input,
-      );
-
-      return result === 'not implemented'
-        ? dataSources.widgetFakeApi.object_listing_2a6ed2a4_cef2_4fcb_bd9e_da6a07398686(args.input, {
-            ...rest,
-          })
-        : result;
-    },
-
     object_listing_3d3baa6b_4237_4e39_bc34_7f22976f16e7: async (
       _parent: any,
       args: { input: DataListingArgs },
@@ -297,22 +281,6 @@ export const widgetResolvers: IResolvers = {
         : result;
     },
 
-    summary_title_72392202_fc97_4e82_9075_3434f87a6ff9: async (
-      _parent: any,
-      args: { input: DataListingArgs },
-      { dataSources, ...rest },
-    ) => {
-      const result = await dataSources.widgetApi.summary_title_72392202_fc97_4e82_9075_3434f87a6ff9(
-        args.input,
-      );
-
-      return result === 'not implemented'
-        ? dataSources.widgetFakeApi.summary_title_72392202_fc97_4e82_9075_3434f87a6ff9(args.input, {
-            ...rest,
-          })
-        : result;
-    },
-
     summary_title_ccd4b585_b8d5_4315_817f_bae7060c22e5: async (
       _parent: any,
       args: { input: DataListingArgs },
@@ -358,18 +326,6 @@ export const widgetResolvers: IResolvers = {
         ? dataSources.widgetFakeApi.summary_title_f991e457_5522_4e72_ba6b_9f8811f612af(args.input, {
             ...rest,
           })
-        : result;
-    },
-
-    widget_0003e6cf_785f_4680_829b_ac54360a79aa: async (
-      _parent: any,
-      args: { input: DataAggregationArgs },
-      { dataSources, ...rest },
-    ) => {
-      const result = await dataSources.widgetApi.widget_0003e6cf_785f_4680_829b_ac54360a79aa(args.input);
-
-      return result === 'not implemented'
-        ? dataSources.widgetFakeApi.widget_0003e6cf_785f_4680_829b_ac54360a79aa(args.input, { ...rest })
         : result;
     },
 
@@ -456,22 +412,6 @@ export const widgetResolvers: IResolvers = {
 
       return result === 'not implemented'
         ? dataSources.widgetFakeApi.widget_statistics15d23aa3_6f00_4505_9199_85c2e2662aaa(args.input, {
-            ...rest,
-          })
-        : result;
-    },
-
-    widget_statistics2cf3e953_eaa2_4461_9347_7a921a525fad: async (
-      _parent: any,
-      args: { input: MultiTransFormationArgs },
-      { dataSources, ...rest },
-    ) => {
-      const result = await dataSources.widgetApi.widget_statistics2cf3e953_eaa2_4461_9347_7a921a525fad(
-        args.input,
-      );
-
-      return result === 'not implemented'
-        ? dataSources.widgetFakeApi.widget_statistics2cf3e953_eaa2_4461_9347_7a921a525fad(args.input, {
             ...rest,
           })
         : result;

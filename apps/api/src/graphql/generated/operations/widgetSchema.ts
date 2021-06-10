@@ -92,10 +92,6 @@ export const widgetSchema = gql`
     # Chart type: [WIDGET] FULL_TABLE
     object_listing_1f20697a_3aa6_4ce4_a14a_8d50d486ce36(input: DataListingArgs): ListingResult
 
-    # View: listadoDeEventos
-    # Chart type: [WIDGET] FULL_TABLE
-    object_listing_2a6ed2a4_cef2_4fcb_bd9e_da6a07398686(input: DataListingArgs): ListingResult
-
     # View: nodes
     # Chart type: [WIDGET] FULL_TABLE
     object_listing_3d3baa6b_4237_4e39_bc34_7f22976f16e7(input: DataListingArgs): ListingResult
@@ -128,12 +124,6 @@ export const widgetSchema = gql`
     # Chart type: [WIDGET] SUMMARY_TITLE
     summary_title_3e93db18_fe67_43a2_be09_6ecf9873ee74(input: DataListingArgs): ListingResult
 
-    # View: Listado de Eventos
-    # Value: event
-    # Value aggregated by: No Aggregation
-    # Chart type: [WIDGET] SUMMARY_TITLE
-    summary_title_72392202_fc97_4e82_9075_3434f87a6ff9(input: DataListingArgs): ListingResult
-
     # View: Sensors
     # Value: sensor
     # Value aggregated by: No Aggregation
@@ -151,14 +141,6 @@ export const widgetSchema = gql`
     # Value aggregated by: No Aggregation
     # Chart type: [WIDGET] SUMMARY_TITLE
     summary_title_f991e457_5522_4e72_ba6b_9f8811f612af(input: DataListingArgs): ListingResult
-
-    # View: Listado de Eventos --- Widget: Eventos Raros
-    # Group by: timestamp
-    # No Aggregation
-    # Value: event
-    # Value aggregated by: Total Unique
-    # Chart type: Scatter
-    widget_0003e6cf_785f_4680_829b_ac54360a79aa(input: DataAggregationArgs): GraphResult
 
     # View: Node Details --- Widget: Site Status
     # Group by: timestamp
@@ -213,12 +195,6 @@ export const widgetSchema = gql`
     # Value aggregated by: 
     # Chart type: Summary Statistics
     widget_statistics15d23aa3_6f00_4505_9199_85c2e2662aaa(input: MultiTransFormationArgs): [MultiTransFormationResults]
-
-    # View: Listado de Eventos --- Widget: Detalle de eventos
-    # Value: event
-    # Value aggregated by: 
-    # Chart type: Summary Statistics
-    widget_statistics2cf3e953_eaa2_4461_9347_7a921a525fad(input: MultiTransFormationArgs): [MultiTransFormationResults]
 
     # View: System --- Widget: System Health
     # Value: systemHealth
