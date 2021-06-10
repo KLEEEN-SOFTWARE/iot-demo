@@ -275,11 +275,9 @@
     "apps/cloud/src/assets/icons/user.svg",
     "apps/cloud/src/assets/icons/wifi-signal-2.svg",
     "apps/cloud/src/assets/.gitkeep",
-    "apps/cloud/src/assets/logo.png",
     "apps/cloud/src/environments/environment.prod.ts",
     "apps/cloud/src/environments/environment.ts",
     "apps/cloud/src/favicon.ico",
-    "apps/cloud/src/index.html",
     "apps/cloud/src/main.tsx",
     "apps/cloud/src/polyfills.ts",
     "apps/cloud/src/styles.scss",
@@ -1151,7 +1149,11 @@
       "apps/cloud/src/app/assets",
       "apps/cloud/src/app/modules/custom"
     ],
-    "files": [".vscode/settings.json", "apps/cloud/src/index.html", "apps/cloud/src/assets/logo.png"]
+    "files": [
+      ".vscode/settings.json",
+      "apps/cloud/src/index.html",
+      "apps/cloud/src/assets/logo.png"
+    ]
   },
   "packageApplied": {
     "name": "template",

@@ -7,10 +7,6 @@ export default {
   'ks-view-ozFw5fbSFqWz82tFnVgnAm': { path: './assets/icons/programming-search-browser.svg', alt: 'Listing' },
   // View Icon for Experience: Table of Node on Workflow: Nodes
   'ks-view-8yyhmnH4a88SWwvb4pJkWx': { path: './assets/icons/app-window-settings.svg', alt: 'Listing' },
-  // View Icon for Experience: Dashboard 1 on Workflow: Listado de Eventos
-  'ks-view-9Nfi1f4x8SXiUBCVrRXaSF': { path: './assets/icons/pie-line-graph-desktop.svg', alt: 'Grid' },
-  // View Icon for Experience: Table of Event on Workflow: Listado de Eventos
-  'ks-view-6eUEZWvNqKsW4vWxjujxJo': { path: './assets/icons/pie-line-graph-desktop.svg', alt: 'Listing' },
   // View Icon for Experience: Table of Sensor on Workflow: Sensors
   'ks-view-gnRpJXqsZaxnoEGRxQVSY4': { path: './assets/icons/alarm-clock-1-alternate.svg', alt: 'Listing' },
   // View Icon for Experience: Dashboard on Workflow: System

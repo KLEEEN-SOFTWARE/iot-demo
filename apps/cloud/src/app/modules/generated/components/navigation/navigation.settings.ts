@@ -17,11 +17,6 @@ export const Settings: NavigationSettings = {
   logo: `assets/logo.png`,
   menuOptions: [
     {
-      title: `Listado de Eventos`,
-      path: `/listado-de-eventos`,
-      icon: `ks-navigation-f75qQAfaT4knTfzj6fqEdH`,
-    },
-    {
       title: `Events`,
       path: `/events`,
       icon: `ks-navigation-naX8kq49HS9GMz3ASo7AaH`,

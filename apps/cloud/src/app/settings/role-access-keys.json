@@ -19,12 +19,6 @@
           "GUEST": "SHOW"
         }
       },
-      "LISTADODEEVENTOS": {
-        "PERMISSIONS": {
-          "ADMIN": "SHOW",
-          "GUEST": "SHOW"
-        }
-      },
       "EVENTS": {
         "PERMISSIONS": {
           "ADMIN": "SHOW",
@@ -119,36 +113,6 @@
             }
           },
           "F51934F0-C79E-4BBA-998B-0D8E381CF5F1": {
-            "PERMISSIONS": {
-              "ADMIN": "SHOW",
-              "GUEST": "SHOW"
-            }
-          }
-        }
-      }
-    }
-  },
-  "LISTADODEEVENTOS": {
-    "CHILDREN": {
-      "WIDGETS": {
-        "CHILDREN": {
-          "0003E6CF-785F-4680-829B-AC54360A79AA": {
-            "PERMISSIONS": {
-              "ADMIN": "SHOW",
-              "GUEST": "SHOW"
-            }
-          },
-          "2CF3E953-EAA2-4461-9347-7A921A525FAD": {
-            "PERMISSIONS": {
-              "ADMIN": "SHOW",
-              "GUEST": "SHOW"
-            }
-          }
-        }
-      },
-      "VIEWS": {
-        "CHILDREN": {
-          "DASHBOARD": {
             "PERMISSIONS": {
               "ADMIN": "SHOW",
               "GUEST": "SHOW"
