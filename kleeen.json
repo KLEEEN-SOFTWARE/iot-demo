@@ -1151,9 +1151,7 @@
       "apps/cloud/src/app/assets",
       "apps/cloud/src/app/modules/custom"
     ],
-    "files": [
-      ".vscode/settings.json"
-    ]
+    "files": [".vscode/settings.json", "apps/cloud/src/index.html", "apps/cloud/src/assets/logo.png"]
   },
   "packageApplied": {
     "name": "template",
