@@ -1,8 +1,8 @@
 import { Badge, Tooltip } from '../FilterSection.styles';
-import { FilterAdded, Operator } from '../FilterSection.model';
+import { FilterAdded } from '../FilterSection.model';
 import React, { ReactElement } from 'react';
 
-import { IntervalDate } from '@kleeen/types';
+import { FilterOperators, IntervalDate } from '@kleeen/types';
 import { KUIConnect } from '@kleeen/core-react';
 import moment from 'moment';
 import { useTheme } from '@kleeen/react/hooks';
@@ -47,21 +47,22 @@ export const filterTooltipFunc = (
         {filterTitles.map((title, i) => (
           <>
             <span>{title}:</span>
-            {filtersMap[i][Operator.in]?.map((filter) => (
+            {filtersMap[i][FilterOperators.in]?.map((filter) => (
               <li>• {filter}</li>
             ))}
-            {filtersMap[i][Operator.max] && <li>• Maximum is {filtersMap[i][Operator.max]}</li>}
-            {filtersMap[i][Operator.min] && <li>• Minimum is {filtersMap[i][Operator.min]}</li>}
-            {filtersMap[i][Operator.from] && (
-              <li>• From {moment(filtersMap[i][Operator.from]).format('DD/MM/YYYY HH:ss')}</li>
+            {filtersMap[i][FilterOperators.max] && <li>• Maximum is {filtersMap[i][FilterOperators.max]}</li>}
+            {filtersMap[i][FilterOperators.min] && <li>• Minimum is {filtersMap[i][FilterOperators.min]}</li>}
+            {filtersMap[i][FilterOperators.from] && (
+              <li>• From {moment(filtersMap[i][FilterOperators.from]).format('DD/MM/YYYY HH:ss')}</li>
             )}
-            {filtersMap[i][Operator.to] && (
-              <li>• To {moment(filtersMap[i][Operator.to]).format('DD/MM/YYYY HH:ss')}</li>
+            {filtersMap[i][FilterOperators.to] && (
+              <li>• To {moment(filtersMap[i][FilterOperators.to]).format('DD/MM/YYYY HH:ss')}</li>
             )}
-            {filtersMap[i][Operator.relativeDate] && (
+            {filtersMap[i][FilterOperators.relativeDate] && (
               <li>
                 {translate(
-                  'app.dateInterval.interval.' + getIntervalDateKey(filtersMap[i][Operator.relativeDate]),
+                  'app.dateInterval.interval.' +
+                    getIntervalDateKey(filtersMap[i][FilterOperators.relativeDate]),
                 )}
               </li>
             )}

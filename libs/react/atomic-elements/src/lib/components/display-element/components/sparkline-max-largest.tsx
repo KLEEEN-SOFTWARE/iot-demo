@@ -15,7 +15,7 @@ export function SparklineMaxLargest(props: DisplayComponentProps) {
 
   return (
     <div className={classes.content}>
-      <BasePie data={value?.displayValue} />
+      <BasePie data={value?.displayValue} highlighted={props.highlighted} />
       <Label {...restOfProps} value={labelValue} />
     </div>
   );

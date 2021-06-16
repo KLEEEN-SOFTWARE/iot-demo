@@ -2,9 +2,8 @@ import React, { ReactElement } from 'react';
 import MuiTooltip from '@material-ui/core/Tooltip';
 import { IconButton } from '@material-ui/core';
 import CloseIcon from '@material-ui/icons/Close';
-import { Operator } from '../FilterSection.model';
 import { Chip } from '../FilterSection.styles';
-import { TimestampKey } from '@kleeen/types';
+import { FilterOperators, TimestampKey } from '@kleeen/types';
 import moment from 'moment';
 
 const FilterItem = ({ option, remove }): ReactElement => (
@@ -59,7 +58,7 @@ const FiltersComp = ({ filters = {}, removeValue, removeCategory }): ReactElemen
               <FilterItem
                 key={`filter-comp-item-${index}`}
                 remove={() => {
-                  removeValue(cat, name, Operator.in);
+                  removeValue(cat, name, FilterOperators.in);
                 }}
                 option={auxLabel}
               />
@@ -69,7 +68,7 @@ const FiltersComp = ({ filters = {}, removeValue, removeCategory }): ReactElemen
             <FilterItem
               key={`filter-comp-item-max`}
               remove={() => {
-                removeValue(cat, name, Operator.max);
+                removeValue(cat, name, FilterOperators.max);
               }}
               option={`Max is ${max}`}
             />
@@ -78,7 +77,7 @@ const FiltersComp = ({ filters = {}, removeValue, removeCategory }): ReactElemen
             <FilterItem
               key={`filter-comp-item-min`}
               remove={() => {
-                removeValue(cat, name, Operator.min);
+                removeValue(cat, name, FilterOperators.min);
               }}
               option={`Min is ${min}`}
             />

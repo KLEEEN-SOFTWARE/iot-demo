@@ -6,16 +6,16 @@ import queryString from 'query-string';
 import { useHistory } from 'react-router';
 import useUrlQueryParams from './useUrlQueryParams';
 
-enum Operator {
+enum FilterOperators {
   max = 'max',
   min = 'min',
   in = '_in',
 }
 
 interface FilterAdded {
-  [Operator.in]?: Array<string | number>;
-  [Operator.min]?: number;
-  [Operator.max]?: number;
+  [FilterOperators.in]?: Array<string | number>;
+  [FilterOperators.min]?: number;
+  [FilterOperators.max]?: number;
 }
 
 interface FiltersAddedState {
@@ -33,9 +33,16 @@ const getToValueOf = (paramsBasedOnRoute): undefined | Moment => {
 const getRelativeDateValueOf = (paramsBasedOnRoute): undefined | string => {
   return paramsBasedOnRoute?.Timestamp?.relativeDate;
 };
+let filtersInUse = false;
+
+export const areFiltersInUse = () => {
+  return filtersInUse;
+};
 
 export const useFilters = (hasDateFilter = false) => {
-  const { paramsBasedOnRoute } = useUrlQueryParams({ useNestedObjects: true });
+  const queryParams = useUrlQueryParams({ useNestedObjects: true });
+  const { paramsBasedOnRoute, version } = queryParams;
+  filtersInUse = true;
   const [isApplyDisabled, setIsApplyDisabled] = useState(true);
   const [isApplyWithoutTimeDisabled, setIsApplyWithoutTime] = useState(true);
   const [isTimeApplyDisabled, setIsTimeApplyDisabled] = useState(true);
@@ -70,6 +77,12 @@ export const useFilters = (hasDateFilter = false) => {
   }, [to, from, relativeDate]);
 
   useEffect(() => {
+    return () => {
+      filtersInUse = false;
+    };
+  }, []);
+
+  useEffect(() => {
     if (Object.entries(paramsBasedOnRoute).length === 0 && isApplyDisabled && !from && !to && !relativeDate) {
       setIsApplyDisabled(true);
       setIsApplyWithoutTime(true);
@@ -88,6 +101,18 @@ export const useFilters = (hasDateFilter = false) => {
       return initialState;
     },
   );
+
+  useEffect(() => {
+    let initialState = {};
+    Object.keys(paramsBasedOnRoute).forEach((key) => {
+      initialState = {
+        ...initialState,
+        [key]: paramsBasedOnRoute[key],
+      };
+    });
+    setFilters(initialState);
+  }, [version]);
+
   const navigation = useHistory();
 
   const clearFilters = () => {
@@ -165,14 +190,14 @@ export const useFilters = (hasDateFilter = false) => {
     }
   });
 
-  const manageOperations = (operator: Operator, value: string | number, operators): any => {
-    if (Array.isArray(operators) || operator === Operator.in) {
+  const manageOperations = (operator: FilterOperators, value: string | number, operators): any => {
+    if (Array.isArray(operators) || operator === FilterOperators.in) {
       return [...(operators || []), value];
     }
     return value;
   };
 
-  const addFilter = (category: string, operator: Operator, value: string | number): void => {
+  const addFilter = (category: string, operator: FilterOperators, value: string | number): void => {
     const newCategory = filtersAdded[category] || {};
     const newOperator = manageOperations(operator, value, newCategory[operator]);
     setFilters({
@@ -192,9 +217,9 @@ export const useFilters = (hasDateFilter = false) => {
     setIsApplyWithoutTime(false);
   };
 
-  const removeValue = (category: string, name: string, operator: Operator): void => {
+  const removeValue = (category: string, name: string, operator: FilterOperators): void => {
     const newCategory = { ...filtersAdded[category] };
-    if (operator === Operator.in) {
+    if (operator === FilterOperators.in) {
       // TODO: should check if is the last item of a category remove also the category
       const currentOperatorValues = newCategory[operator] || [];
       const newOperatorValues = currentOperatorValues.filter((value) => name !== value);
@@ -203,7 +228,7 @@ export const useFilters = (hasDateFilter = false) => {
       if (newOperatorValues.length === 0) {
         delete newCategory[operator];
       }
-    } else if (operator === Operator.max || operator === Operator.min) {
+    } else if (operator === FilterOperators.max || operator === FilterOperators.min) {
       delete newCategory[operator];
     }
 
@@ -221,11 +246,11 @@ export const useFilters = (hasDateFilter = false) => {
   };
 
   return {
+    queryParams,
     handleFilter,
     removeValue,
     addFilter,
     removeCategory,
-    paramsBasedOnRoute,
     isApplyDisabled,
     filtersAdded,
     setIsApplyDisabled,

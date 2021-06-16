@@ -10,11 +10,7 @@ export function KsSvgIcon({ icon, size = KsSvgIconSize.Medium, style }: KsSvgIco
   return (
     <IconRegistryConsumer>
       {({ getIcon }) => (
-        <SVG
-          style={style}
-          className={classnames('ks-svg-icon', size)}
-          src={getIcon(icon).path}
-        />
+        <SVG style={style} className={classnames('ks-svg-icon', size)} src={getIcon(icon).path} />
       )}
     </IconRegistryConsumer>
   );

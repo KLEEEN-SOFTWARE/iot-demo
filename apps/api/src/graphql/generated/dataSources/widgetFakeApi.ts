@@ -58,6 +58,10 @@ export class WidgetFakeApi extends DataSource {
     return getListingData(args);
   }
 
+  async object_listing_57e511be_c5b3_49bc_a376_e2de48c8283c(args: DataListingArgs) {
+    return getListingData(args);
+  }
+
   async object_listing_5cb3e084_759a_484a_8bea_4db978e3c656(args: DataListingArgs) {
     return getListingData(args);
   }

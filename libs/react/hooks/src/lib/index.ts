@@ -14,8 +14,10 @@ export { default as useCrossLinkingMenuOnViz } from './useCrossLinkingMenuOnViz'
 export { default as useUserInfo } from './useUserInfo';
 
 export * from './useAutoComplete';
+export * from './useAutoRefresh';
 export * from './useAnchorElement';
 export * from './useCrosslinking';
+export * from './useCrosslinkingItems';
 export * from './useCrossLinkingMenuOnViz';
 export * from './useWidgetContext';
 export * from './useEntityDetailsEventHandler';
@@ -23,6 +25,7 @@ export * from './useKleeenActions';
 export * from './useKleeenContext';
 export * from './useLocalization';
 export * from './useMasonry';
+export * from './usePrevious';
 export * from './useSwish';
 export * from './useTheme';
 export * from './useTextFormatter';
@@ -31,4 +34,7 @@ export * from './use-inject-reducer-to-store';
 export * from './useFilters';
 export * from './useWebSocket';
 export * from './useGetWidgetsAmount';
+export * from './useFilterItems';
+
+export * from '../helpers';
 export { MenuContextProvider, AttributeContextMenuProvider };

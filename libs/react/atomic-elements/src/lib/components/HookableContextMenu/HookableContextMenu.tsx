@@ -2,7 +2,7 @@ import React, { useRef } from 'react';
 import { useAttributeContextMenu, useOnClickOutside } from '@kleeen/react/hooks';
 
 import { Attribute } from '@kleeen/types';
-import { ContextMenu } from '@kleeen/react/components';
+import { KsContextMenu } from '@kleeen/react/components';
 
 interface Cell {
   id: number | string;
@@ -26,12 +26,7 @@ export const HookableContextMenu = (props: ContextMenuProps) => {
   };
 
   return contextualToggle ? (
-    <ContextMenu
-      attr={context.attr}
-      cell={context.cell}
-      anchorEl={anchorEl}
-      handleClose={handleClose}
-    ></ContextMenu>
+    <KsContextMenu attr={context.attr} cell={context.cell} anchorEl={anchorEl} handleClose={handleClose} />
   ) : (
     ''
   );

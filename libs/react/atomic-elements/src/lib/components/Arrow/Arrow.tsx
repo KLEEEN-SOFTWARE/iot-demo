@@ -11,6 +11,7 @@ export const Arrow = (props: ArrowProps) => {
     <ArrowPoint
       changeDirections={changeDirections}
       className="arrow-point-center"
+      highlighted={props.highlighted}
       result={props.value}
       showPercentage={isChangePercentage}
     />

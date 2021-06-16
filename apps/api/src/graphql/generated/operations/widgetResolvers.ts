@@ -185,6 +185,22 @@ export const widgetResolvers: IResolvers = {
         : result;
     },
 
+    object_listing_57e511be_c5b3_49bc_a376_e2de48c8283c: async (
+      _parent: any,
+      args: { input: DataListingArgs },
+      { dataSources, ...rest },
+    ) => {
+      const result = await dataSources.widgetApi.object_listing_57e511be_c5b3_49bc_a376_e2de48c8283c(
+        args.input,
+      );
+
+      return result === 'not implemented'
+        ? dataSources.widgetFakeApi.object_listing_57e511be_c5b3_49bc_a376_e2de48c8283c(args.input, {
+            ...rest,
+          })
+        : result;
+    },
+
     object_listing_5cb3e084_759a_484a_8bea_4db978e3c656: async (
       _parent: any,
       args: { input: DataListingArgs },

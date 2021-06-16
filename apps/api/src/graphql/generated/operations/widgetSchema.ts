@@ -96,6 +96,10 @@ export const widgetSchema = gql`
     # Chart type: [WIDGET] FULL_TABLE
     object_listing_3d3baa6b_4237_4e39_bc34_7f22976f16e7(input: DataListingArgs): ListingResult
 
+    # View: nodes
+    # Chart type: [WIDGET] FULL_TABLE
+    object_listing_57e511be_c5b3_49bc_a376_e2de48c8283c(input: DataListingArgs): ListingResult
+
     # View: configureSensorNode --- Widget: Sensors
     # Chart type: [WIDGET] CONFIG_TABLE
     object_listing_5cb3e084_759a_484a_8bea_4db978e3c656(input: DataListingArgs): ListingResult

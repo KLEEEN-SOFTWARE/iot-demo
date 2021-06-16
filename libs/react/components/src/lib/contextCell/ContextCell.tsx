@@ -1,27 +1,26 @@
 import './ContextCell.scss';
 
 import { AggregationType, Attribute, Cell, DisplayMediaType, LabelResultsReturnProps } from '@kleeen/types';
-import { ContextMenu, isLinkFilterableByEntityType } from '../contextMenu/ContextMenu';
 import { ContextMenuProps, LabelResultsProps } from './ContextCell.model';
-import { useStyles } from './ContextCell.style';
-import KsDisplayMedia from '../KsDisplayMedia/KsDisplayMedia';
 import React, { ReactElement } from 'react';
 import { isEmpty, isNil, pathOr } from 'ramda';
-import { useAnchorElement, useCrosslinking } from '@kleeen/react/hooks';
+import { isLinkFilterableByEntityType, useAnchorElement } from '@kleeen/react/hooks';
 
 import { ArrowPoint } from '../arrowPoint/ArrowPoint';
 import { BootstrapTooltip } from './bootstrap-tooltip';
 import { ClickableChipsCell } from './ClickableChips/ClickableChipsCell';
+import { KsContextMenu } from '../context-menu/context-menu';
+import KsDisplayMedia from '../KsDisplayMedia/KsDisplayMedia';
 import { NEW_ROW_ID_PREFIX } from '@kleeen/common/utils';
 import { TextFormatter } from '../textFormatter/TextFormatter';
 import classNames from 'classnames';
 import { isAttributeNumericType } from '@kleeen/frontend/utils';
+import { useStyles } from './ContextCell.style';
 
 const MAX_TEXT_LENGTH = 15;
 
 export function ContextCell(props: ContextMenuProps): ReactElement {
   const { anchorEl, handleClick, handleClose } = useAnchorElement();
-  const { crosslink } = useCrosslinking();
   const classes = useStyles();
 
   const cell = props.cell as Cell;
@@ -80,15 +79,6 @@ export function ContextCell(props: ContextMenuProps): ReactElement {
   };
   const tooltipTitle = showAppliedTruncated ? results : '';
 
-  function onCellClick(e) {
-    if (validCrosslinks.length === 1 && !props.attr?.isFilterable?.in) {
-      const [onlyValidLink] = validCrosslinks;
-      crosslink(onlyValidLink.slug, cell, props.attr);
-    } else {
-      handleClick(e);
-    }
-  }
-
   return (
     <>
       {props.hasDisplayMedia && cell.displayMedia.type !== DisplayMediaType.Svg && (
@@ -102,7 +92,7 @@ export function ContextCell(props: ContextMenuProps): ReactElement {
       {validCrosslinks.length > 0 || props.attr?.isFilterable?.in ? (
         <BootstrapTooltip placement="top" title={tooltipTitle}>
           <div className={classNames('context-menu-button', textClasses)}>
-            <span className="cell" onClick={onCellClick}>
+            <span className="cell" onClick={handleClick}>
               {resultsElement}
             </span>
           </div>
@@ -110,12 +100,14 @@ export function ContextCell(props: ContextMenuProps): ReactElement {
       ) : (
         <BootstrapTooltip placement="top" title={tooltipTitle}>
           <div className={classNames('context-menu-only-text', textClasses)}>
-            <span className="cell">{resultsElement}</span>
+            <span className="cell" onClick={handleClick}>
+              {resultsElement}
+            </span>
           </div>
         </BootstrapTooltip>
       )}
       {Boolean(anchorEl) && (
-        <ContextMenu attr={props.attr} cell={cell} handleClose={handleClose} anchorEl={anchorEl} />
+        <KsContextMenu attr={props.attr} cell={cell} handleClose={handleClose} anchorEl={anchorEl} />
       )}
     </>
   );

@@ -5,10 +5,13 @@ import { environment } from '@kleeen/environment';
 import { useKleeenActions } from './useKleeenActions';
 import { useKleeenContext } from './useKleeenContext';
 import { v4 as uuidv4 } from 'uuid';
+import { useAutoRefresh } from './useAutoRefresh';
 
 const WS_BASE = environment.settings.middlewareAPI;
 
-export const WebSocketContext = createContext({});
+export const WebSocketContext: React.Context<{
+  socket?: Socket;
+}> = createContext({});
 
 let socket: Socket;
 
@@ -20,7 +23,7 @@ export function useWebSocket() {
 export const WebSocketProvider = ({ children }) => {
   let ws: { socket: Socket };
   const { currentUser } = useKleeenContext('endUser');
-
+  const { autoRefreshSource } = useAutoRefresh();
   const { addNotification } = useKleeenActions('ksNotifications');
 
   useEffect(() => {
@@ -46,9 +49,9 @@ export const WebSocketProvider = ({ children }) => {
         });
       });
 
-      ws = {
-        socket,
-      };
+      socket.on('event://auto-refresh', (msg: string | string[]) => {
+        autoRefreshSource.next(msg);
+      });
     }
 
     return () => {
@@ -61,6 +64,10 @@ export const WebSocketProvider = ({ children }) => {
       socket.emit('event://user-connected', currentUser?.username);
     }
   }, [socket, currentUser?.username]);
+
+  ws = {
+    socket,
+  };
 
   return <WebSocketContext.Provider value={ws}>{children}</WebSocketContext.Provider>;
 };

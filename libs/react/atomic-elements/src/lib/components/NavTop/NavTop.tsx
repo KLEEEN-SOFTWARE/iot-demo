@@ -1,7 +1,6 @@
 import './NavTop.scss';
 
 import { AppBar, Button, Toolbar, Typography } from './NavTop.style';
-import { NavTopProps } from './NavTop.model';
 import React, { MouseEvent, useRef, useState } from 'react';
 
 import { AccessControl } from '@kleeen/core-react';
@@ -10,6 +9,8 @@ import Avatar from '@material-ui/core/Avatar';
 import HelpOutlineOutlinedIcon from '@material-ui/icons/HelpOutlineOutlined';
 import MenuIcon from '@material-ui/icons/Menu';
 import MenuListSection from './MenuListSection/index';
+import { NavTopProps } from './NavTop.model';
+import Tooltip from '@material-ui/core/Tooltip';
 import { roleAccessKeyTag } from '@kleeen/common/utils';
 import { useLocation } from 'react-router-dom';
 import { useNavigation } from '@kleeen/react/hooks';
@@ -89,7 +90,9 @@ export const NavTop = (props: NavTopProps): JSX.Element => {
                     }}
                   >
                     <>
-                      {title}
+                      <Tooltip title={title} placement="top">
+                        <span className="nav-button-text">{title}</span>
+                      </Tooltip>
                       <div className="nav-circle"></div>
                     </>
                   </Button>

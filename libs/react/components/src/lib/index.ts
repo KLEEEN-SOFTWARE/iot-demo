@@ -1,7 +1,6 @@
 export { ListingModal, ListingModalSettings } from './ListingModal/ListingModal';
 
 export { default as ActionsSection } from './ActionsSection/ActionSection';
-export { default as KsContextMenu } from './ksContextMenu/ksContextMenu';
 export { default as KsDisplayMedia } from './KsDisplayMedia/KsDisplayMedia';
 export { default as KsFilledCircle } from './ksFilledCircle/ksFilledCircle';
 export { default as KsGrid } from './ksGrid/ksGrid.jsx';
@@ -16,6 +15,7 @@ export { default as RefreshControl } from './refreshControl';
 export { default as useKsActionsManager } from './ActionDialogs/ActionManager';
 
 export * from './ActionDialogs';
+export * from './auto-refresh-control';
 export * from './ActionsMenu/ActionsMenu';
 export * from './Icon';
 export * from './Loader/Loader';
@@ -33,7 +33,7 @@ export * from './circularProgress';
 export * from './colorPicker';
 export * from './config-table';
 export * from './contextCell';
-export * from './contextMenu';
+export * from './context-menu';
 export * from './date-interval';
 export * from './date-time';
 export * from './dialog';

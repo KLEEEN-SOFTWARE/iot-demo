@@ -7,6 +7,8 @@ export default {
   'ks-view-ozFw5fbSFqWz82tFnVgnAm': { path: './assets/icons/programming-search-browser.svg', alt: 'Listing' },
   // View Icon for Experience: Table of Node on Workflow: Nodes
   'ks-view-8yyhmnH4a88SWwvb4pJkWx': { path: './assets/icons/app-window-settings.svg', alt: 'Listing' },
+  // View Icon for Experience: Table of Node 2 on Workflow: Nodes
+  'ks-view-bRvAsqbD1Grea8u62NutCG': { path: './assets/icons/tv-flat-screen.svg', alt: 'Listing' },
   // View Icon for Experience: Table of Sensor on Workflow: Sensors
   'ks-view-gnRpJXqsZaxnoEGRxQVSY4': { path: './assets/icons/alarm-clock-1-alternate.svg', alt: 'Listing' },
   // View Icon for Experience: Dashboard on Workflow: System

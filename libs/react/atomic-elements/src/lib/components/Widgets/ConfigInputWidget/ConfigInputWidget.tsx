@@ -9,7 +9,7 @@ import {
   elementCase,
   transformationElements,
 } from './ConfigInputWidget.model';
-import { ContextMenu, Loader } from '@kleeen/react/components';
+import { KsContextMenu, Loader } from '@kleeen/react/components';
 import React, { ReactElement, useEffect, useState } from 'react';
 import { isEmpty, isNil, pathOr } from 'ramda';
 import {
@@ -408,7 +408,7 @@ export function ConfigInputWidget({
         )}
       </div>
       {Boolean(anchorEl) && (
-        <ContextMenu attr={soloAttribute} cell={cell} handleClose={handleClose} anchorEl={anchorEl} />
+        <KsContextMenu attr={soloAttribute} cell={cell} handleClose={handleClose} anchorEl={anchorEl} />
       )}
     </>
   );

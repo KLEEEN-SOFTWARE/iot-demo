@@ -2,9 +2,27 @@
   align-items: center;
   display: flex;
 
+  &.highlighted {
+    height: 100%;
+    width: 100%;
+  }
+
+  .text-highlighted {
+    font-size: var(--tx-5XL);
+    font-weight: 600;
+    width: 50%;
+    height: 25%;
+  }
+
   > svg {
     font-size: inherit;
     margin-right: var(--pm-3XS);
+
+    &.highlighted {
+      color: hsla(var(--on-surface-color-hsl), 0.7);
+      height: var(--wh-1XS);
+      width: var(--wh-1XS);
+    }
 
     &.arrow-up {
       transform: rotate(-90deg);
