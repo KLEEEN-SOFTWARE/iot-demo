@@ -1,16 +1,23 @@
 .card-section {
-  width: 100%;
+  align-items: flex-start;
+  column-gap: var(--pm-1XL);
   display: grid;
   grid-auto-flow: row;
-  grid-template-columns: repeat(auto-fit, calc(var(--wh-8XL) + var(--pm-L) + var(--pm-L)));
-  column-gap: var(--pm-1XL);
-
   grid-auto-rows: var(--wh-6XS);
-  align-items: flex-start;
+  grid-template-columns: repeat(auto-fit, var(--card-width-M));
+  width: 100%;
+
+  &.single-wide-column {
+    grid-template-columns: var(--card-width-L);
+
+    .card-widget {
+      width: var(--card-width-L);
+    }
+  }
 
   .card-widget {
     background-color: var(--card-bg-color);
-    width: calc(var(--wh-8XL) + var(--pm-L) + var(--pm-L));
+    width: var(--card-width-M);
     box-shadow: var(--card-shadow);
     border-radius: var(--card-border-radius);
     border: var(--card-border);

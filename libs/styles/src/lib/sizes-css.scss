@@ -121,6 +121,9 @@
   --card-viz-height-L: var(--wh-6XL);
   --card-viz-height-XL: var(--wh-7XL);
 
+  --card-width-M: calc(var(--wh-8XL) + var(--pm-L) + var(--pm-L));
+  --card-width-L: calc(2 * (var(--wh-8XL) + var(--pm-L) + var(--pm-L)));
+
   //Navigation bar
   --left-nav-bar-width: var(--wh-6XL);
 }

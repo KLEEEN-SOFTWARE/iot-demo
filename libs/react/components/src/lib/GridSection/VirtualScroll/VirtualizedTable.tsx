@@ -1,7 +1,7 @@
 import { AutoSizer, Column, InfiniteLoader, Table, defaultTableRowRenderer } from 'react-virtualized';
 import React, { ReactElement, useEffect, useState } from 'react';
 import { SortableContainer, SortableElement, SortableHandle, arrayMove } from 'react-sortable-hoc';
-import { useTheme, useUserInfo } from '@kleeen/react/hooks';
+import { useTheme, useUserInfo, useLocalStorage } from '@kleeen/react/hooks';
 
 import CellRenderer from './CellRenderer/';
 import DragIndicatorIcon from '@material-ui/icons/DragIndicator';
@@ -97,16 +97,16 @@ function MuiVirtualizedTable({
   getMoreRows,
   orderColumnName,
   widgetId,
+  columnWidth = 178,
   ...tableProps
 }: MuiVirtualizedTableProps): ReactElement {
-  const minWidth = 178 * columns.length;
+  const minWidth = columnWidth * columns.length;
   const list = columns[0].props?.entity?.data;
   const pagination = columns[0].props?.entity?.pagination;
   const remoteRowCount = pagination?.totalCount ?? list?.length;
 
   const [listingModalSettings, setIsListingModalOpen] = useState<ListingModalSettings>(initialModelSettings);
   const [isLoadingMoreRows, setIsLoadingMoreRows] = useState(false);
-  const [columnsState, setColumnsState] = useState(columns || []);
   const [columnsOrderChanged, setColumnsOrderChanged] = useState(false);
   const displayColumnAttribute = attributes.find((attribute) => attribute.isDisplayValue);
   const { themeClass } = useTheme();
@@ -117,21 +117,16 @@ function MuiVirtualizedTable({
   const _user = useUserInfo();
   const userName = _user?.userInfo?.username;
   const keyOfLocalStorage = userName ? `order-of-columns-${userName}-${widgetId}` : '';
+  const {
+    localStorageValue: columnsState,
+    setLocalStorageValue: setColumnsState,
+    removeLocalStorageValue,
+  } = useLocalStorage(keyOfLocalStorage, columns || []);
 
   function handleOnColumnSort(oldIndex, newIndex) {
-    _storage.setItem(keyOfLocalStorage, JSON.stringify(arrayMove(columnsState, oldIndex, newIndex)));
     setColumnsState(arrayMove(columnsState, oldIndex, newIndex));
     setColumnsOrderChanged(!columnsOrderChanged);
   }
-
-  useEffect(() => {
-    const localStorageColumns = JSON.parse(_storage.getItem(keyOfLocalStorage));
-    if (localStorageColumns) {
-      if (localStorageColumns.length > 0) {
-        setColumnsState(localStorageColumns);
-      }
-    }
-  }, [columnsOrderChanged, keyOfLocalStorage]);
 
   function setInputValue(index, value) {
     setInputValues({

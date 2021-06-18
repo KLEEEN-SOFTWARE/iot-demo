@@ -5,6 +5,7 @@ import { Widget } from '@kleeen/react/atomic-elements';
 export interface DataViewDisplaySectionAtomicProps {
   dashboardWidgets: Widget[];
   entityName: string;
+  hasReportView?: boolean;
   selectedRows: Row[];
   setSelectedRows: () => void;
   singleViewWidgets?: Widget[];
@@ -34,6 +35,7 @@ export type DashboardView = {
 export enum ViewType {
   custom = 'Custom',
   dashboard = 'Dashboard',
+  report = 'Report',
   single = 'Single',
   table = 'Table',
 }

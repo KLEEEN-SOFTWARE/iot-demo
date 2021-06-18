@@ -1,13 +1,15 @@
 import './CardSection.scss';
 
-import { CardSectionProps, RenderChildrenProps, Widget } from './CardWidget.model';
+import { CardSectionLayout, CardSectionProps, RenderChildrenProps, Widget } from './CardWidget.model';
 import { ReactElement, ReactNode } from 'react';
 
 import { AccessControl } from '@kleeen/core-react';
 import { TransformToWidgetComponent } from './components';
+import classNames from 'classnames';
 import { roleAccessKeyTag } from '@kleeen/common/utils';
 
 export function CardSection({
+  cardSectionLayout = CardSectionLayout.Masonry,
   children,
   hideSaveAndClose,
   justifyContent = 'flex-start',
@@ -17,7 +19,11 @@ export function CardSection({
   widgets,
 }: CardSectionProps): ReactElement {
   return (
-    <div className="card-section" style={{ justifyContent }} key={`card-section-${taskName}`}>
+    <div
+      className={classNames('card-section', cardSectionLayout)}
+      style={{ justifyContent }}
+      key={`card-section-${taskName}`}
+    >
       {renderChildren({ taskName, widgets, children, registerEvents, hideSaveAndClose, onInputChange })}
     </div>
   );

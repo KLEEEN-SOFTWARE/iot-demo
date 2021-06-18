@@ -3,29 +3,36 @@
     margin-right: auto;
   }
 
+  .menu-nav-button.MuiButton-root {
+    font-size: var(--tx-L);
+    max-width: var(--wh-9XL);
+    min-width: var(--wh-3XL);
+    text-transform: unset;
+  }
+
+  .nav-button-text {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    width: 100%;
+    white-space: nowrap;
+  }
+
   .nav-top-menu {
     width: 50%;
   }
 
-  .menu-nav-button.MuiButton-root {
-    font-size: var(--tx-L);
-    text-transform: unset;
-    min-width: var(--wh-3XL);
-    max-width: var(--wh-9XL);
-  }
-
   .title.MuiTypography-h6 {
-    width: 45%;
     font-size: var(--tx-L);
     padding: var(--pm-1XL);
     text-transform: uppercase;
+    width: 45%;
   }
 
   .toolbar {
     svg {
       height: var(--wh-S);
-      width: var(--wh-S);
       margin: var(--pm-0) var(--pm-M);
+      width: var(--wh-S);
     }
   }
 }

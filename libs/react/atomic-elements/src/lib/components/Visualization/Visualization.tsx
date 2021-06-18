@@ -136,7 +136,7 @@ const renderChildren = (selectedChartType: string, widget: Widget, widgetData: a
     case WidgetTypes.SUMMARY_STATISTICS:
       return <SummaryStatistics attributes={widget.attributes} data={widgetData.data} />;
 
-    case WidgetTypes.TABLE: {
+    case WidgetTypes.SIMPLE_LIST: {
       const { format, crossLinking, results } = widgetData.data || {};
       const parsedAttributes = parseAttributes(widget.attributes, format);
       const { data } = formatDataList({ crossLinking, results, format, params });

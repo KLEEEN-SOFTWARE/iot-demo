@@ -1,3 +1,4 @@
+import './GridAreaSection.scss';
 import React, { ReactElement } from 'react';
 import { useKleeenActions, useUrlQueryParams, useWidgetContext } from '@kleeen/react/hooks';
 
@@ -16,6 +17,8 @@ export interface GridAreaSectionProps {
   widget: Widget;
   entityId?: string;
   sortableColumns?: boolean;
+  columnWidth?: number;
+  className?: string;
 }
 
 export const GridAreaSection = (props: GridAreaSectionProps): ReactElement => {

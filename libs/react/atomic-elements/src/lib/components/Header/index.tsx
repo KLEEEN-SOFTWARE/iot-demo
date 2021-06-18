@@ -1,6 +1,11 @@
 import './Header.scss';
 
-import { ActionsManagerProps, RefreshControl, useKsActionsManager } from '@kleeen/react/components';
+import {
+  ActionsManagerProps,
+  KsAutoRefreshControl,
+  RefreshControl,
+  useKsActionsManager,
+} from '@kleeen/react/components';
 import React, { ReactElement } from 'react';
 
 import { isEmpty } from 'ramda';
@@ -33,7 +38,10 @@ export function KsHeader(props: {
         </div>
         <div className="refresh-control-header">
           {!props.hideRefreshControl && (
-            <RefreshControl onRefresh={props.onRefresh} taskName={props.actionsProps.taskName} />
+            <>
+              <RefreshControl onRefresh={props.onRefresh} taskName={props.actionsProps.taskName} />
+              <KsAutoRefreshControl taskName={props.actionsProps.taskName} onRefresh={props.onRefresh} />
+            </>
           )}
         </div>
         {!isEmpty(actions) && <div className={classes.actionsContainer}>{KsActionsSection}</div>}

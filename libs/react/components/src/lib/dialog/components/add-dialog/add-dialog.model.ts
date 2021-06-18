@@ -22,7 +22,7 @@ export interface BaseAddDialogProps extends DialogProps {
   taskName: string;
 }
 
-interface CurrentRowsProps extends RowData {
+export interface CurrentRowsProps extends RowData {
   objectId: {
     displayValue: number;
   };

@@ -2,6 +2,7 @@ import { BaseDisplayComponentsProps, TrendFormat } from '@kleeen/types';
 
 import Highcharts from 'highcharts';
 import HighchartsReact from 'highcharts-react-official';
+import classNames from 'classnames';
 import { clone } from 'ramda';
 import { generalBaseOptions } from '../../../generalBaseOptions';
 import { getOptions } from '../../../../utils/highchart-options';
@@ -14,13 +15,18 @@ interface BaseTrendProps extends BaseDisplayComponentsProps {
   dataRaw?: number[];
   highlightEnd?: boolean;
   highlightStart?: boolean;
+  highlighted?: boolean;
 }
 
 export function BaseTrend(props: BaseTrendProps) {
   const classes = useStyles();
-
   return (
-    <div className={classes.content}>
+    <div
+      className={classNames({
+        [classes.content]: !props.highlighted,
+        [classes.mainTrend]: props.highlighted,
+      })}
+    >
       <Trend {...props} />
     </div>
   );

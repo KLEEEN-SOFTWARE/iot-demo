@@ -13,9 +13,13 @@ interface BasePieProps extends BaseDisplayComponentsProps {
 
 const baseOptions: Highcharts.Options = merge({}, generalBaseOptions, {} as Highcharts.Options);
 
-export function BasePie({ data }: BasePieProps) {
+export function BasePie({ data, highlighted }: BasePieProps) {
   const containerProps = {
-    style: { height: displayWithVizHeight, width: displayWithVizHeight, marginRight: 'var(--pm-2XS)' },
+    style: {
+      height: highlighted ? 'var(--wh-1XS)' : displayWithVizHeight,
+      width: highlighted ? 'var(--wh-1XS)' : displayWithVizHeight,
+      marginRight: 'var(--pm-2XS)',
+    },
   };
   const options = getOptions(baseOptions);
   const pieOptions: Highcharts.Options = merge({}, options, {
@@ -32,7 +36,7 @@ export function BasePie({ data }: BasePieProps) {
         dataLabels: {
           enabled: false,
         },
-        size: 16,
+        size: highlighted ? 32 : 16,
         states: {
           hover: {
             enabled: false,

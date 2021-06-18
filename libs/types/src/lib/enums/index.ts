@@ -66,6 +66,24 @@ export enum NavPosition {
   top = 'nav-top',
 }
 
+export enum FilterOperators {
+  max = 'max',
+  from = 'from',
+  min = 'min',
+  in = '_in',
+  to = 'to',
+  relativeDate = 'relativeDate',
+}
+
+export const FilterForNumerics = [
+  'Data - Numeric - Discrete',
+  'Data - Numeric',
+  'Data - Numeric - Continuous',
+  'Data - Numeric - Percentage',
+  'Data - Numeric - NTG - Discrete',
+  'Data - Numeric - NTG - Severity Ranking',
+];
+
 export const SameSDTAggregations = [
   AggregationType.Average,
   AggregationType.Latest,

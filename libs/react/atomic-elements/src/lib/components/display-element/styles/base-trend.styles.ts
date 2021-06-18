@@ -7,4 +7,8 @@ export const useStyles = makeStyles({
     height: displayWithVizHeight,
     width: displayWithVizWidth,
   },
+  mainTrend: {
+    height: 'var(--wh-L)',
+    width: 'calc(var(--wh-5XL) - var(--wh-1XS))',
+  },
 });

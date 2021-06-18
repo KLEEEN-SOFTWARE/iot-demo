@@ -7,6 +7,7 @@ import {
 import { isNilOrEmpty, roleAccessKeyTag, sortByKeys } from '@kleeen/common/utils';
 
 import CardSection from '../CardSection/CardSection';
+import { CardSectionLayout } from '../CardSection/CardWidget.model';
 import CustomView from '../CustomView/CustomView';
 import DataViewDisplaySection from './DataViewDisplaySection';
 import FullViewViz from '../FullViewViz/FullViewViz';
@@ -22,6 +23,7 @@ export const DataViewDisplaySectionAtomic = React.memo((props: DataViewDisplaySe
   const {
     atomicCustomViews = [],
     dashboardWidgets = [],
+    hasReportView = false,
     selectedRows,
     setSelectedRows,
     singleViewWidgets = [],
@@ -31,7 +33,7 @@ export const DataViewDisplaySectionAtomic = React.memo((props: DataViewDisplaySe
   } = props;
 
   const accessControlFilterViews = (view: Widget & { type: ViewType }): boolean => {
-    if (view.type === ViewType.dashboard) {
+    if (view.type === ViewType.dashboard || view.type === ViewType.report) {
       return (
         useAccessControlChecker(roleAccessKeyTag(`${props.taskName}.views.dashboard`)).permission ===
         permissionOk
@@ -48,7 +50,7 @@ export const DataViewDisplaySectionAtomic = React.memo((props: DataViewDisplaySe
     ...singleViewWidgets.map((widget) => ({ ...widget, type: ViewType.single })),
     ...atomicCustomViews.map((widget) => ({ ...widget, type: ViewType.custom })),
     ...tableWidgets.map((widget) => ({ ...widget, type: ViewType.table })),
-    ...generateDashboardViews(dashboardWidgets),
+    ...generateCardSectionViews(dashboardWidgets, hasReportView),
   ];
 
   const orderedTaskViews = sortByKeys<Widget & { type: ViewType }>(taskViews, ['viewOrder', 'viewId']);
@@ -66,12 +68,12 @@ export const DataViewDisplaySectionAtomic = React.memo((props: DataViewDisplaySe
   const children = orderedTaskViews.reduce((views, view) => {
     if (!isNilOrEmpty(view) && isTheIndexToRender() && accessControlFilterViews(view)) {
       return resolveViews({
-        widget: view,
-        setSelectedRows,
-        selectedRows,
-        indexToRender,
-        taskName,
         dashboardWidgets,
+        indexToRender,
+        selectedRows,
+        setSelectedRows,
+        taskName,
+        widget: view,
       });
     }
     return views;
@@ -80,16 +82,16 @@ export const DataViewDisplaySectionAtomic = React.memo((props: DataViewDisplaySe
 });
 
 // This will work just for the current implementation of one dashboard per task
-function generateDashboardViews(dashboardWidgets: Widget[]): DashboardView[] {
+function generateCardSectionViews(dashboardWidgets: Widget[], hasReportView: boolean): DashboardView[] {
   if (isNilOrEmpty(dashboardWidgets)) return [];
-
-  const [firsWidget] = dashboardWidgets;
+  const viewType = hasReportView ? ViewType.report : ViewType.dashboard;
+  const [firstWidget] = dashboardWidgets;
   return [
     {
       dashboardWidgets,
-      type: ViewType.dashboard,
-      viewOrder: firsWidget?.viewOrder,
-      viewId: firsWidget?.viewId,
+      type: viewType,
+      viewOrder: firstWidget?.viewOrder,
+      viewId: firstWidget?.viewId,
     },
   ];
 }
@@ -121,16 +123,25 @@ function resolveViews({
         widgets={dashboardWidgets}
       />
     ),
+    [ViewType.report]: () => (
+      <CardSection
+        cardSectionLayout={CardSectionLayout.SingleWideColumn}
+        justifyContent="center"
+        key={`data-view-display-section-card-section-${indexToRender}`}
+        taskName={taskName}
+        widgets={dashboardWidgets}
+      />
+    ),
     [ViewType.table]: () => (
       <GridAreaSection
+        entityId={widget.attributes[0].id}
         entityName={widget.params.baseModel}
         key={`data-view-display-section-grid-area-section-${widget.id}`}
         selectedRows={selectedRows}
         setSelectedRows={setSelectedRows}
+        sortableColumns={true}
         taskName={taskName}
         widget={widget}
-        entityId={widget.attributes[0].id}
-        sortableColumns={true}
       />
     ),
   };

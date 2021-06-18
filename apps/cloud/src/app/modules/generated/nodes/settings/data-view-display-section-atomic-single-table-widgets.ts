@@ -28,7 +28,7 @@ export const dataViewDisplaySectionAtomicSingleTableWidgets = [
         dataType: 'string',
         formatType: 'prime',
         deepDataType: null,
-        description: '',
+        description: 'Network Nodes',
         hasMany: null,
         id: 120421,
         isComplexObject: null,

@@ -14,7 +14,7 @@ export const CardWidget = ({
   selectedViz,
   title,
   widgetSelector = null,
-  disabled
+  disabled,
 }: CardWidgetProps): JSX.Element => {
   const contentRef = useRef<HTMLDivElement>(null);
   const [spans, setSpans] = useState(0);
@@ -41,14 +41,14 @@ export const CardWidget = ({
 
   useEffect(() => {
     updateLayout(contentRef.current.clientHeight);
-  }, [selectedViz, spans]);
+  }, [selectedViz, spans, children]);
 
   const handleImageLoad = (event): void => {
     updateLayout(event.target.clientHeight + cardStyle.imgOffset);
   };
 
   return (
-    <div className={classnames('card-widget', { 'disabled': disabled })} style={cardSpan}>
+    <div className={classnames('card-widget', { disabled })} style={cardSpan}>
       {!hideTitle && <CardTitle title={title} icon={icon} />}
       <div className="content" ref={contentRef} onLoad={handleImageLoad}>
         <MasonryProvider updateLayout={updateLayout}>{children}</MasonryProvider>

@@ -8,6 +8,7 @@ export function ConfigTableActions({
   attributes,
   context,
   entityActions,
+  entityName,
   onAddAction,
   skinny,
   taskName,
@@ -15,10 +16,11 @@ export function ConfigTableActions({
   const { KsActionDialogs, KsActionsSection } = useKsActionsManager({
     actions,
     attributes,
+    context,
     entityActions,
+    entityName,
     onAddAction,
     skinny,
-    context,
     taskName,
   });
 

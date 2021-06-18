@@ -22,6 +22,8 @@ export const dataViewControlSectionViewOptions = [
     entityName: 'Sensor',
     modalAttributes: [
       { name: 'sensor' },
+      { name: 'ppm' },
+      { name: 'node' },
       { name: 'sensorOverallStatus' },
       { name: 'sensorStatus' },
       { name: 'siteMap' },

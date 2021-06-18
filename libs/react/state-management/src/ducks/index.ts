@@ -55,7 +55,6 @@ export function configureStore(): StoreWithLazyLoading {
     createReducer({}),
     composeEnhancers(applyMiddleware(epicMiddleware)),
   );
-
   // Add a dictionary to keep track of the registered async reducers
   store.asyncReducers = {};
 
@@ -64,7 +63,8 @@ export function configureStore(): StoreWithLazyLoading {
   store.injectReducer = (key: string, asyncReducer: Reducer, asyncEpic: Epic) => {
     if (!store.asyncReducers[key]) {
       store.asyncReducers[key] = asyncReducer;
-      store.replaceReducer(createReducer(store.asyncReducers));
+      const appReducer = createReducer(store.asyncReducers);
+      store.replaceReducer(getReducer(appReducer));
       epic$.next(combineEpics(...Object.values(asyncEpic)));
     }
     return store;
@@ -78,6 +78,16 @@ export function configureStore(): StoreWithLazyLoading {
   epicMiddleware.run(rootEpic as Epic);
 
   return store;
+}
+
+function getReducer(appReducer) {
+  return (state, action) => {
+    // when a logout action is dispatched it will reset redux state
+    if (action.type === 'endUser/logout') {
+      return appReducer(undefined, action);
+    }
+    return appReducer(state, action);
+  };
 }
 
 function createReducer(asyncReducers): Reducer {

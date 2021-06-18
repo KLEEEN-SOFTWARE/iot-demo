@@ -30,6 +30,8 @@ export const entityResolvers: IResolvers = {
     autoComplete120420: (_parent, params, { dataSources }) => ({
       data: dataSources.api120420.getAutoCompleteValues(params.input),
     }),
+    flag120420: (_parent, params, { dataSources }): DispatchCustomActionResults =>
+      dataSources.api120420.customAction_flag(params.input),
 
     // Node Resolvers
     add120421: (_parent, { input }, { dataSources }) => ({
@@ -160,5 +162,35 @@ export const entityResolvers: IResolvers = {
     autoComplete120429: (_parent, params, { dataSources }) => ({
       data: dataSources.api120429.getAutoCompleteValues(params.input),
     }),
+
+    // Ppm Resolvers
+    add135534: (_parent, { input }, { dataSources }) => ({
+      data: dataSources.api135534.addEntity(input.entity, input.parent),
+    }),
+    list135534: (_parent, args, { dataSources }) => ({ data: dataSources.api135534.listEntity(args) }),
+    get135534: (_parent, { id }, { dataSources }) => ({ data: dataSources.api135534.getEntity(id) }),
+    delete135534: (_parent, { id }, { dataSources }) => ({ data: dataSources.api135534.deleteEntity(id) }),
+    update135534: (_parent, { entity }, { dataSources }) => ({
+      data: dataSources.api135534.updateEntity(entity),
+    }),
+    autoComplete135534: (_parent, params, { dataSources }) => ({
+      data: dataSources.api135534.getAutoCompleteValues(params.input),
+    }),
+
+    // EventLength Resolvers
+    add135535: (_parent, { input }, { dataSources }) => ({
+      data: dataSources.api135535.addEntity(input.entity, input.parent),
+    }),
+    list135535: (_parent, args, { dataSources }) => ({ data: dataSources.api135535.listEntity(args) }),
+    get135535: (_parent, { id }, { dataSources }) => ({ data: dataSources.api135535.getEntity(id) }),
+    delete135535: (_parent, { id }, { dataSources }) => ({ data: dataSources.api135535.deleteEntity(id) }),
+    update135535: (_parent, { entity }, { dataSources }) => ({
+      data: dataSources.api135535.updateEntity(entity),
+    }),
+    autoComplete135535: (_parent, params, { dataSources }) => ({
+      data: dataSources.api135535.getAutoCompleteValues(params.input),
+    }),
+    flag135535: (_parent, params, { dataSources }): DispatchCustomActionResults =>
+      dataSources.api135535.customAction_flag(params.input),
   },
 };

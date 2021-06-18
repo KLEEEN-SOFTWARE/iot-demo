@@ -84,7 +84,6 @@ function RenderLayout({ showOnboardingPage, modules }) {
   }
   return (
     <>
-      <KsContextMenu />
       <HookableContextMenu />
       <Layout modules={modules} />
     </>

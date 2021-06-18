@@ -2,13 +2,13 @@ import './ClickableChipsCell.scss';
 
 import { Attribute, Cell, FormatProps } from '@kleeen/types';
 import { ClickableChipsCellProps, PreviewChipsProps } from './clickable-chips-cell.model';
-import { ContextMenu, isLinkFilterableByEntityType } from '../../contextMenu/ContextMenu';
-import { useAnchorElement, useCrosslinking } from '@kleeen/react/hooks';
+import React, { useState } from 'react';
+import { isLinkFilterableByEntityType, useAnchorElement, useCrosslinking } from '@kleeen/react/hooks';
 
 import { BootstrapTooltip } from '../bootstrap-tooltip';
 import { KUIConnect } from '@kleeen/core-react';
 import { KsChip } from '../../chip';
-import React from 'react';
+import { KsContextMenu } from '../../context-menu/context-menu';
 import TextFormatter from '../../textFormatter/TextFormatter';
 import { isNil } from 'ramda';
 
@@ -35,50 +35,44 @@ const generateFormattedElements = ({
 };
 
 const PreviewChips = ({ items, attribute, format, translate, validCrosslinks }: PreviewChipsProps) => {
-  const { crosslink } = useCrosslinking();
   const hasCrossLink = validCrosslinks.length >= 1 && !attribute?.isFilterable?.in;
+  const { anchorEl, handleClick, handleClose } = useAnchorElement();
+  const [cellItem, setCellItem] = useState(null);
 
   return (
     <div className="chips-container">
       {items.length ? (
-        items.map((label, i) => {
-          const { anchorEl, handleClick, handleClose } = useAnchorElement();
-
-          function onCrosslinkClick(item) {
-            if (validCrosslinks.length === 1 && !attribute?.isFilterable?.in) {
-              const [onlyValidLink] = validCrosslinks;
-              crosslink(onlyValidLink.slug, item, attribute);
-            } else {
-              handleClick(item);
-            }
-          }
-
-          if (isNil(label)) return;
+        items.map((item, i) => {
+          if (isNil(item)) return null;
           const FormattedElements = generateFormattedElements({
-            label: label.displayValue as string,
+            label: item.displayValue as string,
             attribute,
             format,
           });
+
           return (
-            label && (
+            item && (
               <>
                 <BootstrapTooltip key={i} placement="top" title={FormattedElements}>
                   <KsChip
                     label={FormattedElements}
-                    className={hasCrossLink && 'clickable'}
-                    onClick={validCrosslinks.length > 1 ? onCrosslinkClick : () => onCrosslinkClick(items[i])}
+                    className={hasCrossLink ? 'clickable' : ''}
+                    onClick={(e) => {
+                      handleClick(e);
+                      setCellItem(item);
+                    }}
                   />
                 </BootstrapTooltip>
-
-                {Boolean(anchorEl) && (
-                  <ContextMenu attr={attribute} cell={label} handleClose={handleClose} anchorEl={anchorEl} />
-                )}
               </>
             )
           );
         })
       ) : (
         <span className="no-chips-label">{`${translate('app.no')} ${attribute?.name}`}</span>
+      )}
+
+      {Boolean(anchorEl) && (
+        <KsContextMenu attr={attribute} cell={cellItem} handleClose={handleClose} anchorEl={anchorEl} />
       )}
     </div>
   );

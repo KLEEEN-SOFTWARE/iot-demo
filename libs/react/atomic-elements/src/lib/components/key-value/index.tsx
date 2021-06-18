@@ -8,15 +8,15 @@ const defaultLayoutProps = {
   valueWidth: 233,
 };
 
-export function KeyValue({ keyComponent, layoutProps, valueComponent }: KeyValueProps) {
+export function KeyValue({ highlighted, keyComponent, layoutProps, valueComponent }: KeyValueProps) {
   const classes = useStyles({ ...defaultLayoutProps, ...layoutProps });
 
   return (
     <div className={classNames('key-value', classes.content)}>
       <MuiTooltip title={keyComponent} placement="top">
-        <span className={classNames('key-value__key', classes.key)}>{keyComponent}</span>
+        <span className={classNames('key-value__key', classes.key, { highlighted })}>{keyComponent}</span>
       </MuiTooltip>
-      <div className={classNames('key-value__value', classes.value)}>{valueComponent}</div>
+      <div className={classNames('key-value__value', classes.value, { highlighted })}>{valueComponent}</div>
     </div>
   );
 }

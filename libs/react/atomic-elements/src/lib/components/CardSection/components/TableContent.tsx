@@ -59,7 +59,7 @@ export const TableContent = ({ widgets, widgetsRefs, containerId }: any): ReactE
     >
       {widgets.map((widget) => {
         return (
-          <Button className={classes.buttonMenu} onClick={() => handleScroll(widget.id)}>
+          <Button key={widget.id} className={classes.buttonMenu} onClick={() => handleScroll(widget.id)}>
             <ProgressBar widgetRef={widgetsRefs[widget.id]} containerId={containerId} />
             <span className={classes.title}>{widget.title}</span>
           </Button>

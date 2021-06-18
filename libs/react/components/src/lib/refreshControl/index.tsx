@@ -1,19 +1,20 @@
+import { Pause, PlayArrow } from '@material-ui/icons';
 import React, { ChangeEvent, ReactElement, useEffect, useRef, useState } from 'react';
-
-import { CircularProgress } from '../circularProgress';
-import { KUIConnect } from '@kleeen/core-react';
-import { PlayArrow, Pause } from '@material-ui/icons';
-import { RefreshControlProps } from './refreshControl.model';
-import { TimeIntervals } from '@kleeen/types';
-import { useStyles, usePopOverStyles } from './refreshControl.style';
-import { useTheme, useUserInfo } from '@kleeen/react/hooks';
-import { StorageHelper } from '@aws-amplify/core';
 import {
-  RefreshControlSelect,
   RefreshControlFab,
   RefreshControlListSubheader,
   RefreshControlMenuItem,
+  RefreshControlSelect,
 } from './refreshControl.components';
+import { useAutoRefresh, useLocalStorage, useTheme, useUserInfo } from '@kleeen/react/hooks';
+import { usePopOverStyles, useStyles } from './refreshControl.style';
+
+import { CircularProgress } from '../circularProgress';
+import { KUIConnect } from '@kleeen/core-react';
+import { RefreshControlProps } from './refreshControl.model';
+import { StorageHelper } from '@aws-amplify/core';
+import { Subscription } from 'rxjs/internal/Subscription';
+import { TimeIntervals } from '@kleeen/types';
 
 const REFRESH = 0;
 const MIN_INTERVAL = 0.25;
@@ -24,6 +25,10 @@ const RefreshControl = ({ onRefresh, translate, taskName }: RefreshControlProps)
   const _user = useUserInfo();
   const userName = _user?.userInfo?.username;
   const keyOfLocalStorage = userName ? `current-interval-${userName}-${taskName}` : '';
+  const { localStorageValue, setLocalStorageValue, removeLocalStorageValue } = useLocalStorage(
+    keyOfLocalStorage,
+    DEFAULT_INTERVAL,
+  );
   const classes = useStyles();
   const popoverClasses = usePopOverStyles();
   const { themeClass } = useTheme();
@@ -33,6 +38,9 @@ const RefreshControl = ({ onRefresh, translate, taskName }: RefreshControlProps)
   const currentInterval = useRef(MIN_INTERVAL);
   const updateAt = useRef(Date.now() + currentInterval.current * 60 * 1000);
   const currentTime = useRef(Date.now() + 5 * 60 * 1000);
+  const { autoRefresh$ } = useAutoRefresh();
+  let autoRefreshSubscription: Subscription;
+  currentInterval.current = localStorageValue;
 
   const togglePause = (): void => {
     isTimerPaused.current = !isTimerPaused.current;
@@ -42,6 +50,19 @@ const RefreshControl = ({ onRefresh, translate, taskName }: RefreshControlProps)
   const updateAtCurrent = () => {
     updateAt.current = Date.now() + currentInterval.current * 60 * 1000;
   };
+
+  const ResetControl = () => {
+    setPercent(0);
+    updateAtCurrent();
+  };
+
+  React.useEffect(() => {
+    autoRefreshSubscription = autoRefresh$.subscribe((workflows: string | string[]) => {
+      if (workflows.includes(taskName)) ResetControl();
+    });
+
+    return () => autoRefreshSubscription.unsubscribe();
+  }, []);
 
   useEffect(() => {
     const localStorageInterval = JSON.parse(_storage.getItem(keyOfLocalStorage));
@@ -60,9 +81,8 @@ const RefreshControl = ({ onRefresh, translate, taskName }: RefreshControlProps)
 
   const onTimeIntervalChange = (intervalInMinutes: number): void => {
     currentInterval.current = intervalInMinutes;
-    _storage.setItem(keyOfLocalStorage, intervalInMinutes.toString());
-    setPercent(0);
-    updateAtCurrent();
+    ResetControl();
+    setLocalStorageValue(intervalInMinutes.toString());
   };
 
   const progress = (): void => {

@@ -6,10 +6,9 @@ import {
   FiltersAddedState,
   FilterSectionEnum,
   materialAutocompleteClearSignal,
-  Operator,
   optionsByStatisticalType,
 } from '../FilterSection.model';
-import { TimestampKey } from '@kleeen/types';
+import { FilterOperators, TimestampKey } from '@kleeen/types';
 import React, { ReactElement, useEffect, useState } from 'react';
 import moment from 'moment';
 
@@ -22,7 +21,7 @@ const FilterCreator = ({
 }: {
   categoryFilterOptions: FilterOption[];
   filterOptionsByCategory: Record<string, FilterOption[]>;
-  addFilter: (category: string, operator: Operator, value: string | number) => void;
+  addFilter: (category: string, operator: FilterOperators, value: string | number) => void;
   setIsApplyDisabled: (value: boolean) => void;
   filtersAdded: FiltersAddedState;
 }): ReactElement => {
@@ -70,7 +69,7 @@ const FilterCreator = ({
     } else if (name) {
       // * We use the timestamp key to know that the value in the query string is timestamp type
       const auxName = valueTimestamp ? `${TimestampKey.key}${valueTimestamp}` : name;
-      addFilter(currentCategory, Operator.in, auxName);
+      addFilter(currentCategory, FilterOperators.in, auxName);
     }
     setOptions(categoryFilterOptions);
     setCurrentCategory('');
@@ -89,7 +88,7 @@ const FilterCreator = ({
   const getOptions = (currentOptions: FilterOption[]): FilterOption[] => {
     if (!currentCategory || !filtersAdded[currentCategory]) return options;
     return currentOptions.filter(
-      (option) => !filtersAdded[currentCategory][Operator.in]?.includes(option.name),
+      (option) => !filtersAdded[currentCategory][FilterOperators.in]?.includes(option.name),
     );
   };
 

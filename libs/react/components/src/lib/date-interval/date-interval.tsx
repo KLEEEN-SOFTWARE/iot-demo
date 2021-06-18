@@ -11,11 +11,10 @@ import { KsButton } from '../button';
 import moment from 'moment';
 
 function DateIntervalBase(props: DateTimeIntervalProps): JSX.Element {
-  const { translate, datePickerState, handleFilter, handleCloseDateFilter } = props;
+  const { translate, datePickerState, handleCloseDateFilter } = props;
   const { from = moment(), to = moment(), setFrom, setTo } = datePickerState;
   const fromValue = from.toDate();
   const toValue = to.toDate();
-
   const defaultValue = {
     from: {
       year: fromValue.getFullYear(),
@@ -47,11 +46,35 @@ function DateIntervalBase(props: DateTimeIntervalProps): JSX.Element {
   };
 
   const applyClick = (): void => {
-    datePickerState.setTo(parserMoment(value.to).moment);
-    datePickerState.setFrom(parserMoment(value.from).moment);
+    if (value.to) {
+      datePickerState.setFrom(parserMoment(value.from).moment);
+      datePickerState.setTo(parserMoment(value.to).moment);
+    } else {
+      const dateToday = new Date();
+      const parsedMomentToday = parserMoment({
+        year: dateToday.getFullYear(),
+        month: dateToday.getMonth() + 1,
+        day: dateToday.getDate(),
+        hours: dateToday.getHours(),
+        minutes: dateToday.getMinutes(),
+      }).moment;
+      const parsedMomentFrom = parserMoment({
+        year: value.from.year,
+        month: value.from.month + 1,
+        day: value.from.day,
+        hours: dateToday.getHours(),
+        minutes: dateToday.getMinutes(),
+      }).moment;
+      if (moment(dateToday).isBefore(`${value.from.year}-${value.from.month + 1}-${value.from.day}`)) {
+        datePickerState.setFrom(parsedMomentToday);
+        datePickerState.setTo(parsedMomentFrom);
+      } else {
+        datePickerState.setFrom(parsedMomentFrom);
+        datePickerState.setTo(parsedMomentToday);
+      }
+    }
 
     handleCloseDateFilter();
-    handleFilter();
   };
 
   const clear = () => {
