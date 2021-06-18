@@ -5,6 +5,10 @@ import { makeStyles } from '@material-ui/core/styles';
 export const useStyles = makeStyles({
   content: {
     display: 'flex',
-    height: displayWithVizHeight,
+    height: '100%',
+    alignItems: 'center',
+    '& > .ks-label': {
+      width: '75%',
+    },
   },
 });

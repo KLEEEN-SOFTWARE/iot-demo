@@ -1,12 +1,6 @@
 import './ButtonFilter.scss';
 
-import {
-  Filter,
-  FilterOption,
-  FilterSectionEnum,
-  Operator,
-  Params,
-} from '../../../FilterSection/FilterSection.model';
+import { Filter, FilterOption, FilterSectionEnum, Params } from '../../../FilterSection/FilterSection.model';
 import { useFilterContext, useFilters } from '@kleeen/react/hooks';
 
 import { ButtonFilterProps } from './ButtonFilter.model';
@@ -17,12 +11,13 @@ import React from 'react';
 import { Tooltip } from '../../../FilterSection/FilterSection.styles';
 import { filterTooltipFunc } from '../../../FilterSection/components/FilterTooltip';
 import { isNil } from 'ramda';
+import { FilterOperators } from '@kleeen/types';
 
 const parseToFilterOptions = (options: string[]): FilterOption[] =>
   options.map((option) => ({
     name: option,
     section: FilterSectionEnum.Values,
-    operator: Operator.in,
+    operator: FilterOperators.in,
   }));
 
 export const ButtonFilter = ({
@@ -38,13 +33,13 @@ export const ButtonFilter = ({
     removeValue,
     addFilter,
     removeCategory,
-    paramsBasedOnRoute,
+    queryParams,
     isApplyWithoutTimeDisabled,
     filtersAdded,
     clearFilters,
     setIsApplyWithoutTime,
   } = useFilters();
-
+  const { paramsBasedOnRoute, version } = queryParams;
   const [filtersAddedClone, setFiltersAddedClone] = React.useState(filtersAdded);
   const [paramsBasedOnRouteClone, setParamsBasedOnRouteClone] = React.useState(paramsBasedOnRoute);
   const handleFilterWithoutTimestampClone = (): void => {
@@ -64,6 +59,10 @@ export const ButtonFilter = ({
       delete paramsBasedOnRouteClone.Timestamp;
     }
   }, [paramsBasedOnRouteClone]);
+
+  React.useEffect(() => {
+    setParamsBasedOnRouteClone(paramsBasedOnRoute);
+  }, [version]);
 
   const availableAttributesToFilter = filtersProps || [];
   const filterSummary = filterTooltipFunc(paramsBasedOnRouteClone, translate);

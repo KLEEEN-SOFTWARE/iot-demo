@@ -5,22 +5,35 @@ import { useEffect, useState } from 'react';
 import queryString from 'query-string';
 import { useHistory } from 'react-router';
 import useUrlQueryParams from './useUrlQueryParams';
+import { useLocalStorage, useUserInfo } from '@kleeen/react/hooks';
+import { isNilOrEmpty } from '@kleeen/common/utils';
 
-enum Operator {
+enum FilterOperators {
   max = 'max',
   min = 'min',
   in = '_in',
 }
 
 interface FilterAdded {
-  [Operator.in]?: Array<string | number>;
-  [Operator.min]?: number;
-  [Operator.max]?: number;
+  [FilterOperators.in]?: Array<string | number>;
+  [FilterOperators.min]?: number;
+  [FilterOperators.max]?: number;
 }
 
 interface FiltersAddedState {
   [category: string]: FilterAdded;
 }
+
+const getInitialState = (params: Record<string, any>) => {
+  const initialState = Object.keys(params).reduce((acc, key) => {
+    return {
+      ...acc,
+      [key]: params[key],
+    };
+  }, {});
+
+  return initialState;
+};
 
 const getFromValueOf = (paramsBasedOnRoute): undefined | Moment => {
   return paramsBasedOnRoute?.Timestamp?.from ? moment(paramsBasedOnRoute?.Timestamp?.from) : undefined;
@@ -33,9 +46,24 @@ const getToValueOf = (paramsBasedOnRoute): undefined | Moment => {
 const getRelativeDateValueOf = (paramsBasedOnRoute): undefined | string => {
   return paramsBasedOnRoute?.Timestamp?.relativeDate;
 };
+let filtersInUse = false;
+
+export const areFiltersInUse = () => {
+  return filtersInUse;
+};
 
 export const useFilters = (hasDateFilter = false) => {
-  const { paramsBasedOnRoute } = useUrlQueryParams({ useNestedObjects: true });
+  const queryParams = useUrlQueryParams({ useNestedObjects: true });
+  const _user = useUserInfo();
+  const userName = _user?.userInfo?.username;
+  const navigation = useHistory();
+  const localStoragekey = userName ? `filters-${navigation.location.pathname}-${userName}` : null;
+  const { localStorageValue, setLocalStorageValue, removeLocalStorageValue } = useLocalStorage(
+    localStoragekey,
+    '',
+  );
+  const { paramsBasedOnRoute, version } = queryParams;
+  filtersInUse = true;
   const [isApplyDisabled, setIsApplyDisabled] = useState(true);
   const [isApplyWithoutTimeDisabled, setIsApplyWithoutTime] = useState(true);
   const [isTimeApplyDisabled, setIsTimeApplyDisabled] = useState(true);
@@ -70,25 +98,53 @@ export const useFilters = (hasDateFilter = false) => {
   }, [to, from, relativeDate]);
 
   useEffect(() => {
-    if (Object.entries(paramsBasedOnRoute).length === 0 && isApplyDisabled && !from && !to && !relativeDate) {
+    return () => {
+      filtersInUse = false;
+    };
+  }, []);
+
+  const applyFilterIntoUrl = (filtersToApply: Record<string, any>): void => {
+    const mapWithStringify = Object.keys(filtersToApply).reduce(
+      (acc, key) => ({
+        ...acc,
+        [key]: JSON.stringify(filtersToApply[key]),
+      }),
+      {},
+    );
+    const urlQuery = queryString.stringify(mapWithStringify);
+    navigation.push(`?${urlQuery}`);
+  };
+
+  useEffect(() => {
+    if (
+      isNilOrEmpty(Object.entries(paramsBasedOnRoute)) &&
+      isApplyDisabled &&
+      !from &&
+      !to &&
+      !relativeDate
+    ) {
       setIsApplyDisabled(true);
       setIsApplyWithoutTime(true);
     }
-  }, [paramsBasedOnRoute, isApplyDisabled]);
+    if (isNilOrEmpty(Object.entries(paramsBasedOnRoute)) && !isNilOrEmpty(localStorageValue)) {
+      applyFilterIntoUrl(localStorageValue);
+      if (localStorageValue.Timestamp?.relativeDate) {
+        setRelativeDate(localStorageValue.Timestamp.relativeDate);
+      }
+    }
+  }, [paramsBasedOnRoute, isApplyDisabled, localStoragekey]);
 
   const [filtersAdded, setFilters]: [FiltersAddedState, (filtersAdded: FiltersAddedState) => void] = useState(
     () => {
-      let initialState = {};
-      Object.keys(paramsBasedOnRoute).forEach((key) => {
-        initialState = {
-          ...initialState,
-          [key]: paramsBasedOnRoute[key],
-        };
-      });
-      return initialState;
+      return getInitialState(paramsBasedOnRoute);
     },
   );
-  const navigation = useHistory();
+
+  useEffect(() => {
+    const initialState = getInitialState(paramsBasedOnRoute);
+
+    setFilters(initialState);
+  }, [version]);
 
   const clearFilters = () => {
     setFilters({});
@@ -108,8 +164,10 @@ export const useFilters = (hasDateFilter = false) => {
       hasDateFilter && Object.keys(Timestamp).length ? { Timestamp } : { Timestamp: undefined };
 
     if (hasDateFilter && !Object.keys(Timestamp).length) {
-      timeFilters.Timestamp = { relativeDate: IntervalDate.allTime };
-      setRelativeDate(IntervalDate.allTime);
+      timeFilters.Timestamp = localStorageValue.Timestamp
+        ? localStorageValue.Timestamp
+        : { relativeDate: IntervalDate.allTime };
+      setRelativeDate(timeFilters.Timestamp.relativeDate);
     }
 
     const regExp = new RegExp(`${TimestampKey.key}`, 'gi');
@@ -118,29 +176,21 @@ export const useFilters = (hasDateFilter = false) => {
     return { timeFilters, parsedFilters };
   };
 
-  const applyFilterIntoUrl = (filtersToApply: Record<string, any>): void => {
-    const mapWithStringify = Object.keys(filtersToApply).reduce(
-      (acc, key) => ({
-        ...acc,
-        [key]: JSON.stringify(filtersToApply[key]),
-      }),
-      {},
-    );
-    const urlQuery = queryString.stringify(mapWithStringify);
-    navigation.push(`?${urlQuery}`);
-  };
-
   const handleFilterWithoutTimestamp = () => {
     const { parsedFilters } = getTimeAndCommonFilters();
     const { Timestamp } = paramsBasedOnRoute;
     const possibleUrlTimestamp = Timestamp ? { Timestamp } : {};
-    applyFilterIntoUrl({ ...possibleUrlTimestamp, ...parsedFilters });
+    const filtersToApply = { ...possibleUrlTimestamp, ...parsedFilters };
+    setLocalStorageValue(filtersToApply);
+    applyFilterIntoUrl(filtersToApply);
     setIsApplyWithoutTime(true);
   };
 
   const handleTimestampFilter = () => {
     const { timeFilters } = getTimeAndCommonFilters();
-    applyFilterIntoUrl({ ...paramsBasedOnRoute, ...timeFilters });
+    const filtersToApply = { ...paramsBasedOnRoute, ...timeFilters };
+    setLocalStorageValue(filtersToApply);
+    applyFilterIntoUrl(filtersToApply);
     setIsTimeApplyDisabled(true);
   };
 
@@ -151,28 +201,49 @@ export const useFilters = (hasDateFilter = false) => {
       ...parsedFilters,
       ...timeFilters,
     };
-
+    setLocalStorageValue(filtersToApply);
     applyFilterIntoUrl(filtersToApply);
     setIsApplyDisabled(true);
   };
 
   useEffect(() => {
-    const urlFromMs = getFromValueOf(paramsBasedOnRoute)?.valueOf();
-    const urlToMs = getToValueOf(paramsBasedOnRoute)?.valueOf();
-    const urlRelativeDateMs = getRelativeDateValueOf(paramsBasedOnRoute);
-    if (!urlFromMs && !urlToMs && !urlRelativeDateMs && hasDateFilter) {
-      handleFilter();
+    const relativeDateURL = getRelativeDateValueOf(paramsBasedOnRoute);
+    const fromURL = getFromValueOf(paramsBasedOnRoute);
+    const toURL = getToValueOf(paramsBasedOnRoute);
+    if (
+      !fromURL &&
+      !toURL &&
+      !relativeDateURL &&
+      hasDateFilter &&
+      !localStorageValue.Timestamp?.relativeDate
+    ) {
+      setRelativeDate(IntervalDate.allTime);
     }
-  });
+    if (!fromURL && !toURL && !relativeDateURL && hasDateFilter) {
+      if (localStorageValue.Timestamp?.from) {
+        setFrom(moment(localStorageValue.Timestamp?.from));
+      }
+      if (localStorageValue.Timestamp?.to) {
+        setTo(moment(localStorageValue.Timestamp?.to));
+      }
+      if (localStorageValue.Timestamp?.relativeDate) {
+        setRelativeDate(localStorageValue.Timestamp?.relativeDate);
+      }
+    } else {
+      if (fromURL) setFrom(moment(fromURL));
+      if (toURL) setTo(moment(toURL));
+      if (relativeDateURL) setRelativeDate(relativeDateURL);
+    }
+  }, [localStorageValue]);
 
-  const manageOperations = (operator: Operator, value: string | number, operators): any => {
-    if (Array.isArray(operators) || operator === Operator.in) {
+  const manageOperations = (operator: FilterOperators, value: string | number, operators): any => {
+    if (Array.isArray(operators) || operator === FilterOperators.in) {
       return [...(operators || []), value];
     }
     return value;
   };
 
-  const addFilter = (category: string, operator: Operator, value: string | number): void => {
+  const addFilter = (category: string, operator: FilterOperators, value: string | number): void => {
     const newCategory = filtersAdded[category] || {};
     const newOperator = manageOperations(operator, value, newCategory[operator]);
     setFilters({
@@ -192,9 +263,9 @@ export const useFilters = (hasDateFilter = false) => {
     setIsApplyWithoutTime(false);
   };
 
-  const removeValue = (category: string, name: string, operator: Operator): void => {
+  const removeValue = (category: string, name: string, operator: FilterOperators): void => {
     const newCategory = { ...filtersAdded[category] };
-    if (operator === Operator.in) {
+    if (operator === FilterOperators.in) {
       // TODO: should check if is the last item of a category remove also the category
       const currentOperatorValues = newCategory[operator] || [];
       const newOperatorValues = currentOperatorValues.filter((value) => name !== value);
@@ -203,7 +274,7 @@ export const useFilters = (hasDateFilter = false) => {
       if (newOperatorValues.length === 0) {
         delete newCategory[operator];
       }
-    } else if (operator === Operator.max || operator === Operator.min) {
+    } else if (operator === FilterOperators.max || operator === FilterOperators.min) {
       delete newCategory[operator];
     }
 
@@ -221,11 +292,11 @@ export const useFilters = (hasDateFilter = false) => {
   };
 
   return {
+    queryParams,
     handleFilter,
     removeValue,
     addFilter,
     removeCategory,
-    paramsBasedOnRoute,
     isApplyDisabled,
     filtersAdded,
     setIsApplyDisabled,

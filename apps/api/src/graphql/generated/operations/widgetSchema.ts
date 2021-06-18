@@ -104,6 +104,10 @@ export const widgetSchema = gql`
     # Chart type: [WIDGET] FULL_TABLE
     object_listing_7c86260d_a5b0_407c_8546_2e0be73aada3(input: DataListingArgs): ListingResult
 
+    # View: sites
+    # Chart type: [WIDGET] FULL_TABLE
+    object_listing_aecfa22b_e76c_4402_b2ec_cf1c7a4e8781(input: DataListingArgs): ListingResult
+
     # View: siteMapDetails
     # Chart type: [WIDGET] FULL_TABLE
     object_listing_b6dcf2f6_6cc1_418f_b027_34d3e60bb8c4(input: DataListingArgs): ListingResult
@@ -123,6 +127,12 @@ export const widgetSchema = gql`
     # Value aggregated by: No Aggregation
     # Chart type: [WIDGET] SUMMARY_TITLE
     summary_title_3e93db18_fe67_43a2_be09_6ecf9873ee74(input: DataListingArgs): ListingResult
+
+    # View: Sites
+    # Value: siteMap
+    # Value aggregated by: No Aggregation
+    # Chart type: [WIDGET] SUMMARY_TITLE
+    summary_title_46191c4f_2521_4d6d_8015_5116357f2668(input: DataListingArgs): ListingResult
 
     # View: Sensors
     # Value: sensor
@@ -150,6 +160,14 @@ export const widgetSchema = gql`
     # Chart type: Positive Negative Area
     widget_00153afa_2f0f_4546_96df_d414cb711227(input: DataAggregationArgs): GraphResult
 
+    # View: System --- Widget: Historical Events
+    # Group by: timestamp
+    # No Aggregation
+    # Value: event
+    # Value aggregated by: Total Count
+    # Chart type: [WIDGET] STEP_LINE
+    widget_16dee097_f374_4987_922e_53015c7934d9(input: DataAggregationArgs): GraphResult
+
     # View: System --- Widget: Node Status
     # Group by: timestamp
     # No Aggregation
@@ -157,6 +175,14 @@ export const widgetSchema = gql`
     # Value aggregated by: Total Count
     # Chart type: [WIDGET] AREA_GRADIENT
     widget_5d346104_9524_4ba4_a30a_bb9c509fc439(input: DataAggregationArgs): GraphResult
+
+    # View: System --- Widget: Event Length
+    # Group by: event
+    # No Aggregation
+    # Value: eventLength
+    # Value aggregated by: No Aggregation
+    # Chart type: [WIDGET] BUBBLE_CHART
+    widget_8b263bdb_cbd4_4d6c_ba39_1e8568529e85(input: DataAggregationArgs): GraphResult
 
     # View: Node Details --- Widget: Sensors
     # Group by: node
@@ -171,7 +197,7 @@ export const widgetSchema = gql`
     # No Aggregation
     # Value: siteStatus
     # Value aggregated by: No Aggregation
-    # Chart type: [WIDGET] COLUMN_BAR
+    # Chart type: [WIDGET] SINGLE_BAR_HIGHLIGHT_MAX
     widget_ec00ac75_6320_4963_abcd_4c1aea91727b(input: DataAggregationArgs): GraphResult
 
     # View: System --- Widget: Sensor Status

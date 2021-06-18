@@ -1,5 +1,5 @@
 interface MenuOption {
-  func?: () => Promise<unknown>;
+  func?: () => void;
   icon?: string;
   path: string;
   title: string;

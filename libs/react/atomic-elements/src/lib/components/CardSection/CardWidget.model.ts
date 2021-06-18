@@ -25,7 +25,14 @@ type GridJustification =
   | 'space-between'
   | 'space-evenly';
 
+enum CardSectionLayout {
+  Masonry = 'masonry', // Dashboard grid (default)
+  SingleColumn = 'single-column', // Config (not used yet)
+  SingleWideColumn = 'single-wide-column', // Report
+}
+
 interface CardSectionProps {
+  cardSectionLayout?: CardSectionLayout;
   children?: ReactNode;
   containerId?: string;
   fullWidth?: boolean;
@@ -58,4 +65,12 @@ interface RenderWidgetProps {
   widget: Widget;
 }
 
-export { CardSectionProps, CardTitleProps, CardWidgetProps, RenderWidgetProps, RenderChildrenProps, Widget };
+export {
+  CardSectionLayout,
+  CardSectionProps,
+  CardTitleProps,
+  CardWidgetProps,
+  RenderChildrenProps,
+  RenderWidgetProps,
+  Widget,
+};

@@ -1,34 +1,27 @@
 import './FilterSection.scss';
 
 import { KsButton as Button, KsIcon, KsIconButton } from '@kleeen/react/components';
-import {
-  Filter,
-  FilterOption,
-  FilterSectionEnum,
-  FilterSectionProps,
-  Operator,
-  Params,
-} from './FilterSection.model';
+import { Filter, FilterOption, FilterSectionEnum, FilterSectionProps, Params } from './FilterSection.model';
 import { Paper, useStyles } from './FilterSection.styles';
 import React, { ReactElement } from 'react';
 import { useFilterContext, useFilters } from '@kleeen/react/hooks';
 
 import ArrowLeftIcon from '@material-ui/icons/ArrowLeft';
+import { DatePickerInterval } from '../DatePickerInterval/index';
 import FilterCreator from './components/FilterCreator';
-import FilterListRoundedIcon from '@material-ui/icons/FilterListRounded';
 import FilterTooltip from './components/FilterTooltip';
 import FiltersComp from './components/FilterChipsAndCategories';
 import Grid from '@material-ui/core/Grid';
 import { KUIConnect } from '@kleeen/core-react';
 import { Loader } from '@kleeen/react/components';
 import MuiTypography from '@material-ui/core/Typography';
-import { DatePickerInterval } from '../DatePickerInterval/index';
+import { FilterOperators } from '@kleeen/types';
 
 const parseToFilterOptions = (options: string[], translate): FilterOption[] =>
   options.map((option) => ({
     name: option,
     section: translate ? translate('app.subHeader.filterSection.values') : FilterSectionEnum.Values,
-    operator: Operator.in,
+    operator: FilterOperators.in,
   }));
 
 const FilterSectionComponent = ({ translate, ...props }: FilterSectionProps): ReactElement => {
@@ -72,7 +65,7 @@ const FilterSectionComponent = ({ translate, ...props }: FilterSectionProps): Re
     removeValue,
     addFilter,
     removeCategory,
-    paramsBasedOnRoute,
+    queryParams,
     isApplyDisabled,
     filtersAdded,
     setIsApplyDisabled,
@@ -134,7 +127,7 @@ const FilterSectionComponent = ({ translate, ...props }: FilterSectionProps): Re
         </Paper>
       ) : (
         <Paper elevation={3} className={classes.drawerClose}>
-          <FilterTooltip paramsBasedOnRoute={paramsBasedOnRoute}>
+          <FilterTooltip paramsBasedOnRoute={queryParams.paramsBasedOnRoute}>
             <KsIconButton onClick={handleDrawerOpen}>
               <KsIcon icon="ks-filter" />
             </KsIconButton>

@@ -7,6 +7,13 @@ import {
 } from './config-table.model';
 import { NEW_ROW_ID_PREFIX, entityMap, isNilOrEmpty, mergeByOrAppend } from '@kleeen/common/utils';
 import React, { ReactElement, useEffect, useRef, useState } from 'react';
+import {
+  getAddPayload,
+  getDeletePayload,
+  getEditedRowsAfterDelete,
+  getUpdatePayload,
+  reorderArray,
+} from './config-table.utils';
 
 import { ActionType } from '@kleeen/types';
 import { ConfigTableActions } from './components';
@@ -15,13 +22,6 @@ import { startsWith } from 'ramda';
 import { useKsAutoComplete } from '@kleeen/react/hooks';
 import { useStyles } from './config-table.styles';
 import { v4 as uuid } from 'uuid';
-import {
-  getAddPayload,
-  getDeletePayload,
-  getEditedRowsAfterDelete,
-  getUpdatePayload,
-  reorderArray,
-} from './config-table.utils';
 
 /**
  * Configuration Table component
@@ -285,6 +285,7 @@ export function KsConfigTable({
         attributes={!isNilOrEmpty(addModalAttributes) ? addModalAttributes : attributes}
         context={{ editedRows, customModalProps, currentRows: mergedData }}
         entityActions={entityActions}
+        entityName={params.baseModel}
         onAddAction={handleAddAction}
         skinny={true}
         taskName={taskName}

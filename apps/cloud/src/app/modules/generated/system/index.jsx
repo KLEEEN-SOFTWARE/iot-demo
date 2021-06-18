@@ -56,6 +56,7 @@ function DashboardTask({ translate, ...props }) {
               atomicCustomViews={dataViewDisplaySectionAtomicCustomViews}
               dashboardWidgets={dataViewDisplaySectionAtomicDashboardWidgets}
               entityName={''}
+              hasReportView={false}
               selectedRows={selectedRows}
               setCardsNumber={setCardsNumber}
               setSelectedRows={setSelectedRows}

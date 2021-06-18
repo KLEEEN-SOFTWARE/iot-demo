@@ -50,6 +50,7 @@ export interface MuiVirtualizedTableProps extends WithStyles<typeof styles> {
   orderColumnName?: string;
   getMoreRows?: any;
   widgetId?: string | number;
+  columnWidth: number;
 }
 
 export interface Data {

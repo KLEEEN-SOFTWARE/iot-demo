@@ -23,6 +23,7 @@ import {
   TableWidget,
 } from '../../Widgets';
 import { ReactElement, useState } from 'react';
+import GridAreaSection from '../../GridAreaSection/GridAreaSection';
 
 import { AttributeInputEvents } from '@kleeen/react/hooks';
 import CardWidget from '../CardWidget';
@@ -277,7 +278,7 @@ function renderWidget({
         />
       );
 
-    case WidgetTypes.TABLE:
+    case WidgetTypes.SIMPLE_LIST:
       return (
         <TableWidget
           attributes={widget.attributes}
@@ -285,6 +286,24 @@ function renderWidget({
           taskName={taskName}
           widgetId={widget.id}
         />
+      );
+
+    case WidgetTypes.TABLE:
+      return (
+        <div className="report-table-height">
+          <GridAreaSection
+            className="report-table-height"
+            columnWidth={100}
+            entityId={widget.attributes[0].id as string}
+            entityName={widget.params.baseModel}
+            key={`data-view-display-section-grid-area-section-${widget.id}`}
+            selectedRows={[]}
+            setSelectedRows={() => ({})}
+            sortableColumns={true}
+            taskName={taskName}
+            widget={widget}
+          />
+        </div>
       );
 
     case WidgetTypes.WATERFALL:

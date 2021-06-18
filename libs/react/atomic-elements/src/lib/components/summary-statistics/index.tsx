@@ -1,4 +1,6 @@
 import { KeyValue } from '../key-value';
+import { Loader } from '@kleeen/react/components';
+import MuiTooltip from '@material-ui/core/Tooltip';
 import { SummaryLayout } from '../summary-layout';
 import { SummaryStatisticsProps } from './summary-statistics.model';
 import { TransformationResponse } from '@kleeen/types';
@@ -8,52 +10,87 @@ import { isNilOrEmpty } from '@kleeen/common/utils';
 import { useStyles } from './summary-statistics.styles';
 
 const layoutProps = {
-  columnGap: 55,
+  columnGap: 34,
   containerPadding: 0,
-  keyValuePadding: 21,
+  keyValuePadding: 16,
   keyWidth: 144,
-  valueWidth: 144,
+  valueWidth: 110,
 };
 
 export function SummaryStatistics({ attributes, data }: SummaryStatisticsProps) {
   const classes = useStyles();
+  const [mainStatistic, ...statistics] = isNilOrEmpty(data) ? [] : data;
+  const [mainAttribute, ...restAttribute] = attributes;
 
-  const statistics = isNilOrEmpty(data) ? [] : data;
+  if (isNilOrEmpty(data)) {
+    return <Loader />;
+  }
+
+  const { elements: mainElements, format: mainAttributeFormat, formatType: mainFormatType } = mainAttribute;
+  const {
+    format: mainBackendFormat,
+    results: mainResults,
+    transformation: mainTransformation,
+  } = mainStatistic;
+  const mainFormat = getFormat({ attributeFormat: mainAttributeFormat, backendFormat: mainBackendFormat });
+  const { displayComponent: mainElement } = mainElements;
+  const MainDisplayComponent = getDisplayElement(mainElement);
 
   return (
     <div className={classes.content}>
-      <SummaryLayout layoutProps={layoutProps} totalElements={attributes.length}>
-        {statistics.map((statistic: TransformationResponse, index: number) => {
-          const attribute = attributes[index];
-          const { elements, format: attributeFormat, formatType } = attribute;
-          const { format: backendFormat, results, transformation } = statistic;
+      <div className="primary">
+        <MuiTooltip title={mainAttribute.label} placement="top">
+          <div className="primary-label">{mainAttribute.label}</div>
+        </MuiTooltip>
+        <div className="primary-value">
+          <MainDisplayComponent
+            attribute={mainAttribute}
+            element={mainElement}
+            format={mainFormat}
+            formatType={mainFormatType}
+            transformation={mainTransformation}
+            highlighted
+            value={{
+              displayValue: mainResults,
+            }}
+          />
+        </div>
+      </div>
 
-          const format = getFormat({ attributeFormat, backendFormat });
+      {!isNilOrEmpty(restAttribute) && (
+        <SummaryLayout layoutProps={layoutProps} totalElements={restAttribute.length}>
+          {statistics.map((statistic: TransformationResponse, index: number) => {
+            const attribute = restAttribute[index];
+            const { elements, format: attributeFormat, formatType } = attribute;
+            const { format: backendFormat, results, transformation } = statistic;
 
-          const { displayComponent } = elements;
-          const DisplayComponent = getDisplayElement(displayComponent);
+            const format = getFormat({ attributeFormat, backendFormat });
 
-          return (
-            <KeyValue
-              layoutProps={layoutProps}
-              key={`${attribute.id}-${transformation}`}
-              keyComponent={attribute.label}
-              valueComponent={
-                <DisplayComponent
-                  attribute={attribute}
-                  element={displayComponent}
-                  format={format}
-                  formatType={formatType}
-                  transformation={transformation}
-                  value={{
-                    displayValue: results,
-                  }}
-                />
-              }
-            />
-          );
-        })}
-      </SummaryLayout>
+            const { displayComponent } = elements;
+            const DisplayComponent = getDisplayElement(displayComponent);
+
+            return (
+              <KeyValue
+                layoutProps={layoutProps}
+                key={`${attribute.id}-${transformation}`}
+                keyComponent={attribute.label}
+                valueComponent={
+                  <DisplayComponent
+                    attribute={attribute}
+                    element={displayComponent}
+                    format={format}
+                    formatType={formatType}
+                    transformation={transformation}
+                    value={{
+                      displayValue: results,
+                    }}
+                  />
+                }
+              />
+            );
+          })}
+        </SummaryLayout>
+      )}
     </div>
   );
 }

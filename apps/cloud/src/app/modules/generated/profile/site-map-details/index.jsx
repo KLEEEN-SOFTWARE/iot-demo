@@ -76,6 +76,7 @@ function EntityBrowserDetailsTask({ translate, ...props }) {
               atomicCustomViews={dataViewDisplaySectionAtomicCustomViews}
               dashboardWidgets={dataViewDisplaySectionAtomicDashboardWidgets}
               entityName={entity}
+              hasReportView={false}
               selectedRows={selectedRows}
               setCardsNumber={setCardsNumber}
               setSelectedRows={setSelectedRows}

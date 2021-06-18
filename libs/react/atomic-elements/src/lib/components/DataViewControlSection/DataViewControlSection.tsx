@@ -1,6 +1,12 @@
 import './DataViewControlSection.scss';
 
-import { ActionDialogs, ActionsSection, AddDialogPayload, RefreshControl } from '@kleeen/react/components';
+import {
+  ActionDialogs,
+  ActionsSection,
+  AddDialogPayload,
+  KsAutoRefreshControl,
+  RefreshControl,
+} from '@kleeen/react/components';
 import { Container, Title, Typography } from './DataViewControlSection.styles';
 import { HeaderTitle, HeaderTitleEllipsis } from '../HeaderTitle';
 import React, { ReactElement, useState } from 'react';
@@ -100,7 +106,12 @@ export function DataViewControlSection(props: DataViewControlSectionProps): Reac
           </Grid>
         )}
         <Grid className="actions" container alignItems="center">
-          {!props.hideRefreshControl && <RefreshControl onRefresh={refreshPage} taskName={props.taskName} />}
+          {!props.hideRefreshControl && (
+            <>
+              <RefreshControl onRefresh={refreshPage} taskName={props.taskName} />
+              <KsAutoRefreshControl taskName={props.taskName} onRefresh={refreshPage} />
+            </>
+          )}
           {!isEmpty(addActions) && (
             <ActionsSection actions={addActions} entity={entityName} handleAddClick={handleClick} />
           )}

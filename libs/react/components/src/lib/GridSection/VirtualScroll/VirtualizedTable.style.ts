@@ -22,4 +22,13 @@ export const useStyles = makeStyles({
       },
     },
   },
+  virtualTable: {
+    backgroundColor: 'var(--row-even)',
+    borderRadius: 'var(--card-border-radius)',
+    boxShadow: 'var(--card-shadow)',
+    height: '100%',
+    overflowX: 'auto',
+    overflowY: 'hidden',
+    width: '100%',
+  },
 });

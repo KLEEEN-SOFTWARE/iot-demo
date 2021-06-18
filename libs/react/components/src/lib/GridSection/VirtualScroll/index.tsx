@@ -10,6 +10,7 @@ import { allComponentEnum } from './CellRenderer/CellRenderer.model';
 import { stableSort } from '../stableSort';
 import useFilter from '../useFilter';
 import useSort from '../useSort';
+import { useStyles } from './VirtualizedTable.style';
 
 type HeaderColumns = Array<{
   attr: Attribute;
@@ -32,6 +33,7 @@ function ReactVirtualizedTableComponent({
   const [deleteContainer, setStatusDeleteContainer] = useState([]);
   const [editingCell, setEditingCell] = useState({});
   const [remainingRows] = useState([]);
+  const tableStyles = useStyles();
 
   const actions = props?.actions || [];
   const isDeletable = actions.some(({ type }) => type.toLowerCase() === ActionType.Delete);
@@ -102,17 +104,7 @@ function ReactVirtualizedTableComponent({
     const rowsStableSort = rows ? stableSort(rows, order, orderBy) : remainingRows;
 
     return (
-      <Paper
-        style={{
-          backgroundColor: 'var(--row-even)',
-          borderRadius: 'var(--card-border-radius)',
-          boxShadow: 'var(--card-shadow)',
-          height: '100%',
-          overflowX: 'auto',
-          overflowY: 'hidden',
-          width: '100%',
-        }}
-      >
+      <Paper className={`${props.className} ${tableStyles.virtualTable}`}>
         <VirtualizedTable
           widgetId={widgetId}
           actions={actions}
@@ -142,6 +134,7 @@ function ReactVirtualizedTableComponent({
           triggerCustomAction={triggerCustomAction}
           typeOf={typeOf}
           orderColumnName={orderColumnName}
+          columnWidth={props.columnWidth}
         />
       </Paper>
     );

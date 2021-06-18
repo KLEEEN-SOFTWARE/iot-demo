@@ -19,6 +19,12 @@
           "GUEST": "SHOW"
         }
       },
+      "SITES": {
+        "PERMISSIONS": {
+          "ADMIN": "SHOW",
+          "GUEST": "SHOW"
+        }
+      },
       "EVENTS": {
         "PERMISSIONS": {
           "ADMIN": "SHOW",
@@ -122,6 +128,13 @@
       }
     }
   },
+  "SITES": {
+    "CHILDREN": {
+      "VIEWS": {
+        "CHILDREN": {}
+      }
+    }
+  },
   "SENSORS": {
     "CHILDREN": {
       "VIEWS": {
@@ -140,6 +153,12 @@
             }
           },
           "15D23AA3-6F00-4505-9199-85C2E2662AAA": {
+            "PERMISSIONS": {
+              "ADMIN": "SHOW",
+              "GUEST": "SHOW"
+            }
+          },
+          "16DEE097-F374-4987-922E-53015C7934D9": {
             "PERMISSIONS": {
               "ADMIN": "SHOW",
               "GUEST": "SHOW"
@@ -164,6 +183,12 @@
             }
           },
           "5D346104-9524-4BA4-A30A-BB9C509FC439": {
+            "PERMISSIONS": {
+              "ADMIN": "SHOW",
+              "GUEST": "SHOW"
+            }
+          },
+          "8B263BDB-CBD4-4D6C-BA39-1E8568529E85": {
             "PERMISSIONS": {
               "ADMIN": "SHOW",
               "GUEST": "SHOW"

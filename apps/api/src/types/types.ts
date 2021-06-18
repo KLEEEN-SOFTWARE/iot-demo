@@ -58,7 +58,7 @@ interface ListingFormatItem {
 export interface GetListingDataResults {
   data: EntityList[];
   format: { [key: string]: ListingFormatItem };
-  pagination: { totalCount: number };
+  pagination?: { totalCount: number };
 }
 
 interface ActionItem {

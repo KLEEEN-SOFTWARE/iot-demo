@@ -1,5 +1,7 @@
 import queryString from 'query-string';
 import { useLocation } from 'react-router-dom';
+import { usePrevious } from './usePrevious';
+import { useRef } from 'react';
 
 function isValidJSONString(str): boolean {
   try {
@@ -9,11 +11,19 @@ function isValidJSONString(str): boolean {
   }
   return true;
 }
-
 const useUrlQueryParams = ({ useNestedObjects }: { useNestedObjects?: boolean } = {}): {
   paramsBasedOnRoute: Record<string, any>;
+  version: number;
 } => {
   const location = useLocation();
+  const currentSearch = location.search;
+  const previousSearch = usePrevious(location.search);
+  const version = useRef(0);
+
+  if (currentSearch !== previousSearch) {
+    version.current += 1;
+  }
+
   const paramsBasedOnRoute = queryString.parse(location.search, { parseBooleans: true });
 
   if (useNestedObjects) {
@@ -30,11 +40,11 @@ const useUrlQueryParams = ({ useNestedObjects }: { useNestedObjects?: boolean } 
       {},
     );
 
-    return { paramsBasedOnRoute: mapWithParsed };
+    return { paramsBasedOnRoute: mapWithParsed, version: version.current };
   }
   // todo this extra parse should only happen in an case
 
-  return { paramsBasedOnRoute };
+  return { paramsBasedOnRoute, version: version.current };
 };
 
 export default useUrlQueryParams;

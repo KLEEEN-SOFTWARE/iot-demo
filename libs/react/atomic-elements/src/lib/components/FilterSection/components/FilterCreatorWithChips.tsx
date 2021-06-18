@@ -5,13 +5,12 @@ import {
   FilterOption,
   FilterSectionEnum,
   FiltersAddedState,
-  Operator,
   addFilterText,
   materialAutocompleteClearSignal,
   optionsByStatisticalType,
 } from '../FilterSection.model';
 import React, { ReactElement, useEffect, useState } from 'react';
-import { TimestampKey, Translate } from '@kleeen/types';
+import { FilterOperators, TimestampKey, Translate } from '@kleeen/types';
 
 import { ChipsGroupByCategoryProps } from './FilterCreatorWithChips.model';
 import CloseIcon from '@material-ui/icons/Close';
@@ -46,7 +45,7 @@ const ChipsGroupByCategory = ({
                       size="small"
                       label={auxLabel}
                       onDelete={() => {
-                        removeValue(key, option, Operator.in);
+                        removeValue(key, option, FilterOperators.in);
                       }}
                       deleteIcon={
                         <IconButton>
@@ -62,7 +61,7 @@ const ChipsGroupByCategory = ({
                   size="small"
                   label={`Max is ${values.max}`}
                   onDelete={() => {
-                    removeValue(key, values.max, Operator.max);
+                    removeValue(key, values.max, FilterOperators.max);
                   }}
                   deleteIcon={
                     <IconButton>
@@ -76,7 +75,7 @@ const ChipsGroupByCategory = ({
                   size="small"
                   label={`Min is ${values.min}`}
                   onDelete={() => {
-                    removeValue(key, values.min, Operator.min);
+                    removeValue(key, values.min, FilterOperators.min);
                   }}
                   deleteIcon={
                     <IconButton>
@@ -119,7 +118,7 @@ const FilterCreatorWithChips = ({
 }: {
   categoryFilterOptions: FilterOption[];
   filterOptionsByCategory: Record<string, FilterOption[]>;
-  addFilter: (category: string, operator: Operator, value: string | number) => void;
+  addFilter: (category: string, operator: FilterOperators, value: string | number) => void;
   setIsApplyDisabled: (value: boolean) => void;
   filtersAdded: FiltersAddedState;
   translate: Translate;
@@ -174,7 +173,7 @@ const FilterCreatorWithChips = ({
     } else if (name) {
       // * We use the timestamp key to know that the value in the query string is timestamp type
       const auxName = valueTimestamp ? `${TimestampKey.key}${valueTimestamp}` : name;
-      addFilter(currentCategory, Operator.in, auxName);
+      addFilter(currentCategory, FilterOperators.in, auxName);
     }
     setOptions(categoryFilterOptions);
     setCurrentCategory('');
@@ -193,7 +192,7 @@ const FilterCreatorWithChips = ({
   const getOptions = (currentOptions: FilterOption[]): FilterOption[] => {
     if (!currentCategory || !filtersAdded[currentCategory]) return options;
     return currentOptions.filter(
-      (option) => !filtersAdded[currentCategory][Operator.in]?.includes(option.name),
+      (option) => !filtersAdded[currentCategory][FilterOperators.in]?.includes(option.name),
     );
   };
 

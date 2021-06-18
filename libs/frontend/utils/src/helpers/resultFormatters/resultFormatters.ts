@@ -320,14 +320,15 @@ export const parseAttributes = (attributes: Attribute[], format: any): Attribute
 };
 
 export function trendFormatter({
-  values,
   highlightMinMax = false,
   highlightStart = false,
   highlightEnd = false,
+  radiusSize = 2,
+  values,
 }): TrendFormat[] {
   const min = Math.min(...values);
   const max = Math.max(...values);
-  const highlightedPoint = { color: 'hsl(var(--viz1))', marker: { enabled: true, radius: 2 } };
+  const highlightedPoint = { color: 'hsl(var(--viz1))', marker: { enabled: true, radius: radiusSize } };
 
   return values.map((value, i) => {
     if (highlightMinMax && (value === min || value === max)) {

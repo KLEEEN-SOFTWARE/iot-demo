@@ -52,6 +52,8 @@ interface GridSectionProps {
   translate?: Translate;
   widgetId: string | number;
   getMoreRows?: any;
+  className?: string;
+  columnWidth?: number;
 }
 
 interface Row {

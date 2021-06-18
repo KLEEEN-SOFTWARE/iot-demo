@@ -9,6 +9,8 @@ import { ApiSensorOverallStatus } from '../../custom/entityResolvers/api120426';
 import { ApiSensorStatus } from '../../custom/entityResolvers/api120427';
 import { ApiSiteStatus } from '../../custom/entityResolvers/api120428';
 import { ApiSystemHealth } from '../../custom/entityResolvers/api120429';
+import { ApiPpm } from '../../custom/entityResolvers/api135534';
+import { ApiEventLength } from '../../custom/entityResolvers/api135535';
 import { DataSource } from 'apollo-datasource';
 import { FiltersApi } from '../../custom/filtersResolver/filtersApi';
 import { FiltersFakeApi } from './filtersFakeApi';
@@ -31,4 +33,6 @@ export const dataSources = (): Record<string, DataSource> => ({
   api120427: new ApiSensorStatus(),
   api120428: new ApiSiteStatus(),
   api120429: new ApiSystemHealth(),
+  api135534: new ApiPpm(),
+  api135535: new ApiEventLength(),
 });

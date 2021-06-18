@@ -19,11 +19,12 @@
   }
 
   .donut-shadow {
-    position: absolute;
-    bottom: 0;
-    right: 75px;
-    width: 165px;
-    height: 20px;
     background: radial-gradient(var(--viz-shadow) 0%, var(--transparent) 70%);
+    bottom: 0;
+    height: var(--wh-3XS);
+    position: absolute;
+    right: 34%;
+    transform: translateX(50%);
+    width: 165px;
   }
 }

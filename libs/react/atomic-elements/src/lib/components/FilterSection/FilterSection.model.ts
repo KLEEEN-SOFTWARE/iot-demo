@@ -1,5 +1,4 @@
-import { Timestamp } from 'rxjs/internal/operators/timestamp';
-import { Translate } from '@kleeen/types';
+import { FilterForNumerics, FilterOperators, Translate } from '@kleeen/types';
 
 export interface Filter {
   results: [string, string[]][];
@@ -11,15 +10,6 @@ export interface Params {
   operationName?: string;
 }
 
-export enum Operator {
-  max = 'max',
-  from = 'from',
-  min = 'min',
-  in = '_in',
-  to = 'to',
-  relativeDate = 'relativeDate',
-}
-
 export enum FilterSectionEnum {
   Bounds = 'Bounds',
   FilterBy = 'SELECT FILTER TYPE',
@@ -28,26 +18,19 @@ export enum FilterSectionEnum {
 
 export const optionsByStatisticalType = [
   {
-    included: [
-      'Data - Numeric - Discrete',
-      'Data - Numeric',
-      'Data - Numeric - Continuous',
-      'Data - Numeric - Percentage',
-      'Data - Numeric - NTG - Discrete',
-      'Data - Numeric - NTG - Severity Ranking',
-    ],
+    included: FilterForNumerics,
     options: [
-      { name: 'Maximum', section: FilterSectionEnum.Bounds, operator: Operator.max },
-      { name: 'Minimum', section: FilterSectionEnum.Bounds, operator: Operator.min },
+      { name: 'Maximum', section: FilterSectionEnum.Bounds, operator: FilterOperators.max },
+      { name: 'Minimum', section: FilterSectionEnum.Bounds, operator: FilterOperators.min },
     ],
     section: FilterSectionEnum.Bounds,
   },
 ];
 
 export interface FilterAdded {
-  [Operator.in]?: Array<string | number>;
-  [Operator.min]?: number;
-  [Operator.max]?: number;
+  [FilterOperators.in]?: Array<string | number>;
+  [FilterOperators.min]?: number;
+  [FilterOperators.max]?: number;
 }
 
 export interface FiltersAddedState {
@@ -58,7 +41,7 @@ export interface FilterOption {
   name: string;
   statisticalType?: string;
   section: string;
-  operator?: Operator;
+  operator?: FilterOperators;
   category?: string;
   value?: string;
 }

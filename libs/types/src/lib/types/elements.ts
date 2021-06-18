@@ -8,6 +8,7 @@ import { AggregationType } from '../enums';
 interface BaseComponentProps {
   format?: FormatProps;
   formatType?: string;
+  highlighted?: boolean;
   transformation?: AggregationType;
   value?: any; // eslint-disable-line @typescript-eslint/no-explicit-any
 }
@@ -24,6 +25,7 @@ export interface BaseInputComponentProps extends BaseComponentProps {
 export interface DisplayComponentProps extends BaseDisplayComponentsProps {
   attribute: Attribute;
   element?: ElementDisplayType;
+  highlighted?: boolean;
 }
 
 export type DisplayElement = (props: DisplayComponentProps) => JSX.Element;

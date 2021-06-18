@@ -1,5 +1,4 @@
 import { Attribute } from '@kleeen/types';
-import { isNilOrEmpty } from '@kleeen/common/utils';
 import { path } from 'ramda';
 import useAttributeContextMenu from './useAttributeContextMenu';
 
@@ -29,10 +28,6 @@ const useCrossLinkingMenuOnViz = (
   const attr: Attribute | undefined = path<Attribute>(['attributes', 0], props);
 
   const openMenuIfCrossLink = (e) => {
-    const hasContextMenu = !attr || !isNilOrEmpty(attr.crossLinking) || attr.isFilterable?.in;
-
-    if (!hasContextMenu) return;
-
     const cellContentClicked = axis && path(['point', 'options', axis.key], e);
 
     if (!cellContentClicked) return;

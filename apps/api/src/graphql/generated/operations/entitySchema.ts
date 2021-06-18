@@ -49,6 +49,7 @@ export const entitySchema = gql`
     delete120420(id: String): GenericEntity
     update120420(entity: JSON): GenericEntity
     autoComplete120420(input: AutoCompleteByEntityInput): AutoCompleteResponse
+    flag120420(input: CustomActionArgs): GenericEntity
 
     # Node
     add120421(input: AddEntityInput): GenericEntity
@@ -123,5 +124,22 @@ export const entitySchema = gql`
     delete120429(id: String): GenericEntity
     update120429(entity: JSON): GenericEntity
     autoComplete120429(input: AutoCompleteByEntityInput): AutoCompleteResponse
+
+    # Ppm
+    add135534(input: AddEntityInput): GenericEntity
+    list135534(input: ListEntityInput): GenericEntity
+    get135534(id: String): GenericEntity
+    delete135534(id: String): GenericEntity
+    update135534(entity: JSON): GenericEntity
+    autoComplete135534(input: AutoCompleteByEntityInput): AutoCompleteResponse
+
+    # EventLength
+    add135535(input: AddEntityInput): GenericEntity
+    list135535(input: ListEntityInput): GenericEntity
+    get135535(id: String): GenericEntity
+    delete135535(id: String): GenericEntity
+    update135535(entity: JSON): GenericEntity
+    autoComplete135535(input: AutoCompleteByEntityInput): AutoCompleteResponse
+    flag135535(input: CustomActionArgs): GenericEntity
   }
 `;
