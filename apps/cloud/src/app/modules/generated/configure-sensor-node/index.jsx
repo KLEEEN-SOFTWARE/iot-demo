@@ -67,7 +67,7 @@ function ConfigTask({ translate, ...props }) {
         </div>
         <div
           id={cardSectionContainerId}
-          className={`${classes.configCardSection} ${showSubmit ? classes.snackbarNavLeft : ''} `}
+          className={`${classes.configCardSection} ${showSubmit ? classes.snackbarNavTop : ''} `}
         >
           <CardSection02
             justifyContent="center"
