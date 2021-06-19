@@ -7,11 +7,10 @@ import { actions } from './settings/actions';
 import { attributes } from './settings/attributes';
 import { dataViewControlSectionViewOptions } from './settings/data-view-control-section-view-options';
 import {
-  HeaderAndSubSections,
+  DataViewControlSection,
   DataViewDisplaySectionAtomic,
   SnackBarSection,
 } from '@kleeen/react/atomic-elements';
-import { availableFilters } from './settings/available-filters';
 import { dataViewDisplaySectionAtomicSingleTableWidgets } from './settings/data-view-display-section-atomic-single-table-widgets';
 import { dataViewDisplaySectionAtomicDashboardWidgets } from './settings/data-view-display-section-atomic-dashboard-widgets';
 import { dataViewDisplaySectionAtomicSingleViewWidgets } from './settings/data-view-display-section-atomic-single-view-widgets';
@@ -44,21 +43,22 @@ function EntityBrowserTask({ translate, ...props }) {
       <div className={`${classes.entityBrowserTask} subhead-dynamic`}>
         <div className={`${classes.entityBrowserArea} browserArea`}>
           <div className={`${classes.gridPageIntro} ${cardsNumber > 0 ? `max-card-${cardsNumber}` : ''}`}>
-            <HeaderAndSubSections
-              title={title}
-              subTitle={`${sensorsMainWidgetData.data?.data?.length} Count of ${entity}`}
+            <DataViewControlSection
+              results={
+                sensorsMainWidgetData.data?.pagination?.totalCount ?? sensorsMainWidgetData.data?.data?.length
+              }
               hideRefreshControl
-              taskName={taskName}
-              filters={availableFilters}
-              actionsProps={{
-                actions: actions,
-                entityName: entity,
-                attributes: attributes,
-                entityActions: sensorActions,
-              }}
-              viewOptions={dataViewControlSectionViewOptions}
+              actions={actions}
+              attributes={attributes}
+              entity={entity}
+              entityActions={sensorActions}
               handleChangeTab={handleOnTabIndexChange}
+              objectValue={objectValue}
+              showDropDown={false}
+              taskName={taskName}
+              title={title}
               value={selectedTabIndex}
+              viewOptions={dataViewControlSectionViewOptions}
             />
           </div>
           <div

@@ -132,7 +132,12 @@ export const useFilters = (hasDateFilter = false) => {
         setRelativeDate(localStorageValue.Timestamp.relativeDate);
       }
     }
-  }, [paramsBasedOnRoute, isApplyDisabled, localStoragekey]);
+  }, [
+    Object.entries(paramsBasedOnRoute).length,
+    isApplyDisabled,
+    localStoragekey,
+    isNilOrEmpty(localStorageValue),
+  ]);
 
   const [filtersAdded, setFilters]: [FiltersAddedState, (filtersAdded: FiltersAddedState) => void] = useState(
     () => {
@@ -234,7 +239,11 @@ export const useFilters = (hasDateFilter = false) => {
       if (toURL) setTo(moment(toURL));
       if (relativeDateURL) setRelativeDate(relativeDateURL);
     }
-  }, [localStorageValue]);
+  }, [
+    localStorageValue.Timestamp?.from,
+    localStorageValue.Timestamp?.to,
+    localStorageValue.Timestamp?.relativeDate,
+  ]);
 
   const manageOperations = (operator: FilterOperators, value: string | number, operators): any => {
     if (Array.isArray(operators) || operator === FilterOperators.in) {
