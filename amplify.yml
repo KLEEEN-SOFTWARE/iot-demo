@@ -25,16 +25,17 @@ backend:
 
     build:
       commands:
-        - echo "Build Kleeen API Middleware"
-        - npm run build:api:prod
-        - rm -rf amplify/backend/function/kleeenAPIMiddleware/src
-        - cp dist/apps/api amplify/backend/function/kleeenAPIMiddleware/src
-        - mv amplify/backend/function/kleeenAPIMiddleware/src/main.js amplify/backend/function/kleeenAPIMiddleware/src/index.js
-        - mv amplify/backend/function/kleeenAPIMiddleware/src/main.js.map amplify/backend/function/kleeenAPIMiddleware/src/index.js.map
-
         - echo "Build Back-end app"
         - npm run build:iot:prod
 
+        - echo "Build Kleeen API Middleware"
+        - npm run build:api:prod
+
+        - echo "Copy  Kleeen API Middleware files into the lambda directory"
+        - rm -rf amplify/backend/function/kleeenAPIMiddleware/src
+        - mv dist/apps/api amplify/backend/function/kleeenAPIMiddleware/src
+        - mv amplify/backend/function/kleeenAPIMiddleware/src/main.js amplify/backend/function/kleeenAPIMiddleware/src/index.js
+        - mv amplify/backend/function/kleeenAPIMiddleware/src/main.js.map amplify/backend/function/kleeenAPIMiddleware/src/index.js.map
 
         - echo "Execute Amplify CLI with the helper script"
         - ./tools/build/backend/assume-role.sh
