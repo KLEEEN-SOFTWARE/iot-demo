@@ -1,11 +1,12 @@
 import { RESTDataSource, RequestOptions } from 'apollo-datasource-rest';
 import { KapiCrud, dispatchCustomAction } from '../../../realisticFakeData';
 import { AutoCompleteParams, CustomActionArgs, DispatchCustomActionResults } from '../../../types';
+import { environment } from '../../../environments/environment';
 
 export class ApiNode extends RESTDataSource {
   constructor() {
     super();
-    this.baseURL = 'http://localhost:3009/';
+    this.baseURL = environment.backendURL;
     // If you need to access the current user, the token and data sources,
     // you can get them from 'this.context'
   }

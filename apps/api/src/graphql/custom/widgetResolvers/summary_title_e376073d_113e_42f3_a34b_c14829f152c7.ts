@@ -1,4 +1,5 @@
 import { GetListingDataResults, DataListingArgs, AuthContext } from '../../../types';
+import { environment } from '../../../environments/environment';
 
 import fetch from 'node-fetch';
 
@@ -10,7 +11,7 @@ export const summary_title_e376073d_113e_42f3_a34b_c14829f152c7 = async (
   input: DataListingArgs,
   context: AuthContext,
 ): Promise<GetListingDataResults | 'not implemented'> => {
-  return fetch('http://localhost:3009/sensor/details', {
+  return fetch(`${environment.backendURL}/sensor/details`, {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',

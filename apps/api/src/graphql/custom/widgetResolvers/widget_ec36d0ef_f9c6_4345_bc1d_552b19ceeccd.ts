@@ -1,4 +1,5 @@
 import { GetWidgetDataResult, DataAggregationArgs, AuthContext } from '../../../types';
+import { environment } from '../../../environments/environment';
 
 import fetch from 'node-fetch';
 
@@ -12,7 +13,7 @@ export const widget_ec36d0ef_f9c6_4345_bc1d_552b19ceeccd = async (
   input: DataAggregationArgs,
   context: AuthContext,
 ): Promise<GetWidgetDataResult | 'not implemented'> => {
-  return fetch('http://localhost:3009/system/sensor-status')
+  return fetch(`${environment.backendURL}/system/sensor-status`)
     .then((res) => res.json())
     .then((res) => {
       return res;

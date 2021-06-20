@@ -1,6 +1,8 @@
 import { MultiTransFormationResults, MultiTransFormationArgs, AuthContext } from '../../../types';
+import { environment } from '../../../environments/environment';
 
 import fetch from 'node-fetch';
+import { isNilOrEmpty } from '@kleeen/common/utils';
 
 // View: Sensor Details --- Widget: Site Status
 // Value: siteStatus
@@ -35,7 +37,7 @@ export const widget_statistics592242b4_67a8_4d1f_a98e_45527ebd46c3 = async (
     transformation: 'selfSingle',
   };
 
-  return fetch('http://localhost:3009/sensor/details', {
+  return fetch(`${environment.backendURL}/sensor/details`, {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
@@ -44,7 +46,9 @@ export const widget_statistics592242b4_67a8_4d1f_a98e_45527ebd46c3 = async (
   })
     .then((res) => res.json())
     .then((res) => {
-      siteStatusDefaultResponse.results = res?.data.pop().siteMapStatus;
+      if (isNilOrEmpty(res?.data)) return [];
+
+      siteStatusDefaultResponse.results = res.data.pop().siteMapStatus;
       return [siteStatusDefaultResponse];
     })
     .catch((err) => {
