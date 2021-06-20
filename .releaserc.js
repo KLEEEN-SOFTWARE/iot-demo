@@ -55,7 +55,7 @@ const plugins = [
 ];
 
 module.exports = {
-  branches: ['master', 'staging', 'develop'],
+  branches: ['main', 'staging', 'develop'],
   tagFormat: '${version}',
   plugins,
 };
