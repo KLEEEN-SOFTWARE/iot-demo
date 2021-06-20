@@ -20,8 +20,8 @@ backend:
 
         - npm ci
 
-        - echo "Generate next version"
-        - ./tools/build/backend/generate-next-version.sh
+        # - echo "Generate next version"
+        # - ./tools/build/backend/generate-next-version.sh
 
     build:
       commands:
