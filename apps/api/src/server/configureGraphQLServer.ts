@@ -37,5 +37,5 @@ export const configureGraphQLServer = async (app: Express): Promise<void> => {
     plugins,
   });
 
-  apolloServer.applyMiddleware({ app, path: '/graphql' });
+  apolloServer.applyMiddleware({ app, path: '/middleware/graphql' });
 };
