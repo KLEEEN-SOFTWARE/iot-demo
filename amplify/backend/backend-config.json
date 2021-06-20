@@ -1,0 +1,34 @@
+{
+  "function": {
+    "kleeenAPIMiddleware": {
+      "build": true,
+      "providerPlugin": "awscloudformation",
+      "service": "Lambda",
+      "dependsOn": []
+    },
+    "backendAPI": {
+      "build": true,
+      "providerPlugin": "awscloudformation",
+      "service": "Lambda",
+      "dependsOn": []
+    }
+  },
+  "api": {
+    "iotApiMiddleware": {
+      "service": "API Gateway",
+      "providerPlugin": "awscloudformation",
+      "dependsOn": [
+        {
+          "category": "function",
+          "resourceName": "kleeenAPIMiddleware",
+          "attributes": ["Name", "Arn"]
+        },
+        {
+          "category": "function",
+          "resourceName": "backendAPI",
+          "attributes": ["Name", "Arn"]
+        }
+      ]
+    }
+  }
+}

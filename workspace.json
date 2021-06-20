@@ -496,6 +496,58 @@
           }
         }
       }
+    },
+    "iot": {
+      "root": "apps/iot",
+      "sourceRoot": "apps/iot/src",
+      "projectType": "application",
+      "architect": {
+        "build": {
+          "builder": "@nrwl/node:build",
+          "outputs": ["{options.outputPath}"],
+          "options": {
+            "outputPath": "amplify/backend/function/backendAPI/src/",
+            "index": "app.js",
+            "main": "apps/iot/src/main.ts",
+            "tsConfig": "apps/iot/tsconfig.app.json",
+            "assets": ["apps/iot/src/assets"],
+            "buildLibsFromSource": true
+          },
+          "configurations": {
+            "production": {
+              "optimization": true,
+              "extractLicenses": true,
+              "inspect": false,
+              "fileReplacements": [
+                {
+                  "replace": "apps/iot/src/environments/environment.ts",
+                  "with": "apps/iot/src/environments/environment.prod.ts"
+                }
+              ]
+            }
+          }
+        },
+        "serve": {
+          "builder": "@nrwl/node:execute",
+          "options": {
+            "buildTarget": "iot:build"
+          }
+        },
+        "lint": {
+          "builder": "@nrwl/linter:eslint",
+          "options": {
+            "lintFilePatterns": ["apps/iot/**/*.ts"]
+          }
+        },
+        "test": {
+          "builder": "@nrwl/jest:jest",
+          "outputs": ["coverage/apps/iot"],
+          "options": {
+            "jestConfig": "apps/iot/jest.config.js",
+            "passWithNoTests": true
+          }
+        }
+      }
     }
   },
   "cli": {

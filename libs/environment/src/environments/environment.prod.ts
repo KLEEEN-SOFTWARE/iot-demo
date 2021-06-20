@@ -1,4 +1,4 @@
 export const environment = {
   production: true,
-  middlewareAPI: 'http://localhost:3000',
+  middlewareAPI: 'https://hpqt240vff.execute-api.us-east-1.amazonaws.com/main/kleeenAPIMiddleware/',
 };

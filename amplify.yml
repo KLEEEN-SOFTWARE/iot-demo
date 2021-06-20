@@ -1,0 +1,64 @@
+version: 0.1
+
+backend:
+  phases:
+    preBuild:
+      commands:
+        - echo "AWS_APP_ID = ${AWS_APP_ID}"
+        - echo "AWS_BRANCH = ${AWS_BRANCH}"
+        - echo "USER_BRANCH = ${USER_BRANCH}"
+
+        - echo "Install Node.js"
+        - nvm install ${VERSION_NODE_12}
+        - nvm use ${VERSION_NODE_12}
+        - chmod -R +x tools/build/backend/*.sh
+
+        - echo "Install global and local dependencies"
+        - >-
+          npm install -g \
+            @aws-amplify/cli@${VERSION_AMPLIFY}
+
+        - npm ci
+
+        - echo "Generate next version"
+        - ./tools/build/backend/generate-next-version.sh
+
+    build:
+      commands:
+        - echo "Build Kleeen API Middleware"
+        - npm run build:api:prod
+        - rm -rf amplify/backend/function/kleeenAPIMiddleware/src
+        - cp dist/apps/api amplify/backend/function/kleeenAPIMiddleware/src
+        - mv amplify/backend/function/kleeenAPIMiddleware/src/main.js amplify/backend/function/kleeenAPIMiddleware/src/index.js
+        - mv amplify/backend/function/kleeenAPIMiddleware/src/main.js.map amplify/backend/function/kleeenAPIMiddleware/src/index.js.map
+
+        - echo "Build Back-end app"
+        - npm run build:iot:prod
+
+
+        - echo "Execute Amplify CLI with the helper script"
+        - ./tools/build/backend/assume-role.sh
+
+        - echo "Build and push infrastructure using Amplify"
+        - echo "Execute Amplify CLI with the helper script"
+        - amplifyPush --simple
+
+frontend:
+  phases:
+    preBuild:
+      commands:
+        - nvm use $VERSION_NODE_12
+
+    build:
+      commands:
+        - echo "Build Front-end app"
+        - npm run build:prod
+
+  artifacts:
+    baseDirectory: dist/apps/cloud
+    files:
+      - '**/*'
+
+  cache:
+    paths:
+      - dist/apps/cloud/**/*

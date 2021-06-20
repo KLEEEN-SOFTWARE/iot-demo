@@ -1,8 +1,9 @@
-import express from 'express';
-import * as system from './system-dashboard.js';
-import * as siteMap from './site-map.js';
-import * as sensor from './sensor.js';
 import * as node from './node.js';
+import * as sensor from './sensor.js';
+import * as siteMap from './site-map.js';
+import * as system from './system-dashboard.js';
+
+import express from 'express';
 
 const router = express.Router();
 

@@ -13,6 +13,7 @@
     "affected:test": "nx affected:test",
     "build": "nx build",
     "build:api:prod": "nx build api --prod",
+    "build:iot:prod": "nx build iot --prod",
     "build:prod": "nx build cloud --prod",
     "commit": "npm run format:check && npx git-cz",
     "dep-graph": "nx dep-graph",
