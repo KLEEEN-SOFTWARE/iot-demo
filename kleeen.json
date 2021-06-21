@@ -1174,9 +1174,13 @@
       "apps/cloud/src/app/modules/custom"
     ],
     "files": [
+      ".gitignore",
       ".vscode/settings.json",
+      "apps/cloud/src/assets/logo.png",
       "apps/cloud/src/index.html",
-      "apps/cloud/src/assets/logo.png"
+      "libs/environment/src/environments/environment.prod.ts",
+      "nx.json",
+      "workspace.json"
     ]
   },
   "packageApplied": {
