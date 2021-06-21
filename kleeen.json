@@ -1154,6 +1154,7 @@
     "buildspec.yml",
     "commitlint.config.js",
     "jest.preset.js",
+    "kleeen.json",
     "package-lock.json",
     "package.json",
     "postcss.config.js",
