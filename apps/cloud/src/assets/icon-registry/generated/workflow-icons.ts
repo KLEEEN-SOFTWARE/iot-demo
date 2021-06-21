@@ -10,6 +10,11 @@ export default {
   'ks-navigation-9bqPxguVQuFBVXU6TeZXYJ': { path: './assets/icons/rss-feed.svg', alt: 'Navigation Icon' },
   // Navigation Icon for Sites
   'ks-navigation-9E3PzkenkuMdYfd4FTbeJQ': { path: './assets/icons/paper-write.svg', alt: 'Navigation Icon' },
+  // Navigation Icon for Form
+  'ks-navigation-cA5jm6oQvdU4M77sVveHXv': {
+    path: './assets/icons/programming-search-browser.svg',
+    alt: 'Navigation Icon',
+  },
   // Navigation Icon for Events
   'ks-navigation-naX8kq49HS9GMz3ASo7AaH': {
     path: './assets/icons/app-window-settings.svg',

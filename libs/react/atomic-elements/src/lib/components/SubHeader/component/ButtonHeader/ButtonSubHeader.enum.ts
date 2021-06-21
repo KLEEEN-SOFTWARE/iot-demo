@@ -1,4 +1,4 @@
 export enum ButtonSubHeaderEnum {
-  elementButtonGenericHeader = 'element-button-generic-header',
-  body = 'BODY',
+  elementButtonGenericHeader = "element-button-generic-header",
+  body = "BODY"
 }

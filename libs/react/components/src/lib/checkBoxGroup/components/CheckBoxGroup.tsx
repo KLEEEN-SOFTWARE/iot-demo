@@ -64,7 +64,7 @@ export function CheckBoxGroupComponent(props: ICheckBoxGroupProps): JSX.Element 
   const classes = useStyles();
   const isDisabled: boolean = pathOr(false, ['disabled'], props);
   const optionsLength = options?.data?.length;
-  const maxCharactersAllowed = 43;
+  const  maxCharactersAllowed = 43;
 
   /** In case we will have a different value and label in the future */
   let formattedOptions = [];

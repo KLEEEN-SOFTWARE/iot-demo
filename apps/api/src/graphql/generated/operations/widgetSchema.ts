@@ -218,66 +218,50 @@ export const widgetSchema = gql`
 
     # View: System --- Widget: Sensor Overall Status
     # Value: sensorOverallStatus
-    # Value aggregated by:
+    # Value aggregated by: 
     # Chart type: Summary Statistics
-    widget_statistics15d23aa3_6f00_4505_9199_85c2e2662aaa(
-      input: MultiTransFormationArgs
-    ): [MultiTransFormationResults]
+    widget_statistics15d23aa3_6f00_4505_9199_85c2e2662aaa(input: MultiTransFormationArgs): [MultiTransFormationResults]
 
     # View: System --- Widget: System Health
     # Value: systemHealth
-    # Value aggregated by:
+    # Value aggregated by: 
     # Chart type: [WIDGET] GAUGE_SEVERITY_LEVEL
-    widget_statistics324888f3_eb8c_4097_ba9f_21aa8cf6be4f(
-      input: MultiTransFormationArgs
-    ): [MultiTransFormationResults]
+    widget_statistics324888f3_eb8c_4097_ba9f_21aa8cf6be4f(input: MultiTransFormationArgs): [MultiTransFormationResults]
 
     # View: System --- Widget: Sensors
     # Value: sensorStatus
-    # Value aggregated by:
+    # Value aggregated by: 
     # Chart type: Summary Statistics
-    widget_statistics3a3b0785_d65d_4156_8025_0691da0cf99c(
-      input: MultiTransFormationArgs
-    ): [MultiTransFormationResults]
+    widget_statistics3a3b0785_d65d_4156_8025_0691da0cf99c(input: MultiTransFormationArgs): [MultiTransFormationResults]
 
     # View: System --- Widget: Nodes
     # Value: nodeStatus
-    # Value aggregated by:
+    # Value aggregated by: 
     # Chart type: Summary Statistics
-    widget_statistics423ff13b_de6b_451c_95c3_23288e4edced(
-      input: MultiTransFormationArgs
-    ): [MultiTransFormationResults]
+    widget_statistics423ff13b_de6b_451c_95c3_23288e4edced(input: MultiTransFormationArgs): [MultiTransFormationResults]
 
     # View: Sensor Details --- Widget: Site Status
     # Value: siteStatus
-    # Value aggregated by:
+    # Value aggregated by: 
     # Chart type: [WIDGET] GAUGE_SEVERITY_LEVEL
-    widget_statistics592242b4_67a8_4d1f_a98e_45527ebd46c3(
-      input: MultiTransFormationArgs
-    ): [MultiTransFormationResults]
+    widget_statistics592242b4_67a8_4d1f_a98e_45527ebd46c3(input: MultiTransFormationArgs): [MultiTransFormationResults]
 
     # View: Sensor Details --- Widget: Status
     # Value: sensorStatus
-    # Value aggregated by:
+    # Value aggregated by: 
     # Chart type: [WIDGET] GAUGE_SEVERITY_LEVEL
-    widget_statistics86ae65f8_0d94_499f_86e2_60c17bc48f2c(
-      input: MultiTransFormationArgs
-    ): [MultiTransFormationResults]
+    widget_statistics86ae65f8_0d94_499f_86e2_60c17bc48f2c(input: MultiTransFormationArgs): [MultiTransFormationResults]
 
     # View: System --- Widget: Node Overall Status
     # Value: nodeOverallStatus
-    # Value aggregated by:
+    # Value aggregated by: 
     # Chart type: Summary Statistics
-    widget_statisticscd7fa114_5174_423f_9fdd_b14fc75dd1f1(
-      input: MultiTransFormationArgs
-    ): [MultiTransFormationResults]
+    widget_statisticscd7fa114_5174_423f_9fdd_b14fc75dd1f1(input: MultiTransFormationArgs): [MultiTransFormationResults]
 
     # View: Node Details --- Widget: Status
     # Value: nodeStatus
-    # Value aggregated by:
+    # Value aggregated by: 
     # Chart type: [WIDGET] GAUGE_SEVERITY_LEVEL
-    widget_statisticse95096b2_8851_4330_a0ed_276c81ebe69e(
-      input: MultiTransFormationArgs
-    ): [MultiTransFormationResults]
+    widget_statisticse95096b2_8851_4330_a0ed_276c81ebe69e(input: MultiTransFormationArgs): [MultiTransFormationResults]
   }
 `;

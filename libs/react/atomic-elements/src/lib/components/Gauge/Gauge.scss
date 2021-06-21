@@ -12,8 +12,7 @@
 
   .gauge-tick-label-selected {
     font-size: var(--tx-L);
-    text-shadow: -2px 0 var(--surface-color), 0 2px var(--surface-color), 2px 0 var(--surface-color),
-      0 -2px var(--surface-color);
+    text-shadow: -2px 0 var(--surface-color), 0 2px var(--surface-color), 2px 0 var(--surface-color), 0 -2px var(--surface-color)
   }
 
   .gauge-value {

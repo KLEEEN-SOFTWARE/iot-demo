@@ -90,23 +90,17 @@ Change files in your app, Cypress should rerun its tests
 Run `npm run dep-graph` to see a diagram of the dependencies of your projects.
 
 # Authentication
-
 ## How to add custom integrations
-
 Kleeen Software provides the option to extend the default authentication or implements new ones. To support custom workflows, `@kleeen/auth library` exposes a set of types and interfaces.
-
 ```
 import { Integrations, KSAuth } from '@kleeen/auth';
 KSAuth.configure({
   authenticationHandler: new Integrations.CognitoAuthenticationHandler(),
 });
 ```
-
 ### IAuthenticationHandler base definition
-
 IAuthenticationHandler interface is the blueprint to implement different workflows.
 Here is an example of a custom implementation:
-
 ```
 import 'firebase/auth';
 import firebase from 'firebase/app';
@@ -158,16 +152,13 @@ export class FirebaseAuthenticationHandler extends Integrations.AuthenticationHa
       headers: {
         ...context.headers,
         MY_CUSTOM_HEADER: 'GOING HERE',
-      },
+      },      
     };
   }
 }
 ```
-
 ### Update the authentication handler
-
 Following is the example of configuring the **KSAuth** class to use the custom implementation.
-
 ```
 import { FirebaseAuthenticationHandler } from './google-firebase';
 import firebaseConfiguration from './custom-implementations/firebase.json'
@@ -175,18 +166,14 @@ KSAuth.configure({
   authenticationHandler: new FirebaseAuthenticationHandler(firebaseConfiguration),
 });
 ```
-
 ## Running unit tests
-
 Run `nx test auth` to execute the unit tests via [Jest](https://jestjs.io).
 
 ## Login Role and UI Access Manager Integration
-
 To connect a login to the FE app, it's needed to implement an AuthenticationHandler like `libs/auth/src/lib/integrations/aws-cognito/aws-cognito.ts`, that is the one used in our own prototypes.
 When implementing this 'authenticator,' the currentAuthenticatedUser function needs to return a shape like `{ ...anyUserInfoNeeded, role: 'ADMIN' }`, role its required, but if it's not provided, the access-control did not interfere with anything.
 
-NOTES:
-
-- the role values depend on what the `apps/cloud/src/app/settings/role-access-keys.json` have on the permissions and can be any string.
-- the role-access-keys.json is created for our generated UI proposes grouping each page into NAVIGATION key and next each page have WIDGETS, VIEWS and can have more specific components also can be extended but to also reflect access on the UI, the AccessControl component is needed.
-- the UI implementation follows the rules and uses the access-manager module from the ks-ui-react.
+NOTES: 
+  - the role values depend on what the `apps/cloud/src/app/settings/role-access-keys.json` have on the permissions and can be any string.
+  - the role-access-keys.json is created for our generated UI proposes grouping each page into NAVIGATION key and next each page have WIDGETS, VIEWS and can have more specific components also can be extended but to also reflect access on the UI, the AccessControl component is needed.
+  - the UI implementation follows the rules and uses the access-manager module from the ks-ui-react.

@@ -119,10 +119,12 @@ const LinearProgressBar = (props: {
       />
       <Popover
         className={themeClass}
-        classes={{
-          root: classes.popover,
-          paper: classes.paper,
-        }}
+        classes={
+          {
+            root: classes.popover,
+            paper: classes.paper,
+          }
+        }
         open={open}
         anchorReference="anchorPosition"
         anchorOrigin={{

@@ -2,11 +2,11 @@
   display: flex;
   flex: 1;
 
-  .withMarginLeft {
+  .withMarginLeft{
     margin-left: var(--wh-6XS);
   }
 
-  .MuiFormGroup-row {
+  .MuiFormGroup-row{
     flex-direction: column;
   }
 }
