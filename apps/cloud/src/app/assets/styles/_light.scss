@@ -2,6 +2,11 @@
 @import 'mixins';
 
 div[class*='-light'] {
+  .MuiDialogContent-root,
+  .MuiDialogTitle-root,
+  .MuiDialogActions-root {
+    background-color: var(--on-surface);
+  }
   *[class*='makeStyles-gridPageIntro-'] {
     @include gradient($shade-white, $shade-200);
   }

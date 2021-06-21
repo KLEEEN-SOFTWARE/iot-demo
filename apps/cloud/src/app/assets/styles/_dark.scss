@@ -97,5 +97,11 @@ div[class*='-dark'] {
 }
 
 .MuiDialog-paperScrollPaper > * {
-  background: $color-danger !important;
+  background: $color-danger;
+}
+
+.MuiDialogContent-root,
+.MuiDialogTitle-root,
+.MuiDialogActions-root {
+  background-color: var(--on-surface);
 }
