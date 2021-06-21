@@ -156,8 +156,6 @@
     "apps/api/src/app/.gitkeep",
     "apps/api/src/assets/.gitkeep",
     "apps/api/src/assets/entities.json",
-    "apps/api/src/environments/environment.prod.ts",
-    "apps/api/src/environments/environment.ts",
     "apps/api/src/graphql/custom/filtersResolver/filtersApi.ts",
     "apps/api/src/graphql/custom/operations/custom-resolvers.ts",
     "apps/api/src/graphql/custom/operations/custom-schema.ts",
@@ -1147,7 +1145,6 @@
     ".nvmrc",
     ".prettierignore",
     ".prettierrc",
-    ".releaserc.js",
     "CHANGELOG.md",
     "README.md",
     "babel.config.json",
@@ -1174,7 +1171,10 @@
       "apps/cloud/src/index.html",
       "jest.config.js",
       "libs/environment/src/environments/environment.prod.ts",
+      "apps/api/src/environments/environment.prod.ts",
+      "apps/api/src/environments/environment.ts",
       "nx.json",
+      ".releaserc.js",
       "workspace.json"
     ]
   },
