@@ -8,11 +8,11 @@ import WidgetSection01 from '../../components/WidgetSection01/WidgetSection01';
 import WidgetSection03 from '../../components/WidgetSection03/WidgetSection03';
 import {
   CardTitle01,
-
-  CardTitle02, H3Title01,
-
-  H3Title02, SecondaryCardSection01,
-  SecondaryCardWidget01
+  CardTitle02,
+  H3Title01,
+  H3Title02,
+  SecondaryCardSection01,
+  SecondaryCardWidget01,
 } from '../../index.stories';
 
 const useStyles = makeStyles({

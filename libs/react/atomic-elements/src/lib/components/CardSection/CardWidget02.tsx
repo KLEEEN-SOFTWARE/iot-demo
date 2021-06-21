@@ -13,9 +13,8 @@ export const CardWidget02 = ({
   widgetSelector = null,
   disabled,
 }: CardWidgetProps): JSX.Element => {
-
   return (
-    <div className={classnames('card-widget', { 'disabled': disabled })}>
+    <div className={classnames('card-widget', { disabled: disabled })}>
       {!hideTitle && <CardTitle title={title} icon={icon} />}
       <div className="content">
         {children}

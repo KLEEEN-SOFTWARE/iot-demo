@@ -22,7 +22,11 @@ const possibleDownloads = {
 };
 
 const possibleLinks = {
-  link: { title: 'Kleeen Software', link: { url: 'https://www.kleeen.software/', target: '_self' }, type: 'navigation' },
+  link: {
+    title: 'Kleeen Software',
+    link: { url: 'https://www.kleeen.software/', target: '_self' },
+    type: 'navigation',
+  },
   linkCr: { title: 'Kleeen Software CR', link: 'https://www.kleeen.cr/', type: 'navigation' },
 };
 

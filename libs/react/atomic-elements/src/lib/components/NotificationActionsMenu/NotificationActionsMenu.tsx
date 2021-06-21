@@ -15,9 +15,8 @@ const Menu = styled(MuiMenu)({
   },
 });
 
-
 const Button = styled(MuiButton)({
-  boxShadow: 'var(--shadow-button)', 
+  boxShadow: 'var(--shadow-button)',
   minWidth: 'var(--pm-2XL)',
   height: 'var(--pm-2XL)',
   color: 'var(--on-surface-color)',
@@ -39,11 +38,15 @@ enum ActionTypes {
   Download = 'download',
 }
 
-export type ActionShape = { type: ActionTypes; link?: string | { url: string, target: string }; title?: string };
+export type ActionShape = {
+  type: ActionTypes;
+  link?: string | { url: string; target: string };
+  title?: string;
+};
 
-const hardRefreshPage = ()=>{
+const hardRefreshPage = () => {
   window.location.reload();
-}
+};
 
 const actionEventManager = (taskName: string): ((e: SyntheticEvent, action: ActionShape) => void) => {
   const { refreshPage = hardRefreshPage } = useKleeenActions(taskName) || {};
@@ -52,13 +55,13 @@ const actionEventManager = (taskName: string): ((e: SyntheticEvent, action: Acti
     e.preventDefault();
 
     if (action.type === ActionTypes.Navigation || action.type === ActionTypes.Download) {
-      if(typeof action?.link === 'object') {
+      if (typeof action?.link === 'object') {
         window.open(action.link.url, action.link.target || '_blank');
       } else {
         window.open(action.link, '_blank');
       }
     }
-    
+
     if (action.type === ActionTypes.Reload) {
       refreshPage();
     }

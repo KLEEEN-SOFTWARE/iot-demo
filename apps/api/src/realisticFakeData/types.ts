@@ -14,7 +14,7 @@ export interface DataListingArgs {
     rawEntityName: string;
   }[];
   filters?: any;
-  pagination?: { startIndex: number, stopIndex: number };
+  pagination?: { startIndex: number; stopIndex: number };
 }
 
 export interface Entity {

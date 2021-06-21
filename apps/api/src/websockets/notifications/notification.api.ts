@@ -7,10 +7,10 @@ export enum NotificationTypeEnum {
 }
 
 export interface Notification {
-  message: string | { msg: string, values: { [key:string]: any } };
-  title: string | { msg: string, values: { [key:string]: any } };
+  message: string | { msg: string; values: { [key: string]: any } };
+  title: string | { msg: string; values: { [key: string]: any } };
   success: boolean;
-  actions?: { title: string; link?: string | { url: string, target: string }; type: NotificationTypeEnum }[];
+  actions?: { title: string; link?: string | { url: string; target: string }; type: NotificationTypeEnum }[];
   taskName?: string;
 }
 

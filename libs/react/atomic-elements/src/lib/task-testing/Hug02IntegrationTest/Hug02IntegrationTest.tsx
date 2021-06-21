@@ -7,13 +7,11 @@ import FullAreaCardWidget01 from '../../components/FullAreaCardWidget01/FullArea
 import WidgetSection03 from '../../components/WidgetSection03/WidgetSection03';
 import {
   CardTitle01,
-
-  CardTitle02, H3Title01,
-
+  CardTitle02,
+  H3Title01,
   H3Title02,
-
   SecondaryCardSection02,
-  SecondaryCardWidget02
+  SecondaryCardWidget02,
 } from '../../index.stories';
 
 const useStyles = makeStyles({

@@ -11,7 +11,7 @@ const useStyles = makeStyles({
     height: '100%',
     minHeight: 'var(--wh-5XL)',
     width: 'var(--wh-7XL)',
-    padding: 'var(--pm-S)'
+    padding: 'var(--pm-S)',
   },
 });
 

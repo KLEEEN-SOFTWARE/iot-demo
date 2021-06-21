@@ -1,5 +1,5 @@
-import React from 'react'
-import { withKnobs } from "@storybook/addon-knobs";
+import React from 'react';
+import { withKnobs } from '@storybook/addon-knobs';
 import { SecondaryCardSection01 } from './components/SecondaryCardSection01/SecondaryCardSection01';
 import { SecondaryCardSection02 } from './components/SecondaryCardSection02/SecondaryCardSection02';
 import CardTitle01 from './components/CardTitle01/CardTitle01';
@@ -11,7 +11,6 @@ import SecondaryCardWidget02 from './components/SecondaryCardWidget02/SecondaryC
 import Visualization from './components/Visualization/Visualization';
 import Hug01IntegrationTest from './task-testing/Hug01IntegrationTest/Hug01IntegrationTest';
 import Hug02IntegrationTest from './task-testing/Hug02IntegrationTest/Hug02IntegrationTest';
-
 
 export default {
   title: 'Storybook Knobs',
@@ -27,7 +26,7 @@ export {
   H3Title02,
   SecondaryCardSection01,
   SecondaryCardSection02,
-  SecondaryCardWidget01, 
+  SecondaryCardWidget01,
   SecondaryCardWidget02,
   Visualization,
   Hug01IntegrationTest,

@@ -75,10 +75,7 @@
           "isFilledByEU": null
         },
         "type": "EventLength",
-        "params": [
-          1,
-          500
-        ]
+        "params": [1, 500]
       },
       "timestamp": {
         "dataType": "Timestamp",
@@ -202,18 +199,7 @@
         "format": {
           "aggregations": null,
           "dateTime": null,
-          "examples": [
-            "A03",
-            "A5279",
-            "B1001",
-            "B35",
-            "B40",
-            "B9719",
-            "C4351",
-            "C641",
-            "C6990",
-            "C8172"
-          ],
+          "examples": ["A03", "A5279", "B1001", "B35", "B40", "B9719", "C4351", "C641", "C6990", "C8172"],
           "valueLabels": null,
           "max": null,
           "min": null,
@@ -230,11 +216,7 @@
           "isFilledByEU": true
         },
         "type": "arrayOf",
-        "params": [
-          "Sensor",
-          20,
-          []
-        ]
+        "params": ["Sensor", 20, []]
       },
       "nodeOverallStatus": {
         "dataType": "NodeOverallStatus",
@@ -253,11 +235,7 @@
         "format": {
           "aggregations": null,
           "dateTime": null,
-          "examples": [
-            "Bad",
-            "Ok",
-            "Excellent"
-          ],
+          "examples": ["Bad", "Ok", "Excellent"],
           "valueLabels": [
             {
               "label": "Bad",
@@ -287,10 +265,7 @@
           "isFilledByEU": true
         },
         "type": "NodeOverallStatus",
-        "params": [
-          1,
-          3
-        ]
+        "params": [1, 3]
       },
       "nodeStatus": {
         "dataType": "NodeStatus",
@@ -309,11 +284,7 @@
         "format": {
           "aggregations": null,
           "dateTime": null,
-          "examples": [
-            "Bad",
-            "Ok",
-            "Excellent"
-          ],
+          "examples": ["Bad", "Ok", "Excellent"],
           "valueLabels": [
             {
               "label": "Bad",
@@ -343,10 +314,7 @@
           "isFilledByEU": true
         },
         "type": "NodeStatus",
-        "params": [
-          1,
-          3
-        ]
+        "params": [1, 3]
       },
       "siteMap": {
         "dataType": "SiteMap",
@@ -365,13 +333,7 @@
         "format": {
           "aggregations": null,
           "dateTime": null,
-          "examples": [
-            "Site 1",
-            "Site 2",
-            "Site 3",
-            "Site 4",
-            "Site 5"
-          ],
+          "examples": ["Site 1", "Site 2", "Site 3", "Site 4", "Site 5"],
           "valueLabels": null,
           "max": null,
           "min": null,
@@ -415,11 +377,7 @@
         "format": {
           "aggregations": null,
           "dateTime": null,
-          "examples": [
-            "Bad",
-            "Ok",
-            "Excellent"
-          ],
+          "examples": ["Bad", "Ok", "Excellent"],
           "valueLabels": [
             {
               "label": "Bad",
@@ -582,11 +540,7 @@
         "format": {
           "aggregations": null,
           "dateTime": null,
-          "examples": [
-            "Bad",
-            "Ok",
-            "Excellent"
-          ],
+          "examples": ["Bad", "Ok", "Excellent"],
           "valueLabels": [
             {
               "label": "Bad",
@@ -749,13 +703,7 @@
         "format": {
           "aggregations": null,
           "dateTime": null,
-          "examples": [
-            "Site 1",
-            "Site 2",
-            "Site 3",
-            "Site 4",
-            "Site 5"
-          ],
+          "examples": ["Site 1", "Site 2", "Site 3", "Site 4", "Site 5"],
           "valueLabels": null,
           "max": null,
           "min": null,
@@ -772,15 +720,7 @@
           "isFilledByEU": true
         },
         "type": "oneOfEach",
-        "params": [
-          [
-            "Site 1",
-            "Site 2",
-            "Site 3",
-            "Site 4",
-            "Site 5"
-          ]
-        ]
+        "params": [["Site 1", "Site 2", "Site 3", "Site 4", "Site 5"]]
       },
       "systemHealth": {
         "dataType": "SystemHealth",
@@ -799,11 +739,7 @@
         "format": {
           "aggregations": null,
           "dateTime": null,
-          "examples": [
-            "Bad",
-            "Ok",
-            "Excellent"
-          ],
+          "examples": ["Bad", "Ok", "Excellent"],
           "valueLabels": [
             {
               "label": "Bad",
@@ -833,10 +769,7 @@
           "isFilledByEU": true
         },
         "type": "SystemHealth",
-        "params": [
-          1,
-          3
-        ]
+        "params": [1, 3]
       },
       "sensor": {
         "dataType": "Sensor",
@@ -855,18 +788,7 @@
         "format": {
           "aggregations": null,
           "dateTime": null,
-          "examples": [
-            "A03",
-            "A5279",
-            "B1001",
-            "B35",
-            "B40",
-            "B9719",
-            "C4351",
-            "C641",
-            "C6990",
-            "C8172"
-          ],
+          "examples": ["A03", "A5279", "B1001", "B35", "B40", "B9719", "C4351", "C641", "C6990", "C8172"],
           "valueLabels": null,
           "max": null,
           "min": null,
@@ -883,11 +805,7 @@
           "isFilledByEU": true
         },
         "type": "arrayOf",
-        "params": [
-          "Sensor",
-          20,
-          []
-        ]
+        "params": ["Sensor", 20, []]
       },
       "siteStatus": {
         "dataType": "SiteStatus",
@@ -906,11 +824,7 @@
         "format": {
           "aggregations": null,
           "dateTime": null,
-          "examples": [
-            "Bad",
-            "Ok",
-            "Excellent"
-          ],
+          "examples": ["Bad", "Ok", "Excellent"],
           "valueLabels": [
             {
               "label": "Bad",
@@ -940,10 +854,7 @@
           "isFilledByEU": true
         },
         "type": "SiteStatus",
-        "params": [
-          1,
-          3
-        ]
+        "params": [1, 3]
       },
       "node": {
         "dataType": "Node",
@@ -990,11 +901,7 @@
           "isFilledByEU": true
         },
         "type": "arrayOf",
-        "params": [
-          "Node",
-          20,
-          []
-        ]
+        "params": ["Node", 20, []]
       }
     }
   },
@@ -1021,18 +928,7 @@
         "format": {
           "aggregations": null,
           "dateTime": null,
-          "examples": [
-            "A03",
-            "A5279",
-            "B1001",
-            "B35",
-            "B40",
-            "B9719",
-            "C4351",
-            "C641",
-            "C6990",
-            "C8172"
-          ],
+          "examples": ["A03", "A5279", "B1001", "B35", "B40", "B9719", "C4351", "C641", "C6990", "C8172"],
           "valueLabels": null,
           "max": null,
           "min": null,
@@ -1049,20 +945,7 @@
           "isFilledByEU": true
         },
         "type": "oneOfEach",
-        "params": [
-          [
-            "A03",
-            "A5279",
-            "B1001",
-            "B35",
-            "B40",
-            "B9719",
-            "C4351",
-            "C641",
-            "C6990",
-            "C8172"
-          ]
-        ]
+        "params": [["A03", "A5279", "B1001", "B35", "B40", "B9719", "C4351", "C641", "C6990", "C8172"]]
       },
       "ppm": {
         "dataType": "Ppm",
@@ -1164,11 +1047,7 @@
         "format": {
           "aggregations": null,
           "dateTime": null,
-          "examples": [
-            "Bad",
-            "Ok",
-            "Excellent"
-          ],
+          "examples": ["Bad", "Ok", "Excellent"],
           "valueLabels": [
             {
               "label": "Bad",
@@ -1198,10 +1077,7 @@
           "isFilledByEU": true
         },
         "type": "SensorOverallStatus",
-        "params": [
-          1,
-          3
-        ]
+        "params": [1, 3]
       },
       "sensorStatus": {
         "dataType": "SensorStatus",
@@ -1220,11 +1096,7 @@
         "format": {
           "aggregations": null,
           "dateTime": null,
-          "examples": [
-            "Bad",
-            "Ok",
-            "Excellent"
-          ],
+          "examples": ["Bad", "Ok", "Excellent"],
           "valueLabels": [
             {
               "label": "Bad",
@@ -1254,10 +1126,7 @@
           "isFilledByEU": true
         },
         "type": "SensorStatus",
-        "params": [
-          1,
-          3
-        ]
+        "params": [1, 3]
       },
       "siteMap": {
         "dataType": "SiteMap",
@@ -1276,13 +1145,7 @@
         "format": {
           "aggregations": null,
           "dateTime": null,
-          "examples": [
-            "Site 1",
-            "Site 2",
-            "Site 3",
-            "Site 4",
-            "Site 5"
-          ],
+          "examples": ["Site 1", "Site 2", "Site 3", "Site 4", "Site 5"],
           "valueLabels": null,
           "max": null,
           "min": null,
@@ -1326,11 +1189,7 @@
         "format": {
           "aggregations": null,
           "dateTime": null,
-          "examples": [
-            "Bad",
-            "Ok",
-            "Excellent"
-          ],
+          "examples": ["Bad", "Ok", "Excellent"],
           "valueLabels": [
             {
               "label": "Bad",
@@ -1401,18 +1260,7 @@
         "format": {
           "aggregations": null,
           "dateTime": null,
-          "examples": [
-            "A03",
-            "A5279",
-            "B1001",
-            "B35",
-            "B40",
-            "B9719",
-            "C4351",
-            "C641",
-            "C6990",
-            "C8172"
-          ],
+          "examples": ["A03", "A5279", "B1001", "B35", "B40", "B9719", "C4351", "C641", "C6990", "C8172"],
           "valueLabels": null,
           "max": null,
           "min": null,
@@ -1493,11 +1341,7 @@
         "format": {
           "aggregations": null,
           "dateTime": null,
-          "examples": [
-            "Bad",
-            "Ok",
-            "Excellent"
-          ],
+          "examples": ["Bad", "Ok", "Excellent"],
           "valueLabels": [
             {
               "label": "Bad",
@@ -1568,18 +1412,7 @@
         "format": {
           "aggregations": null,
           "dateTime": null,
-          "examples": [
-            "A03",
-            "A5279",
-            "B1001",
-            "B35",
-            "B40",
-            "B9719",
-            "C4351",
-            "C641",
-            "C6990",
-            "C8172"
-          ],
+          "examples": ["A03", "A5279", "B1001", "B35", "B40", "B9719", "C4351", "C641", "C6990", "C8172"],
           "valueLabels": null,
           "max": null,
           "min": null,
@@ -1660,11 +1493,7 @@
         "format": {
           "aggregations": null,
           "dateTime": null,
-          "examples": [
-            "Bad",
-            "Ok",
-            "Excellent"
-          ],
+          "examples": ["Bad", "Ok", "Excellent"],
           "valueLabels": [
             {
               "label": "Bad",
@@ -1735,13 +1564,7 @@
         "format": {
           "aggregations": null,
           "dateTime": null,
-          "examples": [
-            "Site 1",
-            "Site 2",
-            "Site 3",
-            "Site 4",
-            "Site 5"
-          ],
+          "examples": ["Site 1", "Site 2", "Site 3", "Site 4", "Site 5"],
           "valueLabels": null,
           "max": null,
           "min": null,
@@ -1822,11 +1645,7 @@
         "format": {
           "aggregations": null,
           "dateTime": null,
-          "examples": [
-            "Bad",
-            "Ok",
-            "Excellent"
-          ],
+          "examples": ["Bad", "Ok", "Excellent"],
           "valueLabels": [
             {
               "label": "Bad",
@@ -1897,13 +1716,7 @@
         "format": {
           "aggregations": null,
           "dateTime": null,
-          "examples": [
-            "Site 1",
-            "Site 2",
-            "Site 3",
-            "Site 4",
-            "Site 5"
-          ],
+          "examples": ["Site 1", "Site 2", "Site 3", "Site 4", "Site 5"],
           "valueLabels": null,
           "max": null,
           "min": null,
@@ -1920,11 +1733,7 @@
           "isFilledByEU": true
         },
         "type": "arrayOf",
-        "params": [
-          "SiteMap",
-          20,
-          []
-        ]
+        "params": ["SiteMap", 20, []]
       }
     }
   },
@@ -1987,18 +1796,7 @@
         "format": {
           "aggregations": null,
           "dateTime": null,
-          "examples": [
-            "A03",
-            "A5279",
-            "B1001",
-            "B35",
-            "B40",
-            "B9719",
-            "C4351",
-            "C641",
-            "C6990",
-            "C8172"
-          ],
+          "examples": ["A03", "A5279", "B1001", "B35", "B40", "B9719", "C4351", "C641", "C6990", "C8172"],
           "valueLabels": null,
           "max": null,
           "min": null,
@@ -2059,10 +1857,7 @@
           "isFilledByEU": null
         },
         "type": "integer",
-        "params": [
-          1,
-          500
-        ]
+        "params": [1, 500]
       },
       "event": {
         "dataType": "Event",
