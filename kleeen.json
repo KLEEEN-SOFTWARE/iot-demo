@@ -371,7 +371,6 @@
     "libs/common/utils/tsconfig.spec.json",
     "libs/environment/src/deployment/.gitignore",
     "libs/environment/src/deployment/index.ts",
-    "libs/environment/src/environments/environment.prod.ts",
     "libs/environment/src/environments/environment.ts",
     "libs/environment/src/index.ts",
     "libs/environment/.babelrc",
@@ -1144,7 +1143,6 @@
     ".editorconfig",
     ".eslintrc.json",
     ".gitattributes",
-    ".gitignore",
     ".npmrc",
     ".nvmrc",
     ".prettierignore",
@@ -1158,13 +1156,11 @@
     "jest.config.js",
     "jest.preset.js",
     "kleeen.json",
-    "nx.json",
     "package-lock.json",
     "package.json",
     "postcss.config.js",
     "serverless.yml",
-    "tsconfig.base.json",
-    "workspace.json"
+    "tsconfig.base.json"
   ],
   "exclude": {
     "directories": [
