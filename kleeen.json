@@ -1173,7 +1173,6 @@
       "apps/cloud/src/assets/logo.png",
       "apps/cloud/src/index.html",
       "jest.config.js",
-      "kleeen.json",
       "libs/environment/src/environments/environment.prod.ts",
       "nx.json",
       "workspace.json"
