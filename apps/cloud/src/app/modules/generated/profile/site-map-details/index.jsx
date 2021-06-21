@@ -2,17 +2,13 @@ import React, { useState } from 'react';
 import { KUIConnect, AccessControl } from '@kleeen/core-react';
 import { roleAccessKeyTag } from '@kleeen/common/utils';
 import { useStyles } from './styles/styles';
-import {
-  EntityDetailsSection,
-  DataViewControlSection,
-  DataViewDisplaySectionAtomic,
-} from '@kleeen/react/atomic-elements';
-import { dataViewControlSectionSlots } from './settings/data-view-control-section-slots';
-import { entityDetailsSectionEntityDetails } from './settings/entity-details-section-entity-details';
 import { useKleeenActions, useUrlQueryParams } from '@kleeen/react/hooks';
 import { actions } from './settings/actions';
 import { attributes } from './settings/attributes';
 import { dataViewControlSectionViewOptions } from './settings/data-view-control-section-view-options';
+import { HeaderAndSubSections, DataViewDisplaySectionAtomic } from '@kleeen/react/atomic-elements';
+import { dataViewControlSectionSlots } from './settings/data-view-control-section-slots';
+import { entityDetailsSectionEntityDetails } from './settings/entity-details-section-entity-details';
 import { dataViewDisplaySectionAtomicSingleTableWidgets } from './settings/data-view-display-section-atomic-single-table-widgets';
 import { dataViewDisplaySectionAtomicDashboardWidgets } from './settings/data-view-display-section-atomic-dashboard-widgets';
 import { dataViewDisplaySectionAtomicSingleViewWidgets } from './settings/data-view-display-section-atomic-single-view-widgets';
@@ -26,7 +22,6 @@ function EntityBrowserDetailsTask({ translate, ...props }) {
   const [cardsNumber, setCardsNumber] = useState(0);
   const entityName = `Site Map`;
   const displayTaskName = `Site Map Details`;
-  const [openDetails, setOpenDetails] = useState(true);
   const siteMapActions = useKleeenActions(taskName);
   const title = `Site Map Details`;
   const objectValue = `siteMap`;
@@ -35,22 +30,12 @@ function EntityBrowserDetailsTask({ translate, ...props }) {
   }
   const paramsBasedOnRoute = useUrlQueryParams();
   const parent = { id: paramsBasedOnRoute[objectValue], entity };
+  const [openDetails, setOpenDetails] = useState(true);
   const classes = useStyles();
 
   return (
     <AccessControl id={roleAccessKeyTag(`navigation.${taskName}`)}>
       <div className={`${classes.entityBrowserTask} subhead-dynamic`}>
-        <div className={classes.entityBrowserDetailsSection}>
-          <EntityDetailsSection
-            displayTaskName={displayTaskName}
-            entityDetails={entityDetailsSectionEntityDetails}
-            entityName={entityName}
-            isEditable={true}
-            onChangeFilterVisible={setOpenDetails}
-            slots={dataViewControlSectionSlots}
-            taskName={taskName}
-          />
-        </div>
         <div
           className={
             openDetails
@@ -59,21 +44,31 @@ function EntityBrowserDetailsTask({ translate, ...props }) {
           }
         >
           <div className={`${classes.gridPageIntro} ${cardsNumber > 0 ? `max-card-${cardsNumber}` : ''}`}>
-            <DataViewControlSection
-              slots={dataViewControlSectionSlots}
-              parent={parent}
+            <HeaderAndSubSections
+              title={entity}
+              upText={title}
               hideRefreshControl
-              actions={actions}
-              attributes={attributes}
-              entity={entity}
-              entityActions={siteMapActions}
-              handleChangeTab={handleOnTabIndexChange}
-              objectValue={objectValue}
-              showDropDown={false}
               taskName={taskName}
-              title={title}
-              value={selectedTabIndex}
+              objectValue={objectValue}
+              slots={dataViewControlSectionSlots}
+              withSummarySection={{
+                displayTaskName: title,
+                entityDetails: entityDetailsSectionEntityDetails,
+                entityName: entity,
+                onChangeFilterVisible: setOpenDetails,
+                taskName: taskName,
+                isEditable: true,
+              }}
+              actionsProps={{
+                actions: actions,
+                entityName: entity,
+                attributes: attributes,
+                entityActions: siteMapActions,
+                parent,
+              }}
               viewOptions={dataViewControlSectionViewOptions}
+              handleChangeTab={handleOnTabIndexChange}
+              value={selectedTabIndex}
             />
           </div>
           <div className={classes.dataViewDisplaySection}>

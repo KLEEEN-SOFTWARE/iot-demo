@@ -67,9 +67,11 @@ interface ActionItem {
   type?: string;
 }
 
+// TODO: @cafe move this and other shared types to @kleeen/types
 export interface DispatchCustomActionResults {
   data: {
     actions?: ActionItem[];
+    context?: any;
     customMessage?: string;
     customTitle?: string;
     functionName: string;
