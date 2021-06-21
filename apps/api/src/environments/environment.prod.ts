@@ -1,4 +1,4 @@
 export const environment = {
   production: true,
-  backendURL: 'https://hpqt240vff.execute-api.us-east-1.amazonaws.com/main/backendAPI',
+  backendURL: 'https://av6vpj9zd4.execute-api.us-east-1.amazonaws.com/main/backendAPI',
 };
