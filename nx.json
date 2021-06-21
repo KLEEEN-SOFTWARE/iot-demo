@@ -23,8 +23,7 @@
     "react-state-management": { "tags": [] },
     "render-utils": { "tags": [] },
     "styles": { "tags": [] },
-    "types": { "tags": [] },
-    "iot": { "tags": [] }
+    "types": { "tags": [] }
   },
   "tasksRunnerOptions": {
     "default": {
@@ -32,5 +31,5 @@
       "options": { "cacheableOperations": ["build", "lint", "test", "e2e"] }
     }
   },
-  "affected": { "defaultBase": "main" }
+  "affected": { "defaultBase": "develop" }
 }
