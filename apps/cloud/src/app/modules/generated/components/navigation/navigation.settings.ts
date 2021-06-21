@@ -51,6 +51,11 @@ export const getSettings = (logout: () => void): NavigationSettings => {
         path: `/configure-sensor-node`,
         icon: `ks-navigation-9bqPxguVQuFBVXU6TeZXYJ`,
       },
+      {
+        title: `Form`,
+        path: `/form`,
+        icon: `ks-navigation-cA5jm6oQvdU4M77sVveHXv`,
+      },
     ],
   };
 };
