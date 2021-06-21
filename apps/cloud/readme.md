@@ -18,16 +18,12 @@ e.g.
 
 ```html
 <p align="center">
-  <img
-    src="https://pbs.twimg.com/profile_images/1126258046357737472/bD-e3Sfs_400x400.png"
-    width="150"
-    height="150"
-    alt="Kleeen Software"
-  />
+  <img src="https://pbs.twimg.com/profile_images/1126258046357737472/bD-e3Sfs_400x400.png" width="150" height="150" alt="Kleeen Software">
 </p>
-<h1 align="center">Custom Static Styles</h1>
+<h1 align="center" >
+  Custom Static Styles
+</h1>
 ```
-
 Now you can use your own fonts, copy them into the next folder:
 
 ```
@@ -38,14 +34,11 @@ e.g.
 
 ```html
 <p align="center">
-  <img
-    src="https://pbs.twimg.com/profile_images/1126258046357737472/bD-e3Sfs_400x400.png"
-    width="150"
-    height="150"
-    alt="Kleeen Software"
-  />
+  <img src="https://pbs.twimg.com/profile_images/1126258046357737472/bD-e3Sfs_400x400.png" width="150" height="150" alt="Kleeen Software">
 </p>
-<h1 align="center">Custom Fonts</h1>
+<h1 align="center" >
+  Custom Fonts
+</h1>
 ```
 
 Now you can use your own images, SVG, videos and so on, copy them into the next folder:
@@ -58,12 +51,9 @@ e.g.
 
 ```html
 <p align="center">
-  <img
-    src="https://pbs.twimg.com/profile_images/1126258046357737472/bD-e3Sfs_400x400.png"
-    width="150"
-    height="150"
-    alt="Kleeen Software"
-  />
+  <img src="https://pbs.twimg.com/profile_images/1126258046357737472/bD-e3Sfs_400x400.png" width="150" height="150" alt="Kleeen Software">
 </p>
-<h1 align="center">Custom Static Files</h1>
+<h1 align="center" >
+  Custom Static Files
+</h1>
 ```

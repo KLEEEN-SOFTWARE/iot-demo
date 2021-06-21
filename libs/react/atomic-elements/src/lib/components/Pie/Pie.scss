@@ -1,9 +1,9 @@
-.High-charts {
+.High-charts{
   width: 100%;
   height: 100%;
   position: relative;
 
-  .back-to {
+  .back-to{
     position: absolute;
     display: none;
     z-index: 1;
@@ -14,7 +14,7 @@
     }
   }
 
-  .highcharts-drillup-button {
+  .highcharts-drillup-button{
     display: none;
   }
 }

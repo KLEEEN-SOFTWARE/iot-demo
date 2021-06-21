@@ -19,16 +19,18 @@ const parseDataFormat = (format: any) => {
     acc[key] = value;
 
     return acc;
-  }, {});
-};
+  }, {})
+}
 
 const parseDataItem = (data: any): any => {
-  if (data?.format) {
+  if(data?.format) {
     data.format = parseDataFormat(data.format);
   }
   return data;
-};
+}
 
 export const parseData = (data: any): any => {
-  return Array.isArray(data) ? data.map((list) => parseDataItem(list)) : parseDataItem(data);
-};
+  return Array.isArray(data)
+    ? data.map((list) => parseDataItem(list))
+    : parseDataItem(data);
+}

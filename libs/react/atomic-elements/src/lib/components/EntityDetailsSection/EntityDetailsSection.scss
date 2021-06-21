@@ -90,6 +90,7 @@
         border-left: var(--pm-S) solid transparent;
         border-right: var(--pm-S) solid transparent;
 
+
         > button {
           background: transparent;
           box-shadow: none;
@@ -99,17 +100,16 @@
           padding-right: 0px;
           color: var(--page-intro-text-color);
           text-transform: capitalize;
-
-          .icon-close,
-          &.attributes-navigation-edit-on {
+        
+          .icon-close, &.attributes-navigation-edit-on{
             color: var(--secondary-color);
           }
 
-          &.attributes-navigation-left {
+          &.attributes-navigation-left{
             float: left;
           }
 
-          &.attributes-navigation-right {
+          &.attributes-navigation-right{
             float: right;
           }
         }

@@ -8,7 +8,7 @@
     &::before {
       border: none;
     }
-    &::after {
+    &::after{
       border: none;
     }
     input {
@@ -20,8 +20,7 @@
     }
   }
 
-  .MuiAutocomplete-tag,
-  .MuiChip-root.MuiChip-sizeSmall {
+  .MuiAutocomplete-tag, .MuiChip-root.MuiChip-sizeSmall {
     border-radius: var(--pm-2XS);
     margin: var(--pm-4XS) var(--pm-4XS) var(--pm-5XS) var(--pm-5XS);
     background-color: var(--secondary-color);
@@ -31,10 +30,10 @@
       color: var(--on-nav-top-bg-color);
       height: var(--wh-5XS);
       width: var(--wh-5XS);
-    }
+    };
   }
 
-  .MuiChip-deleteIconSmall {
+  .MuiChip-deleteIconSmall{
     width: 11px;
     height: 11px;
     margin-left: -10px;

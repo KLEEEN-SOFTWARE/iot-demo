@@ -14,9 +14,7 @@
   }
 
   &.full-width {
-    grid-template-columns: calc(var(--wh-5XL) - var(--wh-5XS) - var(--wh-6XS)) calc(
-        100% - calc(var(--wh-5XL) + var(--wh-5XS) + var(--wh-6XS))
-      );
+    grid-template-columns: calc(var(--wh-5XL) - var(--wh-5XS) - var(--wh-6XS)) calc(100% - calc(var(--wh-5XL) + var(--wh-5XS) + var(--wh-6XS)));
   }
 
   .card-widgets-section {

@@ -25,6 +25,12 @@
           "GUEST": "SHOW"
         }
       },
+      "FORM": {
+        "PERMISSIONS": {
+          "ADMIN": "SHOW",
+          "GUEST": "SHOW"
+        }
+      },
       "EVENTS": {
         "PERMISSIONS": {
           "ADMIN": "SHOW",

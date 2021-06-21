@@ -39,10 +39,16 @@
   --flatAlert-dark-hsla: hsla(var(--flatAlert-dark-hsl), 1);
 
   --flatAlertContentTextColor-light-hsl: 0, 0%, 6%;
-  --flatAlertContentTextColor-light-hsla: hsla(var(--flatAlertContentTextColor-light-hsl), 1);
+  --flatAlertContentTextColor-light-hsla: hsla(
+    var(--flatAlertContentTextColor-light-hsl),
+    1
+  );
 
   --flatAlertContentTextColor-dark-hsl: 0, 0%, 6%;
-  --flatAlertContentTextColor-dark-hsla: hsla(var(--flatAlertContentTextColor-dark-hsl), 1);
+  --flatAlertContentTextColor-dark-hsla: hsla(
+    var(--flatAlertContentTextColor-dark-hsl),
+    1
+  );
 
   --flatBackground-light-hsl: 216, 17%, 94%;
   --flatBackground-light-hsla: hsla(var(--flatBackground-light-hsl), 1);
@@ -51,16 +57,28 @@
   --flatBackground-dark-hsla: hsla(var(--flatBackground-dark-hsl), 1);
 
   --flatBackgroundContentTextColor-light-hsl: 0, 0%, 6%;
-  --flatBackgroundContentTextColor-light-hsla: hsla(var(--flatBackgroundContentTextColor-light-hsl), 1);
+  --flatBackgroundContentTextColor-light-hsla: hsla(
+    var(--flatBackgroundContentTextColor-light-hsl),
+    1
+  );
 
   --flatBackgroundContentTextColor-dark-hsl: 0, 0%, 94%;
-  --flatBackgroundContentTextColor-dark-hsla: hsla(var(--flatBackgroundContentTextColor-dark-hsl), 1);
+  --flatBackgroundContentTextColor-dark-hsla: hsla(
+    var(--flatBackgroundContentTextColor-dark-hsl),
+    1
+  );
 
   --flatHorizontalLineOnCards-light-hsl: 0, 0%, 87%;
-  --flatHorizontalLineOnCards-light-hsla: hsla(var(--flatHorizontalLineOnCards-light-hsl), 1);
+  --flatHorizontalLineOnCards-light-hsla: hsla(
+    var(--flatHorizontalLineOnCards-light-hsl),
+    1
+  );
 
   --flatHorizontalLineOnCards-dark-hsl: 224, 23%, 16%;
-  --flatHorizontalLineOnCards-dark-hsla: hsla(var(--flatHorizontalLineOnCards-dark-hsl), 1);
+  --flatHorizontalLineOnCards-dark-hsla: hsla(
+    var(--flatHorizontalLineOnCards-dark-hsl),
+    1
+  );
 
   --flatHorizontalLineOnCardsContentTextColor-light-hsl: 0, 0%, 6%;
   --flatHorizontalLineOnCardsContentTextColor-light-hsla: hsla(
@@ -81,16 +99,28 @@
   --flatMainNavColor-dark-hsla: hsla(var(--flatMainNavColor-dark-hsl), 1);
 
   --flatMainNavColorContentTextColor-light-hsl: 0, 0%, 6%;
-  --flatMainNavColorContentTextColor-light-hsla: hsla(var(--flatMainNavColorContentTextColor-light-hsl), 1);
+  --flatMainNavColorContentTextColor-light-hsla: hsla(
+    var(--flatMainNavColorContentTextColor-light-hsl),
+    1
+  );
 
   --flatMainNavColorContentTextColor-dark-hsl: 0, 0%, 94%;
-  --flatMainNavColorContentTextColor-dark-hsla: hsla(var(--flatMainNavColorContentTextColor-dark-hsl), 1);
+  --flatMainNavColorContentTextColor-dark-hsla: hsla(
+    var(--flatMainNavColorContentTextColor-dark-hsl),
+    1
+  );
 
   --flatMonoVizColorOther-light-hsl: 213, 5%, 45%;
-  --flatMonoVizColorOther-light-hsla: hsla(var(--flatMonoVizColorOther-light-hsl), 1);
+  --flatMonoVizColorOther-light-hsla: hsla(
+    var(--flatMonoVizColorOther-light-hsl),
+    1
+  );
 
   --flatMonoVizColorOther-dark-hsl: 224, 31%, 56%;
-  --flatMonoVizColorOther-dark-hsla: hsla(var(--flatMonoVizColorOther-dark-hsl), 1);
+  --flatMonoVizColorOther-dark-hsla: hsla(
+    var(--flatMonoVizColorOther-dark-hsl),
+    1
+  );
 
   --flatOnAlert-light-hsl: 0, 0%, 6%;
   --flatOnAlert-light-hsla: hsla(var(--flatOnAlert-light-hsl), 1);
@@ -105,10 +135,16 @@
   --flatOnBackground-dark-hsla: hsla(var(--flatOnBackground-dark-hsl), 1);
 
   --flatOnMonoVizColorOther-light-hsl: 0, 0%, 94%;
-  --flatOnMonoVizColorOther-light-hsla: hsla(var(--flatOnMonoVizColorOther-light-hsl), 1);
+  --flatOnMonoVizColorOther-light-hsla: hsla(
+    var(--flatOnMonoVizColorOther-light-hsl),
+    1
+  );
 
   --flatOnMonoVizColorOther-dark-hsl: 0, 0%, 6%;
-  --flatOnMonoVizColorOther-dark-hsla: hsla(var(--flatOnMonoVizColorOther-dark-hsl), 1);
+  --flatOnMonoVizColorOther-dark-hsla: hsla(
+    var(--flatOnMonoVizColorOther-dark-hsl),
+    1
+  );
 
   --flatOnRowEven-light-hsl: 0, 0%, 6%;
   --flatOnRowEven-light-hsla: hsla(var(--flatOnRowEven-light-hsl), 1);
@@ -171,16 +207,28 @@
   --materialOnAlert-dark-hsla: hsla(var(--materialOnAlert-dark-hsl), 1);
 
   --materialOnBackground-light-hsl: 0, 0%, 6%;
-  --materialOnBackground-light-hsla: hsla(var(--materialOnBackground-light-hsl), 1);
+  --materialOnBackground-light-hsla: hsla(
+    var(--materialOnBackground-light-hsl),
+    1
+  );
 
   --materialOnBackground-dark-hsl: 0, 0%, 94%;
-  --materialOnBackground-dark-hsla: hsla(var(--materialOnBackground-dark-hsl), 1);
+  --materialOnBackground-dark-hsla: hsla(
+    var(--materialOnBackground-dark-hsl),
+    1
+  );
 
   --materialOnMonoVizColorOther-light-hsl: 0, 0%, 94%;
-  --materialOnMonoVizColorOther-light-hsla: hsla(var(--materialOnMonoVizColorOther-light-hsl), 1);
+  --materialOnMonoVizColorOther-light-hsla: hsla(
+    var(--materialOnMonoVizColorOther-light-hsl),
+    1
+  );
 
   --materialOnMonoVizColorOther-dark-hsl: 0, 0%, 6%;
-  --materialOnMonoVizColorOther-dark-hsla: hsla(var(--materialOnMonoVizColorOther-dark-hsl), 1);
+  --materialOnMonoVizColorOther-dark-hsla: hsla(
+    var(--materialOnMonoVizColorOther-dark-hsl),
+    1
+  );
 
   --materialOnRowEven-light-hsl: 0, 0%, 6%;
   --materialOnRowEven-light-hsla: hsla(var(--materialOnRowEven-light-hsl), 1);
@@ -201,10 +249,16 @@
   --materialOnSurface-dark-hsla: hsla(var(--materialOnSurface-dark-hsl), 1);
 
   --materialOnSurfaceAlt-light-hsl: 213, 5%, 45%;
-  --materialOnSurfaceAlt-light-hsla: hsla(var(--materialOnSurfaceAlt-light-hsl), 1);
+  --materialOnSurfaceAlt-light-hsla: hsla(
+    var(--materialOnSurfaceAlt-light-hsl),
+    1
+  );
 
   --materialOnSurfaceAlt-dark-hsl: 0, 0%, 81%;
-  --materialOnSurfaceAlt-dark-hsla: hsla(var(--materialOnSurfaceAlt-dark-hsl), 1);
+  --materialOnSurfaceAlt-dark-hsla: hsla(
+    var(--materialOnSurfaceAlt-dark-hsl),
+    1
+  );
 
   --materialRowEven-light-hsl: 0, 0%, 97%;
   --materialRowEven-light-hsla: hsla(var(--materialRowEven-light-hsl), 1);
@@ -255,16 +309,28 @@
   --modernOnBackground-dark-hsla: hsla(var(--modernOnBackground-dark-hsl), 1);
 
   --modernOnMainNavColor-light-hsl: 0, 0%, 94%;
-  --modernOnMainNavColor-light-hsla: hsla(var(--modernOnMainNavColor-light-hsl), 1);
+  --modernOnMainNavColor-light-hsla: hsla(
+    var(--modernOnMainNavColor-light-hsl),
+    1
+  );
 
   --modernOnMainNavColor-dark-hsl: 0, 0%, 94%;
-  --modernOnMainNavColor-dark-hsla: hsla(var(--modernOnMainNavColor-dark-hsl), 1);
+  --modernOnMainNavColor-dark-hsla: hsla(
+    var(--modernOnMainNavColor-dark-hsl),
+    1
+  );
 
   --modernOnMonoVizColorOther-light-hsl: 0, 0%, 94%;
-  --modernOnMonoVizColorOther-light-hsla: hsla(var(--modernOnMonoVizColorOther-light-hsl), 1);
+  --modernOnMonoVizColorOther-light-hsla: hsla(
+    var(--modernOnMonoVizColorOther-light-hsl),
+    1
+  );
 
   --modernOnMonoVizColorOther-dark-hsl: 0, 0%, 6%;
-  --modernOnMonoVizColorOther-dark-hsla: hsla(var(--modernOnMonoVizColorOther-dark-hsl), 1);
+  --modernOnMonoVizColorOther-dark-hsla: hsla(
+    var(--modernOnMonoVizColorOther-dark-hsl),
+    1
+  );
 
   --modernOnRowEven-light-hsl: 0, 0%, 6%;
   --modernOnRowEven-light-hsla: hsla(var(--modernOnRowEven-light-hsl), 1);

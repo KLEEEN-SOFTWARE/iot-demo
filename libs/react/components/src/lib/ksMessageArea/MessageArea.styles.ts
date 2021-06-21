@@ -20,14 +20,14 @@ export const subheaderStyles = makeStyles({
   },
   textBold: {
     fontWeight: 'bold',
-    marginRight: 'var(--pm-3XS)',
+    marginRight: 'var(--pm-3XS)'
   },
-  button: {
+  button:{
     background: 'transparent',
     color: 'var(--secondary-color)',
-    '&:hover': {
+    '&:hover':{
       background: 'transparent',
-      color: 'var(--secondary-color-variant)',
-    },
-  },
+      color: 'var(--secondary-color-variant)'
+    }
+  }
 });

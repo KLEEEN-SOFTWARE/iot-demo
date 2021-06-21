@@ -17,6 +17,11 @@ export const getSettings = (logout: () => void): NavigationSettings => {
     logo: `assets/logo.png`,
     menuOptions: [
       {
+        title: `Form`,
+        path: `/form`,
+        icon: `ks-navigation-cA5jm6oQvdU4M77sVveHXv`,
+      },
+      {
         title: `Events`,
         path: `/events`,
         icon: `ks-navigation-naX8kq49HS9GMz3ASo7AaH`,
