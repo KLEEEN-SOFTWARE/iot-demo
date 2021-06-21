@@ -20,23 +20,19 @@ backend:
 
         - npm ci
 
-        # - echo "Generate next version"
-        # - ./tools/build/backend/generate-next-version.sh
+        - echo "Generate next version"
+        - ./tools/build/backend/generate-next-version.sh
 
     build:
       commands:
-        - echo "Build Back-end app"
-        - npm run build:iot:prod
-
-        - echo "Build Kleeen API Middleware"
-        - ./tools/build/backend/company-backend-app.sh
 
         - echo "Execute Amplify CLI with the helper script"
         - ./tools/build/backend/assume-role.sh
 
-        - echo "Build and push infrastructure using Amplify"
-        - echo "Execute Amplify CLI with the helper script"
-        - amplifyPush --simple
+        - echo "Build and push infrastructure using SLS framework"
+
+        - echo "Build middleware and backend API"
+        - ./tools/build/backend/build-middleware.sh
 
 frontend:
   phases:
