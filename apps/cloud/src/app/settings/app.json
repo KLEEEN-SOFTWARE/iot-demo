@@ -1,6 +1,6 @@
 {
   "layout": {
-    "position": "nav-left"
+    "position": "nav-top"
   },
   "productName": "Internet of Things",
   "defaultHomePage": "/events"

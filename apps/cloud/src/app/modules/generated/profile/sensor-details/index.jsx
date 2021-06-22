@@ -2,13 +2,17 @@ import React, { useState } from 'react';
 import { KUIConnect, AccessControl } from '@kleeen/core-react';
 import { roleAccessKeyTag } from '@kleeen/common/utils';
 import { useStyles } from './styles/styles';
+import {
+  EntityDetailsSection,
+  DataViewControlSection,
+  DataViewDisplaySectionAtomic,
+} from '@kleeen/react/atomic-elements';
+import { dataViewControlSectionSlots } from './settings/data-view-control-section-slots';
+import { entityDetailsSectionEntityDetails } from './settings/entity-details-section-entity-details';
 import { useKleeenActions, useUrlQueryParams } from '@kleeen/react/hooks';
 import { actions } from './settings/actions';
 import { attributes } from './settings/attributes';
 import { dataViewControlSectionViewOptions } from './settings/data-view-control-section-view-options';
-import { HeaderAndSubSections, DataViewDisplaySectionAtomic } from '@kleeen/react/atomic-elements';
-import { dataViewControlSectionSlots } from './settings/data-view-control-section-slots';
-import { entityDetailsSectionEntityDetails } from './settings/entity-details-section-entity-details';
 import { dataViewDisplaySectionAtomicDashboardWidgets } from './settings/data-view-display-section-atomic-dashboard-widgets';
 import { dataViewDisplaySectionAtomicSingleViewWidgets } from './settings/data-view-display-section-atomic-single-view-widgets';
 import { dataViewDisplaySectionAtomicCustomViews } from './settings/data-view-display-section-atomic-custom-views';
@@ -21,6 +25,7 @@ function EntityBrowserDetailsTask({ translate, ...props }) {
   const [cardsNumber, setCardsNumber] = useState(0);
   const entityName = `Sensor`;
   const displayTaskName = `Sensor Details`;
+  const [openDetails, setOpenDetails] = useState(true);
   const sensorActions = useKleeenActions(taskName);
   const title = `Sensor Details`;
   const objectValue = `sensor`;
@@ -29,12 +34,22 @@ function EntityBrowserDetailsTask({ translate, ...props }) {
   }
   const paramsBasedOnRoute = useUrlQueryParams();
   const parent = { id: paramsBasedOnRoute[objectValue], entity };
-  const [openDetails, setOpenDetails] = useState(true);
   const classes = useStyles();
 
   return (
     <AccessControl id={roleAccessKeyTag(`navigation.${taskName}`)}>
       <div className={`${classes.entityBrowserTask} subhead-dynamic`}>
+        <div className={classes.entityBrowserDetailsSection}>
+          <EntityDetailsSection
+            displayTaskName={displayTaskName}
+            entityDetails={entityDetailsSectionEntityDetails}
+            entityName={entityName}
+            isEditable={true}
+            onChangeFilterVisible={setOpenDetails}
+            slots={dataViewControlSectionSlots}
+            taskName={taskName}
+          />
+        </div>
         <div
           className={
             openDetails
@@ -43,31 +58,21 @@ function EntityBrowserDetailsTask({ translate, ...props }) {
           }
         >
           <div className={`${classes.gridPageIntro} ${cardsNumber > 0 ? `max-card-${cardsNumber}` : ''}`}>
-            <HeaderAndSubSections
-              title={entity}
-              upText={title}
-              hideRefreshControl
-              taskName={taskName}
-              objectValue={objectValue}
+            <DataViewControlSection
               slots={dataViewControlSectionSlots}
-              withSummarySection={{
-                displayTaskName: title,
-                entityDetails: entityDetailsSectionEntityDetails,
-                entityName: entity,
-                onChangeFilterVisible: setOpenDetails,
-                taskName: taskName,
-                isEditable: true,
-              }}
-              actionsProps={{
-                actions: actions,
-                entityName: entity,
-                attributes: attributes,
-                entityActions: sensorActions,
-                parent,
-              }}
-              viewOptions={dataViewControlSectionViewOptions}
+              parent={parent}
+              hideRefreshControl
+              actions={actions}
+              attributes={attributes}
+              entity={entity}
+              entityActions={sensorActions}
               handleChangeTab={handleOnTabIndexChange}
+              objectValue={objectValue}
+              showDropDown={false}
+              taskName={taskName}
+              title={title}
               value={selectedTabIndex}
+              viewOptions={dataViewControlSectionViewOptions}
             />
           </div>
           <div className={classes.dataViewDisplaySection}>
