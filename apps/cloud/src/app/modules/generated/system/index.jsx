@@ -5,8 +5,7 @@ import { useStyles } from './styles/styles';
 import { actions } from './settings/actions';
 import { attributes } from './settings/attributes';
 import { dataViewControlSectionViewOptions } from './settings/data-view-control-section-view-options';
-import { HeaderAndSubSections, DataViewDisplaySectionAtomic } from '@kleeen/react/atomic-elements';
-import { availableFilters } from './settings/available-filters';
+import { DataViewControlSection, DataViewDisplaySectionAtomic } from '@kleeen/react/atomic-elements';
 import { dataViewDisplaySectionAtomicDashboardWidgets } from './settings/data-view-display-section-atomic-dashboard-widgets';
 import { dataViewDisplaySectionAtomicSingleViewWidgets } from './settings/data-view-display-section-atomic-single-view-widgets';
 import { dataViewDisplaySectionAtomicCustomViews } from './settings/data-view-display-section-atomic-custom-views';
@@ -32,23 +31,22 @@ function DashboardTask({ translate, ...props }) {
   return (
     <AccessControl id={roleAccessKeyTag(`navigation.${taskName}`)}>
       <div className={`${classes.dashboardTask} ${classSubHeaderDynamics}`}>
+        <div className={classes.dashboardFilterSection}></div>
         <div className={`${classes.dashboardArea} browserArea`}>
           <div className={`${classes.gridPageIntro} max-card-${cardsNumber}`}>
-            <HeaderAndSubSections
-              title={title}
-              withFilterSection
+            <DataViewControlSection
               hideRefreshControl
-              taskName={taskName}
-              filters={availableFilters}
-              actionsProps={{
-                actions: actions,
-                entityName: '',
-                attributes: attributes,
-                entityActions: {},
-              }}
-              viewOptions={dataViewControlSectionViewOptions}
+              actions={actions}
+              attributes={attributes}
+              entity={''}
+              entityActions={{}}
               handleChangeTab={handleOnTabIndexChange}
+              objectValue={objectValue}
+              showDropDown={false}
+              taskName={taskName}
+              title={title}
               value={selectedTabIndex}
+              viewOptions={dataViewControlSectionViewOptions}
             />
           </div>
           <div className={classes.dataViewDisplaySection}>
