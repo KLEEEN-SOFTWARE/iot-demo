@@ -21,3 +21,5 @@ import { isEmpty, isNil } from 'ramda';
  * Validator.isNilOrEmpty({length: 0}); //=> false
  */
 export const isNilOrEmpty = (value: unknown): value is undefined | null => isNil(value) || isEmpty(value);
+
+export const isNotNilOrEmpty = (value: unknown): value is undefined | null => !isNilOrEmpty(value);

@@ -4,6 +4,7 @@
     "app.actions.delete": "Delete",
     "app.button.back": "Return",
     "app.contextMenu.filter.addAndApply": "Add and Apply Filter Where <b>{value}</b>",
+    "app.contextMenu.filter.removeAndApply": "Remove and Apply Filter Where <b>{value}</b>",
     "app.contextMenu.filter.equalTo": "Is equal to <b>{value}</b>",
     "app.contextMenu.filter.lessThan": "Is less than <b>{value}</b>",
     "app.contextMenu.filter.moreThan": "Is more than <b>{value}</b>",
@@ -47,7 +48,7 @@
     "app.globalNav.logout": "Logout",
     "app.globalNav.menu": "Menu",
     "app.globalNav.userAccount": "User Account",
-    "app.globalNav.userPreferences": "User Preferences",
+    "app.globalNav.userPreferences": "Settings",
     "app.gridSection.actionsTableHeaderRow": "Actions",
     "app.gridSection.addButtonAriaLabel": "Add Item",
     "app.gridSection.clearSearchAriaLabel": "Clear Search",
@@ -129,13 +130,15 @@
     "app.subHeader.container.button.saveEdit": "SAVE EDIT",
     "app.total": "Total",
     "entities.endUserPreferences.locale": "Language",
-    "entities.endUserPreferences.theme": "Theme"
+    "entities.endUserPreferences.theme": "Theme",
+    "entities.endUserPreferences.version": "Version"
   },
   "es": {
     "app.actions.add": "Agregar",
     "app.actions.delete": "Eliminar",
     "app.button.back": "Regresar",
     "app.contextMenu.filter.addAndApply": "Agregar y Aplicar Filtro Donde <b>{value}</b>",
+    "app.contextMenu.filter.removeAndApply": "Remover y Aplicar Filtro Donde <b>{value}</b>",
     "app.contextMenu.filter.equalTo": "Es igual a <b>{value}</b>",
     "app.contextMenu.filter.lessThan": "Es menor a <b>{value}</b>",
     "app.contextMenu.filter.moreThan": "Es mayor a <b>{value}</b>",
@@ -179,7 +182,7 @@
     "app.globalNav.logout": "Cerrar Sesión",
     "app.globalNav.menu": "Menú",
     "app.globalNav.userAccount": "Cuenta de Usuario",
-    "app.globalNav.userPreferences": "Preferencias de Usuario",
+    "app.globalNav.userPreferences": "Ajustes",
     "app.gridSection.actionsTableHeaderRow": "Comportamiento",
     "app.gridSection.addButtonAriaLabel": "Añadir artículo",
     "app.gridSection.clearSearchAriaLabel": "Borrar búsqueda",
@@ -261,6 +264,7 @@
     "app.subHeader.container.button.saveEdit": "Guardar edición",
     "app.total": "Total",
     "entities.endUserPreferences.locale": "Idioma",
-    "entities.endUserPreferences.theme": "Tema"
+    "entities.endUserPreferences.theme": "Tema",
+    "entities.endUserPreferences.version": "Versión"
   }
 }

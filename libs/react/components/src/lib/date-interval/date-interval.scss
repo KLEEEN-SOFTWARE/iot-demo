@@ -40,11 +40,11 @@ $sizeTextFocus: var(--size-size10);
 }
 .time--input {
   color: var(--on-surface-color) !important;
-  background-color: $backgroundColor !important;
+  background-color: transparent !important;
 }
 
 .time-fieldset--inc {
-  background-color: $backgroundColor !important;
+  background-color: transparent !important;
   background-image: none !important;
   border-left: 12px solid transparent !important;
   border-right: 12px solid transparent !important;
@@ -55,7 +55,7 @@ $sizeTextFocus: var(--size-size10);
   }
 }
 .time-fieldset--dec {
-  background-color: $backgroundColor !important;
+  background-color: transparent !important;
   background-image: none !important;
   border-left: 12px solid transparent !important;
   border-right: 12px solid transparent !important;
@@ -95,11 +95,11 @@ $sizeTextFocus: var(--size-size10);
   .header-date {
     border: none !important;
     padding: 0 !important;
-    background-color: var(--surface-color) !important;
+    background-color: transparent !important;
     color: var(--on-surface-color) !important;
   }
   .header--btn {
-    background-color: var(--surface-color) !important;
+    background-color: transparent !important;
     color: var(--on-surface-color) !important;
   }
 }

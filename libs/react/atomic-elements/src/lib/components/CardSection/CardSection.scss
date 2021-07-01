@@ -1,3 +1,15 @@
+@mixin single-wide-column-media-query($max-width) {
+  @media only screen and (max-width: $max-width) {
+    .card-section.single-wide-column {
+      grid-template-columns: var(--card-width-M);
+
+      .card-widget {
+        width: var(--card-width-M);
+      }
+    }
+  }
+}
+
 .card-section {
   align-items: flex-start;
   column-gap: var(--pm-1XL);
@@ -8,7 +20,10 @@
   width: 100%;
 
   &.single-wide-column {
+    grid-auto-rows: auto;
     grid-template-columns: var(--card-width-L);
+    margin-bottom: var(--pm-1XL);
+    row-gap: var(--pm-1XL);
 
     .card-widget {
       width: var(--card-width-L);
@@ -66,4 +81,14 @@
       box-shadow: var(--card-content-shadow);
     }
   }
+}
+
+// Media queries to handle small screen single column wide layout
+// @cafe TODO we should change our whole layout and handle this in one single place
+.nav-left {
+  @include single-wide-column-media-query(1260px);
+}
+
+.nav-top {
+  @include single-wide-column-media-query(1069px);
 }

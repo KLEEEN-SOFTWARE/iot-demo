@@ -1,7 +1,9 @@
 import React, { ReactElement } from 'react';
 
-import { makeStyles } from '@material-ui/core';
+const bem = 'ks-full-area-card-widget-01';
 
+import { makeStyles } from '@material-ui/core';
+import classnames from 'classnames';
 export interface FullAreaCardWidget01Props {
   children: ReactElement | ReactElement[];
 }
@@ -26,9 +28,9 @@ export const FullAreaCardWidget01 = (props: FullAreaCardWidget01Props): ReactEle
   const [A, B] = React.Children.toArray(props.children);
 
   return (
-    <div className={classes.fullAreaCardWidget01}>
+    <div className={classnames(bem, classes.fullAreaCardWidget01)}>
       {A}
-      <div className={classes.content}>{B}</div>
+      <div className={classnames(`${bem}__content`, classes.content)}>{B}</div>
     </div>
   );
 };

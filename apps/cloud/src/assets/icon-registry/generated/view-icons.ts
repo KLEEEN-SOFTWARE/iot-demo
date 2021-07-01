@@ -9,6 +9,8 @@ export default {
   'ks-view-8yyhmnH4a88SWwvb4pJkWx': { path: './assets/icons/app-window-settings.svg', alt: 'Listing' },
   // View Icon for Experience: Site Map on Workflow: Sites
   'ks-view-nA1GN1aJqWsavD3vT7SZVK': { path: './assets/icons/rss-feed.svg', alt: 'Listing' },
+  // View Icon for Experience: Site Map on Workflow: Site Map Report
+  'ks-view-bp8VvnmqwCGBPG4xX3ZeYm': { path: './assets/icons/house-entrance-alternate.svg', alt: 'Grid' },
   // View Icon for Experience: Table of Sensor on Workflow: Sensors
   'ks-view-gnRpJXqsZaxnoEGRxQVSY4': { path: './assets/icons/alarm-clock-1-alternate.svg', alt: 'Listing' },
   // View Icon for Experience: Dashboard on Workflow: System

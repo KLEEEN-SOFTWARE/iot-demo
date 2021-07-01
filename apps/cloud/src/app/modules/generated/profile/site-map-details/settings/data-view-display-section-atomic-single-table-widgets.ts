@@ -5,7 +5,7 @@ export const dataViewDisplaySectionAtomicSingleTableWidgets = [
         areYouSure: true,
         component: undefined,
         description: undefined,
-        displayName: `reboot`,
+        displayName: `Reboot`,
         name: `reboot`,
         type: `custom`,
       },
@@ -27,7 +27,7 @@ export const dataViewDisplaySectionAtomicSingleTableWidgets = [
         multiple: true,
         name: 'sensor',
         statisticalType: 'Data - Categorical',
-        prototypeId: null,
+        prototypeId: 95949,
         format: {
           aggregations: null,
           dateTime: null,
@@ -66,7 +66,7 @@ export const dataViewDisplaySectionAtomicSingleTableWidgets = [
         multiple: true,
         name: 'sensorStatus',
         statisticalType: 'Data - Categorical - ordered - Severity Ranking',
-        prototypeId: null,
+        prototypeId: 96079,
         format: {
           aggregations: null,
           dateTime: null,
@@ -138,7 +138,7 @@ export const dataViewDisplaySectionAtomicSingleTableWidgets = [
         multiple: true,
         name: 'node',
         statisticalType: 'Data - Categorical',
-        prototypeId: null,
+        prototypeId: 95949,
         format: {
           aggregations: null,
           dateTime: null,
@@ -188,7 +188,7 @@ export const dataViewDisplaySectionAtomicSingleTableWidgets = [
         multiple: true,
         name: 'nodeStatus',
         statisticalType: 'Data - Categorical - ordered - Severity Ranking',
-        prototypeId: null,
+        prototypeId: 96079,
         format: {
           aggregations: null,
           dateTime: null,

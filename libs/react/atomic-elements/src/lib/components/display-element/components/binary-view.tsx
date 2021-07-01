@@ -1,14 +1,14 @@
 import { DisplayComponentProps } from '@kleeen/types';
-import classNames from 'classnames';
-import { useStyles } from '../styles/label.styles';
+import classnames from 'classnames';
 
-export function BinaryView({ highlighted, value }: DisplayComponentProps) {
+const bem = 'ks-binary-view';
+
+export function BinaryView({ value }: DisplayComponentProps) {
   const displayValue = value?.displayValue ? 'True' : 'False';
-  const classes = useStyles();
 
   return (
-    <div className={classNames('ks-label', classes.label, { highlighted })}>
-      <span>{displayValue}</span>
-    </div>
+    <>
+      <span className={classnames(bem)}>{displayValue}</span>
+    </>
   );
 }

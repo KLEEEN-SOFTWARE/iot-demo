@@ -1,30 +1,32 @@
 import './CardSection.scss';
 
-import React, { useEffect, useRef, useState } from 'react';
-
 import { CardTitle } from './components/CardTitle';
 import { CardWidgetProps } from './CardWidget.model';
 import { MasonryProvider } from '@kleeen/react/hooks';
+import { useEffect, useRef, useState } from 'react';
 import classnames from 'classnames';
+
+const bem = 'ks-card-widget';
 
 export const CardWidget = ({
   children,
+  disabled,
+  disableHeightCalculation,
   hideTitle,
   icon,
   selectedViz,
   title,
   widgetSelector = null,
-  disabled,
 }: CardWidgetProps): JSX.Element => {
   const contentRef = useRef<HTMLDivElement>(null);
   const [spans, setSpans] = useState(0);
 
   // Styles
   const cardStyle = {
-    height: 42,
-    marginBottom: 16,
     gridAutoRows: 10,
+    height: 42,
     imgOffset: 24,
+    marginBottom: 16,
   };
 
   const cardSpan = {
@@ -40,21 +42,29 @@ export const CardWidget = ({
   };
 
   useEffect(() => {
-    updateLayout(contentRef.current.clientHeight);
-  }, [selectedViz, spans, children]);
+    if (!disableHeightCalculation) {
+      // TODO @cafe single column widgets do not require height calculation
+      // Look for a masonry solution where we don't do this manually
+      updateLayout(contentRef.current.clientHeight);
+    }
+  }, [disableHeightCalculation, selectedViz, spans, children]);
 
   const handleImageLoad = (event): void => {
     updateLayout(event.target.clientHeight + cardStyle.imgOffset);
   };
 
   return (
-    <div className={classnames('card-widget', { disabled })} style={cardSpan}>
+    <div
+      className={classnames(bem, 'card-widget', { disabled })}
+      style={!disableHeightCalculation ? cardSpan : {}}
+    >
       {!hideTitle && <CardTitle title={title} icon={icon} />}
-      <div className="content" ref={contentRef} onLoad={handleImageLoad}>
+      <div className={classnames(`${bem}__content`, 'content')} ref={contentRef} onLoad={handleImageLoad}>
         <MasonryProvider updateLayout={updateLayout}>{children}</MasonryProvider>
         {widgetSelector}
       </div>
     </div>
   );
 };
+
 export default CardWidget;

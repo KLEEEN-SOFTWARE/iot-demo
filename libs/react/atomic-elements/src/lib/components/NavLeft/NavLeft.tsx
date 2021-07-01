@@ -1,18 +1,20 @@
-import React, { useEffect, useState } from 'react';
-import { Theme, createStyles, makeStyles } from '@material-ui/core/styles';
-
 import { AccessControl } from '@kleeen/core-react';
-import Drawer from '@material-ui/core/Drawer';
 import { FooterNavLeft } from './Footer/Index';
 import { HeaderNavLeft } from './Header/Index';
 import { KsSvgIcon } from '@kleeen/react/components';
+import { NavLeftProps } from './NavLeft.model';
+import { roleAccessKeyTag } from '@kleeen/common/utils';
+import { Theme, createStyles, makeStyles } from '@material-ui/core/styles';
+import { useEffect, useState } from 'react';
+import { useLocation } from 'react-router-dom';
+import { useNavigation } from '@kleeen/react/hooks';
+import Drawer from '@material-ui/core/Drawer';
 import List from '@material-ui/core/List';
 import ListItem from '@material-ui/core/ListItem';
 import ListItemText from '@material-ui/core/ListItemText';
-import { NavLeftProps } from './NavLeft.model';
-import { roleAccessKeyTag } from '@kleeen/common/utils';
-import { useLocation } from 'react-router-dom';
-import { useNavigation } from '@kleeen/react/hooks';
+import classnames from 'classnames';
+
+const bem = 'ks-nav-left';
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -78,12 +80,11 @@ const useStyles = makeStyles((theme: Theme) =>
 );
 
 export const NavLeft = ({
-  menuList,
   accountMenuList,
-  logo,
   helpUrl,
+  logo,
+  menuList,
   productName,
-  children,
 }: NavLeftProps): JSX.Element => {
   const location = useLocation();
   const classes = useStyles();
@@ -96,24 +97,19 @@ export const NavLeft = ({
     }
   }, [location]);
 
-  const isActivePath = (path: string): string => {
-    if (path === activePath) {
-      return 'active';
-    }
-    return '';
-  };
+  const isActivePath = (path: string): string => path === activePath && 'active';
 
   return (
     <Drawer
-      className={classes.drawer}
-      variant="permanent"
+      anchor="left"
       classes={{
         paper: classes.drawerPaper,
       }}
-      anchor="left"
+      className={classnames(bem, classes.drawer)}
+      variant="permanent"
     >
       {logo || productName ? <HeaderNavLeft logo={logo} productName={productName} /> : null}
-      <List className={classes.list}>
+      <List className={classnames(`${bem}__lists`, classes.list)}>
         {menuList.map(({ title, path, func, icon }) => {
           const navigationTitle = roleAccessKeyTag(`navigation.${title}`);
           return (
@@ -121,7 +117,7 @@ export const NavLeft = ({
               <ListItem
                 button
                 key={title}
-                className={isActivePath(path)}
+                className={classnames(`${bem}__lists-item`, isActivePath(path))}
                 onClick={(e) => {
                   e.preventDefault();
                   if (func) {

@@ -12,6 +12,7 @@ export { default as useSyncUserPreferences } from './useSyncUserPreferences';
 export { default as useUrlQueryParams } from './useUrlQueryParams';
 export { default as useCrossLinkingMenuOnViz } from './useCrossLinkingMenuOnViz';
 export { default as useUserInfo } from './useUserInfo';
+export { default as useWindowsDimension } from './windowDimensions';
 
 export * from './useAutoComplete';
 export * from './useAutoRefresh';
@@ -21,6 +22,7 @@ export * from './useCrosslinkingItems';
 export * from './useCrossLinkingMenuOnViz';
 export * from './useWidgetContext';
 export * from './useEntityDetailsEventHandler';
+export * from './use-hover-intent';
 export * from './useKleeenActions';
 export * from './useKleeenContext';
 export * from './useLocalization';

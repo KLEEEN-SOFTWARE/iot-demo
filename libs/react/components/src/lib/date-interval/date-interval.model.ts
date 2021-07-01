@@ -3,9 +3,6 @@ import { Moment } from 'moment';
 export type DateTimeProps = Moment;
 
 export interface DateTimeIntervalProps {
-  translate: (e: string) => string;
-  handleFilter?: () => void;
-  handleCloseDateFilter?: () => void;
   datePickerState: {
     from: DateTimeProps;
     to: DateTimeProps;
@@ -13,6 +10,10 @@ export interface DateTimeIntervalProps {
     setTo: (e: DateTimeProps) => void;
     setRelativeDate: (e: string) => void;
   };
+  handleCloseDateFilter?: () => void;
+  handleFilter?: () => void;
+  setOpenCustomRange: (e: boolean) => void;
+  translate: (e: string) => string;
 }
 type DateType = {
   year: number;

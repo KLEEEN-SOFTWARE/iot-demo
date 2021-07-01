@@ -1,6 +1,8 @@
-import React, { ReactElement } from 'react';
-
 import { makeStyles } from '@material-ui/core';
+import React, { ReactElement } from 'react';
+import classnames from 'classnames';
+
+const bem = 'ks-secondary-card-widget-01';
 
 /* eslint-disable-next-line */
 export interface SecondaryCardWidget01Props {
@@ -9,10 +11,10 @@ export interface SecondaryCardWidget01Props {
 
 const useStyles = makeStyles({
   secondaryCardWidget01: {
-    boxShadow: 'var(--card-shadow)',
-    borderRadius: 'var(--card-border-radius)',
-    border: 'var(--card-border)',
     backgroundColor: 'var(--card-bg-color)',
+    border: 'var(--card-border)',
+    borderRadius: 'var(--card-border-radius)',
+    boxShadow: 'var(--card-shadow)',
     marginBottom: 'var(--pm-1XS)',
     marginLeft: 'var(--pm-L)',
     marginRight: 'var(--pm-L)',
@@ -30,9 +32,9 @@ export const SecondaryCardWidget01 = (props: SecondaryCardWidget01Props): ReactE
   const [A, B] = React.Children.toArray(props.children);
 
   return (
-    <div className={classes.secondaryCardWidget01}>
+    <div className={classnames(bem, classes.secondaryCardWidget01)}>
       {A}
-      <div className={classes.content}>{B}</div>
+      <div className={classnames(`${bem}__content`, classes.content)}>{B}</div>
     </div>
   );
 };

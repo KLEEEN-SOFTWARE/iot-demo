@@ -12,7 +12,7 @@ export const attributes = [
     multiple: true,
     name: 'sensor',
     statisticalType: 'Data - Categorical',
-    prototypeId: null,
+    prototypeId: 95949,
     format: {
       aggregations: null,
       dateTime: null,

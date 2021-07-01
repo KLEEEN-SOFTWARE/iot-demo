@@ -4,6 +4,7 @@ import { Attribute } from '@kleeen/types';
 
 export interface BubbleChartWidgetProps extends VizCommonParams {
   attributes?: Attribute[];
+  disableHeightCalculation?: boolean;
   params: {
     baseModel: string;
     aggregatedByType?: string;

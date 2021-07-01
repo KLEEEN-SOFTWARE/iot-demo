@@ -37,12 +37,20 @@ function ActionDialogsComponent({
     <>
       {areYouSure && (
         <ConfirmationActionDialog
-          description={`${translate && translate('app.dialog.confirmation')} ${action.displayName}?`}
+          description={
+            entity
+              ? `${translate && translate('app.dialog.confirmation')} ${translate(
+                  'app.modal.action.addNew',
+                )} ${entity}?`
+              : `${translate && translate('app.dialog.confirmation')} ${action.displayName}?`
+          }
           key={`${action.name}-confirmation`}
           open={isConfirmationOpen || false}
           onAction={(e: MouseEvent) => dispatchAction(action, e)}
           onClose={handleConfirmationClose}
-          title={action.displayName}
+          title={
+            entity ? `${translate && translate('app.modal.action.addNew')} ${entity}` : action.displayName
+          }
         />
       )}
       {isCustomAddAction && CustomDialog && (
@@ -58,7 +66,11 @@ function ActionDialogsComponent({
           onClose={handleCustomClose}
           parent={parent}
           taskName={taskName}
-          title={entity ? `${action.displayName} new ${entity}` : `${action.displayName} new`}
+          title={
+            entity
+              ? `${translate && translate('app.modal.action.addNew')} ${entity}`
+              : translate && translate('app.modal.action.addNew')
+          }
         />
       )}
       {

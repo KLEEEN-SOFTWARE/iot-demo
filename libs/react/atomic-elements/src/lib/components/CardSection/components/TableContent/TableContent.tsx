@@ -1,36 +1,36 @@
-import { Button, Drawer, makeStyles, styled } from '@material-ui/core';
-import React, { ReactElement } from 'react';
-
-import { ProgressBar } from './ProgressBar';
+import { Button, Drawer, makeStyles } from '@material-ui/core';
+import { ProgressBar } from '../ProgressBar';
+import { ReactElement } from 'react';
+import classnames from 'classnames';
 
 const useStyles = makeStyles(() => ({
   drawer: {
-    width: '100%',
     padding: 'var(--pm-L)',
-    zIndex: 0,
     position: 'sticky',
     top: 0,
+    width: '100%',
+    zIndex: 0,
   },
   drawerPaper: {
-    width: '100%',
-    position: 'relative',
     background: 'inherit',
     border: 'none',
     overflowY: 'hidden',
+    position: 'relative',
+    width: '100%',
   },
   buttonMenu: {
-    fontSize: 'var(--tx-M)',
-    justifyContent: 'left',
-    textAlign: 'left',
-    fontWeight: 'bold',
     color: 'var(--secondary-color)',
-    textTransform: 'unset',
+    fontSize: 'var(--tx-M)',
+    fontWeight: 'bold',
     height: 'var(--wh-4XS)',
+    justifyContent: 'left',
     margin: 'var(--pm-4XS) 0',
+    textAlign: 'left',
+    textTransform: 'unset',
     width: '100%',
     '&:hover': {
-      color: 'var(--secondary-color-variant)',
       background: 'none',
+      color: 'var(--secondary-color-variant)',
     },
   },
   title: {
@@ -39,6 +39,8 @@ const useStyles = makeStyles(() => ({
     whiteSpace: 'nowrap',
   },
 }));
+
+const bem = 'ks-table-content';
 
 export const TableContent = ({ widgets, widgetsRefs, containerId }: any): ReactElement => {
   const classes = useStyles();
@@ -53,15 +55,19 @@ export const TableContent = ({ widgets, widgetsRefs, containerId }: any): ReactE
       classes={{
         paper: classes.drawerPaper,
       }}
-      className={classes.drawer}
+      className={classnames(`${bem}__content`, classes.drawer)}
       open={true}
       variant="persistent"
     >
       {widgets.map((widget) => {
         return (
-          <Button key={widget.id} className={classes.buttonMenu} onClick={() => handleScroll(widget.id)}>
+          <Button
+            key={widget.id}
+            className={classnames(`${bem}__button-menu`, classes.buttonMenu)}
+            onClick={() => handleScroll(widget.id)}
+          >
             <ProgressBar widgetRef={widgetsRefs[widget.id]} containerId={containerId} />
-            <span className={classes.title}>{widget.title}</span>
+            <span className={classnames(`${bem}__title`, classes.title)}>{widget.title}</span>
           </Button>
         );
       })}

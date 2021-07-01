@@ -1,11 +1,13 @@
-import { GroupByProps, ValueProp, ValuesProps, VizCommonParams } from '../../../../types/types';
-import { formatDataList, formatSeverity, parseAttributes } from '@kleeen/frontend/utils';
-
 import { Attribute } from '@kleeen/types';
-import React from 'react';
-import { SimpleList } from '@kleeen/react/components';
+import { formatDataList, formatSeverity, parseAttributes } from '@kleeen/frontend/utils';
+import { GroupByProps, ValueProp, ValuesProps, VizCommonParams } from '../../../../types/types';
 import { makeStyles } from '@material-ui/core';
+import { SimpleList } from '@kleeen/react/components';
 import { useWidgetContext } from '@kleeen/react/hooks';
+import classnames from 'classnames';
+import React from 'react';
+
+const bem = 'ks-table';
 
 const useStyles = makeStyles({
   widgetContent: {
@@ -16,17 +18,17 @@ const useStyles = makeStyles({
 });
 export interface TableWidgetProps extends VizCommonParams {
   attributes?: Attribute[];
-  taskName: string;
-  widgetId: string | number;
   params: {
-    baseModel: string;
-    aggregatedByType?: string;
     aggregatedBy?: string;
+    aggregatedByType?: string;
     aggregation_attribute?: string;
     aggregation?: string;
+    baseModel: string;
     groupBy?: GroupByProps;
     value?: ValueProp | ValuesProps;
   };
+  taskName: string;
+  widgetId: string | number;
 }
 
 export const TableWidget = ({ attributes, params, taskName, widgetId }: TableWidgetProps): JSX.Element => {
@@ -44,8 +46,8 @@ export const TableWidget = ({ attributes, params, taskName, widgetId }: TableWid
   const classes = useStyles();
 
   return (
-    <div className={classes.widgetContent}>
-      <SimpleList hideHeader={hideHeader} data={newWidgetData.data} columns={listColumns} />
+    <div className={classnames(bem, classes.widgetContent)}>
+      <SimpleList columns={listColumns} data={newWidgetData.data} hideHeader={hideHeader} />
     </div>
   );
 };

@@ -1,33 +1,19 @@
-import { useState, useEffect } from 'react';
 import { StorageHelper } from '@aws-amplify/core';
 
 export const useLocalStorage = (key: string, defaultValue: any) => {
   const _storage = new StorageHelper().getStorage();
-  const [localStorageValue, setLocalStorageValue] = useState((state) => {
-    let value;
-    try {
-      value = JSON.parse(_storage.getItem(key) || JSON.stringify(defaultValue));
-    } catch (e) {
-      value = defaultValue;
-    }
-    return value;
-  });
+  let localStorageValue;
+  try {
+    localStorageValue = JSON.parse(_storage.getItem(key) || JSON.stringify(defaultValue));
+  } catch (e) {
+    localStorageValue = defaultValue;
+  }
 
-  useEffect(() => {
-    let value;
-    try {
-      value = JSON.parse(_storage.getItem(key) || JSON.stringify(defaultValue));
-    } catch (e) {
-      value = defaultValue;
-    }
-    setLocalStorageValue(value);
-  }, [key]);
-
-  useEffect(() => {
+  const setLocalStorageValue = (value) => {
     if (key) {
-      _storage.setItem(key, JSON.stringify(localStorageValue));
+      _storage.setItem(key, JSON.stringify(value));
     }
-  }, [localStorageValue]);
+  };
 
   const removeLocalStorageValue = () => {
     _storage.removeItem(key);

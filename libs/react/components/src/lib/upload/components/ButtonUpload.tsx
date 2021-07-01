@@ -5,11 +5,12 @@ import Snackbar, { SnackbarCloseReason } from '@material-ui/core/Snackbar';
 import { path, pathOr } from 'ramda';
 
 import Badge from '@material-ui/core/Badge';
-import Button from '@material-ui/core/Button';
 import { ButtonUploadProps } from '../Upload.model';
+import { KsButton } from '../../button';
 import MuiAlert from '@material-ui/lab/Alert';
 import Tooltip from '@material-ui/core/Tooltip';
 import { getFileExtension } from '@kleeen/common/utils';
+import { isNilOrEmpty } from '@kleeen/common/utils';
 import { makeStyles } from '@material-ui/core/styles';
 
 const useStyles = makeStyles(() => ({
@@ -30,10 +31,17 @@ export function ButtonUpload(props: ButtonUploadProps): JSX.Element {
 
   const [statusSnackBar, setSnackBarStatus] = useState(false);
   const [readFiles, setReadFiles] = useState([]);
+  const badgeContentFallBack = readFiles.length > 0 ? readFiles.length : null;
   const [buttonLabelValue, setButtonLabel] = useState(labelProp);
   const [buttonClick, setButtonClick] = useState(false);
 
   const inputFile = useRef();
+
+  useEffect(() => {
+    if (props.shouldResetState) {
+      setButtonLabel(labelProp);
+    }
+  }, [props.shouldResetState]);
 
   useEffect(() => {
     if (inputFile.current) {
@@ -113,11 +121,11 @@ export function ButtonUpload(props: ButtonUploadProps): JSX.Element {
           title={buttonLabelValue.length > 0 && !disabled ? buttonLabelValue : ''}
         >
           <Badge
-            badgeContent={readFiles.length > 0 ? readFiles.length : null}
+            badgeContent={isNilOrEmpty(props.badgeCounter) ? badgeContentFallBack : props.badgeCounter}
             {...badgeConfig}
             disabled={disabled}
           >
-            <Button
+            <KsButton
               className={addDefaultClass()}
               disabled={disabled}
               variant="contained"
@@ -127,7 +135,7 @@ export function ButtonUpload(props: ButtonUploadProps): JSX.Element {
               }}
             >
               {buttonLabelValue}
-            </Button>
+            </KsButton>
           </Badge>
         </BootstrapTooltip>
 

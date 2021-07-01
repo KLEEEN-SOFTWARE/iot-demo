@@ -8,25 +8,26 @@ import {
   RefreshControl,
 } from '@kleeen/react/components';
 import { Container, Title, Typography } from './DataViewControlSection.styles';
-import { HeaderTitle, HeaderTitleEllipsis } from '../HeaderTitle';
-import React, { ReactElement, useState } from 'react';
-import { isNilOrEmpty, sortByKeys } from '@kleeen/common/utils';
-
-import { Action } from '@kleeen/types';
 import { DataViewControlSectionProps } from './DataViewControlSection.model';
-import Grid from '@material-ui/core/Grid';
-import MuiTooltip from '@material-ui/core/Tooltip';
-import { ViewSwitcher } from './ViewSwitcher';
+import { HeaderTitle, HeaderTitleEllipsis } from '../HeaderTitle';
 import { isAddAction } from '@kleeen/render-utils';
 import { isEmpty } from 'ramda';
+import { isNilOrEmpty, sortByKeys } from '@kleeen/common/utils';
+import { ReactElement, useState } from 'react';
 import { useKleeenActions } from '@kleeen/react/hooks';
+import { ViewSwitcher } from './ViewSwitcher';
+import classnames from 'classnames';
+import Grid from '@material-ui/core/Grid';
+import MuiTooltip from '@material-ui/core/Tooltip';
+import { Action } from '@kleeen/types';
+
+const bem = 'ks-data-view-control-section';
 
 export function DataViewControlSection(props: DataViewControlSectionProps): ReactElement {
   const { refreshPage } = useKleeenActions(props.taskName);
   const [actionPayload, setActionPayload] = useState({});
   const [isConfirmationOpen, setIsConfirmationOpen] = useState(false);
   const [isCustomOpen, setIsCustomOpen] = useState(false);
-
   // TODO: @cafe move this logic to a shared util and re-use it in HeaderAndSubSectionsComponent
   const viewOptionProps = props.viewOptions && props.viewOptions[props.value];
   const orderedViewProps = sortByKeys(props.viewOptions, ['viewOrder', 'viewId']);
@@ -72,14 +73,25 @@ export function DataViewControlSection(props: DataViewControlSectionProps): Reac
 
   return (
     <>
-      <Container className="dataview-control-section" maxWidth="xl">
-        <Grid className="main-container" container alignItems="center">
+      <Container className={classnames(bem, 'dataview-control-section')} maxWidth="xl">
+        <Grid alignItems="center" className={classnames(`${bem}__container`, 'main-container')} container>
           {props.showAvatar && (
-            <Grid item xs={4} sm={2} container alignItems="center">
+            <Grid
+              alignItems="center"
+              className={classnames(`${bem}__avatar-container`)}
+              container
+              item
+              sm={2}
+              xs={4}
+            >
               <AvatarSection />
             </Grid>
           )}
-          <Grid container className="typography-ellipsis" direction="column">
+          <Grid
+            className={classnames(`${bem}__typography`, 'typography-ellipsis')}
+            container
+            direction="column"
+          >
             <MuiTooltip title={HeaderTitle(props)} placement="top-start">
               <Title>
                 <Typography variant="h2" component="h1">
@@ -88,14 +100,14 @@ export function DataViewControlSection(props: DataViewControlSectionProps): Reac
               </Title>
             </MuiTooltip>
             {props.results != null && (
-              <Typography className="results">
+              <Typography className={classnames(`${bem}__results`, 'results')}>
                 <>{props.results} Results</>
               </Typography>
             )}
           </Grid>
         </Grid>
         {orderedViewProps.length > 1 && (
-          <Grid className="options" container alignItems="center">
+          <Grid alignItems="center" className={classnames(`${bem}__options`, 'options')} container>
             <ViewSwitcher
               handleChangeTab={props.handleChangeTab}
               showDropDown={props.showDropDown}

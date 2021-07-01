@@ -1,12 +1,13 @@
 import './CardSection.scss';
 
+import { AccessControl } from '@kleeen/core-react';
 import { CardSectionLayout, CardSectionProps, RenderChildrenProps, Widget } from './CardWidget.model';
 import { ReactElement, ReactNode } from 'react';
-
-import { AccessControl } from '@kleeen/core-react';
+import { roleAccessKeyTag } from '@kleeen/common/utils';
 import { TransformToWidgetComponent } from './components';
 import classNames from 'classnames';
-import { roleAccessKeyTag } from '@kleeen/common/utils';
+
+const bem = 'ks-card-section';
 
 export function CardSection({
   cardSectionLayout = CardSectionLayout.Masonry,
@@ -20,11 +21,19 @@ export function CardSection({
 }: CardSectionProps): ReactElement {
   return (
     <div
-      className={classNames('card-section', cardSectionLayout)}
+      className={classNames(bem, 'card-section', cardSectionLayout)}
       style={{ justifyContent }}
       key={`card-section-${taskName}`}
     >
-      {renderChildren({ taskName, widgets, children, registerEvents, hideSaveAndClose, onInputChange })}
+      {renderChildren({
+        cardSectionLayout,
+        children,
+        hideSaveAndClose,
+        onInputChange,
+        registerEvents,
+        taskName,
+        widgets,
+      })}
     </div>
   );
 }
@@ -43,6 +52,7 @@ function addCurrentWidgetTypeToViableSolutions(widget: Widget): Widget {
 }
 
 function renderChildren({
+  cardSectionLayout,
   children,
   hideSaveAndClose,
   onInputChange,
@@ -60,6 +70,7 @@ function renderChildren({
           key={`card-section-widget-${widget.id}`}
         >
           <TransformToWidgetComponent
+            disableHeightCalculation={cardSectionLayout === CardSectionLayout.SingleWideColumn}
             hideSaveAndClose={hideSaveAndClose}
             key={`card-section-widget-${widget.id}`}
             onInputChange={onInputChange}

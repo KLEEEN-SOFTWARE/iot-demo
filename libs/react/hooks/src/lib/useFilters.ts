@@ -7,6 +7,14 @@ import { useHistory } from 'react-router';
 import useUrlQueryParams from './useUrlQueryParams';
 import { useLocalStorage, useUserInfo } from '@kleeen/react/hooks';
 import { isNilOrEmpty } from '@kleeen/common/utils';
+import {
+  getFiltersInitialState,
+  getFromValueOf,
+  getRelativeDateValueOf,
+  getToValueOf,
+  manageOperations,
+  mapWithStringify,
+} from '../helpers';
 
 enum FilterOperators {
   max = 'max',
@@ -24,28 +32,6 @@ interface FiltersAddedState {
   [category: string]: FilterAdded;
 }
 
-const getInitialState = (params: Record<string, any>) => {
-  const initialState = Object.keys(params).reduce((acc, key) => {
-    return {
-      ...acc,
-      [key]: params[key],
-    };
-  }, {});
-
-  return initialState;
-};
-
-const getFromValueOf = (paramsBasedOnRoute): undefined | Moment => {
-  return paramsBasedOnRoute?.Timestamp?.from ? moment(paramsBasedOnRoute?.Timestamp?.from) : undefined;
-};
-
-const getToValueOf = (paramsBasedOnRoute): undefined | Moment => {
-  return paramsBasedOnRoute?.Timestamp?.to ? moment(paramsBasedOnRoute?.Timestamp?.to) : undefined;
-};
-
-const getRelativeDateValueOf = (paramsBasedOnRoute): undefined | string => {
-  return paramsBasedOnRoute?.Timestamp?.relativeDate;
-};
 let filtersInUse = false;
 
 export const areFiltersInUse = () => {
@@ -104,14 +90,7 @@ export const useFilters = (hasDateFilter = false) => {
   }, []);
 
   const applyFilterIntoUrl = (filtersToApply: Record<string, any>): void => {
-    const mapWithStringify = Object.keys(filtersToApply).reduce(
-      (acc, key) => ({
-        ...acc,
-        [key]: JSON.stringify(filtersToApply[key]),
-      }),
-      {},
-    );
-    const urlQuery = queryString.stringify(mapWithStringify);
+    const urlQuery = queryString.stringify(mapWithStringify(filtersToApply));
     navigation.push(`?${urlQuery}`);
   };
 
@@ -127,7 +106,7 @@ export const useFilters = (hasDateFilter = false) => {
       setIsApplyWithoutTime(true);
     }
     if (isNilOrEmpty(Object.entries(paramsBasedOnRoute)) && !isNilOrEmpty(localStorageValue)) {
-      applyFilterIntoUrl(localStorageValue);
+      if (!hasDateFilter) applyFilterIntoUrl(localStorageValue);
       if (localStorageValue.Timestamp?.relativeDate) {
         setRelativeDate(localStorageValue.Timestamp.relativeDate);
       }
@@ -141,19 +120,20 @@ export const useFilters = (hasDateFilter = false) => {
 
   const [filtersAdded, setFilters]: [FiltersAddedState, (filtersAdded: FiltersAddedState) => void] = useState(
     () => {
-      return getInitialState(paramsBasedOnRoute);
+      return getFiltersInitialState(paramsBasedOnRoute);
     },
   );
 
+  const clearFilters = () => {
+    setFilters({});
+    removeLocalStorageValue();
+  };
+
   useEffect(() => {
-    const initialState = getInitialState(paramsBasedOnRoute);
+    const initialState = getFiltersInitialState(paramsBasedOnRoute);
 
     setFilters(initialState);
   }, [version]);
-
-  const clearFilters = () => {
-    setFilters({});
-  };
 
   const getTimeAndCommonFilters = (): {
     timeFilters: { Timestamp: { from?: number; to?: number; relativeDate?: string } };
@@ -244,13 +224,6 @@ export const useFilters = (hasDateFilter = false) => {
     localStorageValue.Timestamp?.to,
     localStorageValue.Timestamp?.relativeDate,
   ]);
-
-  const manageOperations = (operator: FilterOperators, value: string | number, operators): any => {
-    if (Array.isArray(operators) || operator === FilterOperators.in) {
-      return [...(operators || []), value];
-    }
-    return value;
-  };
 
   const addFilter = (category: string, operator: FilterOperators, value: string | number): void => {
     const newCategory = filtersAdded[category] || {};

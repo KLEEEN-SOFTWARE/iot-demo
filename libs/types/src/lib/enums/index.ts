@@ -75,6 +75,11 @@ export enum FilterOperators {
   relativeDate = 'relativeDate',
 }
 
+export enum FilterTypes {
+  in = 'filter-in',
+  out = 'filter-out',
+}
+
 export const FilterForNumerics = [
   'Data - Numeric - Discrete',
   'Data - Numeric',

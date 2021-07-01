@@ -12,6 +12,8 @@ import { Tooltip } from '../../../FilterSection/FilterSection.styles';
 import { filterTooltipFunc } from '../../../FilterSection/components/FilterTooltip';
 import { isNil } from 'ramda';
 import { FilterOperators } from '@kleeen/types';
+import { isNilOrEmpty } from '@kleeen/common/utils';
+import { cleanUnavailableFilters, isSomeFilterUnavailable } from '@kleeen/frontend/utils';
 
 const parseToFilterOptions = (options: string[]): FilterOption[] =>
   options.map((option) => ({
@@ -65,7 +67,6 @@ export const ButtonFilter = ({
   }, [version]);
 
   const availableAttributesToFilter = filtersProps || [];
-  const filterSummary = filterTooltipFunc(paramsBasedOnRouteClone, translate);
 
   const categoryFilterOptions = availableAttributesToFilter.map(({ name, statisticalType }) => ({
     name,
@@ -95,6 +96,16 @@ export const ButtonFilter = ({
     handleFilterWithoutTimestampClone();
   };
 
+  const shouldClearUnavailableFilters =
+    !isNilOrEmpty(filtersAddedClone) &&
+    !isNilOrEmpty(filterOptionsByCategory) &&
+    isSomeFilterUnavailable(filtersAddedClone, filterOptionsByCategory);
+  const filtersAvailable = shouldClearUnavailableFilters
+    ? cleanUnavailableFilters(filtersAddedClone, filterOptionsByCategory)
+    : filtersAddedClone;
+
+  const filterSummary = filterTooltipFunc(filtersAvailable, translate);
+
   return (
     <>
       <Tooltip
@@ -117,7 +128,7 @@ export const ButtonFilter = ({
       </Tooltip>
       <ContainerHeader
         className="button-container-filter-actions"
-        filtersAdded={filtersAddedClone}
+        filtersAdded={filtersAvailable}
         isApplyDisabled={isApplyWithoutTimeDisabled}
         isShow={isShow}
         onClearFilters={onClearFilters}
@@ -130,7 +141,7 @@ export const ButtonFilter = ({
             categoryFilterOptions={categoryFilterOptions}
             filterOptionsByCategory={filterOptionsByCategory}
             addFilter={addFilter}
-            filtersAdded={filtersAddedClone}
+            filtersAdded={filtersAvailable}
             setIsApplyDisabled={setIsApplyWithoutTime}
             removeValue={removeValue}
             removeCategory={removeCategory}

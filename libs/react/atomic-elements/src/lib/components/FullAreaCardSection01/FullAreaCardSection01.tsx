@@ -1,6 +1,8 @@
-import React, { ReactElement } from 'react';
+import { ReactElement } from 'react';
 import { makeStyles } from '@material-ui/core';
+import classnames from 'classnames';
 
+const bem = 'ks-full-area-card-section-01';
 export interface FullAreaCardSection01Props {
   children: ReactElement | ReactElement[];
 }
@@ -14,7 +16,7 @@ const useStyles = makeStyles({
 
 export const FullAreaCardSection01 = ({ children }: FullAreaCardSection01Props) => {
   const classes = useStyles();
-  return <div className={classes.fullAreaCardSection01}>{children}</div>;
+  return <div className={classnames(bem, classes.fullAreaCardSection01)}>{children}</div>;
 };
 
 export default FullAreaCardSection01;

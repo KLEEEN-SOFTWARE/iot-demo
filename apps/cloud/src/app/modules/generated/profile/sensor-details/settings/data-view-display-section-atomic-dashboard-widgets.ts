@@ -172,7 +172,7 @@ export const dataViewDisplaySectionAtomicDashboardWidgets = [
         areYouSure: true,
         component: undefined,
         description: undefined,
-        displayName: `reboot`,
+        displayName: `Reboot`,
         name: `reboot`,
         type: `custom`,
       },
@@ -185,7 +185,7 @@ export const dataViewDisplaySectionAtomicDashboardWidgets = [
     id: `3b73adbb-d755-414b-b017-1d964567aa2d`,
     params: {
       baseModel: 'Sensor',
-      displayName: 'reboot',
+      displayName: 'Reboot',
       operationName: 'custom_action_3b73adbb_d755_414b_b017_1d964567aa2d',
     },
     statisticalType: undefined,

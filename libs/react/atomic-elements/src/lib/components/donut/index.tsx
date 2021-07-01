@@ -1,19 +1,21 @@
 import './donut.scss';
 
-import { KsButton, Loader } from '@kleeen/react/components';
 import { addDonutSubTitle, addDonutTitle, drillUp, getRadialSharedOptions } from '../../utils';
 import { clone, pathOr } from 'ramda';
-
-import Highcharts from 'highcharts';
-import HighchartsReact from 'highcharts-react-official';
-import { KUIConnect } from '@kleeen/core-react';
-import React from 'react';
-import drilldown from 'highcharts/modules/drilldown';
 import { getAggregationLabel } from '../../../types';
 import { isEmpty } from 'ramda';
 import { isValidArray } from '@kleeen/common/utils';
-import merge from 'lodash.merge';
+import { KsButton, Loader } from '@kleeen/react/components';
+import { KUIConnect } from '@kleeen/core-react';
 import { useRadialDataParser } from '../../hooks/useRadialDataParser';
+import classnames from 'classnames';
+import drilldown from 'highcharts/modules/drilldown';
+import Highcharts from 'highcharts';
+import HighchartsReact from 'highcharts-react-official';
+import merge from 'lodash.merge';
+import React from 'react';
+
+const bem = 'ks-donut';
 
 drilldown(Highcharts);
 
@@ -67,8 +69,8 @@ function DonutBase(props: HighchartsReact.Props): React.ReactElement {
   const options = merge({}, baseOptions, donutOptions);
 
   return (
-    <div className="High-charts">
-      <div ref={backButtonRef} className="back-to">
+    <div className={classnames(bem, 'High-charts')}>
+      <div ref={backButtonRef} className={classnames(`${bem}__back`, 'back-to')}>
         <KsButton
           onClick={() => {
             drillUp({ backButtonRef, highChartUpdate });

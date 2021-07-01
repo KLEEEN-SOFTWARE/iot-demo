@@ -1,18 +1,20 @@
 import './SingleBarHighlightMax.scss';
 
-import { CrossLinkingProps, useCrossLinkingMenuOnViz, useTextFormattersForViz } from '@kleeen/react/hooks';
-import { KsButton, Loader } from '@kleeen/react/components';
-import React, { useState } from 'react';
 import { axisStyle, generalBaseOptions } from '../generalBaseOptions';
 import { backToClick, deltaOfResults, localization, singleBarOptions } from './options';
 import { clone, has, pathOr } from 'ramda';
-
-import Highcharts from 'highcharts';
-import HighchartsReact from 'highcharts-react-official';
+import { CrossLinkingProps, useCrossLinkingMenuOnViz, useTextFormattersForViz } from '@kleeen/react/hooks';
 import { IDeltaResults } from './interfaces';
+import { KsButton, Loader } from '@kleeen/react/components';
 import { KUIConnect } from '@kleeen/core-react';
 import drilldown from 'highcharts/modules/drilldown';
+import Highcharts from 'highcharts';
+import HighchartsReact from 'highcharts-react-official';
 import merge from 'lodash.merge';
+import React, { useState } from 'react';
+import classnames from 'classnames';
+
+const bem = 'ks-single-bar-highlight-max';
 
 drilldown(Highcharts);
 
@@ -111,11 +113,11 @@ function SingleBarHighlightMaxBase({ translate, ...props }: HighchartsReact.Prop
   }
 
   return (
-    <div className="singlebar-hightlightmax-container">
+    <div className={classnames(bem, 'singlebar-hightlightmax-container')}>
       <div
-        ref={backButtonRef}
-        className="back-to"
+        className={classnames(`${bem}__cta--back`, 'back-to')}
         id={`singlebar-hightlightmax-${widgetId}-container__backButton`}
+        ref={backButtonRef}
       >
         <KsButton
           onClick={() => {

@@ -1,17 +1,18 @@
 import { DisplayViewType, SwitcherProps, TabSwitcherProps } from './DataViewControlSection.model';
-import { KsSvgIcon, KsSvgIconSize } from '@kleeen/react/components';
-import React, { ReactElement } from 'react';
-import { Tab, Tabs, useStyles } from './DataViewControlSection.styles';
+import { formatViewOptions } from './index';
 import { isNilOrEmpty, roleAccessKeyTag } from '@kleeen/common/utils';
-
+import { KsSvgIcon, KsSvgIconSize } from '@kleeen/react/components';
+import { ReactElement } from 'react';
+import { SelectList } from '../SelectList/SelectList';
+import { Tab, Tabs, useStyles } from './DataViewControlSection.styles';
+import { useAccessControlChecker } from '@kleeen/core-react';
 import Apps from '@material-ui/icons/Apps';
 import AspectRatio from '@material-ui/icons/AspectRatio';
-import { SelectList } from '../SelectList/SelectList';
+import classnames from 'classnames';
 import TableChart from '@material-ui/icons/TableChart';
 import Tooltip from '@material-ui/core/Tooltip';
-import { formatViewOptions } from './index';
-import { useAccessControlChecker } from '@kleeen/core-react';
 
+const bem = 'ks-view-switcher';
 const rolePermissionOk = 'SHOW';
 
 const IconTable = ({ name }) => (
@@ -72,7 +73,7 @@ const getViewOptionPropsBasedOnId = ({
     id: viewId,
     icon: (
       <Tooltip title={name} placement="top">
-        <div className={classes.IconContainer}>
+        <div className={classnames(bem, classes.IconContainer)}>
           <KsSvgIcon size={KsSvgIconSize.ExtraLarge} icon={viewId} />
         </div>
       </Tooltip>

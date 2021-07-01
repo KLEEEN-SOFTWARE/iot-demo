@@ -13,6 +13,9 @@ import { RelativeTimePicker } from './components/relativeTimePicker/index';
 import Tooltip from '@material-ui/core/Tooltip';
 import { isNil } from 'ramda';
 import { useTheme } from '@kleeen/react/hooks';
+import classnames from 'classnames';
+
+const bem = 'ks-date-picker-interval';
 
 const StyledTooltip = withStyles((theme: Theme) => ({
   tooltip: {
@@ -39,6 +42,9 @@ export const DatePickerInterval = ({
   const { themeClass } = useTheme();
   const isApply = !isNil(handleFilter);
 
+  const themeWrapper = document.getElementById('theme-wrapper-id');
+  const isNavLeft = themeWrapper.classList.contains('nav-left');
+
   if (!isNil(isOpen) && isApply) {
     React.useEffect(() => {
       setOpen(isOpen);
@@ -47,12 +53,11 @@ export const DatePickerInterval = ({
 
   const handleCloseDateFilter = (e = null): void => {
     if (e?.path[0].classList.contains(ButtonSubHeaderEnum.elementButtonGenericHeader)) return;
-
     if (open) {
       if (isApply && isSetOpen) {
-        isSetOpen(false);
+        isSetOpen(isNavLeft ? openCustomRange : isNavLeft);
       }
-      setOpen(false);
+      setOpen(isNavLeft ? openCustomRange : isNavLeft);
       setTimeout(() => {
         setOpenCustomRange(false);
       }, 250);
@@ -81,9 +86,9 @@ export const DatePickerInterval = ({
   };
 
   return (
-    <div className="date-picker-interval-container">
+    <div className={classnames(bem, 'date-picker-interval-container')}>
       <ClickAwayListener onClickAway={handleCloseDateFilter}>
-        <div>
+        <div className={classnames(`${bem}__tooltip`)}>
           <StyledTooltip
             onClose={handleCloseDateFilter}
             open={open}
@@ -99,6 +104,7 @@ export const DatePickerInterval = ({
                   datePickerState={datePickerState}
                   handleFilter={handleFilter}
                   handleCloseDateFilter={handleCloseDateFilter}
+                  setOpenCustomRange={setOpenCustomRange}
                 />
               ) : (
                 <RelativeTimePicker
@@ -111,7 +117,7 @@ export const DatePickerInterval = ({
               )
             }
           >
-            <div>
+            <div className={classnames(`${bem}__container`)}>
               <DateFilterButton onClick={handleClickFilterButton} datePickerState={datePickerState} />
             </div>
           </StyledTooltip>

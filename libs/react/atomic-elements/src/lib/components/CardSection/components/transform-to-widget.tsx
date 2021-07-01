@@ -36,6 +36,7 @@ import { isNilOrEmpty } from '@kleeen/common/utils';
 
 export function TransformToWidgetComponent({
   CardWidgetElement = CardWidget,
+  disableHeightCalculation = false,
   hideSaveAndClose,
   onInputChange,
   registerEvents,
@@ -43,6 +44,7 @@ export function TransformToWidgetComponent({
   widget,
 }: {
   CardWidgetElement?: any;
+  disableHeightCalculation?: boolean;
   hideSaveAndClose?: boolean;
   onInputChange?: (hasChanged: boolean) => void;
   registerEvents?: (event: AttributeInputEvents) => void;
@@ -65,9 +67,17 @@ export function TransformToWidgetComponent({
   }
 
   return widget.chartType === WidgetTypes.CUSTOM ? (
-    renderWidget({ preferredWidget: getChartTypeToRender(), widget, taskName, onInputChange, registerEvents })
+    renderWidget({
+      disableHeightCalculation,
+      onInputChange,
+      preferredWidget: getChartTypeToRender(),
+      registerEvents,
+      taskName,
+      widget,
+    })
   ) : (
     <CardWidgetElement
+      disableHeightCalculation={disableHeightCalculation}
       icon={false}
       selectedViz={preferredWidgetIndex}
       title={widget.title}
@@ -88,6 +98,7 @@ export function TransformToWidgetComponent({
         registerEvents,
         taskName,
         widget,
+        disableHeightCalculation,
       })}
     </CardWidgetElement>
   );
@@ -95,6 +106,7 @@ export function TransformToWidgetComponent({
 
 //#region Private members
 function renderWidget({
+  disableHeightCalculation,
   hideSaveAndClose,
   onInputChange,
   preferredWidget,
@@ -122,6 +134,7 @@ function renderWidget({
       return (
         <BubbleChartWidget
           attributes={widget.attributes}
+          disableHeightCalculation={disableHeightCalculation}
           params={widget.params}
           taskName={taskName}
           widgetId={widget.id}
@@ -173,7 +186,14 @@ function renderWidget({
       );
 
     case WidgetTypes.CUSTOM: {
-      return <CustomWidget widget={widget} onInputChange={onInputChange} registerEvents={registerEvents} />;
+      return (
+        <CustomWidget
+          disableHeightCalculation={disableHeightCalculation}
+          widget={widget}
+          onInputChange={onInputChange}
+          registerEvents={registerEvents}
+        />
+      );
     }
 
     case WidgetTypes.CUSTOM_ACTION:

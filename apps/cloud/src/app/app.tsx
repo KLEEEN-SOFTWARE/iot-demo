@@ -1,42 +1,41 @@
 import './app.scss';
-import './assets/styles/custom.scss';
 import './assets/styles/custom.css';
+import './assets/styles/custom.scss';
 
+import {
+  AccessControlProvider as KsAccessControlProvider,
+  IconRegistryProvider,
+  KUICombineProviders,
+  TranslationProvider,
+} from '@kleeen/core-react';
 import {
   AttributeContextMenuProvider,
   MenuContextProvider,
   ThemeContextProvider,
-  WebSocketProvider,
   useLocalization,
+  WebSocketProvider,
 } from '@kleeen/react/hooks';
-import {
-  IconRegistryProvider,
-  KUICombineProviders,
-  AccessControlProvider as KsAccessControlProvider,
-  TranslationProvider,
-} from '@kleeen/core-react';
-import React, { ReactElement } from 'react';
-
 import { DEFAULT_ROLE } from './settings/default-user-role';
-import { KsNotifications } from '@kleeen/react/components';
-import Router from './routesLoader';
-import ThemeWrapper from './themeWrapper';
-import customPermissions from './settings/role-access-keys.custom.json';
 import { environment } from '@kleeen/environment';
+import { KsNotifications } from '@kleeen/react/components';
+import { merge } from 'lodash';
+import { useServiceWorker } from './useServiceWorker';
+import customPermissions from './settings/role-access-keys.custom.json';
 import iconRegistry from '../assets/icon-registry';
 import localeData from './settings/strings-translations.json';
-import { merge } from 'lodash';
 import permissions from './settings/role-access-keys.json';
-import { useServiceWorker } from './useServiceWorker';
+import React, { ReactElement } from 'react';
+import Router from './routesLoader';
+import ThemeWrapper from './themeWrapper';
 
 merge(permissions, customPermissions);
 
 const AccessControlProvider = ({ children }) => (
   <KsAccessControlProvider
     accessControlSettings={{
-      permissions,
-      pathToRoleOnState: 'endUser.currentUser.role',
       defaultRole: DEFAULT_ROLE,
+      pathToRoleOnState: 'endUser.currentUser.role',
+      permissions,
     }}
   >
     {children}
@@ -47,9 +46,9 @@ function App(): ReactElement {
   useServiceWorker();
   const { language } = useLocalization();
   const TranslateProvider = TranslationProvider({
-    localeData,
-    locale: language,
     defaultLocale: 'en',
+    locale: language,
+    localeData,
     onError: (err: string): void => {
       console.debug('TranslateProvider', err);
     },
@@ -62,11 +61,11 @@ function App(): ReactElement {
           <KUICombineProviders
             providers={[
               AccessControlProvider,
+              AttributeContextMenuProvider,
               IconRegistryProvider({ iconRegistry }),
               MenuContextProvider,
-              AttributeContextMenuProvider,
-              WebSocketProvider,
               ThemeContextProvider,
+              WebSocketProvider,
             ]}
           >
             <KsNotifications />

@@ -1,22 +1,24 @@
-import { PauseButton, ProgressBar, TooltipText, useStyles } from './LinearProgressBar.styles';
-
 import { Grid } from '@material-ui/core';
+import { PauseButton, ProgressBar, TooltipText, useStyles } from './LinearProgressBar.styles';
+import { Popover } from '@material-ui/core';
+import { useTheme } from '@kleeen/react/hooks';
 import PauseCircleFilledIcon from '@material-ui/icons/PauseCircleFilled';
 import PlayCircleFilledIcon from '@material-ui/icons/PlayCircleFilled';
-import { Popover } from '@material-ui/core';
 import React from 'react';
-import { useTheme } from '@kleeen/react/hooks';
+import classnames from 'classnames';
+
+const bem = 'ks-linear-progress-bar';
 
 const LinearProgressBar = (props: {
-  time;
-  setTime;
   completed;
-  setCompleted;
-  title;
-  setTitle;
-  timeCurrent;
-  setTimeCurrent;
   refreshPage;
+  setCompleted;
+  setTime;
+  setTimeCurrent;
+  setTitle;
+  time;
+  timeCurrent;
+  title;
 }) => {
   const [completed, setCompleted] = [props.completed, props.setCompleted];
   const [title, setTitle] = [props.title, props.setTitle];
@@ -109,38 +111,33 @@ const LinearProgressBar = (props: {
 
   const open = Boolean(anchorEl);
   return (
-    <Grid className="linear-progress-bar-content">
+    <Grid className={classnames(bem, 'linear-progress-bar-content')}>
       <ProgressBar
         onMouseEnter={handlePopoverOpen}
         onMouseLeave={handlePopoverClose}
-        variant="determinate"
-        value={percent}
         ref={progressRef}
+        value={percent}
+        variant="determinate"
       />
       <Popover
-        className={themeClass}
-        classes={
-          {
-            root: classes.popover,
-            paper: classes.paper,
-          }
-        }
-        open={open}
-        anchorReference="anchorPosition"
         anchorOrigin={{
-          vertical: 'top',
           horizontal: 0,
-        }}
-        transformOrigin={{
           vertical: 'top',
-          horizontal: 0,
         }}
         anchorPosition={{
-          top: 69,
           left: 16 + progressRef.current.clientWidth * (percent / 100),
+          top: 69,
         }}
+        anchorReference="anchorPosition"
+        classes={{
+          paper: classes.paper,
+          root: classes.popover,
+        }}
+        className={classnames(`${bem}__popover`, themeClass)}
+        open={open}
+        transformOrigin={{ horizontal: 0, vertical: 'top' }}
       >
-        <TooltipText className={classes.tooltip}>{title}</TooltipText>
+        <TooltipText className={classnames(`${bem}__tooltip`, classes.tooltip)}>{title}</TooltipText>
       </Popover>
       <PauseButton onClick={handlePause}>
         {isPause ? <PlayCircleFilledIcon /> : <PauseCircleFilledIcon />}

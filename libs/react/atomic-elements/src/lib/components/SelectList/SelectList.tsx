@@ -1,12 +1,14 @@
 import './SelectList.scss';
 
 import { FormControl, makeStyles, styled } from '@material-ui/core';
-import MuiSelect, { SelectProps } from '@material-ui/core/Select';
-
 import { KsMenuItem } from '@kleeen/react/components';
-import MuiInputLabel from '@material-ui/core/InputLabel';
-import React from 'react';
 import { useTheme } from '@kleeen/react/hooks';
+import MuiInputLabel from '@material-ui/core/InputLabel';
+import MuiSelect, { SelectProps } from '@material-ui/core/Select';
+import React from 'react';
+import classnames from 'classnames';
+
+const bem = 'ks-select-list';
 
 interface SelectListProps extends SelectProps {
   onChange: (value: unknown, child?: React.ReactNode) => void;
@@ -93,12 +95,12 @@ export const SelectList = ({
   const { themeClass } = useTheme();
   const styles = useStyles();
   return (
-    <FormControl variant="outlined" className="select-action-container">
-      <InputLabel id="select-action-label" className="select-action-label">
+    <FormControl variant="outlined" className={classnames(bem, 'select-action-container')}>
+      <InputLabel id="select-action-label" className={classnames(`${bem}__label`, 'select-action-label')}>
         {label}
       </InputLabel>
       <Select
-        className="select-action"
+        className={classnames(`${bem}__action`, 'select-action')}
         disabled={options?.length === 1}
         id={id}
         key={value.toString()}

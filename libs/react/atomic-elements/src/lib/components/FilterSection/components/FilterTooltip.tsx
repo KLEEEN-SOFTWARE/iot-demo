@@ -1,11 +1,14 @@
 import { Badge, Tooltip } from '../FilterSection.styles';
 import { FilterAdded } from '../FilterSection.model';
-import React, { ReactElement } from 'react';
 
 import { FilterOperators, IntervalDate } from '@kleeen/types';
 import { KUIConnect } from '@kleeen/core-react';
-import moment from 'moment';
 import { useTheme } from '@kleeen/react/hooks';
+import moment from 'moment';
+import React, { ReactElement } from 'react';
+import classnames from 'classnames';
+
+const bem = 'ks-filter-tooltip';
 
 export const filterTooltipFunc = (
   paramsBasedOnRoute,
@@ -41,8 +44,10 @@ export const filterTooltipFunc = (
     PopperProps: { className: `${themeClass}`, style: { zIndex: 2 } },
     badgeContent: filterTitles.length,
     title: (
-      <ul>
-        <li>{`${filterTitles.length} ${translate('app.subHeader.buttonFilter.currentFilters')}`}</li>
+      <ul className={classnames(bem)}>
+        <li className={classnames(`${bem}__item--applied`)}>{`${filterTitles.length} ${translate(
+          'app.subHeader.buttonFilter.currentFilters',
+        )}`}</li>
 
         {filterTitles.map((title, i) => (
           <>

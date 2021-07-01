@@ -1,16 +1,18 @@
 import './Pie.scss';
 
-import { KsButton, Loader } from '@kleeen/react/components';
 import { clone, pathOr } from 'ramda';
 import { drillUp, getRadialSharedOptions } from '../../utils';
-
+import { KsButton, Loader } from '@kleeen/react/components';
+import { KUIConnect } from '@kleeen/core-react';
+import { useRadialDataParser } from '../../hooks/useRadialDataParser';
+import classnames from 'classnames';
+import drilldown from 'highcharts/modules/drilldown';
 import Highcharts from 'highcharts';
 import HighchartsReact from 'highcharts-react-official';
-import { KUIConnect } from '@kleeen/core-react';
-import React from 'react';
-import drilldown from 'highcharts/modules/drilldown';
 import merge from 'lodash.merge';
-import { useRadialDataParser } from '../../hooks/useRadialDataParser';
+import React from 'react';
+
+const bem = 'ks-pie-chart';
 
 drilldown(Highcharts);
 
@@ -40,8 +42,8 @@ function PieBase(props: HighchartsReact.Props): React.ReactElement {
   const options = merge({}, baseOptions, pieOptions);
 
   return (
-    <div className="High-charts">
-      <div ref={backButtonRef} className="back-to">
+    <div className={classnames(bem, 'High-charts')}>
+      <div ref={backButtonRef} className={classnames(`${bem}__back`, 'back-to')}>
         <KsButton
           onClick={() => {
             drillUp({ backButtonRef, highChartUpdate });
