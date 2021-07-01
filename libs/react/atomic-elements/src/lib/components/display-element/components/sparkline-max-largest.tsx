@@ -3,6 +3,9 @@ import { DisplayComponentProps } from '@kleeen/types';
 import { Label } from './label';
 import { pathOr } from 'ramda';
 import { useStyles } from '../styles/sparkline-max-largest.styles';
+import classnames from 'classnames';
+
+const bem = 'ks-spark-line-max-largest';
 
 export function SparklineMaxLargest(props: DisplayComponentProps) {
   const classes = useStyles();
@@ -14,7 +17,7 @@ export function SparklineMaxLargest(props: DisplayComponentProps) {
   };
 
   return (
-    <div className={classes.content}>
+    <div className={classnames(bem, classes.content)}>
       <BasePie data={value?.displayValue} highlighted={props.highlighted} />
       <Label {...restOfProps} value={labelValue} />
     </div>

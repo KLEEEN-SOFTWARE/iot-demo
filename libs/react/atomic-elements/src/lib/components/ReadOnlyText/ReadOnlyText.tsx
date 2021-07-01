@@ -1,12 +1,13 @@
 import './ReadOnlyText.scss';
 
+import { DataProps } from '../../../types';
+import { isNilOrEmpty } from '@kleeen/common/utils';
+import { Loader } from '@kleeen/react/components';
+import { pathOr } from 'ramda';
+import classnames from 'classnames';
 import React, { ReactElement } from 'react';
 
-import { DataProps } from '../../../types';
-import { Loader } from '@kleeen/react/components';
-import classnames from 'classnames';
-import { pathOr } from 'ramda';
-import { isNilOrEmpty } from '@kleeen/common/utils';
+const bem = 'ks-read-only-text';
 
 interface ReadOnlyTextProps {
   context: any;
@@ -24,7 +25,7 @@ export const ReadOnlyText = (props: ReadOnlyTextProps): ReactElement => {
     return <Loader />;
   }
 
-  return <div className={classnames('read-only-text', { fullscreen })}>{result}</div>;
+  return <div className={classnames(bem, 'read-only-text', { fullscreen })}>{result}</div>;
 };
 
 export default React.memo(ReadOnlyText);

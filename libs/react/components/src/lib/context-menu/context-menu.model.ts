@@ -1,9 +1,10 @@
 import { Attribute, Cell } from '@kleeen/types';
 
 export interface ContextMenuProps {
-  attr: Attribute;
-  cell: Cell;
   anchorEl: null | HTMLElement;
+  attr: Attribute;
+  autoClose?: boolean;
+  cell: Cell;
   handleClose: () => void;
 }
 

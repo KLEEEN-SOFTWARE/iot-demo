@@ -47,6 +47,11 @@ export const getSettings = (logout: () => void): NavigationSettings => {
         icon: `ks-navigation-ri1YjTGoXjuntsUDouUSec`,
       },
       {
+        title: `Site Map Report`,
+        path: `/site-map-report`,
+        icon: `ks-navigation-oyBJKXZrsLjuR3qUxB2uEW`,
+      },
+      {
         title: `Configure Sensor/Node`,
         path: `/configure-sensor-node`,
         icon: `ks-navigation-9bqPxguVQuFBVXU6TeZXYJ`,

@@ -37,7 +37,7 @@ export const dataViewDisplaySectionAtomicSingleTableWidgets = [
         multiple: true,
         name: 'node',
         statisticalType: 'Data - Categorical',
-        prototypeId: null,
+        prototypeId: 95949,
         format: {
           aggregations: null,
           dateTime: null,
@@ -87,7 +87,7 @@ export const dataViewDisplaySectionAtomicSingleTableWidgets = [
         multiple: true,
         name: 'nodeStatus',
         statisticalType: 'Data - Categorical - ordered - Severity Ranking',
-        prototypeId: null,
+        prototypeId: 96079,
         format: {
           aggregations: null,
           dateTime: null,

@@ -1,13 +1,15 @@
 import './RefreshControlSection.scss';
 
 import { Button, Container, Title, Typography } from './refreshControlSection.styles';
-import React, { ReactElement, useState } from 'react';
-import { useKleeenActions } from '@kleeen/react/hooks';
-
-import Grid from '@material-ui/core/Grid';
-import LinearProgressBar from '../LinearProgressBar/LinearProgressBar';
+import { ReactElement, useState } from 'react';
 import { SelectList } from '../SelectList/SelectList';
 import { TimeIntervals } from '@kleeen/types';
+import { useKleeenActions } from '@kleeen/react/hooks';
+import Grid from '@material-ui/core/Grid';
+import LinearProgressBar from '../LinearProgressBar/LinearProgressBar';
+import classnames from 'classnames';
+
+const bem = 'ks-refresh-control';
 
 export interface RefreshControlSectionProps {
   actions?: Action[];
@@ -48,6 +50,7 @@ const SelectedStatsSection = (props: { actions: Action[]; time; setTime }) => {
       id="select-refresh-time"
       label="Refresh..."
       labelId="refresh-time"
+      className={classnames(`${bem}__select`)}
       onChange={(value) => {
         props.setTime(value);
       }}
@@ -73,13 +76,13 @@ export const RefreshControlSection = (props: RefreshControlSectionProps): ReactE
 
   return (
     <>
-      <Container maxWidth="xl" className="refresh-control">
+      <Container maxWidth="xl" className={classnames(bem, 'refresh-control')}>
         {props.showAvatar && (
-          <Grid item xs={4} sm={2}>
+          <Grid className={classnames(`${bem}__avatar-container`)} item xs={4} sm={2}>
             <AvatarSection />
           </Grid>
         )}
-        <Grid className="main-container">
+        <Grid className={classnames(`${bem}__content`, 'main-container')}>
           <Title>
             <Typography variant="h2" component="h1">
               {props.title}
@@ -87,17 +90,17 @@ export const RefreshControlSection = (props: RefreshControlSectionProps): ReactE
           </Title>
           <LinearProgressBar
             completed={completed}
-            setCompleted={setCompleted}
-            title={title}
-            setTitle={setTitle}
-            timeCurrent={timeCurrent}
-            setTimeCurrent={setTimeCurrent}
-            time={time}
-            setTime={setTime}
             refreshPage={refreshPage}
+            setCompleted={setCompleted}
+            setTime={setTime}
+            setTimeCurrent={setTimeCurrent}
+            setTitle={setTitle}
+            time={time}
+            timeCurrent={timeCurrent}
+            title={title}
           />
         </Grid>
-        <Grid className="actions-container">
+        <Grid className={classnames(`${bem}__actions`, 'actions-container')}>
           <SelectedStatsSection actions={props.actions} time={time} setTime={setTime} />
           <Button variant="contained" color="primary" onClick={handleRefresh}>
             {'REFRESH'}

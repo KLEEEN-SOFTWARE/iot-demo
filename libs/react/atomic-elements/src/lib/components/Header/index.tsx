@@ -6,10 +6,13 @@ import {
   RefreshControl,
   useKsActionsManager,
 } from '@kleeen/react/components';
-import React, { ReactElement } from 'react';
 
 import { isEmpty } from 'ramda';
+import { ReactElement } from 'react';
 import { useStyles } from './Header.style';
+import classnames from 'classnames';
+
+const bem = 'ks-header';
 
 export function KsHeader(props: {
   actionsProps: ActionsManagerProps;
@@ -27,14 +30,17 @@ export function KsHeader(props: {
   return (
     <>
       <header
-        className={`main-header ${classes.header} ${
-          props.withoutSubHeader && classes.withoutSubHeader
-        } dataview`}
+        className={classnames(
+          bem,
+          'main-header',
+          classes.header,
+          `${props.withoutSubHeader && classes.withoutSubHeader} dataview`,
+        )}
       >
-        <div className={classes.infoContainer}>
-          <h5 className={classes.withoutMargin}>{props.upText}</h5>
-          <h3 className={classes.mainTitle}>{props.title}</h3>
-          <h5 className={classes.withoutMargin}>{props.subTitle}</h5>
+        <div className={classnames(`${bem}__container`, classes.infoContainer)}>
+          <h5 className={classnames(`${bem}__title--up`, classes.withoutMargin)}>{props.upText}</h5>
+          <h3 className={classnames(`${bem}__title`, classes.mainTitle)}>{props.title}</h3>
+          <h5 className={classnames(`${bem}__title--sub`, classes.withoutMargin)}>{props.subTitle}</h5>
         </div>
         <div className="refresh-control-header">
           {!props.hideRefreshControl && (
@@ -44,7 +50,9 @@ export function KsHeader(props: {
             </>
           )}
         </div>
-        {!isEmpty(actions) && <div className={classes.actionsContainer}>{KsActionsSection}</div>}
+        {!isEmpty(actions) && (
+          <div className={classnames(`${bem}__actions`, classes.actionsContainer)}>{KsActionsSection}</div>
+        )}
       </header>
       {KsActionDialogs}
     </>

@@ -1,6 +1,8 @@
-import React, { ReactElement } from 'react';
-
 import { makeStyles } from '@material-ui/core';
+import React, { ReactElement } from 'react';
+import classnames from 'classnames';
+
+const bem = 'ks-secondary-card-widget-02';
 
 /* eslint-disable-next-line */
 export interface SecondaryCardWidget02Props {
@@ -28,9 +30,9 @@ export const SecondaryCardWidget02 = (props: SecondaryCardWidget02Props): ReactE
   const [A, B] = React.Children.toArray(props.children);
 
   return (
-    <div className={classes.secondaryCardWidget02}>
+    <div className={classnames(bem, classes.secondaryCardWidget02)}>
       {A}
-      <div className={classes.content}>{B}</div>
+      <div className={classnames(`${bem}__content`, classes.content)}>{B}</div>
     </div>
   );
 };

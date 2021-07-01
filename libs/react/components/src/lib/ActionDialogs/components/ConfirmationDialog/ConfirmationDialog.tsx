@@ -8,6 +8,7 @@ import DialogTitle from '@material-ui/core/DialogTitle';
 import { Button as KsButton } from '../../ActionDialogs.styles';
 import { KsDialog } from '../../../dialog';
 import capitalize from 'lodash.capitalize';
+import { Translate } from '@kleeen/core-react';
 import { useTheme } from '@kleeen/react/hooks';
 
 export function ConfirmationActionDialog({
@@ -35,7 +36,9 @@ export function ConfirmationActionDialog({
         <DialogContentText>{description}</DialogContentText>
       </DialogContent>
       <DialogActions>
-        <KsButton onClick={handleClose}>Cancel</KsButton>
+        <KsButton onClick={handleClose}>
+          <Translate id="app.modal.action.cancel" type="html" />
+        </KsButton>
         <KsButton color="primary" onClick={handleAction}>
           {title}
         </KsButton>

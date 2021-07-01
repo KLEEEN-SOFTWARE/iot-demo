@@ -18,7 +18,7 @@
         "multiple": true,
         "name": "displayValue",
         "statisticalType": "Data - Categorical - free form",
-        "prototypeId": null,
+        "prototypeId": 96092,
         "format": {
           "aggregations": null,
           "dateTime": null,
@@ -54,7 +54,7 @@
         "multiple": true,
         "name": "eventLength",
         "statisticalType": "Data - Numeric - NTG - Discrete",
-        "prototypeId": null,
+        "prototypeId": 95952,
         "format": {
           "aggregations": null,
           "dateTime": null,
@@ -93,7 +93,7 @@
         "multiple": true,
         "name": "timestamp",
         "statisticalType": "Data - Numeric - Temporal",
-        "prototypeId": null,
+        "prototypeId": 96085,
         "format": {
           "aggregations": null,
           "dateTime": {
@@ -138,7 +138,7 @@
         "multiple": true,
         "name": "displayValue",
         "statisticalType": "Data - Categorical",
-        "prototypeId": null,
+        "prototypeId": 95949,
         "format": {
           "aggregations": null,
           "dateTime": null,
@@ -198,7 +198,7 @@
         "multiple": true,
         "name": "sensor",
         "statisticalType": "Data - Categorical",
-        "prototypeId": null,
+        "prototypeId": 95949,
         "format": {
           "aggregations": null,
           "dateTime": null,
@@ -249,7 +249,7 @@
         "multiple": true,
         "name": "nodeOverallStatus",
         "statisticalType": "Data - Categorical - ordered - Severity Ranking",
-        "prototypeId": null,
+        "prototypeId": 96079,
         "format": {
           "aggregations": null,
           "dateTime": null,
@@ -305,7 +305,7 @@
         "multiple": true,
         "name": "nodeStatus",
         "statisticalType": "Data - Categorical - ordered - Severity Ranking",
-        "prototypeId": null,
+        "prototypeId": 96079,
         "format": {
           "aggregations": null,
           "dateTime": null,
@@ -361,7 +361,7 @@
         "multiple": true,
         "name": "siteMap",
         "statisticalType": "Data - Categorical",
-        "prototypeId": null,
+        "prototypeId": 95949,
         "format": {
           "aggregations": null,
           "dateTime": null,
@@ -411,7 +411,7 @@
         "multiple": true,
         "name": "displayValue",
         "statisticalType": "Data - Categorical - ordered - Severity Ranking",
-        "prototypeId": null,
+        "prototypeId": 96079,
         "format": {
           "aggregations": null,
           "dateTime": null,
@@ -486,7 +486,7 @@
         "multiple": true,
         "name": "node",
         "statisticalType": "Data - Categorical",
-        "prototypeId": null,
+        "prototypeId": 95949,
         "format": {
           "aggregations": null,
           "dateTime": null,
@@ -533,7 +533,7 @@
         "multiple": true,
         "name": "timestamp",
         "statisticalType": "Data - Numeric - Temporal",
-        "prototypeId": null,
+        "prototypeId": 96085,
         "format": {
           "aggregations": null,
           "dateTime": {
@@ -578,7 +578,7 @@
         "multiple": true,
         "name": "displayValue",
         "statisticalType": "Data - Categorical - ordered - Severity Ranking",
-        "prototypeId": null,
+        "prototypeId": 96079,
         "format": {
           "aggregations": null,
           "dateTime": null,
@@ -653,7 +653,7 @@
         "multiple": true,
         "name": "node",
         "statisticalType": "Data - Categorical",
-        "prototypeId": null,
+        "prototypeId": 95949,
         "format": {
           "aggregations": null,
           "dateTime": null,
@@ -700,7 +700,7 @@
         "multiple": true,
         "name": "timestamp",
         "statisticalType": "Data - Numeric - Temporal",
-        "prototypeId": null,
+        "prototypeId": 96085,
         "format": {
           "aggregations": null,
           "dateTime": {
@@ -745,7 +745,7 @@
         "multiple": true,
         "name": "displayValue",
         "statisticalType": "Data - Categorical",
-        "prototypeId": null,
+        "prototypeId": 95949,
         "format": {
           "aggregations": null,
           "dateTime": null,
@@ -795,7 +795,7 @@
         "multiple": true,
         "name": "systemHealth",
         "statisticalType": "Data - Categorical - ordered - Severity Ranking",
-        "prototypeId": null,
+        "prototypeId": 96079,
         "format": {
           "aggregations": null,
           "dateTime": null,
@@ -851,7 +851,7 @@
         "multiple": true,
         "name": "sensor",
         "statisticalType": "Data - Categorical",
-        "prototypeId": null,
+        "prototypeId": 95949,
         "format": {
           "aggregations": null,
           "dateTime": null,
@@ -902,7 +902,7 @@
         "multiple": true,
         "name": "siteStatus",
         "statisticalType": "Data - Categorical - ordered - Severity Ranking",
-        "prototypeId": null,
+        "prototypeId": 96079,
         "format": {
           "aggregations": null,
           "dateTime": null,
@@ -958,7 +958,7 @@
         "multiple": true,
         "name": "node",
         "statisticalType": "Data - Categorical",
-        "prototypeId": null,
+        "prototypeId": 95949,
         "format": {
           "aggregations": null,
           "dateTime": null,
@@ -1017,7 +1017,7 @@
         "multiple": true,
         "name": "displayValue",
         "statisticalType": "Data - Categorical",
-        "prototypeId": null,
+        "prototypeId": 95949,
         "format": {
           "aggregations": null,
           "dateTime": null,
@@ -1077,7 +1077,7 @@
         "multiple": true,
         "name": "ppm",
         "statisticalType": "Data - Numeric - NTG - Discrete",
-        "prototypeId": null,
+        "prototypeId": 95952,
         "format": {
           "aggregations": null,
           "dateTime": null,
@@ -1113,7 +1113,7 @@
         "multiple": true,
         "name": "node",
         "statisticalType": "Data - Categorical",
-        "prototypeId": null,
+        "prototypeId": 95949,
         "format": {
           "aggregations": null,
           "dateTime": null,
@@ -1160,7 +1160,7 @@
         "multiple": true,
         "name": "sensorOverallStatus",
         "statisticalType": "Data - Categorical - ordered - Severity Ranking",
-        "prototypeId": null,
+        "prototypeId": 96079,
         "format": {
           "aggregations": null,
           "dateTime": null,
@@ -1216,7 +1216,7 @@
         "multiple": true,
         "name": "sensorStatus",
         "statisticalType": "Data - Categorical - ordered - Severity Ranking",
-        "prototypeId": null,
+        "prototypeId": 96079,
         "format": {
           "aggregations": null,
           "dateTime": null,
@@ -1272,7 +1272,7 @@
         "multiple": true,
         "name": "siteMap",
         "statisticalType": "Data - Categorical",
-        "prototypeId": null,
+        "prototypeId": 95949,
         "format": {
           "aggregations": null,
           "dateTime": null,
@@ -1322,7 +1322,7 @@
         "multiple": true,
         "name": "displayValue",
         "statisticalType": "Data - Categorical - ordered - Severity Ranking",
-        "prototypeId": null,
+        "prototypeId": 96079,
         "format": {
           "aggregations": null,
           "dateTime": null,
@@ -1397,7 +1397,7 @@
         "multiple": true,
         "name": "sensor",
         "statisticalType": "Data - Categorical",
-        "prototypeId": null,
+        "prototypeId": 95949,
         "format": {
           "aggregations": null,
           "dateTime": null,
@@ -1444,7 +1444,7 @@
         "multiple": true,
         "name": "timestamp",
         "statisticalType": "Data - Numeric - Temporal",
-        "prototypeId": null,
+        "prototypeId": 96085,
         "format": {
           "aggregations": null,
           "dateTime": {
@@ -1489,7 +1489,7 @@
         "multiple": true,
         "name": "displayValue",
         "statisticalType": "Data - Categorical - ordered - Severity Ranking",
-        "prototypeId": null,
+        "prototypeId": 96079,
         "format": {
           "aggregations": null,
           "dateTime": null,
@@ -1564,7 +1564,7 @@
         "multiple": true,
         "name": "sensor",
         "statisticalType": "Data - Categorical",
-        "prototypeId": null,
+        "prototypeId": 95949,
         "format": {
           "aggregations": null,
           "dateTime": null,
@@ -1611,7 +1611,7 @@
         "multiple": true,
         "name": "timestamp",
         "statisticalType": "Data - Numeric - Temporal",
-        "prototypeId": null,
+        "prototypeId": 96085,
         "format": {
           "aggregations": null,
           "dateTime": {
@@ -1656,7 +1656,7 @@
         "multiple": true,
         "name": "displayValue",
         "statisticalType": "Data - Categorical - ordered - Severity Ranking",
-        "prototypeId": null,
+        "prototypeId": 96079,
         "format": {
           "aggregations": null,
           "dateTime": null,
@@ -1731,7 +1731,7 @@
         "multiple": true,
         "name": "siteMap",
         "statisticalType": "Data - Categorical",
-        "prototypeId": null,
+        "prototypeId": 95949,
         "format": {
           "aggregations": null,
           "dateTime": null,
@@ -1773,7 +1773,7 @@
         "multiple": true,
         "name": "timestamp",
         "statisticalType": "Data - Numeric - Temporal",
-        "prototypeId": null,
+        "prototypeId": 96085,
         "format": {
           "aggregations": null,
           "dateTime": {
@@ -1818,7 +1818,7 @@
         "multiple": true,
         "name": "displayValue",
         "statisticalType": "Data - Categorical - ordered - Severity Ranking",
-        "prototypeId": null,
+        "prototypeId": 96079,
         "format": {
           "aggregations": null,
           "dateTime": null,
@@ -1893,7 +1893,7 @@
         "multiple": true,
         "name": "siteMap",
         "statisticalType": "Data - Categorical",
-        "prototypeId": null,
+        "prototypeId": 95949,
         "format": {
           "aggregations": null,
           "dateTime": null,
@@ -1947,7 +1947,7 @@
         "multiple": true,
         "name": "displayValue",
         "statisticalType": "Data - Numeric - NTG - Discrete",
-        "prototypeId": null,
+        "prototypeId": 95952,
         "format": {
           "aggregations": null,
           "dateTime": null,
@@ -1983,7 +1983,7 @@
         "multiple": true,
         "name": "sensor",
         "statisticalType": "Data - Categorical",
-        "prototypeId": null,
+        "prototypeId": 95949,
         "format": {
           "aggregations": null,
           "dateTime": null,
@@ -2038,7 +2038,7 @@
         "multiple": true,
         "name": "displayValue",
         "statisticalType": "Data - Numeric - NTG - Discrete",
-        "prototypeId": null,
+        "prototypeId": 95952,
         "format": {
           "aggregations": null,
           "dateTime": null,
@@ -2077,7 +2077,7 @@
         "multiple": true,
         "name": "event",
         "statisticalType": "Data - Categorical - free form",
-        "prototypeId": null,
+        "prototypeId": 96092,
         "format": {
           "aggregations": null,
           "dateTime": null,
@@ -2121,7 +2121,7 @@
         "multiple": true,
         "name": "displayValue",
         "statisticalType": "Data - Numeric - Temporal",
-        "prototypeId": null,
+        "prototypeId": 96085,
         "format": {
           "isNumericType": true
         },

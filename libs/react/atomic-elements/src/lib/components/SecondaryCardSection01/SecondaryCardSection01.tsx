@@ -1,6 +1,8 @@
-import React, { ReactElement } from 'react';
-
 import { makeStyles } from '@material-ui/core/styles';
+import React, { ReactElement } from 'react';
+import classnames from 'classnames';
+
+const bem = 'ks-secondary-card-section-01';
 
 const useStyles = makeStyles({
   cardSection01: {
@@ -20,7 +22,7 @@ export interface SecondaryCardSection01Props {
 export const SecondaryCardSection01 = (props: SecondaryCardSection01Props): ReactElement => {
   const classes = useStyles();
 
-  return <div className={classes.cardSection01}>{props.children}</div>;
+  return <div className={classnames(bem, classes.cardSection01)}>{props.children}</div>;
 };
 
 export default SecondaryCardSection01;

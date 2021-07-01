@@ -6,3 +6,6 @@
 
 # Nx
 workspace.json
+
+# Semantic Release
+CHANGELOG.md

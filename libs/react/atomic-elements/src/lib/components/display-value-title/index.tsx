@@ -1,6 +1,5 @@
 import { WidgetContextAttributes, useWidgetContext } from '@kleeen/react/hooks';
 
-import React from 'react';
 import { TextFormatter } from '@kleeen/react/components';
 import { pathOr } from 'ramda';
 import { WidgetDataAttributes } from '@kleeen/types';

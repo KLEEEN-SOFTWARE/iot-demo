@@ -1,21 +1,22 @@
 import './EntityDetailsSection.scss';
 
 import { AttributeInputEvents, useEntityDetailsEventHandler, useKleeenActions } from '@kleeen/react/hooks';
+import { getUpdateRequestPayload } from '../../utils';
 import { KsButton, KsMenuContainer } from '@kleeen/react/components';
-import { ReactElement, useEffect, useState } from 'react';
-import { makeStyles, styled } from '@material-ui/core';
-
-import ArrowLeftIcon from '@material-ui/icons/ArrowLeft';
-import EditOutlinedIcon from '@material-ui/icons/EditOutlined';
 import { KUIConnect } from '@kleeen/core-react';
-import MuiButton from '@material-ui/core/Button';
-import MuiToolbar from '@material-ui/core/Toolbar';
-import MuiTooltip from '@material-ui/core/Tooltip';
+import { makeStyles, styled } from '@material-ui/core';
+import { ReactElement, useEffect, useState } from 'react';
 import { Slot } from '../DetailSummary/DetailSummary.model';
 import { SummaryPanel } from '../summary-panel';
 import { Translate } from '@kleeen/types';
-import { getUpdateRequestPayload } from '../../utils';
+import ArrowLeftIcon from '@material-ui/icons/ArrowLeft';
+import classnames from 'classnames';
+import EditOutlinedIcon from '@material-ui/icons/EditOutlined';
+import MuiButton from '@material-ui/core/Button';
+import MuiToolbar from '@material-ui/core/Toolbar';
+import MuiTooltip from '@material-ui/core/Tooltip';
 
+const bem = 'ks-entity-details-section';
 export interface EntityDetailsSectionProps {
   displayTaskName: string;
   entityDetails: any[]; // TODO: @cafe add better types here
@@ -116,19 +117,24 @@ export function EntityDetailsSectionBase({ translate, ...props }: EntityDetailsS
   }
 
   return open ? (
-    <Paper className={'entity-details-section'} elevation={3}>
-      <div className="paper-container">
-        <div className="attributes-container">
-          <div className="attributes-navigation">
-            <KsButton className="attributes-navigation-left" onClick={handleDrawerClose}>
-              <ArrowLeftIcon className="icon-close" />
+    <Paper className={classnames(bem, 'entity-details-section')} elevation={3}>
+      <div className={classnames(`${bem}__container`, 'paper-container')}>
+        <div className={classnames(`${bem}__attributes`, 'attributes-container')}>
+          <div className={classnames(`${bem}__navigation`, 'attributes-navigation')}>
+            <KsButton
+              className={classnames(`${bem}__navigation--left`, 'attributes-navigation-left')}
+              onClick={handleDrawerClose}
+            >
+              <ArrowLeftIcon className={classnames(`${bem}__close`, 'icon-close')} />
               {translate('app.subHeader.buttonSummary.summaryDetails')}
             </KsButton>
             {props.isEditable && (
               <KsButton
-                className={
-                  'attributes-navigation-right ' + (isEditing ? 'attributes-navigation-edit-on' : '')
-                }
+                className={classnames(
+                  `${bem}__navigation--right`,
+                  'attributes-navigation-right',
+                  isEditing && 'attributes-navigation-edit-on',
+                )}
                 onClick={() => setEditing(!isEditing)}
               >
                 {isEditing
@@ -153,7 +159,7 @@ export function EntityDetailsSectionBase({ translate, ...props }: EntityDetailsS
         </div>
         {isEditing && (
           <Toolbar>
-            <Button className="primary-button" onClick={onSave}>
+            <Button className={classnames(`${bem}__cta`, 'primary-button')} onClick={onSave}>
               {translate('app.subHeader.container.button.save')}
             </Button>
           </Toolbar>
@@ -161,7 +167,7 @@ export function EntityDetailsSectionBase({ translate, ...props }: EntityDetailsS
       </div>
     </Paper>
   ) : (
-    <Paper elevation={3} className={classes.drawerClose}>
+    <Paper elevation={3} className={classnames(`${bem}__container--close`, classes.drawerClose)}>
       <MuiTooltip title="View your entity" placement="top">
         <EditOutlinedIcon className={classes.iconEntity} onClick={handleDrawerOpen} />
       </MuiTooltip>

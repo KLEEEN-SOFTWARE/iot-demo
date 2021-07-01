@@ -91,7 +91,9 @@ export const entitySchema = gql`
     delete120425(id: String): GenericEntity
     update120425(entity: JSON): GenericEntity
     autoComplete120425(input: AutoCompleteByEntityInput): AutoCompleteResponse
-    reboot120425(input: CustomActionArgs): GenericEntity
+    disable120425(input: CustomActionArgs): GenericEntity
+,    reboot120425(input: CustomActionArgs): GenericEntity
+,    suspend120425(input: CustomActionArgs): GenericEntity
 
     # SensorOverallStatus
     add120426(input: AddEntityInput): GenericEntity

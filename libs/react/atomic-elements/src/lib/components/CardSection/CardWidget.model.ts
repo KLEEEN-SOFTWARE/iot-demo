@@ -5,6 +5,7 @@ import { Widget } from '../../../types';
 interface CardWidgetProps {
   children: ReactNode;
   disabled?: boolean;
+  disableHeightCalculation?: boolean;
   hideTitle?: boolean;
   icon: boolean;
   selectedViz?: number;
@@ -47,6 +48,7 @@ interface CardSectionProps {
 }
 
 interface RenderChildrenProps {
+  cardSectionLayout?: CardSectionLayout;
   children?: ReactNode;
   hideSaveAndClose?: boolean;
   onInputChange?: (hasChanged: boolean) => void;
@@ -57,6 +59,7 @@ interface RenderChildrenProps {
 }
 
 interface RenderWidgetProps {
+  disableHeightCalculation?: boolean;
   hideSaveAndClose?: boolean;
   onInputChange?: (hasChanged: boolean) => void;
   preferredWidget: string;

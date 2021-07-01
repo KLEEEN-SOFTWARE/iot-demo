@@ -20,6 +20,7 @@ import { object_listing_1f20697a_3aa6_4ce4_a14a_8d50d486ce36 } from '../../custo
 import { object_listing_3d3baa6b_4237_4e39_bc34_7f22976f16e7 } from '../../custom/widgetResolvers/object_listing_3d3baa6b_4237_4e39_bc34_7f22976f16e7';
 import { object_listing_5cb3e084_759a_484a_8bea_4db978e3c656 } from '../../custom/widgetResolvers/object_listing_5cb3e084_759a_484a_8bea_4db978e3c656';
 import { object_listing_7c86260d_a5b0_407c_8546_2e0be73aada3 } from '../../custom/widgetResolvers/object_listing_7c86260d_a5b0_407c_8546_2e0be73aada3';
+import { object_listing_83d2ffac_502b_4730_ab9a_af59e46419da } from '../../custom/widgetResolvers/object_listing_83d2ffac_502b_4730_ab9a_af59e46419da';
 import { object_listing_aecfa22b_e76c_4402_b2ec_cf1c7a4e8781 } from '../../custom/widgetResolvers/object_listing_aecfa22b_e76c_4402_b2ec_cf1c7a4e8781';
 import { object_listing_b6dcf2f6_6cc1_418f_b027_34d3e60bb8c4 } from '../../custom/widgetResolvers/object_listing_b6dcf2f6_6cc1_418f_b027_34d3e60bb8c4';
 import { object_listing_f51934f0_c79e_4bba_998b_0d8e381cf5f1 } from '../../custom/widgetResolvers/object_listing_f51934f0_c79e_4bba_998b_0d8e381cf5f1';
@@ -31,12 +32,17 @@ import { summary_title_e376073d_113e_42f3_a34b_c14829f152c7 } from '../../custom
 import { summary_title_f991e457_5522_4e72_ba6b_9f8811f612af } from '../../custom/widgetResolvers/summary_title_f991e457_5522_4e72_ba6b_9f8811f612af';
 import { widget_00153afa_2f0f_4546_96df_d414cb711227 } from '../../custom/widgetResolvers/widget_00153afa_2f0f_4546_96df_d414cb711227';
 import { widget_16dee097_f374_4987_922e_53015c7934d9 } from '../../custom/widgetResolvers/widget_16dee097_f374_4987_922e_53015c7934d9';
+import { widget_3ee9f2eb_56f5_413d_885c_2b50b4fe77ce } from '../../custom/widgetResolvers/widget_3ee9f2eb_56f5_413d_885c_2b50b4fe77ce';
+import { widget_54091272_9393_4593_9876_f39a3b43ca18 } from '../../custom/widgetResolvers/widget_54091272_9393_4593_9876_f39a3b43ca18';
 import { widget_5d346104_9524_4ba4_a30a_bb9c509fc439 } from '../../custom/widgetResolvers/widget_5d346104_9524_4ba4_a30a_bb9c509fc439';
+import { widget_6b3abce7_9ad3_4e09_8f10_e4806284237d } from '../../custom/widgetResolvers/widget_6b3abce7_9ad3_4e09_8f10_e4806284237d';
+import { widget_831078f7_ef51_4751_8d76_3ed1b4647d4e } from '../../custom/widgetResolvers/widget_831078f7_ef51_4751_8d76_3ed1b4647d4e';
 import { widget_8b263bdb_cbd4_4d6c_ba39_1e8568529e85 } from '../../custom/widgetResolvers/widget_8b263bdb_cbd4_4d6c_ba39_1e8568529e85';
 import { widget_d3df6c8c_ee91_45e1_af8e_3b1ef9343fbe } from '../../custom/widgetResolvers/widget_d3df6c8c_ee91_45e1_af8e_3b1ef9343fbe';
 import { widget_ec00ac75_6320_4963_abcd_4c1aea91727b } from '../../custom/widgetResolvers/widget_ec00ac75_6320_4963_abcd_4c1aea91727b';
 import { widget_ec36d0ef_f9c6_4345_bc1d_552b19ceeccd } from '../../custom/widgetResolvers/widget_ec36d0ef_f9c6_4345_bc1d_552b19ceeccd';
 import { widget_f2e76b4e_b7ab_4a57_bb13_6e7c3c783e88 } from '../../custom/widgetResolvers/widget_f2e76b4e_b7ab_4a57_bb13_6e7c3c783e88';
+import { widget_statistics074508ac_6c71_4c53_bae4_29f37200164b } from '../../custom/widgetResolvers/widget_statistics074508ac_6c71_4c53_bae4_29f37200164b';
 import { widget_statistics15d23aa3_6f00_4505_9199_85c2e2662aaa } from '../../custom/widgetResolvers/widget_statistics15d23aa3_6f00_4505_9199_85c2e2662aaa';
 import { widget_statistics324888f3_eb8c_4097_ba9f_21aa8cf6be4f } from '../../custom/widgetResolvers/widget_statistics324888f3_eb8c_4097_ba9f_21aa8cf6be4f';
 import { widget_statistics3a3b0785_d65d_4156_8025_0691da0cf99c } from '../../custom/widgetResolvers/widget_statistics3a3b0785_d65d_4156_8025_0691da0cf99c';
@@ -101,6 +107,10 @@ export class WidgetApi extends RESTDataSource {
     return object_listing_7c86260d_a5b0_407c_8546_2e0be73aada3(args, this.context);
   }
 
+  async object_listing_83d2ffac_502b_4730_ab9a_af59e46419da(args: DataListingArgs) {
+    return object_listing_83d2ffac_502b_4730_ab9a_af59e46419da(args, this.context);
+  }
+
   async object_listing_aecfa22b_e76c_4402_b2ec_cf1c7a4e8781(args: DataListingArgs) {
     return object_listing_aecfa22b_e76c_4402_b2ec_cf1c7a4e8781(args, this.context);
   }
@@ -145,8 +155,24 @@ export class WidgetApi extends RESTDataSource {
     return widget_16dee097_f374_4987_922e_53015c7934d9(args, this.context);
   }
 
+  async widget_3ee9f2eb_56f5_413d_885c_2b50b4fe77ce(args: DataAggregationArgs) {
+    return widget_3ee9f2eb_56f5_413d_885c_2b50b4fe77ce(args, this.context);
+  }
+
+  async widget_54091272_9393_4593_9876_f39a3b43ca18(args: DataAggregationArgs) {
+    return widget_54091272_9393_4593_9876_f39a3b43ca18(args, this.context);
+  }
+
   async widget_5d346104_9524_4ba4_a30a_bb9c509fc439(args: DataAggregationArgs) {
     return widget_5d346104_9524_4ba4_a30a_bb9c509fc439(args, this.context);
+  }
+
+  async widget_6b3abce7_9ad3_4e09_8f10_e4806284237d(args: DataAggregationArgs) {
+    return widget_6b3abce7_9ad3_4e09_8f10_e4806284237d(args, this.context);
+  }
+
+  async widget_831078f7_ef51_4751_8d76_3ed1b4647d4e(args: DataAggregationArgs) {
+    return widget_831078f7_ef51_4751_8d76_3ed1b4647d4e(args, this.context);
   }
 
   async widget_8b263bdb_cbd4_4d6c_ba39_1e8568529e85(args: DataAggregationArgs) {
@@ -167,6 +193,10 @@ export class WidgetApi extends RESTDataSource {
 
   async widget_f2e76b4e_b7ab_4a57_bb13_6e7c3c783e88(args: DataAggregationArgs) {
     return widget_f2e76b4e_b7ab_4a57_bb13_6e7c3c783e88(args, this.context);
+  }
+
+  async widget_statistics074508ac_6c71_4c53_bae4_29f37200164b(args: MultiTransFormationArgs) {
+    return widget_statistics074508ac_6c71_4c53_bae4_29f37200164b(args, this.context);
   }
 
   async widget_statistics15d23aa3_6f00_4505_9199_85c2e2662aaa(args: MultiTransFormationArgs) {

@@ -8,28 +8,30 @@ import {
   Slot,
   SlotsProps,
 } from './DetailSummary.model';
+import { ActionType } from '@kleeen/types';
 import { Container, Dialog, Typography } from './DetailSummary.styles';
+import { DisplayValueTitle } from '../display-value-title';
+import { isNilOrEmpty } from '@kleeen/common/utils';
 import { KsButton, KsMenuItem } from '@kleeen/react/components';
-import React, { MouseEvent, ReactElement, useRef, useState } from 'react';
+import { MouseEvent, ReactElement, useRef, useState } from 'react';
+import { pathOr } from 'ramda';
+import { SummarySlot } from '../Widgets';
+import { useHistory } from 'react-router-dom';
 import { useKleeenActions, useTheme, useUrlQueryParams } from '@kleeen/react/hooks';
-
+import camelcase from 'lodash.camelcase';
+import classnames from 'classnames';
 import ClickAwayListener from '@material-ui/core/ClickAwayListener';
 import DialogActions from '@material-ui/core/DialogActions';
 import DialogContent from '@material-ui/core/DialogContent';
 import DialogContentText from '@material-ui/core/DialogContentText';
 import DialogTitle from '@material-ui/core/DialogTitle';
-import { DisplayValueTitle } from '../display-value-title';
 import Grow from '@material-ui/core/Grow';
 import MenuList from '@material-ui/core/MenuList';
 import MoreHorizIcon from '@material-ui/icons/MoreHoriz';
 import Paper from '@material-ui/core/Paper';
 import Popper from '@material-ui/core/Popper';
-import { SummarySlot } from '../Widgets';
-import camelcase from 'lodash.camelcase';
-import { isNilOrEmpty } from '@kleeen/common/utils';
-import { pathOr } from 'ramda';
-import { useHistory } from 'react-router-dom';
-import { ActionType } from '@kleeen/types';
+
+const bem = 'ks-detail-summary';
 
 export function DetailSummary(props: DetailSummaryProps): ReactElement {
   const { safeDeleteRequest } = useKleeenActions(props.taskName);
@@ -38,14 +40,14 @@ export function DetailSummary(props: DetailSummaryProps): ReactElement {
 
   return (
     <>
-      <Container maxWidth="xl" className="detail-summary">
-        <div className="detail-summary-header">
+      <Container className={classnames(bem, 'detail-summary')} maxWidth="xl">
+        <div className={classnames(`${bem}__header`, 'detail-summary-header')}>
           <Typography variant="h2" component="h1">
             <DisplayValueTitle
+              formatType={formatType}
               objectValue={props.objectValue}
               operationName={props.operationName}
               taskName={props.taskName}
-              formatType={formatType}
             />{' '}
             | {props.taskTitle}
           </Typography>
@@ -85,7 +87,7 @@ function ActionListSection({ actions, openDeleteDialog }: ActionsProps): ReactEl
   }
 
   return (
-    <div className="action-section">
+    <div className={classnames(`${bem}__actions`, 'action-section')}>
       <KsButton className="btn-actions" onClick={handleToggle} ref={mainAction} variant="contained">
         <MoreHorizIcon fontSize="large" />
       </KsButton>
@@ -122,7 +124,11 @@ function ActionSection({ actions, anchorEl, handleClose, open, openDeleteDialog 
                   switch (actionType) {
                     case ActionType.Delete:
                       return (
-                        <KsMenuItem className="menu-item" key={name} onClick={handleDelete}>
+                        <KsMenuItem
+                          className={classnames(`${bem}__menu-item`, 'menu-item')}
+                          key={name}
+                          onClick={handleDelete}
+                        >
                           {displayName}
                         </KsMenuItem>
                       );
@@ -180,7 +186,7 @@ function DeleteDialog(props: DeleteDialogProps): ReactElement {
 
 function SlotSection(props: SlotsProps): ReactElement {
   return (
-    <div className="slot-section">
+    <div className={classnames(`${bem}__slots`, 'slot-section')}>
       {props.slots.map((slot: Slot) => (
         <SummarySlot
           attributes={slot.attributes}

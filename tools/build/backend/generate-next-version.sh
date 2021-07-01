@@ -22,5 +22,9 @@ if [[ "$(./tools/build/is-a-production-branch.sh)" = "true" ]]; then
   if [[ $NEW_VERSION ]]; then
     # Replace package.json version with Semantic Release version
     replaceOnFile "${CURRENT_VERSION_KEY_VALUE}" "${NEW_VERSION_KEY_VALUE}" "package.json"
+
+    echo "Generate new version"
+    npm run versiongen
   fi
 fi
+

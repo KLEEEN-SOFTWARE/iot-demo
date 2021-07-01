@@ -1,15 +1,15 @@
 import './CardSection02.scss';
 
-import { CardSectionProps, RenderChildrenProps, Widget } from './CardWidget.model';
-import React, { ReactElement, ReactNode, useRef } from 'react';
-import { TableContent, TransformToWidgetComponent } from './components';
-
-import { CardWidget02 } from './CardWidget02';
-import classnames from 'classnames';
-import { roleAccessKeyTag } from '@kleeen/common/utils';
-import { useAccessControlChecker } from '@kleeen/core-react';
-
 const rolePermissionOk = 'SHOW';
+import { CardSectionProps, RenderChildrenProps, Widget } from './CardWidget.model';
+import { CardWidget02 } from './CardWidget02';
+import { roleAccessKeyTag } from '@kleeen/common/utils';
+import { TableContent, TransformToWidgetComponent } from './components';
+import { useAccessControlChecker } from '@kleeen/core-react';
+import classnames from 'classnames';
+import React, { ReactElement, ReactNode, useRef } from 'react';
+
+const bem = 'ks-card-section-02';
 
 /**
  * viableSolutions needs the current chartType included
@@ -98,14 +98,14 @@ export const CardSection02 = ({
 
   return (
     <div
-      className={classnames('card-section02', { 'hide-toc': hideTOC, 'full-width': fullWidth })}
-      style={{ justifyContent }}
+      className={classnames(bem, 'card-section02', { 'hide-toc': hideTOC, 'full-width': fullWidth })}
       key={`card-section-${taskName}`}
+      style={{ justifyContent }}
     >
       {!hideTOC && (
         <TableContent widgets={filteredWidgets} widgetsRefs={widgetsRefs} containerId={containerId} />
       )}
-      <div className={classnames('card-widgets-section', { 'full-width': fullWidth })}>
+      <div className={classnames(`${bem}__widgets`, 'card-widgets-section', { 'full-width': fullWidth })}>
         {renderChildren({
           taskName,
           widgets: filteredWidgets,

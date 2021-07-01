@@ -110,7 +110,6 @@ export const getOptions = (
     chart: {
       ...baseOptions.chart,
       type,
-      height: '100%',
     },
     title: { text: title },
     xAxis: {

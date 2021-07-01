@@ -1,19 +1,22 @@
 import { AttributeInputEvents, useEntityDetailsEventHandler, useTheme } from '@kleeen/react/hooks';
 import { BaseAddDialogProps, KsButton } from '@kleeen/react/components';
-import React, { MouseEvent, useEffect } from 'react';
-
 import { ConfigInputWidget } from '../Widgets';
+import { Dialog as KsDialog } from './AddDialog.styles';
+import { MouseEvent, useEffect } from 'react';
+import { startCase } from 'lodash';
+import { Translate } from '@kleeen/core-react';
+import capitalize from 'lodash.capitalize';
+import classnames from 'classnames';
 import DialogActions from '@material-ui/core/DialogActions';
 import DialogContent from '@material-ui/core/DialogContent';
 import DialogTitle from '@material-ui/core/DialogTitle';
-import { Dialog as KsDialog } from './AddDialog.styles';
-import capitalize from 'lodash.capitalize';
-import { startCase } from 'lodash';
 
 interface BuildEntityProps {
   attributeEventList: AttributeInputEvents[];
   entityKey: string;
 }
+
+const bem = 'ks-dialog';
 
 const CreateFormField = ({
   attr,
@@ -31,7 +34,6 @@ const CreateFormField = ({
         aggregations: null,
         dateTime: null,
         examples: null,
-        valueLabels: null,
         max: null,
         min: null,
         prefix: null,
@@ -39,29 +41,33 @@ const CreateFormField = ({
         severityGood: null,
         severityLevels: null,
         suffix: null,
+        valueLabels: null,
       },
       formatType: 'text',
       hasMany: null,
-      label: `Display value of ${startCase(attr.name)}`,
+      label: startCase(attr.name),
       name: attr.name,
       rawEntityName: attr.name,
     },
   ];
 
   return (
-    <div style={{ minWidth: 'calc(var(--wh-9XL) - var(--wh-S) - var(--wh-4XS))' }}>
+    <div
+      className={classnames(bem)}
+      style={{ minWidth: 'calc(var(--wh-9XL) - var(--wh-S) - var(--wh-4XS))' }}
+    >
       <ConfigInputWidget
-        taskName={taskName}
-        title={''}
-        widgetId={attr.name}
         attributes={configInputAttr as any}
-        icon={false}
         disabled={false}
         hideSaveAndClose={true}
         hideTitle={true}
+        icon={false}
         inSummaryDetails={true}
         registerEvents={registerEvents}
         statisticalType={'Data - Categorical - free form' as any}
+        taskName={taskName}
+        title={''}
+        widgetId={attr.name}
       />
     </div>
   );
@@ -139,11 +145,16 @@ export function AddDialog({
   }
 
   return (
-    <KsDialog aria-labelledby="form-dialog-title" className={themeClass} onClose={handleClose} open={open}>
+    <KsDialog
+      aria-labelledby="form-dialog-title"
+      className={classnames(`${bem}`, themeClass)}
+      onClose={handleClose}
+      open={open}
+    >
       <DialogTitle id="form-dialog-title">{capitalize(title)}</DialogTitle>
       <DialogContent>
         {attributes.map((attr) => (
-          <div style={{ marginBottom: 'var(--pm-S)' }}>
+          <div className={classnames(`${bem}__content`)} style={{ marginBottom: 'var(--pm-S)' }}>
             <CreateFormField
               attr={attr}
               key={attr.name}
@@ -154,7 +165,9 @@ export function AddDialog({
         ))}
       </DialogContent>
       <DialogActions>
-        <KsButton onClick={handleClose}>Cancel</KsButton>
+        <KsButton onClick={handleClose}>
+          <Translate id="app.modal.action.cancel" type="html" />
+        </KsButton>
         <KsButton color="primary" onClick={onSave}>
           {title}
         </KsButton>

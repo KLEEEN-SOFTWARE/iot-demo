@@ -37,7 +37,10 @@ export const BubbleChart = ({ translate, ...props }: HighchartsReact.Props): Rea
     crossLinkingValuesForAxis,
   );
 
-  const containerPropsPlus = { ...props, style: { height: '100%', width: '100%' } };
+  const containerPropsPlus = {
+    ...props,
+    style: { height: '100%', width: props.bigWidget ? '50%' : '100%' },
+  };
 
   return (
     <>
@@ -47,6 +50,7 @@ export const BubbleChart = ({ translate, ...props }: HighchartsReact.Props): Rea
         <HighchartsReact
           containerProps={containerPropsPlus}
           highcharts={Highcharts}
+          key={`bubble-chart-${props.bigWidget.toString()}`}
           options={clone(options)}
           {...props}
         />

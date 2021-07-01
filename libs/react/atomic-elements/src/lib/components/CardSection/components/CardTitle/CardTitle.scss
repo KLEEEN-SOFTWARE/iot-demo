@@ -1,11 +1,11 @@
 .card-widget .cardTitle {
   align-items: center;
   background: var(--card-content-bg-color-medium);
+  border-width: var(--card-header-border-width);
+  border: var(--card-header-border);
   display: flex;
   height: var(--wh-S);
   width: 100%;
-  border: var(--card-header-border);
-  border-width: var(--card-header-border-width);
 
   .title {
     color: var(--h3-title-color);
@@ -15,10 +15,10 @@
     line-height: var(--tx-2XL);
     margin: 0;
     overflow: hidden;
-    text-overflow: ellipsis;
-    white-space: nowrap;
     padding-left: var(--pm-L);
     padding-right: var(--pm-L);
+    text-overflow: ellipsis;
+    white-space: nowrap;
     width: 100%;
   }
 

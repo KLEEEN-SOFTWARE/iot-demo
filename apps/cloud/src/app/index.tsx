@@ -1,12 +1,11 @@
-import { ErrorFallback, ReduxProvider, StylesProvider } from './components';
-import { MessageShape, ToastNotification } from '@kleeen/react/atomic-elements';
-import React, { useState } from 'react';
-
-import AppContainer from './app';
 import { ErrorBoundary } from 'react-error-boundary';
+import { ErrorFallback, ReduxProvider, StylesProvider } from './components';
 import { KUICombineProviders } from '@kleeen/core-react';
 import { LocalizationContextProvider } from '@kleeen/react/hooks';
+import { MessageShape, ToastNotification } from '@kleeen/react/atomic-elements';
 import { SnackbarProvider } from 'notistack';
+import { useState } from 'react';
+import AppContainer from './app';
 
 export function App(): JSX.Element {
   const [errorInfo, setErrorInfo] = useState<{ componentStack: string }>(null);

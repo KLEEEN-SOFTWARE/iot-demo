@@ -1,22 +1,24 @@
-import React, { ReactElement } from 'react';
-
-import AppBar from '@material-ui/core/AppBar';
-import Avatar from '@material-ui/core/Avatar';
 import { HeaderNavLeftProps } from './HeaderNavLeft.model';
 import { useStyles } from './HeaderNavLeft.style';
+import AppBar from '@material-ui/core/AppBar';
+import Avatar from '@material-ui/core/Avatar';
+import classnames from 'classnames';
+
+const bem = 'ks-nav-left-header';
 
 export const HeaderNavLeft = ({ logo, productName }: HeaderNavLeftProps): JSX.Element => {
   const classes = useStyles();
+
   return (
-    <div className={classes.appBarContainer}>
-      <AppBar position="fixed" color="primary" className={classes.appBar}>
-        <div className={classes.appBarContent}>
-          {logo && (
-            <div className={classes.logoContainer}>
+    <div className={classnames(bem, classes.appBarContainer)}>
+      <AppBar className={classnames(`${bem}__app-bar`, classes.appBar)} color="primary" position="fixed">
+        <div className={classnames(`${bem}__content`, classes.appBarContent)}>
+          {logo ? (
+            <div className={classnames(`${bem}__logo`, classes.logoContainer)}>
               <Avatar alt="KS" variant="square" src={logo} />
             </div>
-          )}
-          <div>{productName || ''}</div>
+          ) : null}
+          {productName ? <div className={classnames(`${bem}__brand`)}>{productName}</div> : null}
         </div>
       </AppBar>
     </div>

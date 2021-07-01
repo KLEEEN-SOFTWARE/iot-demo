@@ -1,10 +1,12 @@
-import React, { ReactElement } from 'react';
-
 import { makeStyles } from '@material-ui/core';
+import classnames from 'classnames';
+import React, { ReactElement } from 'react';
 
 export interface CardTitle01Props {
   children: ReactElement;
 }
+
+const bem = 'ks-card-title-01';
 
 const useStyles = makeStyles({
   cardTitle01: {
@@ -25,10 +27,10 @@ export const CardTitle01 = (props: CardTitle01Props): ReactElement => {
   const [A, B, C] = React.Children.toArray(props.children);
 
   return (
-    <div className={classes.cardTitle01}>
+    <div className={classnames(bem, classes.cardTitle01)}>
       {A}
       {C}
-      <div className={classes.alignToRight}>{B}</div>
+      <div className={classnames(`${bem}--right`, classes.alignToRight)}>{B}</div>
     </div>
   );
 };

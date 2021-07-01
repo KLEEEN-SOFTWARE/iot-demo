@@ -35,6 +35,7 @@ export * from './lib/components/SecondaryCardWidget02/SecondaryCardWidget02';
 export * from './lib/components/SelectList/SelectList';
 export * from './lib/components/SnackBarSection/SnackBarSection';
 export * from './lib/components/SubHeader/SubHeader';
+export * from './lib/components/summary-statistics';
 export * from './lib/components/Switch/Switch';
 export * from './lib/components/ToastNotification/ToastNotification';
 export * from './lib/components/Visualization/Visualization';

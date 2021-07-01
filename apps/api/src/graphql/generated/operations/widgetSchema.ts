@@ -104,6 +104,10 @@ export const widgetSchema = gql`
     # Chart type: [WIDGET] FULL_TABLE
     object_listing_7c86260d_a5b0_407c_8546_2e0be73aada3(input: DataListingArgs): ListingResult
 
+    # View: siteMapReport --- Widget: Site Map
+    # Chart type: Table
+    object_listing_83d2ffac_502b_4730_ab9a_af59e46419da(input: DataListingArgs): ListingResult
+
     # View: sites
     # Chart type: [WIDGET] FULL_TABLE
     object_listing_aecfa22b_e76c_4402_b2ec_cf1c7a4e8781(input: DataListingArgs): ListingResult
@@ -168,6 +172,22 @@ export const widgetSchema = gql`
     # Chart type: [WIDGET] STEP_LINE
     widget_16dee097_f374_4987_922e_53015c7934d9(input: DataAggregationArgs): GraphResult
 
+    # View: Site Map Report --- Widget: Node Breakdown
+    # Group by: siteMap
+    # No Aggregation
+    # Value: node
+    # Value aggregated by: Total Count
+    # Chart type: Polar Area
+    widget_3ee9f2eb_56f5_413d_885c_2b50b4fe77ce(input: DataAggregationArgs): GraphResult
+
+    # View: Site Map Report --- Widget: Event Length
+    # Group by: event
+    # No Aggregation
+    # Value: eventLength
+    # Value aggregated by: No Aggregation
+    # Chart type: [WIDGET] BUBBLE_CHART
+    widget_54091272_9393_4593_9876_f39a3b43ca18(input: DataAggregationArgs): GraphResult
+
     # View: System --- Widget: Node Status
     # Group by: timestamp
     # No Aggregation
@@ -175,6 +195,22 @@ export const widgetSchema = gql`
     # Value aggregated by: Total Count
     # Chart type: [WIDGET] AREA_GRADIENT
     widget_5d346104_9524_4ba4_a30a_bb9c509fc439(input: DataAggregationArgs): GraphResult
+
+    # View: Site Map Report --- Widget: Site Map Status
+    # Group by: timestamp
+    # No Aggregation
+    # Value: siteMap
+    # Value aggregated by: Total Count
+    # Chart type: [WIDGET] AREA_GRADIENT
+    widget_6b3abce7_9ad3_4e09_8f10_e4806284237d(input: DataAggregationArgs): GraphResult
+
+    # View: Site Map Report --- Widget: Node Status
+    # Group by: node
+    # No Aggregation
+    # Value: nodeStatus
+    # Value aggregated by: No Aggregation
+    # Chart type: [WIDGET] COLUMN_BAR
+    widget_831078f7_ef51_4751_8d76_3ed1b4647d4e(input: DataAggregationArgs): GraphResult
 
     # View: System --- Widget: Event Length
     # Group by: event
@@ -215,6 +251,12 @@ export const widgetSchema = gql`
     # Value aggregated by: Change (in count)
     # Chart type: Positive Negative Area
     widget_f2e76b4e_b7ab_4a57_bb13_6e7c3c783e88(input: DataAggregationArgs): GraphResult
+
+    # View: Site Map Report --- Widget: Node Summary
+    # Value: nodeStatus
+    # Value aggregated by: 
+    # Chart type: Summary Statistics
+    widget_statistics074508ac_6c71_4c53_bae4_29f37200164b(input: MultiTransFormationArgs): [MultiTransFormationResults]
 
     # View: System --- Widget: Sensor Overall Status
     # Value: sensorOverallStatus

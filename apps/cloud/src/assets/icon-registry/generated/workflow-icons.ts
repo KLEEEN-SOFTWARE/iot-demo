@@ -20,6 +20,11 @@ export default {
     path: './assets/icons/app-window-settings.svg',
     alt: 'Navigation Icon',
   },
+  // Navigation Icon for Site Map Report
+  'ks-navigation-oyBJKXZrsLjuR3qUxB2uEW': {
+    path: './assets/icons/tv-flat-screen.svg',
+    alt: 'Navigation Icon',
+  },
   // Navigation Icon for Production KPIs
   'ks-navigation-p77rZt8jMsSCbnS9P72Lkb': {
     path: './assets/icons/pie-line-graph-desktop.svg',

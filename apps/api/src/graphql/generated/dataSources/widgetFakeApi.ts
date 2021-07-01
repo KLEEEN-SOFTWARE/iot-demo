@@ -66,6 +66,10 @@ export class WidgetFakeApi extends DataSource {
     return getListingData(args);
   }
 
+  async object_listing_83d2ffac_502b_4730_ab9a_af59e46419da(args: DataListingArgs) {
+    return getListingData(args);
+  }
+
   async object_listing_aecfa22b_e76c_4402_b2ec_cf1c7a4e8781(args: DataListingArgs) {
     return getListingData(args);
   }
@@ -110,7 +114,23 @@ export class WidgetFakeApi extends DataSource {
     return getWidgetData(args);
   }
 
+  async widget_3ee9f2eb_56f5_413d_885c_2b50b4fe77ce(args: DataAggregationArgs) {
+    return getWidgetData(args);
+  }
+
+  async widget_54091272_9393_4593_9876_f39a3b43ca18(args: DataAggregationArgs) {
+    return getWidgetData(args);
+  }
+
   async widget_5d346104_9524_4ba4_a30a_bb9c509fc439(args: DataAggregationArgs) {
+    return getWidgetData(args);
+  }
+
+  async widget_6b3abce7_9ad3_4e09_8f10_e4806284237d(args: DataAggregationArgs) {
+    return getWidgetData(args);
+  }
+
+  async widget_831078f7_ef51_4751_8d76_3ed1b4647d4e(args: DataAggregationArgs) {
     return getWidgetData(args);
   }
 
@@ -132,6 +152,10 @@ export class WidgetFakeApi extends DataSource {
 
   async widget_f2e76b4e_b7ab_4a57_bb13_6e7c3c783e88(args: DataAggregationArgs) {
     return getWidgetData(args);
+  }
+
+  async widget_statistics074508ac_6c71_4c53_bae4_29f37200164b(args: MultiTransFormationArgs) {
+    return getMultiTransFormationData(args);
   }
 
   async widget_statistics15d23aa3_6f00_4505_9199_85c2e2662aaa(args: MultiTransFormationArgs) {

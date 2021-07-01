@@ -1,17 +1,16 @@
-import { IsOnboardingEnable, OnBoardingTask } from './modules/generated/components';
-import React, { useEffect, useState } from 'react';
-import { useKleeenActions, useKleeenContext, useSyncUserPreferences } from '@kleeen/react/hooks';
-
 import { Authenticator } from './modules/custom/components';
-import Highcharts from 'highcharts';
-import { HookableContextMenu } from '@kleeen/react/atomic-elements';
-import { KSAuth } from '@kleeen/auth';
-import { KUIConnect } from '@kleeen/core-react';
-import { KsContextMenu } from '@kleeen/react/components';
-import Layout from './layout';
 import { BrowserRouter as Router } from 'react-router-dom';
 import { fontFamily } from './settings/font-family';
+import { HookableContextMenu } from '@kleeen/react/atomic-elements';
+import { IsOnboardingEnable, OnBoardingTask } from './modules/generated/components';
+import { KSAuth } from '@kleeen/auth';
+import { KsContextMenu } from '@kleeen/react/components';
+import { KUIConnect } from '@kleeen/core-react';
+import { useKleeenActions, useKleeenContext, useSyncUserPreferences } from '@kleeen/react/hooks';
 import getModules from './modules';
+import Highcharts from 'highcharts';
+import Layout from './layout';
+import React, { useEffect, useState } from 'react';
 
 const IsAuthEnabled = true;
 
@@ -42,10 +41,13 @@ function PagesManager() {
 
   useEffect(() => {
     getModules([
-      { modulePath: './modules/generated', folder: require.context('./modules/generated', true, /\.jsx$/) },
       {
-        modulePath: './modules/custom',
+        folder: require.context('./modules/generated', true, /\.jsx$/),
+        modulePath: './modules/generated',
+      },
+      {
         folder: require.context('./modules/custom', true, /\.jsx$/),
+        modulePath: './modules/custom',
         priority: 1,
       },
     ])
@@ -67,9 +69,9 @@ function PagesManager() {
   return (
     <Router>
       <Authenticator
+        authState={authState}
         hideDefault={true}
         isEnabled={IsAuthEnabled}
-        authState={authState}
         setAuthState={setAuthState}
       >
         <RenderLayout modules={modules} showOnboardingPage={IsOnboardingEnable && showOnboardingPage} />

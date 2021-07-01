@@ -37,6 +37,12 @@
           "GUEST": "SHOW"
         }
       },
+      "SITEMAPREPORT": {
+        "PERMISSIONS": {
+          "ADMIN": "SHOW",
+          "GUEST": "SHOW"
+        }
+      },
       "PRODUCTIONKPIS": {
         "PERMISSIONS": {
           "ADMIN": "SHOW",
@@ -138,6 +144,60 @@
     "CHILDREN": {
       "VIEWS": {
         "CHILDREN": {}
+      }
+    }
+  },
+  "SITEMAPREPORT": {
+    "CHILDREN": {
+      "WIDGETS": {
+        "CHILDREN": {
+          "074508AC-6C71-4C53-BAE4-29F37200164B": {
+            "PERMISSIONS": {
+              "ADMIN": "SHOW",
+              "GUEST": "SHOW"
+            }
+          },
+          "3EE9F2EB-56F5-413D-885C-2B50B4FE77CE": {
+            "PERMISSIONS": {
+              "ADMIN": "SHOW",
+              "GUEST": "SHOW"
+            }
+          },
+          "54091272-9393-4593-9876-F39A3B43CA18": {
+            "PERMISSIONS": {
+              "ADMIN": "SHOW",
+              "GUEST": "SHOW"
+            }
+          },
+          "6B3ABCE7-9AD3-4E09-8F10-E4806284237D": {
+            "PERMISSIONS": {
+              "ADMIN": "SHOW",
+              "GUEST": "SHOW"
+            }
+          },
+          "831078F7-EF51-4751-8D76-3ED1B4647D4E": {
+            "PERMISSIONS": {
+              "ADMIN": "SHOW",
+              "GUEST": "SHOW"
+            }
+          },
+          "83D2FFAC-502B-4730-AB9A-AF59E46419DA": {
+            "PERMISSIONS": {
+              "ADMIN": "SHOW",
+              "GUEST": "SHOW"
+            }
+          }
+        }
+      },
+      "VIEWS": {
+        "CHILDREN": {
+          "DASHBOARD": {
+            "PERMISSIONS": {
+              "ADMIN": "SHOW",
+              "GUEST": "SHOW"
+            }
+          }
+        }
       }
     }
   },

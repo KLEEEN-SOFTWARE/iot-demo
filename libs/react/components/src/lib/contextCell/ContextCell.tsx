@@ -4,7 +4,12 @@ import { AggregationType, Attribute, Cell, DisplayMediaType, LabelResultsReturnP
 import { ContextMenuProps, LabelResultsProps } from './ContextCell.model';
 import React, { ReactElement } from 'react';
 import { isEmpty, isNil, pathOr } from 'ramda';
-import { isLinkFilterableByEntityType, useAnchorElement } from '@kleeen/react/hooks';
+import {
+  isLinkFilterableByEntityType,
+  useAnchorElement,
+  useCrosslinking,
+  useHoverIntent,
+} from '@kleeen/react/hooks';
 
 import { ArrowPoint } from '../arrowPoint/ArrowPoint';
 import { BootstrapTooltip } from './bootstrap-tooltip';
@@ -21,6 +26,11 @@ const MAX_TEXT_LENGTH = 15;
 
 export function ContextCell(props: ContextMenuProps): ReactElement {
   const { anchorEl, handleClick, handleClose } = useAnchorElement();
+  const { crosslink } = useCrosslinking();
+  const { ref } = useHoverIntent({
+    delayOnEnter: 800,
+    onMouseEnterFn: handleClick,
+  });
   const classes = useStyles();
 
   const cell = props.cell as Cell;
@@ -79,6 +89,13 @@ export function ContextCell(props: ContextMenuProps): ReactElement {
   };
   const tooltipTitle = showAppliedTruncated ? results : '';
 
+  function onCellClick() {
+    if (validCrosslinks) {
+      const [onlyValidLink] = validCrosslinks;
+      crosslink(onlyValidLink.slug, cell, props.attr);
+    }
+  }
+
   return (
     <>
       {props.hasDisplayMedia && cell.displayMedia.type !== DisplayMediaType.Svg && (
@@ -92,7 +109,7 @@ export function ContextCell(props: ContextMenuProps): ReactElement {
       {validCrosslinks.length > 0 || props.attr?.isFilterable?.in ? (
         <BootstrapTooltip placement="top" title={tooltipTitle}>
           <div className={classNames('context-menu-button', textClasses)}>
-            <span className="cell" onClick={handleClick}>
+            <span className="cell" onClick={onCellClick} ref={ref}>
               {resultsElement}
             </span>
           </div>
@@ -100,14 +117,20 @@ export function ContextCell(props: ContextMenuProps): ReactElement {
       ) : (
         <BootstrapTooltip placement="top" title={tooltipTitle}>
           <div className={classNames('context-menu-only-text', textClasses)}>
-            <span className="cell" onClick={handleClick}>
+            <span className="cell" onClick={onCellClick} ref={ref}>
               {resultsElement}
             </span>
           </div>
         </BootstrapTooltip>
       )}
       {Boolean(anchorEl) && (
-        <KsContextMenu attr={props.attr} cell={cell} handleClose={handleClose} anchorEl={anchorEl} />
+        <KsContextMenu
+          anchorEl={anchorEl}
+          attr={props.attr}
+          autoClose
+          cell={cell}
+          handleClose={handleClose}
+        />
       )}
     </>
   );
@@ -119,7 +142,7 @@ function applyFormat(value: any, attr: Attribute): any {
   const type = attr?.deepDataType;
   if (type === 'boolean') return value ? 'True' : 'False';
   if (React.isValidElement(value)) return value; // FIXME: Please consider this comment: https://github.com/KLEEEN-SOFTWARE/kapitan/pull/1800/files?file-filters%5B%5D=.tsx#r600664986
-  if (typeof value === 'object') return value.displayValue;
+  if (typeof value === 'object') return value?.displayValue;
 
   return value;
 }

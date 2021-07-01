@@ -5,3 +5,4 @@ export * from './html';
 export * from './resultFormatters';
 export * from './sdt';
 export * from './transformations';
+export * from './filters';

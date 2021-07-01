@@ -1,11 +1,13 @@
 import { Crosslink } from '../../crosslink';
 import { DisplayComponentProps } from '@kleeen/types';
-import { KsDisplayMedia } from '@kleeen/react/components';
-import MuiTooltip from '@material-ui/core/Tooltip';
-import classNames from 'classnames';
 import { getColorForSeverityValues } from '@kleeen/frontend/utils';
+import { KsDisplayMedia } from '@kleeen/react/components';
 import { useStyles } from '../styles/label.styles';
 import { useTextFormatter } from '@kleeen/react/hooks';
+import classNames from 'classnames';
+import MuiTooltip from '@material-ui/core/Tooltip';
+
+const bem = 'ks-label';
 
 export function Label({
   attribute,
@@ -26,7 +28,7 @@ export function Label({
   const formattedValue = formatter(value?.displayValue) || '';
 
   return (
-    <div className={classNames('ks-label', classes.label, { highlighted })}>
+    <div className={classNames(bem, classes.label, { highlighted })}>
       {value?.displayMedia && (
         <div className={classes.displayMedia}>
           <KsDisplayMedia

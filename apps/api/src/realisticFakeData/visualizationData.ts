@@ -4,9 +4,9 @@ import { Cardinality, Transformation, transformationsWithCrossLinking } from '..
 import { DataAggregationArgs, DataAggregationArgsDataPoint, GetWidgetDataResult } from '../types';
 import { FakeDataDataPoint, GetWidgetData, PrimitiveTypes } from './types';
 import { buildArrayOfNumbers, getDataList, getEntityFormat, getRandomNumber, getType } from './utils';
+import { isNilOrEmpty, isNotNilOrEmpty } from '@kleeen/common/utils';
 
 import { calculateTransformation } from './transformation';
-import { isNilOrEmpty } from '@kleeen/common/utils';
 
 const transformToFakeDataPoint = (
   dataPoint: DataAggregationArgsDataPoint,
@@ -91,15 +91,10 @@ const toMultipleResults = (groupByList, valueList): number[][] => {
  *
  */
 const toNumericalResults = (groupByList: number[], valueList: number[]): number[][] => {
-  // const groupByListParsed = groupByType === PrimitiveTypes.Date // TODO: should do we always a sort?
-  //   ? [...(groupByList as number[])].sort((a, b) => a - b)
-  //   : groupByList;
   const groupByListSorted = [...groupByList].sort((a, b) => a - b);
-  const numericalResults = groupByListSorted.map((groupByValue, index) => [
-    groupByValue as number,
-    valueList[index] as number,
-  ]);
-  // .sort((a: number[], b: number[]) => a[0] - b[0]); // TODO: sorting may not be needed.
+  const numericalResults = groupByListSorted
+    .map((groupByValue, index) => [groupByValue as number, valueList[index] as number])
+    .filter((data) => data.every(isNotNilOrEmpty));
 
   return numericalResults;
 };

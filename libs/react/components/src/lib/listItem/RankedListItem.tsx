@@ -8,6 +8,8 @@ import { useStyles } from './listItem.style';
 
 export function RankedListItem({ item, columns, metadata }: ListItemProps): ReactElement {
   const classes = useStyles();
+  const bem = 'ks-ranked-list-item';
+
   const getKey = (dataItem: DataListItem, columnName: string): string =>
     `${dataItem[columnName]?.id}  ${dataItem[columnName]?.displayValue}`;
 
@@ -23,17 +25,20 @@ export function RankedListItem({ item, columns, metadata }: ListItemProps): Reac
   };
 
   return (
-    <li className={classes.item}>
+    <li className={`${bem} ${classes.item}`}>
       {columns.map((column, i) => {
         const cellData = item[column.name];
         return (
-          <div key={getKey(item, column?.name)} className={classes.cell}>
+          <div key={getKey(item, column?.name)} className={`${bem}__cell ${classes.cell}`}>
             {i === 1 && (
-              <div className={classes.numericBar}>
+              <div className={`${bem}__cell--numeric-bar ${classes.numericBar}`}>
                 <div className={classes.barSpace} style={{ width: `${metadata?.positiveBarSpace}%` }}>
                   {parseInt(cellData.displayValue as string, 10) > 0 && (
                     <div
-                      className={classnames(classes.bar, classes.positiveBar)}
+                      className={`${bem}__cell--numeric-bar-positive ${classnames(
+                        classes.bar,
+                        classes.positiveBar,
+                      )}`}
                       style={calculatePositiveBar(parseInt(cellData.displayValue as string, 10))}
                     ></div>
                   )}
@@ -41,7 +46,10 @@ export function RankedListItem({ item, columns, metadata }: ListItemProps): Reac
                 <div className={classes.barSpace} style={{ width: `${metadata?.negativeBarSpace}%` }}>
                   {parseInt(cellData.displayValue as string, 10) < 0 && (
                     <div
-                      className={classnames(classes.bar, classes.negativeBar)}
+                      className={`${bem}__cell--numeric-bar-negative ${classnames(
+                        classes.bar,
+                        classes.negativeBar,
+                      )}`}
                       style={calculateNegativeBar(parseInt(cellData.displayValue as string, 10))}
                     ></div>
                   )}
@@ -50,7 +58,7 @@ export function RankedListItem({ item, columns, metadata }: ListItemProps): Reac
             )}
 
             <div
-              className={classes.textNumericBar}
+              className={`${bem}__value ${classes.textNumericBar}`}
               style={i === 1 ? { paddingRight: `${metadata?.negativeBarSpace}%` } : {}}
             >
               <ContextCell attr={column} cell={cellData} format={column.format} />
