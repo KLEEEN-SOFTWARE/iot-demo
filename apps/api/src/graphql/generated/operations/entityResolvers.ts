@@ -104,8 +104,12 @@ export const entityResolvers: IResolvers = {
     autoComplete120425: (_parent, params, { dataSources }) => ({
       data: dataSources.api120425.getAutoCompleteValues(params.input),
     }),
+    adjust120425: (_parent, params, { dataSources }): DispatchCustomActionResults =>
+      dataSources.api120425.customAction_adjust(params.input),
     disable120425: (_parent, params, { dataSources }): DispatchCustomActionResults =>
       dataSources.api120425.customAction_disable(params.input),
+    flag120425: (_parent, params, { dataSources }): DispatchCustomActionResults =>
+      dataSources.api120425.customAction_flag(params.input),
     reboot120425: (_parent, params, { dataSources }): DispatchCustomActionResults =>
       dataSources.api120425.customAction_reboot(params.input),
     suspend120425: (_parent, params, { dataSources }): DispatchCustomActionResults =>

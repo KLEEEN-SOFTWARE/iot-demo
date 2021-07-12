@@ -29,10 +29,16 @@
   }
 
   .toolbar {
-    svg {
+    svg.nav-icons {
       height: var(--wh-S);
       margin: var(--pm-0) var(--pm-M);
       width: var(--wh-S);
+    }
+    svg.nav-menu-icons {
+      margin: var(--pm-0) var(--pm-M);
+    }
+    .nav-menu {
+      margin-left: var(--pm-1XL);
     }
   }
 }

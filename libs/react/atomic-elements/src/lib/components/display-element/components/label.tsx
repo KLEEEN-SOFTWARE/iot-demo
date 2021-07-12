@@ -29,18 +29,18 @@ export function Label({
 
   return (
     <div className={classNames(bem, classes.label, { highlighted })}>
-      {value?.displayMedia && (
-        <div className={classes.displayMedia}>
-          <KsDisplayMedia
-            className={'ks-label__display-media'}
-            color={color}
-            size={16}
-            type={value?.displayMedia.type}
-            value={value?.displayMedia.value}
-          />
-        </div>
-      )}
       <Crosslink attribute={attribute} value={value}>
+        {value?.displayMedia && (
+          <div className={classes.displayMedia}>
+            <KsDisplayMedia
+              className={'ks-label__display-media'}
+              color={color}
+              size={16}
+              type={value?.displayMedia.type}
+              value={value?.displayMedia.value}
+            />
+          </div>
+        )}
         <MuiTooltip enterDelay={500} enterNextDelay={500} title={formattedValue} placement="top-start">
           <div className={classNames('ks-label__text', classes.text, { highlighted })} style={{ color }}>
             <span className={classNames(classes.text, { highlighted })}>{formattedValue} </span>

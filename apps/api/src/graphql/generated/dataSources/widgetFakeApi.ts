@@ -70,39 +70,15 @@ export class WidgetFakeApi extends DataSource {
     return getListingData(args);
   }
 
+  async object_listing_90101dbc_cddd_446b_a5e7_cc8318d22a43(args: DataListingArgs) {
+    return getListingData(args);
+  }
+
   async object_listing_aecfa22b_e76c_4402_b2ec_cf1c7a4e8781(args: DataListingArgs) {
     return getListingData(args);
   }
 
   async object_listing_b6dcf2f6_6cc1_418f_b027_34d3e60bb8c4(args: DataListingArgs) {
-    return getListingData(args);
-  }
-
-  async object_listing_f51934f0_c79e_4bba_998b_0d8e381cf5f1(args: DataListingArgs) {
-    return getListingData(args);
-  }
-
-  async summary_title_09522661_c6e8_4161_a1cf_8c1e2e499824(args: DataListingArgs) {
-    return getListingData(args);
-  }
-
-  async summary_title_3e93db18_fe67_43a2_be09_6ecf9873ee74(args: DataListingArgs) {
-    return getListingData(args);
-  }
-
-  async summary_title_46191c4f_2521_4d6d_8015_5116357f2668(args: DataListingArgs) {
-    return getListingData(args);
-  }
-
-  async summary_title_ccd4b585_b8d5_4315_817f_bae7060c22e5(args: DataListingArgs) {
-    return getListingData(args);
-  }
-
-  async summary_title_e376073d_113e_42f3_a34b_c14829f152c7(args: DataListingArgs) {
-    return getListingData(args);
-  }
-
-  async summary_title_f991e457_5522_4e72_ba6b_9f8811f612af(args: DataListingArgs) {
     return getListingData(args);
   }
 

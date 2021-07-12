@@ -1,43 +1,45 @@
-import { WidgetContextAttributes, useWidgetContext } from '@kleeen/react/hooks';
+import { useKleeenActions, useKleeenContext, useUrlQueryParams } from '@kleeen/react/hooks';
+import camelcase from 'lodash.camelcase';
 
 import { TextFormatter } from '@kleeen/react/components';
 import { pathOr } from 'ramda';
-import { WidgetDataAttributes } from '@kleeen/types';
+import { useEffect } from 'react';
 
 interface DisplayValueTitleProps {
   objectValue: string;
-  operationName: string;
   taskName: string;
   formatType?: string;
 }
 
 export function DisplayValueTitle({
   objectValue,
-  operationName,
   taskName,
   formatType,
 }: DisplayValueTitleProps): JSX.Element {
-  const params = {
-    baseModel: objectValue,
-    operationName,
-    taskName,
-    formatType,
-  };
   const attributes = [{ name: objectValue, aggregation: 'noAggregation' }];
-  const widgetData = useWidgetContext({
-    taskName,
-    widgetId: WidgetContextAttributes.DisplayValueTitle,
-    params: { ...params, attributes },
-  });
 
-  const getDisplayValue = pathOr('', [
-    'data',
-    'data',
-    0,
-    `${WidgetDataAttributes.DisplayValue}::${objectValue}`,
-    'displayValue',
-  ]);
+  const { getRequest } = useKleeenActions(taskName);
+  const widgetData = useKleeenContext(taskName);
+  const { paramsBasedOnRoute } = useUrlQueryParams();
+
+  const getDisplayValue = pathOr('', ['entity', `${objectValue}`, 'displayValue']);
   const displayValue = getDisplayValue(widgetData);
+  const currentEntityValue = paramsBasedOnRoute[camelcase(objectValue)];
+
+  useEffect(() => {
+    getRequest({
+      entity: objectValue,
+      params: {
+        taskName,
+        formatType,
+        baseModel: objectValue,
+        attributes,
+        value: currentEntityValue,
+        id: currentEntityValue,
+      },
+    });
+  }, []);
+
   const format = pathOr({}, ['data', 'format', objectValue], widgetData);
 
   if (!widgetData) {

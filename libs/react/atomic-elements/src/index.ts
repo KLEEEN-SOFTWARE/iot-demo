@@ -1,3 +1,4 @@
+export * from './helpers';
 export * from './lib/components/AddDialog';
 export * from './lib/components/CardSection/CardSection';
 export * from './lib/components/CardSection/CardSection02';
@@ -35,7 +36,6 @@ export * from './lib/components/SecondaryCardWidget02/SecondaryCardWidget02';
 export * from './lib/components/SelectList/SelectList';
 export * from './lib/components/SnackBarSection/SnackBarSection';
 export * from './lib/components/SubHeader/SubHeader';
-export * from './lib/components/summary-statistics';
 export * from './lib/components/Switch/Switch';
 export * from './lib/components/ToastNotification/ToastNotification';
 export * from './lib/components/Visualization/Visualization';
@@ -43,3 +43,5 @@ export * from './lib/components/WidgetSection01/WidgetSection01';
 export * from './lib/components/WidgetSection02/WidgetSection02';
 export * from './lib/components/WidgetSection03/WidgetSection03';
 export * from './lib/components/Widgets';
+export * from './lib/components/summary-statistics';
+export * from './lib/style';

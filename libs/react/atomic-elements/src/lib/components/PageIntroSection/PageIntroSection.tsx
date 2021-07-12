@@ -14,7 +14,8 @@ export function PageIntroSection(props: PageIntroSectionProps): React.ReactEleme
   const [isConfirmationOpen, setIsConfirmationOpen] = useState(false);
   const [isCustomOpen, setIsCustomOpen] = useState(false);
 
-  const addActions = props.actions?.filter(isAddAction);
+  const { actions = [] } = props;
+  const addActions = actions.filter(isAddAction);
 
   function dispatchAction({ action, payload }: { action: Action; payload: AddDialogPayload }): void {
     const isCustomDialogOpen = isCustomOpen;

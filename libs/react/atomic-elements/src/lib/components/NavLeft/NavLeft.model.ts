@@ -1,17 +1,11 @@
 import { ReactNode } from 'react';
+import { MenuListProps } from '../../../types';
 
 export interface NavLeftProps {
-  menuList: MenuListProps[];
   accountMenuList: MenuListProps[];
-  logo: string;
-  helpUrl?: string;
-  productName?: string;
   children?: ReactNode;
-}
-
-export interface MenuListProps {
-  func?: () => void;
-  icon?: string;
-  path: string;
-  title: string;
+  helpUrl?: string;
+  logo: string;
+  menuList: MenuListProps[];
+  productName?: string;
 }

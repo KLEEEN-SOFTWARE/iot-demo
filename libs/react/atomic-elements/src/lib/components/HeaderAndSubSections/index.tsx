@@ -15,6 +15,7 @@ function HeaderAndSubSectionsComponent({
   actionsProps,
   filters,
   handleChangeTab,
+  onTabIndexChanged,
   hideRefreshControl,
   objectValue,
   slots,
@@ -43,7 +44,9 @@ function HeaderAndSubSectionsComponent({
     objectValue,
     slots,
     taskName,
+    results: subTitle,
     title,
+    onTabIndexChanged,
   };
 
   const hasSubHeader = () =>
@@ -69,6 +72,7 @@ function HeaderAndSubSectionsComponent({
         <SubHeader>
           <ButtonSelect
             handleChangeTab={handleChangeTab}
+            onTabIndexChanged={props.onTabIndexChanged}
             taskName={taskName}
             translate={translate}
             value={value}

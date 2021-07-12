@@ -8,6 +8,7 @@ export interface HeaderAndSubSectionsProps extends TranslateProps {
   actionsProps: ActionsManagerProps;
   filters?: FilterProps[];
   handleChangeTab: (e: boolean) => void;
+  onTabIndexChanged?: (index: number, option: ViewOption) => void;
   hideRefreshControl?: boolean;
   objectValue: string;
   slots?: Slot[];

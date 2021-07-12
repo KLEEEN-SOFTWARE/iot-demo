@@ -26,6 +26,7 @@ export enum KsSvgIconSize {
 type KsSvgIconSizeProp = 'extra-small' | 'small' | 'medium' | 'large' | 'extra-large' | KsSvgIconSize;
 
 export interface KsSvgIconProps {
+  className?: string;
   icon: string;
   size?: KsSvgIconSizeProp;
   style?: React.CSSProperties;

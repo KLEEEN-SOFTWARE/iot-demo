@@ -102,7 +102,7 @@ const buildEntity = ({ attributeEventList, entityKey }: BuildEntityProps) => {
 };
 
 export function AddDialog({
-  attributes,
+  attributes = [],
   open,
   onAction,
   onClose,

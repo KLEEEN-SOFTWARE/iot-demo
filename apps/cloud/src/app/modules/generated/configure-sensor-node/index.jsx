@@ -1,39 +1,43 @@
-import React, { useState } from 'react';
 import { KUIConnect, AccessControl } from '@kleeen/core-react';
-import { useEntityDetailsEventHandler, useKleeenActions } from '@kleeen/react/hooks';
 import { roleAccessKeyTag } from '@kleeen/common/utils';
-import { useStyles } from './styles/styles';
-import { PageIntroSection, CardSection02, SnackBarSection } from '@kleeen/react/atomic-elements';
-import { pageIntroSectionActions } from './settings/page-intro-section-actions';
-import { pageIntroSectionAttributes } from './settings/page-intro-section-attributes';
-import { cardSectionWidgets } from './settings/card-section-widgets';
+import { useState, useEffect } from 'react';
+import {
+  ConfigureLayoutStyle,
+  PageIntroSection,
+  CardSection02,
+  SnackBarSection,
+} from '@kleeen/react/atomic-elements';
+import { useEntityDetailsEventHandler, useKleeenActions } from '@kleeen/react/hooks';
+import { widgets } from './settings/widgets';
 
-function ConfigTask({ translate, ...props }) {
+function Workflow({ translate, ...props }) {
   const taskName = `configureSensorNode`;
-  const pageIntroSectionTitle = `Configure Sensor/Node`;
-  const pageIntroSectionDescription = undefined;
-  const classes = useStyles();
-  const cardSectionContainerId = `container-id-${classes.configCardSection}`;
-  const [showSubmit, setShowSubmit] = useState(false);
-  const configureSensorNodeActions = useKleeenActions(taskName);
+  const [selectedRows, setSelectedRows] = useState([]);
+  const classes = ConfigureLayoutStyle();
+  const workflowName = `Configure Sensor/Node`;
+  const workflowDescription = undefined;
+  const [showSnackBar, setShowSnackBar] = useState(false);
+  const [attributeEventList, eventList] = useEntityDetailsEventHandler();
+  function snackBarRegisterEvents(event) {
+    eventList.addEvent(event);
+  }
+  function onInputChange(hasChanged) {
+    setShowSnackBar(hasChanged);
+  }
+  const mainContainerId = `container-id-${classes.configCardSection}`;
 
-  const [attributeEventList, { addEvent, clearEventList }] = useEntityDetailsEventHandler();
-
-  React.useEffect(() => {
+  useEffect(() => {
+    const { clearEventList } = eventList;
     return clearEventList;
   }, []);
 
-  function onCancel() {
-    setShowSubmit(false);
+  const configureSensorNodeActions = useKleeenActions(taskName);
+  function snackBarOnCancel() {
+    setShowSnackBar(false);
     attributeEventList.map((event) => event.onCancel());
   }
-
-  function onInputChange(hasChanged) {
-    setShowSubmit(hasChanged);
-  }
-
-  function onSave() {
-    setShowSubmit(false);
+  function snackBarOnSave() {
+    setShowSnackBar(false);
     const widgetsData = attributeEventList.map((event) => event.onSave()).filter((data) => data);
     const dataList = widgetsData.map((current) => {
       return {
@@ -47,58 +51,46 @@ function ConfigTask({ translate, ...props }) {
     dataList.map((data) => configureSensorNodeActions.updateRequest(data));
   }
 
-  function registerEvents(event) {
-    addEvent(event);
-  }
-
   return (
     <AccessControl id={roleAccessKeyTag(`navigation.${taskName}`)}>
       <div className={classes.configTask}>
         <div className={classes.pageIntro}>
-          <PageIntroSection
-            actions={pageIntroSectionActions}
-            attributes={pageIntroSectionAttributes}
-            description={pageIntroSectionDescription}
-            entity={''}
-            entityActions={{}}
-            showActions={false}
-            title={pageIntroSectionTitle}
-          />
+          <PageIntroSection title={workflowName} description={workflowDescription} showActions />
         </div>
         <div
-          id={cardSectionContainerId}
-          className={`${classes.configCardSection} ${showSubmit ? classes.snackbarNavTop : ''} `}
+          id={mainContainerId}
+          className={`${classes.configCardSection} ${showSnackBar ? classes.snackbarNavTop : ''} `}
         >
           <CardSection02
-            justifyContent="center"
-            taskName={taskName}
-            widgets={cardSectionWidgets}
-            hideSaveAndClose={true}
+            justifyContent={'center'}
+            hideSaveAndClose
+            widgets={widgets}
+            containerId={mainContainerId}
+            registerEvents={snackBarRegisterEvents}
             onInputChange={onInputChange}
-            registerEvents={registerEvents}
-            containerId={cardSectionContainerId}
+            selectedRows={selectedRows}
+            setSelectedRows={setSelectedRows}
+            taskName={taskName}
           />
         </div>
         <div>
           <SnackBarSection
+            entityActions={configureSensorNodeActions}
+            selectedRows={selectedRows}
+            setSelectedRows={setSelectedRows}
+            showSnackBar={showSnackBar}
             actions={[
               {
                 type: 'CUSTOM',
                 label: 'SAVE',
-                func: onSave,
+                func: snackBarOnSave,
               },
               {
                 type: 'CUSTOM',
                 label: 'CANCEL',
-                func: onCancel,
+                func: snackBarOnCancel,
               },
             ]}
-            entity=""
-            entityActions={{}}
-            selectedRows={[]}
-            setSelectedRows={[]}
-            showSelectAndExecute={false}
-            showSnackBar={showSubmit}
           />
         </div>
       </div>
@@ -106,4 +98,4 @@ function ConfigTask({ translate, ...props }) {
   );
 }
 
-export default KUIConnect(({ translate }) => ({ translate }))(ConfigTask);
+export default KUIConnect(({ translate }) => ({ translate }))(Workflow);

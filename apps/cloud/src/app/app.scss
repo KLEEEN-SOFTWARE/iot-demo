@@ -22,7 +22,11 @@
       flex-direction: column;
 
       .layout {
-        height: calc(100% - var(--wh-M));
+        height: calc(100% - var(--preview-handled-height));
+      }
+
+      .layout-preview {
+        height: 100%;
       }
     }
 
@@ -31,6 +35,12 @@
 
       .layout {
         height: 100%;
+        overflow: hidden;
+        width: 100%;
+      }
+
+      .layout-preview {
+        height: calc(100% - var(--preview-handled-height));
         width: 100%;
       }
     }

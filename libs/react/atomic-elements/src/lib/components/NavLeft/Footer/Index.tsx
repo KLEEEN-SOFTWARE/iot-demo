@@ -1,19 +1,24 @@
 import './FooterNavLeft.scss';
 
 import { Button, UserAccountButton } from '../NavLeft.style';
-import { FooterNavLeftProps } from './FooterNavLeft.model';
-import { useStyles } from './FooterNavLeft.style';
 import { useTheme, useUserInfo } from '@kleeen/react/hooks';
+
 import AccountCircleOutlinedIcon from '@material-ui/icons/AccountCircleOutlined';
 import AppBar from '@material-ui/core/AppBar';
-import classnames from 'classnames';
+import { FooterNavLeftProps } from './FooterNavLeft.model';
 import HelpOutlineOutlinedIcon from '@material-ui/icons/HelpOutlineOutlined';
+import { KsSvgIcon } from '@kleeen/react/components';
 import Menu from '@material-ui/core/Menu';
 import MenuItem from '@material-ui/core/MenuItem';
 import React from 'react';
 import Tooltip from '@material-ui/core/Tooltip';
+import classnames from 'classnames';
+import { styled } from '@material-ui/core';
+import { useStyles } from './FooterNavLeft.style';
 
 const bem = 'ks-nav-left-footer';
+
+const AppBarFooter = styled(AppBar)({});
 
 export const FooterNavLeft = ({ helpUrl, accountMenuList, navigate }: FooterNavLeftProps): JSX.Element => {
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
@@ -35,7 +40,11 @@ export const FooterNavLeft = ({ helpUrl, accountMenuList, navigate }: FooterNavL
 
   return (
     <div className={classnames(bem, classes.appBarContainer, 'nav-bar-footer')}>
-      <AppBar position="fixed" color="primary" className={classnames(`${bem}__app-bar`, classes.appBar)}>
+      <AppBarFooter
+        position="fixed"
+        color="primary"
+        className={classnames(`${bem}__app-bar`, classes.appBar)}
+      >
         <div className={classnames(`${bem}__content`, classes.appBarContent)}>
           <UserAccountButton onClick={handleClick}>
             <AccountCircleOutlinedIcon />
@@ -65,7 +74,7 @@ export const FooterNavLeft = ({ helpUrl, accountMenuList, navigate }: FooterNavL
             onClose={handleClose}
             open={Boolean(anchorEl)}
           >
-            {accountMenuList.map(({ title, path, func }) => (
+            {accountMenuList.map(({ func, icon, path, title }) => (
               <MenuItem
                 key={title}
                 className={classnames(`${bem}__menu--item`)}
@@ -79,12 +88,13 @@ export const FooterNavLeft = ({ helpUrl, accountMenuList, navigate }: FooterNavL
                   handleClose();
                 }}
               >
+                <KsSvgIcon icon={icon} />
                 {title}
               </MenuItem>
             ))}
           </Menu>
         </div>
-      </AppBar>
+      </AppBarFooter>
     </div>
   );
 };

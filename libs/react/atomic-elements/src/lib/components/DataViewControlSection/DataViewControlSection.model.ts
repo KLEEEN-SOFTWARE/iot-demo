@@ -22,7 +22,10 @@ export interface TabSwitcherProps {
   handleChangeTab: HandleChangeTab;
   viewOptions: ViewOption[];
   value: number;
+  selectedOption?: ViewOption;
   taskName?: string;
+  onTabIndexChanged?: (index: number, option: ViewOption) => void;
+  tabIndex?: number;
 }
 
 export interface SwitcherProps extends TabSwitcherProps {
@@ -39,13 +42,12 @@ export interface DataViewControlSectionProps extends TabSwitcherProps {
   isEntityDetails?: boolean;
   objectValue: string;
   parent?: { id: string; entity: string };
-  results: number;
+  results: string;
   showActions: boolean;
   showAvatar: boolean;
   showDesc: boolean;
   showDropDown: boolean;
   showTitle: boolean;
-  slots: any[];
   taskName: string;
   title?: string;
   order?: number;

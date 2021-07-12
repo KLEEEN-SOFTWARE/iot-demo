@@ -28,7 +28,9 @@ export function BubbleChartWidget({
   const hideHeader = false;
   const { updateLayout } = useMasonry();
   const size = useWindowsDimension();
-  const breakPoint = 1260;
+  const themeWrapper = document.getElementById('theme-wrapper-id');
+  const isNavTop = themeWrapper.classList.contains('nav-top');
+  const breakPoint = isNavTop ? 1069 : 1260;
   const bigWidget = size.width > breakPoint && disableHeightCalculation;
   const classes = useStyles({ bigWidget });
 
@@ -52,7 +54,7 @@ export function BubbleChartWidget({
         widgetId={widgetId}
       />
       {bigWidget && (
-        <div style={{ height: 'calc(var(--wh-8XL) - var(--wh-2XL))' }}>
+        <div style={{ height: 'calc(var(--wh-8XL) - var(--wh-2XL))', width: '50%' }}>
           <SimpleList
             columns={listColumns}
             data={data}

@@ -1,93 +1,85 @@
-import React, { useState } from 'react';
 import { KUIConnect, AccessControl } from '@kleeen/core-react';
 import { roleAccessKeyTag } from '@kleeen/common/utils';
-import { useStyles } from './styles/styles';
+import { useState } from 'react';
 import {
+  SimpleLayoutStyle,
   EntityDetailsSection,
   DataViewControlSection,
   DataViewDisplaySectionAtomic,
 } from '@kleeen/react/atomic-elements';
-import { dataViewControlSectionSlots } from './settings/data-view-control-section-slots';
 import { entityDetailsSectionEntityDetails } from './settings/entity-details-section-entity-details';
-import { useKleeenActions, useUrlQueryParams } from '@kleeen/react/hooks';
-import { actions } from './settings/actions';
-import { attributes } from './settings/attributes';
-import { dataViewControlSectionViewOptions } from './settings/data-view-control-section-view-options';
-import { dataViewDisplaySectionAtomicDashboardWidgets } from './settings/data-view-display-section-atomic-dashboard-widgets';
-import { dataViewDisplaySectionAtomicSingleViewWidgets } from './settings/data-view-display-section-atomic-single-view-widgets';
-import { dataViewDisplaySectionAtomicCustomViews } from './settings/data-view-display-section-atomic-custom-views';
+import { useKleeenActions } from '@kleeen/react/hooks';
+import { viewOptions } from './settings/view-options';
+import { workflowAction } from './settings/workflow-action';
+import { attributesOnCreate } from './settings/attributes-on-create';
+import { widgets } from './settings/widgets';
 
-function EntityBrowserDetailsTask({ translate, ...props }) {
-  const [selectedRows, setSelectedRows] = useState([]);
+function Workflow({ translate, ...props }) {
   const taskName = `sensorDetails`;
   const entity = `Sensor`;
-  const [selectedTabIndex, setSelectedTabIndex] = useState(0);
+  const [selectedViewOption, setSelectedViewOption] = useState(widgets[0]);
   const [cardsNumber, setCardsNumber] = useState(0);
-  const entityName = `Sensor`;
-  const displayTaskName = `Sensor Details`;
-  const [openDetails, setOpenDetails] = useState(true);
-  const sensorActions = useKleeenActions(taskName);
-  const title = `Sensor Details`;
-  const objectValue = `sensor`;
-  function handleOnTabIndexChange(newTabIndex) {
-    setSelectedTabIndex(newTabIndex);
+  const [selectedRows, setSelectedRows] = useState([]);
+  const classes = SimpleLayoutStyle();
+  const [isSummarizeOpen, setIsSummarizeOpen] = useState(true);
+  const workflowName = `Sensor Details`;
+  function handleOnTabIndexChanged(newTabIndex, option) {
+    setSelectedViewOption(option);
   }
-  const paramsBasedOnRoute = useUrlQueryParams();
-  const parent = { id: paramsBasedOnRoute[objectValue], entity };
-  const classes = useStyles();
+  const objectFocus = `sensor`;
+  const sensorActions = useKleeenActions(taskName);
 
   return (
     <AccessControl id={roleAccessKeyTag(`navigation.${taskName}`)}>
       <div className={`${classes.entityBrowserTask} subhead-dynamic`}>
         <div className={classes.entityBrowserDetailsSection}>
           <EntityDetailsSection
-            displayTaskName={displayTaskName}
+            entityName={entity}
+            isEditable
             entityDetails={entityDetailsSectionEntityDetails}
-            entityName={entityName}
-            isEditable={true}
-            onChangeFilterVisible={setOpenDetails}
-            slots={dataViewControlSectionSlots}
             taskName={taskName}
+            displayTaskName={workflowName}
+            onChangeFilterVisible={setIsSummarizeOpen}
           />
         </div>
         <div
           className={
-            openDetails
-              ? `${classes.entityBrowserAreaWithDetailsSection} openDetailsSection`
-              : `${classes.entityBrowserArea} browserArea`
+            isSummarizeOpen
+              ? `${classes.entityBrowserAreaWithDetailsSection} openDetailsSection `
+              : `${classes.entityBrowserArea} browserArea `
           }
         >
           <div className={`${classes.gridPageIntro} ${cardsNumber > 0 ? `max-card-${cardsNumber}` : ''}`}>
             <DataViewControlSection
-              slots={dataViewControlSectionSlots}
-              parent={parent}
-              hideRefreshControl
-              actions={actions}
-              attributes={attributes}
+              actions={workflowAction}
+              attributes={attributesOnCreate}
               entity={entity}
               entityActions={sensorActions}
-              handleChangeTab={handleOnTabIndexChange}
-              objectValue={objectValue}
-              showDropDown={false}
+              hideRefreshControl
+              isEntityDetails
+              objectValue={objectFocus}
+              onTabIndexChanged={handleOnTabIndexChanged}
+              selectedOption={selectedViewOption}
+              setSelectedOption={setSelectedViewOption}
               taskName={taskName}
-              title={title}
-              value={selectedTabIndex}
-              viewOptions={dataViewControlSectionViewOptions}
+              title={workflowName}
+              viewOptions={viewOptions}
             />
           </div>
-          <div className={classes.dataViewDisplaySection}>
+          <div
+            className={`${classes.dataViewDisplaySection} ${
+              selectedRows.length > 0 && selectedViewOption.sortOrder === 0 ? classes.snackbar : ''
+            }`}
+          >
             <DataViewDisplaySectionAtomic
-              atomicCustomViews={dataViewDisplaySectionAtomicCustomViews}
-              dashboardWidgets={dataViewDisplaySectionAtomicDashboardWidgets}
+              widgets={widgets}
               entityName={entity}
-              hasReportView={false}
+              selectedOption={selectedViewOption}
               selectedRows={selectedRows}
               setCardsNumber={setCardsNumber}
               setSelectedRows={setSelectedRows}
-              singleViewWidgets={dataViewDisplaySectionAtomicSingleViewWidgets}
-              tableWidgets={[]}
               taskName={taskName}
-              value={selectedTabIndex}
+              value={selectedViewOption}
             />
           </div>
         </div>
@@ -96,4 +88,4 @@ function EntityBrowserDetailsTask({ translate, ...props }) {
   );
 }
 
-export default KUIConnect(({ translate }) => ({ translate }))(EntityBrowserDetailsTask);
+export default KUIConnect(({ translate }) => ({ translate }))(Workflow);

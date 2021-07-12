@@ -15,7 +15,7 @@ interface CardWidgetProps {
 
 interface CardTitleProps {
   icon: boolean;
-  title: string | JSX.Element;
+  title: string | JSX.Element | null | undefined;
 }
 
 type GridJustification =

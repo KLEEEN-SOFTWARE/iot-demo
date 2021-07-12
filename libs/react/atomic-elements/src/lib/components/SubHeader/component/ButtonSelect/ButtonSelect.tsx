@@ -12,6 +12,7 @@ const defaultIconKey = 'Apps';
 export const ButtonSelect = ({
   viewOptions,
   handleChangeTab,
+  onTabIndexChanged,
   value,
   translate,
   taskName,
@@ -24,9 +25,16 @@ export const ButtonSelect = ({
 
   if (!navigation) return null;
 
-  const handleOnChangeOverride = (optionValue) => {
-    if (viewOptions[optionValue]?.viewId) setIconView(viewOptions[optionValue]?.viewId || defaultIconKey);
-    handleChangeTab(optionValue);
+  const handleOnChange = (optionValue, rawOption) => {
+    if (viewOptions[optionValue]?.viewId) {
+      setIconView(viewOptions[optionValue]?.viewId || defaultIconKey);
+    }
+    if (handleChangeTab) {
+      handleChangeTab(optionValue);
+    }
+    if (onTabIndexChanged) {
+      onTabIndexChanged(optionValue as number, rawOption);
+    }
   };
 
   if (viewOptions.length < 2) return null;
@@ -40,7 +48,7 @@ export const ButtonSelect = ({
       translate={translate}
       isDisabled={!hasViewSwitch}
     >
-      <SelectList onChange={handleOnChangeOverride} options={options} value={value} taskName={taskName} />
+      <SelectList onChange={handleOnChange} options={options} value={value} taskName={taskName} />
       {hasViewSwitch && (
         <div className="icon-outlined">
           <svg className="MuiSvgIcon-root element-select-arrow">

@@ -46,7 +46,6 @@ export function DetailSummary(props: DetailSummaryProps): ReactElement {
             <DisplayValueTitle
               formatType={formatType}
               objectValue={props.objectValue}
-              operationName={props.operationName}
               taskName={props.taskName}
             />{' '}
             | {props.taskTitle}

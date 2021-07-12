@@ -1,16 +1,17 @@
-import { DisplayViewType, SwitcherProps, TabSwitcherProps } from './DataViewControlSection.model';
-import { formatViewOptions } from './index';
-import { isNilOrEmpty, roleAccessKeyTag } from '@kleeen/common/utils';
+import { DisplayViewType, SwitcherProps, TabSwitcherProps, ViewOption } from './DataViewControlSection.model';
 import { KsSvgIcon, KsSvgIconSize } from '@kleeen/react/components';
-import { ReactElement } from 'react';
-import { SelectList } from '../SelectList/SelectList';
 import { Tab, Tabs, useStyles } from './DataViewControlSection.styles';
-import { useAccessControlChecker } from '@kleeen/core-react';
+import { isNilOrEmpty, roleAccessKeyTag } from '@kleeen/common/utils';
+
 import Apps from '@material-ui/icons/Apps';
 import AspectRatio from '@material-ui/icons/AspectRatio';
-import classnames from 'classnames';
+import { ReactElement } from 'react';
+import { SelectList } from '../SelectList/SelectList';
 import TableChart from '@material-ui/icons/TableChart';
 import Tooltip from '@material-ui/core/Tooltip';
+import classnames from 'classnames';
+import { formatViewOptions } from './index';
+import { useAccessControlChecker } from '@kleeen/core-react';
 
 const bem = 'ks-view-switcher';
 const rolePermissionOk = 'SHOW';
@@ -82,9 +83,16 @@ const getViewOptionPropsBasedOnId = ({
   };
 };
 
-const TabSwitcher = ({ handleChangeTab, viewOptions, value, taskName }: TabSwitcherProps): ReactElement => (
+const TabSwitcher = ({
+  handleChangeTab,
+  viewOptions,
+  value,
+  taskName,
+  onTabIndexChanged,
+}: TabSwitcherProps): ReactElement => (
   <Tabs value={value} scrollButtons="off" aria-label="tabs">
-    {viewOptions.map(({ name = 'List', type, viewId, viewOrder }, index) => {
+    {viewOptions.map((option, index) => {
+      const { name = 'List', type, viewId, viewOrder } = option;
       const props = viewId
         ? getViewOptionPropsBasedOnId({ name, viewId })
         : getViewOptionPropsBasedOnType({ id: index, name, type });
@@ -95,7 +103,13 @@ const TabSwitcher = ({ handleChangeTab, viewOptions, value, taskName }: TabSwitc
           {...props}
           selected={value === index}
           onClick={(e) => {
-            handleChangeTab(isNilOrEmpty(viewOrder) ? index : viewOrder);
+            const selectedIndex = isNilOrEmpty(viewOrder) ? index : viewOrder;
+            if (handleChangeTab) {
+              handleChangeTab(selectedIndex);
+            }
+            if (onTabIndexChanged) {
+              onTabIndexChanged(selectedIndex, option);
+            }
           }}
         />
       );
@@ -105,6 +119,7 @@ const TabSwitcher = ({ handleChangeTab, viewOptions, value, taskName }: TabSwitc
 
 const SelectListWrapper = ({
   handleChangeTab,
+  onTabIndexChanged,
   value,
   viewOptions,
   taskName,
@@ -116,17 +131,22 @@ const SelectListWrapper = ({
       id="select-view"
       label="Select View"
       labelId="select-view"
-      onChange={(value) => {
-        handleChangeTab(value);
+      onChange={(selectedIndex, option) => {
+        if (handleChangeTab) {
+          handleChangeTab(selectedIndex);
+        }
+        if (onTabIndexChanged) {
+          onTabIndexChanged(selectedIndex as number, option as ViewOption);
+        }
       }}
       options={options}
-      value={value}
+      value={options[value].label}
       taskName={taskName}
     />
   );
 };
 
-export const ViewSwitcher = ({ showDropDown, viewOptions, ...rest }: SwitcherProps): JSX.Element => {
+export const ViewSwitcher = ({ showDropDown = false, viewOptions, ...rest }: SwitcherProps): JSX.Element => {
   const options = [];
   viewOptions.forEach((vOption) => {
     if (
