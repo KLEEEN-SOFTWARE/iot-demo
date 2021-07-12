@@ -21,15 +21,12 @@ const permissionOk = 'SHOW';
 
 export const DataViewDisplaySectionAtomic = React.memo((props: DataViewDisplaySectionAtomicProps) => {
   const {
-    atomicCustomViews = [],
-    dashboardWidgets = [],
-    hasReportView = false,
+    selectedOption,
+    widgets = [],
     selectedRows,
     setSelectedRows,
-    singleViewWidgets = [],
-    tableWidgets = [],
     taskName,
-    value: indexToRender,
+    value: indexToRender = 0,
   } = props;
 
   const accessControlFilterViews = (view: Widget & { type: ViewType }): boolean => {
@@ -41,17 +38,11 @@ export const DataViewDisplaySectionAtomic = React.memo((props: DataViewDisplaySe
     }
     return (
       useAccessControlChecker(
-        roleAccessKeyTag(`${props.taskName}.views.${view.title || view.params.baseModel}`),
+        roleAccessKeyTag(`${props.taskName}.views.${view.title || view.params?.baseModel}`),
       ).permission === permissionOk
     );
   };
-
-  const taskViews = [
-    ...singleViewWidgets.map((widget) => ({ ...widget, type: ViewType.single })),
-    ...atomicCustomViews.map((widget) => ({ ...widget, type: ViewType.custom })),
-    ...tableWidgets.map((widget) => ({ ...widget, type: ViewType.table })),
-    ...generateCardSectionViews(dashboardWidgets, hasReportView),
-  ];
+  const taskViews = widgets;
 
   const orderedTaskViews = sortByKeys<Widget & { type: ViewType }>(taskViews, ['viewOrder', 'viewId']);
 
@@ -59,16 +50,14 @@ export const DataViewDisplaySectionAtomic = React.memo((props: DataViewDisplaySe
 
   // TODO: @Guaria this is just a workaround, the solution should be assign an ID to each entry on the DataViewControlSection
   // then use that selected ID to identify which section should be render.
-  let currentIndex = -1;
-  const isTheIndexToRender = (): boolean => {
-    currentIndex += 1;
-    return currentIndex === indexToRender;
+  const isTheIndexToRender = (view: Widget): boolean => {
+    return view.viewId === selectedOption?.viewId;
   };
 
   const children = orderedTaskViews.reduce((views, view) => {
-    if (!isNilOrEmpty(view) && isTheIndexToRender() && accessControlFilterViews(view)) {
+    if (!isNilOrEmpty(view) && isTheIndexToRender(view) && accessControlFilterViews(view)) {
       return resolveViews({
-        dashboardWidgets,
+        dashboardWidgets: [],
         indexToRender,
         selectedRows,
         setSelectedRows,
@@ -81,27 +70,11 @@ export const DataViewDisplaySectionAtomic = React.memo((props: DataViewDisplaySe
   return <DataViewDisplaySection value={0}>{children}</DataViewDisplaySection>;
 });
 
-// This will work just for the current implementation of one dashboard per task
-function generateCardSectionViews(dashboardWidgets: Widget[], hasReportView: boolean): DashboardView[] {
-  if (isNilOrEmpty(dashboardWidgets)) return [];
-  const viewType = hasReportView ? ViewType.report : ViewType.dashboard;
-  const [firstWidget] = dashboardWidgets;
-  return [
-    {
-      dashboardWidgets,
-      type: viewType,
-      viewOrder: firstWidget?.viewOrder,
-      viewId: firstWidget?.viewId,
-    },
-  ];
-}
-
 function resolveViews({
   widget,
   taskName,
   setSelectedRows,
   selectedRows,
-  dashboardWidgets,
   indexToRender,
 }: DisplaySectionViews) {
   const viewResolvers = {
@@ -120,7 +93,7 @@ function resolveViews({
         justifyContent="center"
         key={`data-view-display-section-card-section-${indexToRender}`}
         taskName={taskName}
-        widgets={dashboardWidgets}
+        widgets={widget.widgets}
       />
     ),
     [ViewType.report]: () => (
@@ -129,12 +102,12 @@ function resolveViews({
         justifyContent="center"
         key={`data-view-display-section-card-section-${indexToRender}`}
         taskName={taskName}
-        widgets={dashboardWidgets}
+        widgets={widget.widgets}
       />
     ),
     [ViewType.table]: () => (
       <GridAreaSection
-        entityId={widget.attributes[0].id}
+        entityId={widget.attributes[0]?.id}
         entityName={widget.params.baseModel}
         key={`data-view-display-section-grid-area-section-${widget.id}`}
         selectedRows={selectedRows}
@@ -146,6 +119,11 @@ function resolveViews({
     ),
   };
 
+  const componentToRender = viewResolvers[widget.type];
+  if (!componentToRender) {
+    console.error(`There is no valid component for widget type ${widget.type}.`);
+    return;
+  }
   return viewResolvers[widget.type]();
 }
 

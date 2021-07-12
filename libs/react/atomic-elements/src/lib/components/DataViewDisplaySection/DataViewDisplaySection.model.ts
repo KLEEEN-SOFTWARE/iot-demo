@@ -1,11 +1,13 @@
 import { ReactText } from 'react';
 import { Row } from '../../../../../components/src/lib/GridSection/GridSection.model';
+import { ViewOption } from '../DataViewControlSection/DataViewControlSection.model';
 import { Widget } from '@kleeen/react/atomic-elements';
 
 export interface DataViewDisplaySectionAtomicProps {
+  widgets: Widget[];
+  selectedOption: ViewOption;
   dashboardWidgets: Widget[];
   entityName: string;
-  hasReportView?: boolean;
   selectedRows: Row[];
   setSelectedRows: () => void;
   singleViewWidgets?: Widget[];
@@ -33,9 +35,9 @@ export type DashboardView = {
 };
 
 export enum ViewType {
-  custom = 'Custom',
-  dashboard = 'Dashboard',
-  report = 'Report',
-  single = 'Single',
-  table = 'Table',
+  custom = 'custom',
+  dashboard = 'dashboard',
+  report = 'report',
+  single = 'single',
+  table = 'table',
 }

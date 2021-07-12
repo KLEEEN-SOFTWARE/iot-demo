@@ -109,7 +109,7 @@ export function safeDelete(action$) {
   return action$.pipe(
     ofType(actions.safeDeleteRequest.type),
     mergeMap((action) =>
-      BaseApiService.graphqlEntityCRUD('')
+      BaseApiService.graphqlEntityCRUD('siteMapReport')
         .delete({
           id: action.payload && action.payload.id,
         })

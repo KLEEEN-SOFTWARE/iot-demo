@@ -3,7 +3,7 @@ import './CardSection02.scss';
 const rolePermissionOk = 'SHOW';
 import { CardSectionProps, RenderChildrenProps, Widget } from './CardWidget.model';
 import { CardWidget02 } from './CardWidget02';
-import { roleAccessKeyTag } from '@kleeen/common/utils';
+import { isNilOrEmpty, roleAccessKeyTag } from '@kleeen/common/utils';
 import { TableContent, TransformToWidgetComponent } from './components';
 import { useAccessControlChecker } from '@kleeen/core-react';
 import classnames from 'classnames';
@@ -18,6 +18,11 @@ const bem = 'ks-card-section-02';
  */
 const addCurrentWidgetTypeToViableSolutions = (widget: Widget): Widget => {
   const resultWidget = { ...widget };
+
+  // TODO: @jcvalerio this method have to be refactored in a single place duplicated with libs/react/atomic-elements/src/lib/components/CardSection/CardSection02.tsx
+  if (isNilOrEmpty(resultWidget.viableSolutions)) {
+    return resultWidget;
+  }
 
   if (resultWidget.viableSolutions.length && !resultWidget.viableSolutions.includes(resultWidget.chartType)) {
     resultWidget.viableSolutions.unshift(resultWidget.chartType);

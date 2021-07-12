@@ -3,9 +3,9 @@ import './CardSection.scss';
 import { AccessControl } from '@kleeen/core-react';
 import { CardSectionLayout, CardSectionProps, RenderChildrenProps, Widget } from './CardWidget.model';
 import { ReactElement, ReactNode } from 'react';
-import { roleAccessKeyTag } from '@kleeen/common/utils';
 import { TransformToWidgetComponent } from './components';
 import classNames from 'classnames';
+import { isNilOrEmpty, roleAccessKeyTag } from '@kleeen/common/utils';
 
 const bem = 'ks-card-section';
 
@@ -43,6 +43,11 @@ export default CardSection;
 //#region Private members
 function addCurrentWidgetTypeToViableSolutions(widget: Widget): Widget {
   const resultWidget = { ...widget };
+
+  // TODO: @jcvalerio this method have to be refactored in a single place duplicated with libs/react/atomic-elements/src/lib/components/CardSection/CardSection.tsx
+  if (isNilOrEmpty(resultWidget.viableSolutions)) {
+    return resultWidget;
+  }
 
   if (resultWidget.viableSolutions.length && !resultWidget.viableSolutions.includes(resultWidget.chartType)) {
     resultWidget.viableSolutions.unshift(resultWidget.chartType);

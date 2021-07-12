@@ -45,7 +45,7 @@ export const KsDisplayMedia = ({ value, type, size, color, ...props }: KsDisplay
         <div className={classes[type]}>
           <SVG
             className={classes[type]}
-            style={{ color: color, height: `${size}px`, width: `${size}px` }}
+            style={{ color, height: `${size}px`, width: `${size}px` }}
             src={value}
           />
         </div>

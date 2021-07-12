@@ -1,4 +1,4 @@
-import { KsMenuContainer, KsMenuItem } from '@kleeen/react/components';
+import { KsMenuContainer, KsMenuItem, KsSvgIcon, KsSvgIconSize } from '@kleeen/react/components';
 import React, { ReactElement } from 'react';
 
 import { AccessControl } from '@kleeen/core-react';
@@ -18,6 +18,7 @@ const useStyles = makeStyles({
 
 const MenuListSection = ({
   anchorEl,
+  className,
   handleClose,
   menuList,
   open,
@@ -33,9 +34,9 @@ const MenuListSection = ({
             {...TransitionProps}
             style={{ transformOrigin: placement === 'bottom' ? 'center top' : 'center bottom' }}
           >
-            <KsMenuContainer variant="outlined" square>
+            <KsMenuContainer className={className} variant="outlined" square>
               <MenuList data-testid="ks-dropdown-menu">
-                {menuList.map(({ title, path, func }) => (
+                {menuList.map(({ title, path, func, icon }) => (
                   <AccessControl
                     id={roleAccessKeyTag(`navigation.${title}`)}
                     key={roleAccessKeyTag(`navigation.${title}`)}
@@ -53,6 +54,9 @@ const MenuListSection = ({
                         setOpen(false);
                       }}
                     >
+                      {icon && (
+                        <KsSvgIcon size={KsSvgIconSize.Medium} className="nav-menu-icons" icon={icon} />
+                      )}
                       {title}
                     </KsMenuItem>
                   </AccessControl>

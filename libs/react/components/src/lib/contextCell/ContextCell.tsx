@@ -98,31 +98,29 @@ export function ContextCell(props: ContextMenuProps): ReactElement {
 
   return (
     <>
-      {props.hasDisplayMedia && cell.displayMedia.type !== DisplayMediaType.Svg && (
-        <KsDisplayMedia
-          className={classes.displayMedia}
-          value={cell.displayMedia.value}
-          type={cell.displayMedia.type}
-          size={21}
-        />
-      )}
-      {validCrosslinks.length > 0 || props.attr?.isFilterable?.in ? (
-        <BootstrapTooltip placement="top" title={tooltipTitle}>
-          <div className={classNames('context-menu-button', textClasses)}>
-            <span className="cell" onClick={onCellClick} ref={ref}>
-              {resultsElement}
-            </span>
-          </div>
-        </BootstrapTooltip>
-      ) : (
-        <BootstrapTooltip placement="top" title={tooltipTitle}>
-          <div className={classNames('context-menu-only-text', textClasses)}>
-            <span className="cell" onClick={onCellClick} ref={ref}>
-              {resultsElement}
-            </span>
-          </div>
-        </BootstrapTooltip>
-      )}
+      <span
+        className={`${classes.mediaValueContainer} ${validCrosslinks.length > 0 && 'clickable'}`}
+        onClick={onCellClick}
+        ref={ref}
+      >
+        {props.hasDisplayMedia && cell.displayMedia.type !== DisplayMediaType.Svg && (
+          <KsDisplayMedia
+            className={classes.displayMedia}
+            size={21}
+            type={cell.displayMedia.type}
+            value={cell.displayMedia.value}
+          />
+        )}
+        {validCrosslinks.length > 0 || props.attr?.isFilterable?.in ? (
+          <BootstrapTooltip placement="top" title={tooltipTitle}>
+            <div className={classNames('context-menu-button', textClasses)}>{resultsElement}</div>
+          </BootstrapTooltip>
+        ) : (
+          <BootstrapTooltip placement="top" title={tooltipTitle}>
+            <div className={classNames('context-menu-only-text', textClasses)}>{resultsElement}</div>
+          </BootstrapTooltip>
+        )}
+      </span>
       {Boolean(anchorEl) && (
         <KsContextMenu
           anchorEl={anchorEl}

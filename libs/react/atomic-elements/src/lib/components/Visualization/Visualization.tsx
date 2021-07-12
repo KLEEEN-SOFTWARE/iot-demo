@@ -22,6 +22,7 @@ import Scatter from '../Scatter/Scatter';
 import SingleBarHighlightMax from '../SingleBarHighlightMax/SingleBarHighlightMax';
 import StepLineWidget from '../StepLine/StepLine';
 import { SummaryStatistics } from '../summary-statistics';
+import { ViewType } from '../DataViewDisplaySection/DataViewDisplaySection.model';
 import { VizCommonParams } from '../../../types/types';
 import Waterfall from '../Waterfall/Waterfall';
 import { WidgetTypes } from '../../../enums';
@@ -46,6 +47,7 @@ export interface Widget extends VizCommonParams {
   viableSolutions?: WidgetTypes[];
   viewOrder?: number;
   viewId: ReactText;
+  type: ViewType;
 }
 
 interface VisualizationProps {

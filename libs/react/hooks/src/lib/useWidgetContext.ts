@@ -32,7 +32,7 @@ export function useWidgetContext({ params, taskName, widgetId }: WidgetContextPr
   const entityActions = useKleeenActions(widgetContext);
 
   const widgetData: WidgetState = useKleeenContext(widgetContext);
-  const { status = { version: 0 } } = useKleeenContext(taskName);
+  const { status = { version: 0 } } = useKleeenContext(taskName) ?? {};
 
   const paramsBasedOnRoute = useUrlQueryParams({ useNestedObjects: true });
 

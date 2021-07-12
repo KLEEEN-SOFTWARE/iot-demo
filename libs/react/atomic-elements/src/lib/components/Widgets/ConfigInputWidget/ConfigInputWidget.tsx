@@ -61,16 +61,16 @@ export function ConfigInputWidget({
   const widgetData = params
     ? useWidgetContext({ taskName, widgetId, params: { ...params, attributes } })
     : { isLoading: false };
+  const attrName = widgetData && soloAttribute.name;
   const autoCompleteValues = useKsAutoComplete({
     taskName,
     widgetId,
-    entity: soloAttribute.rawEntityName,
+    entity: attrName,
   });
   const { updateRequest } = useKleeenActions(taskName);
   const { updateLayout } = useMasonry();
   const { paramsBasedOnRoute } = useUrlQueryParams();
   const attrLabel = widgetData && soloAttribute.label;
-  const attrName = widgetData && soloAttribute.name;
   const canAddValues = widgetData && soloAttribute.canAddValues;
   const hasMany = widgetData && soloAttribute.hasMany;
   const isClickable =
@@ -209,7 +209,7 @@ export function ConfigInputWidget({
     };
     attrValueRef.current = inputValueRef.current;
     return {
-      entity: params?.baseModel === KS_GLOBAL_APP ? soloAttribute.rawEntityName : params?.baseModel,
+      entity: params?.baseModel === KS_GLOBAL_APP ? attrName : params?.baseModel,
       params: {
         id: paramsBasedOnRoute[camelcase(params?.baseModel)],
         [isDisplayValue ? WidgetDataAttributes.DisplayValue : attrNameRef.current]:

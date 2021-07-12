@@ -2,17 +2,18 @@ import './SelectList.scss';
 
 import { FormControl, makeStyles, styled } from '@material-ui/core';
 import { KsMenuItem } from '@kleeen/react/components';
-import { useTheme } from '@kleeen/react/hooks';
 import MuiInputLabel from '@material-ui/core/InputLabel';
 import MuiSelect, { SelectProps } from '@material-ui/core/Select';
 import React from 'react';
+import { useTheme } from '@kleeen/react/hooks';
+import { ViewOption } from '../DataViewControlSection/DataViewControlSection.model';
 import classnames from 'classnames';
 
 const bem = 'ks-select-list';
 
 interface SelectListProps extends SelectProps {
   onChange: (value: unknown, child?: React.ReactNode) => void;
-  options: { label: string; value: string | number }[];
+  options: { label: string; value: string | number; option?: ViewOption }[];
   taskName?: string;
 }
 
@@ -114,13 +115,14 @@ export const SelectList = ({
         value={value}
         {...rest}
       >
-        {options.map(({ value: optionValue, label: optionLabel }) => {
+        {options.map((option) => {
+          const { value: optionValue, label: optionLabel, option: rawOption } = option;
           return (
             <MenuItem
               key={optionValue}
               value={optionValue}
               onClick={() => {
-                onChange(optionValue, null);
+                onChange(optionValue, rawOption);
               }}
             >
               {optionLabel}

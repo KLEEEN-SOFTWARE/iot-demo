@@ -60,10 +60,11 @@ export const NavTop = (props: NavTopProps): JSX.Element => {
               color="inherit"
               data-testid="ks-dropdown-menu-button"
             >
-              <MenuIcon />
+              <MenuIcon className="nav-icons" />
             </Button>
             <MenuListSection
               open={openMainMenu}
+              className="nav-menu"
               setOpen={setOpenMainMenu}
               anchorEl={mainMenu.current}
               handleClose={handleClose}
@@ -112,11 +113,11 @@ export const NavTop = (props: NavTopProps): JSX.Element => {
               window.open(props.helpUrl, '_blank');
             }}
           >
-            <HelpOutlineOutlinedIcon />
+            <HelpOutlineOutlinedIcon className="nav-icons" />
           </Button>
         )}
         <Button ref={accountMenu} onClick={handleToggleAccount} color="inherit">
-          <AccountCircleOutlinedIcon />
+          <AccountCircleOutlinedIcon className="nav-icons" />
         </Button>
         <MenuListSection
           open={openAccount}

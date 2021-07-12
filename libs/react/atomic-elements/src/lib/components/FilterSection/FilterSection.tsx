@@ -29,7 +29,7 @@ const parseToFilterOptions = (options: string[], translate): FilterOption[] =>
 const FilterSectionComponent = ({ translate, ...props }: FilterSectionProps): ReactElement => {
   const classes = useStyles();
   const [open, setOpen] = React.useState(false);
-  const availableAttributesToFilter = props.filters;
+  const availableAttributesToFilter = props.filters ?? [];
   const categoryFilterOptions: FilterOption[] = availableAttributesToFilter.map(
     ({ name, statisticalType }) => ({
       name,

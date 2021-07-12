@@ -11,7 +11,7 @@ import { Container, Title, Typography } from './DataViewControlSection.styles';
 import { DataViewControlSectionProps } from './DataViewControlSection.model';
 import { HeaderTitle, HeaderTitleEllipsis } from '../HeaderTitle';
 import { isAddAction } from '@kleeen/render-utils';
-import { isEmpty } from 'ramda';
+import { isEmpty, isNil } from 'ramda';
 import { isNilOrEmpty, sortByKeys } from '@kleeen/common/utils';
 import { ReactElement, useState } from 'react';
 import { useKleeenActions } from '@kleeen/react/hooks';
@@ -24,13 +24,32 @@ import { Action } from '@kleeen/types';
 const bem = 'ks-data-view-control-section';
 
 export function DataViewControlSection(props: DataViewControlSectionProps): ReactElement {
+  if (isNilOrEmpty(props.taskName)) {
+    throw new Error(`Value cannot be null. Parameter name: taskName`);
+  }
   const { refreshPage } = useKleeenActions(props.taskName);
   const [actionPayload, setActionPayload] = useState({});
   const [isConfirmationOpen, setIsConfirmationOpen] = useState(false);
   const [isCustomOpen, setIsCustomOpen] = useState(false);
+
+  const { selectedOption, onTabIndexChanged, viewOptions = [] } = props;
+  const viewOptionsBySortOrder = sortByKeys(viewOptions, ['viewOrder', 'viewId']);
+
+  const getSelectedOption = () => {
+    const hastToChooseADefaultViewOption =
+      isNilOrEmpty(selectedOption) && !isNilOrEmpty(viewOptionsBySortOrder) && !isNil(onTabIndexChanged);
+
+    if (hastToChooseADefaultViewOption) {
+      const [defaultViewOption] = viewOptionsBySortOrder;
+      onTabIndexChanged(0, defaultViewOption);
+      return defaultViewOption;
+    }
+    return viewOptionsBySortOrder.find(
+      (viewOption) => selectedOption && viewOption.viewId === selectedOption.viewId,
+    );
+  };
   // TODO: @cafe move this logic to a shared util and re-use it in HeaderAndSubSectionsComponent
-  const viewOptionProps = props.viewOptions && props.viewOptions[props.value];
-  const orderedViewProps = sortByKeys(props.viewOptions, ['viewOrder', 'viewId']);
+  const viewOptionProps = getSelectedOption();
 
   const addActions = getAddActions();
   const entityName = isNilOrEmpty(viewOptionProps?.entityName) ? props.entity : viewOptionProps.entityName;
@@ -52,7 +71,7 @@ export function DataViewControlSection(props: DataViewControlSectionProps): Reac
 
   function getAddActions(): Action[] {
     const localActions = isNilOrEmpty(viewOptionProps?.actions) ? props.actions : viewOptionProps.actions;
-    return localActions?.filter(isAddAction);
+    return (localActions || []).filter(isAddAction);
   }
 
   function handleClick(action: Action): void {
@@ -106,14 +125,15 @@ export function DataViewControlSection(props: DataViewControlSectionProps): Reac
             )}
           </Grid>
         </Grid>
-        {orderedViewProps.length > 1 && (
+        {viewOptionsBySortOrder.length > 1 && (
           <Grid alignItems="center" className={classnames(`${bem}__options`, 'options')} container>
             <ViewSwitcher
               handleChangeTab={props.handleChangeTab}
+              onTabIndexChanged={props.onTabIndexChanged}
               showDropDown={props.showDropDown}
               taskName={props.taskName}
-              value={props.value}
-              viewOptions={orderedViewProps}
+              value={viewOptionsBySortOrder.indexOf(viewOptionProps)}
+              viewOptions={viewOptionsBySortOrder}
             />
           </Grid>
         )}

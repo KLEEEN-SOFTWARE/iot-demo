@@ -13,5 +13,5 @@ export const CardTitle = ({ title, icon }: CardTitleProps): JSX.Element =>
       {icon && <MoreHorizIcon className={classnames(`${bem}__icon`, 'icon')} />}
     </div>
   ) : (
-    title
+    title ?? null
   );

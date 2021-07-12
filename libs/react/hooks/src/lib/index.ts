@@ -28,6 +28,7 @@ export * from './useKleeenContext';
 export * from './useLocalization';
 export * from './useMasonry';
 export * from './usePrevious';
+export * from './usePreviewPanel';
 export * from './useSwish';
 export * from './useTheme';
 export * from './useTextFormatter';

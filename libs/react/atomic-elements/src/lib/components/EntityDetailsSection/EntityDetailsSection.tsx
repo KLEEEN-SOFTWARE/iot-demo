@@ -8,13 +8,14 @@ import { makeStyles, styled } from '@material-ui/core';
 import { ReactElement, useEffect, useState } from 'react';
 import { Slot } from '../DetailSummary/DetailSummary.model';
 import { SummaryPanel } from '../summary-panel';
-import { Translate } from '@kleeen/types';
 import ArrowLeftIcon from '@material-ui/icons/ArrowLeft';
 import classnames from 'classnames';
 import EditOutlinedIcon from '@material-ui/icons/EditOutlined';
-import MuiButton from '@material-ui/core/Button';
+import { Translate } from '@kleeen/types';
 import MuiToolbar from '@material-ui/core/Toolbar';
 import MuiTooltip from '@material-ui/core/Tooltip';
+import { isNilOrEmpty } from '@kleeen/common/utils';
+import MuiButton from '@material-ui/core/Button';
 
 const bem = 'ks-entity-details-section';
 export interface EntityDetailsSectionProps {
@@ -73,7 +74,13 @@ const useStyles = makeStyles(() => ({
 }));
 
 export function EntityDetailsSectionBase({ translate, ...props }: EntityDetailsSectionProps): ReactElement {
-  const { updateRequest } = useKleeenActions(props.taskName);
+  const { taskName } = props;
+  if (isNilOrEmpty(taskName)) {
+    // TODO: @jcvalerio should throw an exception
+    // throw new Error('The attribute taskName was null');
+    return null;
+  }
+  const { updateRequest } = useKleeenActions(taskName);
   const [attributeEventList, { addEvent, clearEventList }] = useEntityDetailsEventHandler();
   const [open, setOpen] = useState(true);
   const [isEditing, setEditing] = useState(false);

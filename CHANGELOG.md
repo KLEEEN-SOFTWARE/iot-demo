@@ -1,3 +1,30 @@
+## [1.47.1](https://github.com/KLEEEN-SOFTWARE/template/compare/1.47.0...1.47.1) (2021-07-07)
+
+
+### Bug Fixes
+
+* **components:** end user preferences required components ([18c1bf6](https://github.com/KLEEEN-SOFTWARE/template/commit/18c1bf6e1069b7cf4c7148834687c99814c01746))
+
+# [1.47.0](https://github.com/KLEEEN-SOFTWARE/template/compare/1.46.0...1.47.0) (2021-07-05)
+
+
+### Bug Fixes
+
+* **component:** fix missing prop custom widgets ([#1024](https://github.com/KLEEEN-SOFTWARE/template/issues/1024)) ([b920f27](https://github.com/KLEEEN-SOFTWARE/template/commit/b920f2744c54731eb82c32ff38717d11e2270f0f))
+* **component:** fix timepicker error and styles ([#1019](https://github.com/KLEEEN-SOFTWARE/template/issues/1019)) ([82ef576](https://github.com/KLEEEN-SOFTWARE/template/commit/82ef5760d404d02e24e7d9bdf26cf34dc963d251))
+* **cross-link-on-display-media:** fix of width ([#1028](https://github.com/KLEEEN-SOFTWARE/template/issues/1028)) ([ffce6b0](https://github.com/KLEEEN-SOFTWARE/template/commit/ffce6b04ffa90d875621f1a13d97b2d8cfb6876f))
+* **develop:** fix chart  with example data ([#1014](https://github.com/KLEEEN-SOFTWARE/template/issues/1014)) ([49fab85](https://github.com/KLEEEN-SOFTWARE/template/commit/49fab856f8fae79a18e32021c4dd94f1aecdd13f))
+* **elements:** fix order cart title styles ([#1027](https://github.com/KLEEEN-SOFTWARE/template/issues/1027)) ([d1fa6f8](https://github.com/KLEEEN-SOFTWARE/template/commit/d1fa6f8cc4357095db4b461670ff694ba2ca4a83))
+* **list:** avoid infinite loop re-render ([#1017](https://github.com/KLEEEN-SOFTWARE/template/issues/1017)) ([d377fc6](https://github.com/KLEEEN-SOFTWARE/template/commit/d377fc6ec2b2e3ef4c88e087906499e038b93f08))
+
+
+### Features
+
+* **bubble-chart-report:** fix on simple list ([#1026](https://github.com/KLEEEN-SOFTWARE/template/issues/1026)) ([5c70c9b](https://github.com/KLEEEN-SOFTWARE/template/commit/5c70c9b792f12306150584669518c8a45e9c9924))
+* **components:** add upload optional dependency to reset the state ([#1008](https://github.com/KLEEEN-SOFTWARE/template/issues/1008)) ([b0073ab](https://github.com/KLEEEN-SOFTWARE/template/commit/b0073ab10d64ae29fff8f1b2ded22991af1b8c20))
+* **cross-link:** cross-link on display media ([#1023](https://github.com/KLEEEN-SOFTWARE/template/issues/1023)) ([4049c27](https://github.com/KLEEEN-SOFTWARE/template/commit/4049c27ade5a69c0dfc328d57c3de1745cf45895))
+* **topnav-icons:** add icons to top navigation menu [KSE-3434] ([#1025](https://github.com/KLEEEN-SOFTWARE/template/issues/1025)) ([aed2370](https://github.com/KLEEEN-SOFTWARE/template/commit/aed2370c764f5116f86a10bc07578c3c86bd3159))
+
 # [1.46.0](https://github.com/KLEEEN-SOFTWARE/template/compare/1.45.0...1.46.0) (2021-06-29)
 
 

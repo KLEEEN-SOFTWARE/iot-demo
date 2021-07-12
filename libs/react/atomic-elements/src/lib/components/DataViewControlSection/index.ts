@@ -9,8 +9,13 @@ export * from './DataViewControlSection';
 export type DataViewControlSectionProps = DataViewControlSectionPropsType;
 
 export function formatViewOptions(viewOptions: ViewOption[]) {
-  return viewOptions.map(({ name, viewOrder }, index) => ({
-    label: name,
-    value: isNilOrEmpty(viewOrder) ? index : viewOrder,
-  }));
+  return viewOptions.map((option, index) => {
+    const { name, viewOrder } = option;
+    return {
+      label: name,
+      viewOrder: isNilOrEmpty(viewOrder) ? index : viewOrder,
+      value: name,
+      option,
+    };
+  });
 }

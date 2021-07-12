@@ -6,6 +6,13 @@ export interface GroupByProps {
   formatType: string;
 }
 
+export interface MenuListProps {
+  func?: () => void;
+  icon?: string;
+  path: string;
+  title: string;
+}
+
 export interface TransformationProps {
   isPrimary?: boolean;
   transformation: AggregationType;
