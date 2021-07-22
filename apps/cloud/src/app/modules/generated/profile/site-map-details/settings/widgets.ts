@@ -1,4 +1,4 @@
-import CustomView_6MxSUSiehmRP9kh7u543zo from '../../../../custom/pages/profile/site-map-details/components/custom-view-6-mx-su-siehm-rp-9-kh-7-u-543-zo';
+import CustomView_6MxSUSiehmRP9kh7u543zo from '../../../../custom/profile/site-map-details/components/custom-view-6-mx-su-siehm-rp-9-kh-7-u-543-zo';
 
 export const widgets = [
   {
@@ -12,6 +12,7 @@ export const widgets = [
     params: {},
     statisticalType: undefined,
     title: undefined,
+    entityId: undefined,
     viableSolutions: [],
     viewId: 'ks-view-6MxSUSiehmRP9kh7u543zo',
     type: 'custom',
@@ -108,6 +109,7 @@ export const widgets = [
     },
     statisticalType: undefined,
     title: undefined,
+    entityId: 120425,
     viableSolutions: [],
     viewOrder: 1,
     viewId: 'ks-view-4QW2xvV3Vsfs1RDwBfmZ6Q',
@@ -216,6 +218,7 @@ export const widgets = [
     },
     statisticalType: undefined,
     title: undefined,
+    entityId: 120421,
     viableSolutions: [],
     viewOrder: 2,
     viewId: 'ks-view-ozFw5fbSFqWz82tFnVgnAm',

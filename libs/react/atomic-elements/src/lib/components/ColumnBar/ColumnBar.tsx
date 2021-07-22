@@ -8,7 +8,7 @@ import HighchartsHighstock from 'highcharts/highstock';
 import HighchartsReact from 'highcharts-react-official';
 import { Loader } from '@kleeen/react/components';
 import React from 'react';
-import { WidgetTypes } from '../../../enums';
+import { WidgetTypes } from '@kleeen/types';
 import { generalBaseOptions } from '../generalBaseOptions';
 import { getOptions } from './options';
 import merge from 'lodash.merge';

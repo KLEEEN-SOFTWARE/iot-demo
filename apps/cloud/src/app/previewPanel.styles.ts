@@ -77,7 +77,7 @@ export const useStyles = makeStyles({
     height: '100%',
   },
   reflexPanelElement: {
-    height: '60%',
+    height: '100%',
   },
   topPanel: {
     minHeight: 'var(--wh-6XL)',

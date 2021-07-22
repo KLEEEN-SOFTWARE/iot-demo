@@ -3,6 +3,7 @@ import './DatePickerInterval.scss';
 import { DatePickerIntervalProps, DateProps } from './DatePickerInterval.model';
 import React, { useState } from 'react';
 import { Theme, withStyles } from '@material-ui/core/styles';
+import { useGetNavigationStyle, useTheme } from '@kleeen/react/hooks';
 
 import { ButtonSubHeaderEnum } from '../SubHeader/component/ButtonHeader/ButtonSubHeader.enum';
 import ClickAwayListener from '@material-ui/core/ClickAwayListener';
@@ -11,9 +12,8 @@ import { DateInterval } from '@kleeen/react/components';
 import { IntervalDate } from '@kleeen/types';
 import { RelativeTimePicker } from './components/relativeTimePicker/index';
 import Tooltip from '@material-ui/core/Tooltip';
-import { isNil } from 'ramda';
-import { useTheme } from '@kleeen/react/hooks';
 import classnames from 'classnames';
+import { isNil } from 'ramda';
 
 const bem = 'ks-date-picker-interval';
 
@@ -42,8 +42,7 @@ export const DatePickerInterval = ({
   const { themeClass } = useTheme();
   const isApply = !isNil(handleFilter);
 
-  const themeWrapper = document.getElementById('theme-wrapper-id');
-  const isNavLeft = themeWrapper.classList.contains('nav-left');
+  const { isNavLeft } = useGetNavigationStyle();
 
   if (!isNil(isOpen) && isApply) {
     React.useEffect(() => {

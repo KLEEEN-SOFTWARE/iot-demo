@@ -3,11 +3,9 @@ import { roleAccessKeyTag } from '@kleeen/common/utils';
 import { useState } from 'react';
 import {
   EntireProductDomainLayoutStyle,
-  FilterSection,
   DataViewControlSection,
   DataViewDisplaySectionAtomic,
 } from '@kleeen/react/atomic-elements';
-import { filterSectionFilters } from './settings/filter-section-filters';
 import { viewOptions } from './settings/view-options';
 import { widgets } from './settings/widgets';
 
@@ -26,9 +24,6 @@ function Workflow({ translate, ...props }) {
   return (
     <AccessControl id={roleAccessKeyTag(`navigation.${taskName}`)}>
       <div className={`${classes.entityBrowserTask} subhead-dynamic`}>
-        <div className={classes.entityBrowserFilterSection}>
-          <FilterSection filters={filterSectionFilters} taskName={taskName} />
-        </div>
         <div
           className={
             isFilterOpen

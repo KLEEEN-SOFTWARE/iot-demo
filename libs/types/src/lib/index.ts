@@ -4,3 +4,4 @@ export * from './types';
 export * from './types/elements';
 export * from './types/format';
 export * from './types/responses';
+export * from './types/widget';

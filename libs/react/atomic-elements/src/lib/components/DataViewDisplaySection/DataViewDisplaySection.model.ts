@@ -1,7 +1,7 @@
+import { ViewType, Widget } from '@kleeen/types';
+
 import { ReactText } from 'react';
-import { Row } from '../../../../../components/src/lib/GridSection/GridSection.model';
 import { ViewOption } from '../DataViewControlSection/DataViewControlSection.model';
-import { Widget } from '@kleeen/react/atomic-elements';
 
 export interface DataViewDisplaySectionAtomicProps {
   widgets: Widget[];
@@ -16,6 +16,10 @@ export interface DataViewDisplaySectionAtomicProps {
   taskName: string;
   value: any;
   setCardsNumber?: (e: number) => void;
+}
+
+export interface Row {
+  [key: string]: string | number;
 }
 
 export type DisplaySectionViews = {
@@ -33,11 +37,3 @@ export type DashboardView = {
   dashboardWidgets: Widget[];
   viewId: ReactText;
 };
-
-export enum ViewType {
-  custom = 'custom',
-  dashboard = 'dashboard',
-  report = 'report',
-  single = 'single',
-  table = 'table',
-}

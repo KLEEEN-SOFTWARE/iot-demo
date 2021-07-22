@@ -1,9 +1,10 @@
-import { isEmpty } from 'ramda';
+import React, { ReactElement } from 'react';
+
+import { DataListItem } from '@kleeen/types';
 import { ListHeader } from './ListHeader';
 import { ListProps } from './List.model';
-import { styleList } from './list.style';
-import React, { ReactElement } from 'react';
 import classnames from 'classnames';
+import { styleList } from './list.style';
 
 const bem = 'ks-list';
 
@@ -34,21 +35,17 @@ export function List({
   const [sortedData, setSearchResults] = React.useState(data);
 
   React.useEffect(() => {
-    renderData(searchTerm);
-  }, [searchTerm]);
+    if (data) renderData(data, searchTerm);
+  }, [data, searchTerm]);
 
-  React.useEffect(() => {
-    if (isEmpty(sortedData) && !searchTerm) setSearchResults(data);
-  }, [data]);
-
-  function renderData(searchTermParam: string) {
+  function renderData(dataResults: DataListItem[], searchTermParam: string) {
     let results = sortBy
-      ? data.sort(function (a, b) {
+      ? dataResults.sort(function (a, b) {
           const aValue = a[sortBy].displayValue;
           const bValue = b[sortBy].displayValue;
           return sortByType?.[typeof aValue]?.(aValue, bValue);
         })
-      : data;
+      : dataResults;
     if (searchTermParam) {
       results = results.filter((dataPoint) => {
         return String(dataPoint[searchKey]?.displayValue)

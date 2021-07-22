@@ -6,7 +6,7 @@ import AreaMacroMicro from '../../AreaMacroMicro/AreaMacroMicro';
 import AreaMasterDetail from '../../AreaMasterDetail/AreaMasterDetail';
 import { Loader } from '@kleeen/react/components';
 import React from 'react';
-import { WidgetTypes } from '../../../../enums';
+import { WidgetTypes } from '@kleeen/types';
 import { makeStyles } from '@material-ui/core';
 import { useWidgetContext } from '@kleeen/react/hooks';
 

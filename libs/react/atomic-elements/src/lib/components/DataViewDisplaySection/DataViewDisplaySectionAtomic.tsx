@@ -1,9 +1,5 @@
-import {
-  DashboardView,
-  DataViewDisplaySectionAtomicProps,
-  DisplaySectionViews,
-  ViewType,
-} from './DataViewDisplaySection.model';
+import { DataViewDisplaySectionAtomicProps, DisplaySectionViews } from './DataViewDisplaySection.model';
+import { ViewType, Widget } from '@kleeen/types';
 import { isNilOrEmpty, roleAccessKeyTag, sortByKeys } from '@kleeen/common/utils';
 
 import CardSection from '../CardSection/CardSection';
@@ -13,7 +9,6 @@ import DataViewDisplaySection from './DataViewDisplaySection';
 import FullViewViz from '../FullViewViz/FullViewViz';
 import GridAreaSection from '../GridAreaSection/GridAreaSection';
 import React from 'react';
-import { Widget } from '@kleeen/react/atomic-elements';
 import { useAccessControlChecker } from '@kleeen/core-react';
 import { useGetWidgetsAmount } from '@kleeen/react/hooks';
 
@@ -29,7 +24,7 @@ export const DataViewDisplaySectionAtomic = React.memo((props: DataViewDisplaySe
     value: indexToRender = 0,
   } = props;
 
-  const accessControlFilterViews = (view: Widget & { type: ViewType }): boolean => {
+  const accessControlFilterViews = (view: Widget): boolean => {
     if (view.type === ViewType.dashboard || view.type === ViewType.report) {
       return (
         useAccessControlChecker(roleAccessKeyTag(`${props.taskName}.views.dashboard`)).permission ===
@@ -44,7 +39,7 @@ export const DataViewDisplaySectionAtomic = React.memo((props: DataViewDisplaySe
   };
   const taskViews = widgets;
 
-  const orderedTaskViews = sortByKeys<Widget & { type: ViewType }>(taskViews, ['viewOrder', 'viewId']);
+  const orderedTaskViews = sortByKeys<Widget>(taskViews, ['viewOrder', 'viewId']);
 
   useGetWidgetsAmount(props.setCardsNumber);
 

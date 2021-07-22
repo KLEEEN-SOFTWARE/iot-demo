@@ -1,7 +1,8 @@
 {
+  "companyName": "Kleeen IoT",
+  "defaultHomePage": "/events",
   "layout": {
     "position": "nav-top"
   },
-  "productName": "Internet of Things",
-  "defaultHomePage": "/events"
+  "productName": "Internet of Things"
 }

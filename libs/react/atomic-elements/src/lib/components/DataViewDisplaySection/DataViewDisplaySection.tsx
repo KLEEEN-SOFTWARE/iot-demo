@@ -1,7 +1,8 @@
-import { makeStyles } from '@material-ui/core';
-import { useGetWidgetsAmount } from '@kleeen/react/hooks';
 import React, { useEffect, useState } from 'react';
+import { useGetNavigationStyle, useGetWidgetsAmount } from '@kleeen/react/hooks';
+
 import classnames from 'classnames';
+import { makeStyles } from '@material-ui/core';
 
 const bem = 'ks-data-display-section';
 
@@ -63,8 +64,7 @@ export const DataViewDisplaySection = React.memo((props: DataViewDisplaySectionP
 
   useEffect(() => {
     const subHeader = document.getElementById('sub-header-element-id');
-    const themeWrapper = document.getElementById('theme-wrapper-id');
-    const isNavLeft = themeWrapper.classList.contains('nav-left');
+    const { isNavLeft } = useGetNavigationStyle();
     if (!subHeader && isNavLeft) {
       setWithoutSubHeader(true);
     }

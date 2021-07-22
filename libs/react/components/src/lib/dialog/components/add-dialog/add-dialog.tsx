@@ -58,7 +58,7 @@ export function KsAddDialog({
       open={open}
     >
       <DialogTitle id="form-dialog-title" className={classes.dialogTitle}>
-        {capitalize(title)}
+        {typeof title === 'string' ? capitalize(title.toString()) : title}
       </DialogTitle>
       <DialogContent className={classes.dialogContent} id={containerId}>
         {children}

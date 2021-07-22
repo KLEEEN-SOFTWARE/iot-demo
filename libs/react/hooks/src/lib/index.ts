@@ -22,6 +22,7 @@ export * from './useCrosslinkingItems';
 export * from './useCrossLinkingMenuOnViz';
 export * from './useWidgetContext';
 export * from './useEntityDetailsEventHandler';
+export * from './use-get-navigation-style';
 export * from './use-hover-intent';
 export * from './useKleeenActions';
 export * from './useKleeenContext';

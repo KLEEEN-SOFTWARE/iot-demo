@@ -1,4 +1,4 @@
-import Widget_1MRtKroSqrEGDDNEs9CJDv from '../../../custom/pages/system/components/widget-1-m-rt-kro-sqr-egddn-es-9-cj-dv';
+import Widget_1MRtKroSqrEGDDNEs9CJDv from '../../../custom/system/components/widget-1-m-rt-kro-sqr-egddn-es-9-cj-dv';
 
 export const widgets = [
   {
@@ -12,6 +12,7 @@ export const widgets = [
     params: {},
     statisticalType: undefined,
     title: undefined,
+    entityId: undefined,
     viableSolutions: [],
     viewId: 'ks-view-6M9TLFSHnbMdsMp9tJGEeA',
     widgets: [
@@ -59,6 +60,7 @@ export const widgets = [
         },
         statisticalType: undefined,
         title: `Event Length`,
+        entityId: undefined,
         viableSolutions: ['[WIDGET] SINGLE_BAR_HIGHLIGHT_MAX', '[WIDGET] SIMPLE_LIST_RANKED'],
         sortOrder: 0,
         viewId: 'ks-view-6M9TLFSHnbMdsMp9tJGEeA',
@@ -106,6 +108,7 @@ export const widgets = [
         },
         statisticalType: undefined,
         title: `Historical Events`,
+        entityId: undefined,
         viableSolutions: ['[WIDGET] SIMPLE_LIST_RANKED'],
         sortOrder: 1,
         viewId: 'ks-view-6M9TLFSHnbMdsMp9tJGEeA',
@@ -340,6 +343,7 @@ export const widgets = [
         },
         statisticalType: undefined,
         title: `Sensors`,
+        entityId: undefined,
         viableSolutions: [],
         sortOrder: 2,
         viewId: 'ks-view-6M9TLFSHnbMdsMp9tJGEeA',
@@ -574,6 +578,7 @@ export const widgets = [
         },
         statisticalType: undefined,
         title: `Nodes`,
+        entityId: undefined,
         viableSolutions: [],
         sortOrder: 3,
         viewId: 'ks-view-6M9TLFSHnbMdsMp9tJGEeA',
@@ -629,6 +634,7 @@ export const widgets = [
         },
         statisticalType: undefined,
         title: `Site Map`,
+        entityId: undefined,
         viableSolutions: ['[WIDGET] SIMPLE_LIST'],
         sortOrder: 4,
         viewId: 'ks-view-6M9TLFSHnbMdsMp9tJGEeA',
@@ -689,6 +695,7 @@ export const widgets = [
         },
         statisticalType: undefined,
         title: `Node Status`,
+        entityId: undefined,
         viableSolutions: [
           '[WIDGET] STEP_LINE',
           '[WIDGET] AREA_MACRO_MICRO',
@@ -743,6 +750,7 @@ export const widgets = [
         },
         statisticalType: undefined,
         title: `Sensor Status`,
+        entityId: undefined,
         viableSolutions: [
           '[WIDGET] STEP_LINE',
           '[WIDGET] AREA_MACRO_MICRO',
@@ -848,6 +856,7 @@ export const widgets = [
         },
         statisticalType: undefined,
         title: `Sensor Overall Status`,
+        entityId: undefined,
         viableSolutions: [],
         sortOrder: 7,
         viewId: 'ks-view-6M9TLFSHnbMdsMp9tJGEeA',
@@ -948,6 +957,7 @@ export const widgets = [
         },
         statisticalType: undefined,
         title: `Node Overall Status`,
+        entityId: undefined,
         viableSolutions: [],
         sortOrder: 8,
         viewId: 'ks-view-6M9TLFSHnbMdsMp9tJGEeA',
@@ -1002,6 +1012,7 @@ export const widgets = [
         },
         statisticalType: undefined,
         title: `System Health`,
+        entityId: undefined,
         viableSolutions: [],
         sortOrder: 9,
         viewId: 'ks-view-6M9TLFSHnbMdsMp9tJGEeA',
@@ -1017,6 +1028,7 @@ export const widgets = [
         params: {},
         statisticalType: undefined,
         title: `Utilization Saturation and Errors (USE)`,
+        entityId: undefined,
         viableSolutions: [],
         sortOrder: 10,
       },

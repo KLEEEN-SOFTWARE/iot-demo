@@ -104,6 +104,7 @@ export const widgets = [
     },
     statisticalType: undefined,
     title: undefined,
+    entityId: 120421,
     viableSolutions: [],
     viewOrder: Infinity,
     viewId: 'ks-view-8yyhmnH4a88SWwvb4pJkWx',

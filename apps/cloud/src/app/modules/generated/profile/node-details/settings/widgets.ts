@@ -1,4 +1,4 @@
-import Widget_hkerWJWdKvQKCk8cKSRUfD from '../../../../custom/pages/profile/node-details/components/widget-hker-wj-wd-kv-qk-ck-8-c-ksr-uf-d';
+import Widget_hkerWJWdKvQKCk8cKSRUfD from '../../../../custom/profile/node-details/components/widget-hker-wj-wd-kv-qk-ck-8-c-ksr-uf-d';
 
 export const widgets = [
   {
@@ -12,6 +12,7 @@ export const widgets = [
     params: {},
     statisticalType: undefined,
     title: undefined,
+    entityId: undefined,
     viableSolutions: [],
     viewId: 'ks-view-836ktgrgcWMRiBYeeCEB8G',
     widgets: [
@@ -39,6 +40,7 @@ export const widgets = [
         },
         statisticalType: undefined,
         title: `Reboot Node`,
+        entityId: undefined,
         viableSolutions: [],
         sortOrder: 0,
       },
@@ -92,6 +94,7 @@ export const widgets = [
         },
         statisticalType: undefined,
         title: `Status`,
+        entityId: undefined,
         viableSolutions: [],
         sortOrder: 1,
         viewId: 'ks-view-836ktgrgcWMRiBYeeCEB8G',
@@ -155,6 +158,7 @@ export const widgets = [
         },
         statisticalType: undefined,
         title: `Sensors`,
+        entityId: undefined,
         viableSolutions: [],
         sortOrder: 2,
         viewId: 'ks-view-836ktgrgcWMRiBYeeCEB8G',
@@ -209,6 +213,7 @@ export const widgets = [
         },
         statisticalType: undefined,
         title: `Site Status`,
+        entityId: undefined,
         viableSolutions: ['[WIDGET] SIMPLE_LIST_RANKED'],
         sortOrder: 3,
         viewId: 'ks-view-836ktgrgcWMRiBYeeCEB8G',
@@ -224,6 +229,7 @@ export const widgets = [
         params: {},
         statisticalType: undefined,
         title: `Total Sensors`,
+        entityId: undefined,
         viableSolutions: [],
         sortOrder: 4,
       },

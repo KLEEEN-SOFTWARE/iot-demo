@@ -23,15 +23,14 @@ import {
   TableWidget,
 } from '../../Widgets';
 import { ReactElement, useState } from 'react';
-import GridAreaSection from '../../GridAreaSection/GridAreaSection';
+import { Widget, WidgetTypes } from '@kleeen/types';
 
 import { AttributeInputEvents } from '@kleeen/react/hooks';
 import CardWidget from '../CardWidget';
+import GridAreaSection from '../../GridAreaSection/GridAreaSection';
 import { RenderWidgetProps } from '../CardWidget.model';
 import { VisualizationSelector } from '../../VisualizationSelector/VisualizationSelector';
 import WaterfallWidget from '../../Widgets/WaterfallWidget/WaterfallWidget';
-import { Widget } from '../../../../types';
-import { WidgetTypes } from '../../../../enums';
 import { isNilOrEmpty } from '@kleeen/common/utils';
 
 export function TransformToWidgetComponent({

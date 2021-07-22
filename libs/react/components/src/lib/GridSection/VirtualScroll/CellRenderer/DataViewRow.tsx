@@ -34,13 +34,14 @@ function DataViewRow({
   function _draggableColumn(children) {
     return <DragHandle>{children}</DragHandle>;
   }
+  const isFirstColumn = idx === 0;
   const classes = useStyles();
-  if (deleteContainer && deleteContainer.includes(row.id)) {
+  if (deleteContainer && deleteContainer.includes(rowData.id) && isFirstColumn) {
     const confirmMethod = () => {
-      deleteProcess(row.id);
+      deleteProcess(rowData.id);
     };
     const rejectMethod = () => {
-      toggleDelete(row.id);
+      toggleDelete(rowData.id);
     };
 
     return (
@@ -56,17 +57,20 @@ function DataViewRow({
       </TableCell>
     );
   }
-  if (deleteContainer && deleteContainer.includes(rowData.id)) return null;
+  if (deleteContainer && deleteContainer.includes(rowData.id)) {
+    return null;
+  }
 
   const rowKey = `${row.id}-${`${attr.isDisplayValue ? `displayValue::${attr.name}` : attr.name}`}`;
   const { displayValue: rowDisplayValue } = rowData[`displayValue::${displayColumnAttribute?.name}`] || {};
 
-  if (idx === 0) {
+  if (isFirstColumn) {
     const hasBorderRight = hasActions ? 'no-border-right' : null;
-    const handleCustomAction = (action) => triggerCustomAction(action, row.id);
-    const handleDelete = () => toggleDelete(row.id);
-    const handleEdit = () => {
-      null;
+    const handleCustomAction = (action) => triggerCustomAction(action, rowData.id);
+
+    const handleDelete = () => toggleDelete(rowData.id);
+    const handleEdit = (): void => {
+      return;
     };
 
     return (
@@ -82,7 +86,7 @@ function DataViewRow({
           )}
         <TableCell
           key={rowKey}
-          className={`hasBorderRight ${draggable ? 'firstColumn' : ''} ${
+          className={`${hasBorderRight} ${draggable ? 'firstColumn' : ''} ${
             row.displayMedia && classes.tableCellContainer
           }`}
         >

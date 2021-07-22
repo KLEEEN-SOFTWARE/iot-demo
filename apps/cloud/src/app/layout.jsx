@@ -1,6 +1,6 @@
 import 'react-reflex/styles.css';
 
-import React, { useState } from 'react';
+import React, { useCallback, useState } from 'react';
 import { ReflexContainer, ReflexElement, ReflexHandle, ReflexSplitter } from 'react-reflex';
 import { PreviewCloseButton, MockSelect, useStyles } from './previewPanel.styles';
 import { NavPosition } from '@kleeen/types';
@@ -8,7 +8,7 @@ import { NavigationTask } from './modules/generated/components';
 import classnames from 'classnames';
 import settings from './settings/app.json';
 import { PreviewPanelLayoutProvider, useKleeenRouting, usePreviewPanel } from '@kleeen/react/hooks';
-import FormControl from '@material-ui/core/FormControl';
+import { FormControl } from '@material-ui/core';
 import { KUIConnect } from '@kleeen/core-react';
 
 //TODO Remove Mock component when ViewSwitcher is implemented
@@ -52,19 +52,21 @@ const Layout = ({ modules }) => {
   const bem = 'ks-layout';
   const modifier = isNavTop ? 'top' : 'side container-nav-left';
   const [isPreviewOpen, setPreviewOpen] = useState(false);
-  const previewModifier = isPreviewOpen ? 'preview-open' : 'preview-close';
 
   const styles = useStyles();
 
-  const Content = () => (
-    <main
-      className={classnames(`${bem}__content`, isPreviewOpen ? 'layout-preview' : 'layout', {
-        [NavPosition.top]: isNavTop,
-        [NavPosition.left]: !isNavTop,
-      })}
-    >
-      <KsRouter />
-    </main>
+  const Content = useCallback(
+    () => (
+      <main
+        className={classnames(`${bem}__content`, 'main-layout', {
+          [NavPosition.top]: isNavTop,
+          [NavPosition.left]: !isNavTop,
+        })}
+      >
+        <KsRouter />
+      </main>
+    ),
+    [],
   );
 
   const togglePreviewPanel = () => {
@@ -76,14 +78,14 @@ const Layout = ({ modules }) => {
   };
 
   return (
-    <div className={classnames(bem, `${bem}--${modifier}`, `${bem}--${previewModifier}`, 'content-layout')}>
+    <div className={classnames(bem, `${bem}--${modifier}`, 'content-layout')}>
       <section className={classnames(`${bem}__navigation`)}>
         <NavigationTask />
       </section>
       <PreviewPanelLayoutProvider fns={reflexFns}>
         <ReflexContainer
           orientation="horizontal"
-          className={classnames(`${bem}__preview-container`, isPreviewOpen ? 'layout-preview' : 'layout')}
+          className={classnames(`${bem}__preview-container`, 'layout')}
         >
           <ReflexElement
             className={classnames(`${bem}__top-pane`, styles.topPanel, styles.reflexPanelElement)}

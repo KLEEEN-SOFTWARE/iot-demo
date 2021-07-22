@@ -1,15 +1,16 @@
 import { AttributeInputEvents, useEntityDetailsEventHandler, useTheme } from '@kleeen/react/hooks';
 import { BaseAddDialogProps, KsButton } from '@kleeen/react/components';
-import { ConfigInputWidget } from '../Widgets';
-import { Dialog as KsDialog } from './AddDialog.styles';
 import { MouseEvent, useEffect } from 'react';
-import { startCase } from 'lodash';
-import { Translate } from '@kleeen/core-react';
-import capitalize from 'lodash.capitalize';
-import classnames from 'classnames';
+
+import { ConfigInputWidget } from '../Widgets';
 import DialogActions from '@material-ui/core/DialogActions';
 import DialogContent from '@material-ui/core/DialogContent';
 import DialogTitle from '@material-ui/core/DialogTitle';
+import { Dialog as KsDialog } from './AddDialog.styles';
+import { Translate } from '@kleeen/core-react';
+import capitalize from 'lodash.capitalize';
+import classnames from 'classnames';
+import { startCase } from 'lodash';
 
 interface BuildEntityProps {
   attributeEventList: AttributeInputEvents[];
@@ -151,7 +152,9 @@ export function AddDialog({
       onClose={handleClose}
       open={open}
     >
-      <DialogTitle id="form-dialog-title">{capitalize(title)}</DialogTitle>
+      <DialogTitle id="form-dialog-title">
+        {typeof title === 'string' ? capitalize(title.toString()) : title}
+      </DialogTitle>
       <DialogContent>
         {attributes.map((attr) => (
           <div className={classnames(`${bem}__content`)} style={{ marginBottom: 'var(--pm-S)' }}>

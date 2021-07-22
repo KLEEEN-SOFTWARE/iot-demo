@@ -1,6 +1,5 @@
-import { styled, withStyles } from '@material-ui/core';
-
 import { KsMenu, KsMenuItem } from '../menu';
+import { styled, withStyles } from '@material-ui/core';
 
 export const Menu = styled(KsMenu)({
   '& .MuiMenu-paper': {
@@ -76,6 +75,14 @@ export const MenuTitle = withStyles({
     zIndex: 2,
     '&.MuiListItem-button.Mui-disabled': {
       opacity: '1',
+    },
+    '&, span .text-formatter': {
+      width: '100%',
+      whiteSpace: 'nowrap',
+      textOverflow: 'ellipsis',
+      overflow: 'hidden',
+      textAlign: 'left',
+      display: 'inline-block',
     },
   },
 })(MenuGroupNameBase);

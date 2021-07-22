@@ -1,4 +1,4 @@
-import Action_c7rM8APPPfREsDkdczyzcS from '../../../custom/pages/sensors/components/action-c-7-r-m-8-app-pf-r-es-dkdczyzc-s';
+import Action_c7rM8APPPfREsDkdczyzcS from '../../../custom/sensors/components/action-c-7-r-m-8-app-pf-r-es-dkdczyzc-s';
 import { AddDialog } from '@kleeen/react/atomic-elements';
 
 export const widgets = [
@@ -134,6 +134,7 @@ export const widgets = [
     },
     statisticalType: undefined,
     title: undefined,
+    entityId: 120425,
     viableSolutions: [],
     viewOrder: Infinity,
     viewId: 'ks-view-gnRpJXqsZaxnoEGRxQVSY4',

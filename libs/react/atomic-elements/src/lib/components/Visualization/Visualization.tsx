@@ -1,13 +1,13 @@
 /* eslint-disable complexity */
 import { Loader, RankedListItem, SimpleList } from '@kleeen/react/components';
-import { ReactElement, ReactText, useState } from 'react';
+import { ReactElement, useState } from 'react';
+import { Widget, WidgetTypes } from '@kleeen/types';
 import { formatDataList, formatSeverity, parseAttributes } from '@kleeen/frontend/utils';
 
 import { AccessControl } from '@kleeen/core-react';
 import Area from '../Area/Area';
 import AreaMacroMicro from '../AreaMacroMicro/AreaMacroMicro';
 import AreaMasterDetail from '../AreaMasterDetail/AreaMasterDetail';
-import { Attribute } from '@kleeen/types';
 import BubbleChart from '../BubbleChart/BubbleChart';
 import ColumnBar from '../ColumnBar/ColumnBar';
 import { Donut } from '../donut';
@@ -22,10 +22,7 @@ import Scatter from '../Scatter/Scatter';
 import SingleBarHighlightMax from '../SingleBarHighlightMax/SingleBarHighlightMax';
 import StepLineWidget from '../StepLine/StepLine';
 import { SummaryStatistics } from '../summary-statistics';
-import { ViewType } from '../DataViewDisplaySection/DataViewDisplaySection.model';
-import { VizCommonParams } from '../../../types/types';
 import Waterfall from '../Waterfall/Waterfall';
-import { WidgetTypes } from '../../../enums';
 import { makeStyles } from '@material-ui/core/styles';
 import { roleAccessKeyTag } from '@kleeen/common/utils';
 import { useWidgetContext } from '@kleeen/react/hooks';
@@ -37,18 +34,6 @@ const useStyles = makeStyles({
     width: '100%',
   },
 });
-
-export interface Widget extends VizCommonParams {
-  attributes?: Attribute[];
-  chartType: WidgetTypes;
-  component: any;
-  id: string | number;
-  title: string;
-  viableSolutions?: WidgetTypes[];
-  viewOrder?: number;
-  viewId: ReactText;
-  type: ViewType;
-}
 
 interface VisualizationProps {
   taskName: string;

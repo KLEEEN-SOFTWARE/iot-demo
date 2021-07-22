@@ -113,11 +113,11 @@ export function ContextCell(props: ContextMenuProps): ReactElement {
         )}
         {validCrosslinks.length > 0 || props.attr?.isFilterable?.in ? (
           <BootstrapTooltip placement="top" title={tooltipTitle}>
-            <div className={classNames('context-menu-button', textClasses)}>{resultsElement}</div>
+            <span className={classNames('context-menu-button', textClasses)}>{resultsElement}</span>
           </BootstrapTooltip>
         ) : (
           <BootstrapTooltip placement="top" title={tooltipTitle}>
-            <div className={classNames('context-menu-only-text', textClasses)}>{resultsElement}</div>
+            <span className={classNames('context-menu-only-text', textClasses)}>{resultsElement}</span>
           </BootstrapTooltip>
         )}
       </span>
@@ -145,8 +145,8 @@ function applyFormat(value: any, attr: Attribute): any {
   return value;
 }
 
-function shouldTruncateText(text = ''): boolean {
-  return text ? text.toString().trim().length > MAX_TEXT_LENGTH : false;
+function shouldTruncateText(text): boolean {
+  return text ? text.toString().trim().length >= MAX_TEXT_LENGTH : false;
 }
 
 function labelResults({
