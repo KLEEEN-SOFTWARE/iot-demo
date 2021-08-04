@@ -1,20 +1,19 @@
-import CustomView_6MxSUSiehmRP9kh7u543zo from '../../../../custom/pages/profile/site-map-details/components/custom-view-6-mx-su-siehm-rp-9-kh-7-u-543-zo';
+import CustomView_6MxSUSiehmRP9kh7u543zo from '../../../../custom/profile/site-map-details/components/custom-view-6-mx-su-siehm-rp-9-kh-7-u-543-zo';
 
 export const widgets = [
   {
     actions: [],
-    addModalAttributes: [],
     attributes: [],
     chartType: `[WIDGET] CUSTOM`,
     component: CustomView_6MxSUSiehmRP9kh7u543zo,
-    description: undefined,
+    entityId: undefined,
     id: `2ed9ceee-e3dd-4f0d-805b-87645661b690`,
     params: {},
     statisticalType: undefined,
     title: undefined,
+    type: 'custom',
     viableSolutions: [],
     viewId: 'ks-view-6MxSUSiehmRP9kh7u543zo',
-    type: 'custom',
   },
   {
     actions: [
@@ -35,7 +34,6 @@ export const widgets = [
         type: `custom`,
       },
     ],
-    addModalAttributes: [],
     attributes: [
       {
         editable: false,
@@ -99,7 +97,7 @@ export const widgets = [
     ],
     chartType: `[WIDGET] FULL_TABLE`,
     component: undefined,
-    description: undefined,
+    entityId: 120425,
     id: `1f20697a-3aa6-4ce4-a14a-8d50d486ce36`,
     params: {
       baseModel: 'Sensor',
@@ -108,10 +106,10 @@ export const widgets = [
     },
     statisticalType: undefined,
     title: undefined,
-    viableSolutions: [],
-    viewOrder: 1,
-    viewId: 'ks-view-4QW2xvV3Vsfs1RDwBfmZ6Q',
     type: 'table',
+    viableSolutions: [],
+    viewId: 'ks-view-4QW2xvV3Vsfs1RDwBfmZ6Q',
+    viewOrder: 1,
   },
   {
     actions: [
@@ -132,7 +130,6 @@ export const widgets = [
         type: `custom`,
       },
     ],
-    addModalAttributes: [],
     attributes: [
       {
         editable: false,
@@ -207,7 +204,7 @@ export const widgets = [
     ],
     chartType: `[WIDGET] FULL_TABLE`,
     component: undefined,
-    description: undefined,
+    entityId: 120421,
     id: `b6dcf2f6-6cc1-418f-b027-34d3e60bb8c4`,
     params: {
       baseModel: 'Node',
@@ -216,9 +213,9 @@ export const widgets = [
     },
     statisticalType: undefined,
     title: undefined,
-    viableSolutions: [],
-    viewOrder: 2,
-    viewId: 'ks-view-ozFw5fbSFqWz82tFnVgnAm',
     type: 'table',
+    viableSolutions: [],
+    viewId: 'ks-view-ozFw5fbSFqWz82tFnVgnAm',
+    viewOrder: 2,
   },
 ];

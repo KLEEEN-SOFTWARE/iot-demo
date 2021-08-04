@@ -5,7 +5,6 @@ import { KsConfigTable } from '@kleeen/react/components';
 
 export function ConfigTableWidget({
   actions,
-  addModalAttributes,
   attributes,
   registerEvents,
   params,
@@ -23,7 +22,6 @@ export function ConfigTableWidget({
   return (
     <KsConfigTable
       actions={actions}
-      addModalAttributes={addModalAttributes}
       attributes={attributes}
       data={widgetData}
       entityActions={entityActions}

@@ -1,8 +1,10 @@
-import { Attribute, FormatProps, ListItem } from '../types';
 import { Dispatch, SetStateAction } from 'react';
 import { ElementDisplayType, ElementInputType } from '../enums/elements';
+import { FormatProps, ListItem } from '../types';
 
 import { AggregationType } from '../enums';
+import { Attribute } from './attributes';
+import { ElementComponentRules } from './element-components';
 
 //#region BaseComponentProps
 interface BaseComponentProps {
@@ -34,17 +36,6 @@ export type DisplayCatalog = { [key in ElementDisplayType]: DisplayElement };
 //#endregion
 
 //#region InputComponentProps
-export interface ElementComponentRules {
-  component: ElementInputType;
-  maxChoices?: number;
-}
-
-export interface ElementComponents {
-  displayComponent: ElementDisplayType;
-  inputComponent?: ElementInputType;
-  rules?: ElementComponentRules[];
-}
-
 export interface InputComponentProps extends BaseInputComponentProps {
   attribute: Attribute;
   autoCompleteValues: ListItem[];

@@ -1,6 +1,8 @@
 import './FooterNavLeft.scss';
 
 import { Button, UserAccountButton } from '../NavLeft.style';
+import { executeFunc, validateOpenInNewTab } from '../../../utils/navigationUtils';
+
 import { useTheme, useUserInfo } from '@kleeen/react/hooks';
 
 import AccountCircleOutlinedIcon from '@material-ui/icons/AccountCircleOutlined';
@@ -79,12 +81,8 @@ export const FooterNavLeft = ({ helpUrl, accountMenuList, navigate }: FooterNavL
                 key={title}
                 className={classnames(`${bem}__menu--item`)}
                 onClick={(e) => {
-                  e.preventDefault();
-                  if (func) {
-                    func();
-                    return;
-                  }
-                  navigate(path, false);
+                  executeFunc(func);
+                  validateOpenInNewTab(navigate, path, e);
                   handleClose();
                 }}
               >

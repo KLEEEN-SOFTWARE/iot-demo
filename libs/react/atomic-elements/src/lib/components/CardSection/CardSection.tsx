@@ -1,11 +1,13 @@
 import './CardSection.scss';
 
-import { AccessControl } from '@kleeen/core-react';
-import { CardSectionLayout, CardSectionProps, RenderChildrenProps, Widget } from './CardWidget.model';
+import { CardSectionLayout, CardSectionProps, RenderChildrenProps } from './CardWidget.model';
 import { ReactElement, ReactNode } from 'react';
-import { TransformToWidgetComponent } from './components';
-import classNames from 'classnames';
 import { isNilOrEmpty, roleAccessKeyTag } from '@kleeen/common/utils';
+
+import { AccessControl } from '@kleeen/core-react';
+import { TransformToWidgetComponent } from './components';
+import { Widget } from '@kleeen/types';
+import classNames from 'classnames';
 
 const bem = 'ks-card-section';
 

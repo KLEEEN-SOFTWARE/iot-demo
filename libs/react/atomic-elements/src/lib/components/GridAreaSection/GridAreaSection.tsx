@@ -1,5 +1,5 @@
 import './GridAreaSection.scss';
-import { ReactElement } from 'react';
+
 import {
   getWidgetContextName,
   useKleeenActions,
@@ -8,11 +8,9 @@ import {
 } from '@kleeen/react/hooks';
 
 import { KsVirtualTable } from '@kleeen/react/components';
-import { Widget } from '../../../types';
-
-interface Row {
-  [key: string]: string | number;
-}
+import { ReactElement } from 'react';
+import { Row } from '../DataViewDisplaySection/DataViewDisplaySection.model';
+import { Widget } from '@kleeen/types';
 
 export interface GridAreaSectionProps {
   entityName: string;

@@ -15,6 +15,7 @@ const transformationResolvers: {
   [Transformation.Min]: minElement,
   [Transformation.Oldest]: firstElement,
   [Transformation.SelfSingle]: firstElement,
+  [Transformation.SelfMulti]: selfMulti,
   [Transformation.Sum]: sumElement,
   [Transformation.TrendCountSparkline]: trendCountElement,
   [Transformation.TrendCountHighLowSparkline]: trendCountElement,
@@ -103,6 +104,10 @@ function sumElement(list: PrimitiveType[]): number {
   const validatedResult: number[] = Number.isInteger(numbersArray[0]) ? numbersArray : [];
 
   return validatedResult.reduce((row, acc) => row + acc, 0);
+}
+
+function selfMulti(list: PrimitiveType[]): PrimitiveType[] {
+  return list;
 }
 
 function trendCountElement(list: PrimitiveType[]): number[] {

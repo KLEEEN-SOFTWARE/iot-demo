@@ -56,6 +56,7 @@ function ActionDialogsComponent({
       {isCustomAddAction && CustomDialog && (
         <CustomDialog
           attributes={attributes}
+          action={action}
           context={context}
           description={`${translate && translate('app.dialog.confirmation')} ${action.displayName}?`}
           key={`${action.name}-custom`}

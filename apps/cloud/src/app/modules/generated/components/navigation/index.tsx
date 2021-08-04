@@ -1,8 +1,8 @@
 import { NavLeft, NavTop } from '@kleeen/react/atomic-elements';
-import React, { ReactElement } from 'react';
 
 import { KSAuth } from '@kleeen/auth';
 import { NavPosition } from '@kleeen/types';
+import { ReactElement } from 'react';
 import appSettings from '../../../../settings/app.json';
 import { getSettings } from './navigation.settings';
 import { useHistory } from 'react-router-dom';
@@ -16,6 +16,7 @@ export function NavigationTask(): ReactElement {
   const history = useHistory();
 
   async function onLogout() {
+    history.push('/ks-logout');
     try {
       logout();
       await KSAuth.signOut();
@@ -38,6 +39,7 @@ export function NavigationTask(): ReactElement {
 
   const navCommonProps = {
     accountMenuList: settings.accountMenuOptions,
+    accountName: appSettings.companyName,
     helpUrl: settings.helpUrl,
     logo: settings.logo,
     menuList: settings.menuOptions,

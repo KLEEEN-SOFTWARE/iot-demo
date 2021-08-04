@@ -11,16 +11,15 @@ export const ConfigureLayoutStyle = makeStyles({
     'padding-top': 'var(--pm-L)',
   },
   configCardSection: {
-    height: 'calc(100% - var(--wh-3XL))',
+    height: '100%',
     margin: 'var(--pm-0) var(--pm-L)',
-    'padding-bottom': 'var(--pm-L)',
     overflow: 'auto',
     transition: 'height 400ms cubic-bezier(0, 0, 0.2, 1) 0ms',
   },
   snackbarNavTop: {
-    height: 'calc(100vh - var(--wh-5XL) - var(--wh-2XS))',
+    paddingBottom: 'var(--pm-5XL)',
   },
   snackbarNavLeft: {
-    height: 'calc(100vh - var(--wh-5XL) + var(--wh-2XS))',
+    height: 'calc(100% - var(--wh-5XL) + var(--wh-2XS))',
   },
 });

@@ -1,4 +1,4 @@
-import { AttributeProps, ParentProps, Translate } from '@kleeen/types';
+import { Action, AttributeProps, ParentProps, Translate } from '@kleeen/types';
 import { MouseEvent, ReactNode } from 'react';
 
 import { DialogProps } from '../../dialog.model';
@@ -15,11 +15,12 @@ export interface AddDialogPayload {
 }
 
 export interface BaseAddDialogProps extends DialogProps {
+  action: Action;
   attributes: AttributeProps[];
   onAction: (e: MouseEvent, payload: AddDialogPayload) => void;
   parent?: ParentProps;
-  translate: Translate;
   taskName: string;
+  translate: Translate;
 }
 
 export interface CurrentRowsProps extends RowData {

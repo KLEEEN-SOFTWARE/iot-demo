@@ -39,7 +39,7 @@ export const generateDisplayMediaByType = (dataType, displayValue, attribute) =>
       return {
         type: DisplayMediaType.Svg,
         value: `https://raw.githubusercontent.com/KLEEEN-SOFTWARE/Kleeen-svgs/main/assets/severity-levels-svgs/severity-level-${
-          severityLevels.find(isSeverityObject).value
+          severityLevels?.find(isSeverityObject)?.value
         }of${attribute?.format?.valueLabels?.length}.svg`,
       };
     default:

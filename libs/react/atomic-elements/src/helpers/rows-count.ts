@@ -1,7 +1,7 @@
+import { Widget, WidgetTypes } from '@kleeen/types';
+
 import { isNilOrEmpty } from '@kleeen/common/utils';
 import { useWidgetContext } from '@kleeen/react/hooks';
-import { WidgetTypes } from '../enums';
-import { Widget } from '../types';
 
 export function getRowsCountByWidget(widget?: Widget): number {
   if (isNilOrEmpty(widget) || isNilOrEmpty(widget.params)) {

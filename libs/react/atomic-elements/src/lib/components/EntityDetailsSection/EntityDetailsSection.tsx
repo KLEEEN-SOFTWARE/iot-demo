@@ -1,27 +1,37 @@
 import './EntityDetailsSection.scss';
 
-import { AttributeInputEvents, useEntityDetailsEventHandler, useKleeenActions } from '@kleeen/react/hooks';
-import { getUpdateRequestPayload } from '../../utils';
+import {
+  AttributeInputEvents,
+  useEntityDetailsEventHandler,
+  useKleeenActions,
+  useKleeenContext,
+} from '@kleeen/react/hooks';
+import { DisplayMediaType, Translate } from '@kleeen/types';
 import { KsButton, KsMenuContainer } from '@kleeen/react/components';
-import { KUIConnect } from '@kleeen/core-react';
-import { makeStyles, styled } from '@material-ui/core';
 import { ReactElement, useEffect, useState } from 'react';
-import { Slot } from '../DetailSummary/DetailSummary.model';
-import { SummaryPanel } from '../summary-panel';
+import { styled } from '@material-ui/core';
+
 import ArrowLeftIcon from '@material-ui/icons/ArrowLeft';
-import classnames from 'classnames';
+import { Avatar, Collapse } from '@material-ui/core';
 import EditOutlinedIcon from '@material-ui/icons/EditOutlined';
-import { Translate } from '@kleeen/types';
+import { KUIConnect } from '@kleeen/core-react';
+import MuiButton from '@material-ui/core/Button';
 import MuiToolbar from '@material-ui/core/Toolbar';
 import MuiTooltip from '@material-ui/core/Tooltip';
+import { Slot } from '../DetailSummary/DetailSummary.model';
+import { SummaryPanel } from '../summary-panel';
+import { useStyles } from './entity-details-section.styles';
+import classnames from 'classnames';
+import { getUpdateRequestPayload } from '../../utils';
 import { isNilOrEmpty } from '@kleeen/common/utils';
-import MuiButton from '@material-ui/core/Button';
+import { pathOr } from 'ramda';
 
 const bem = 'ks-entity-details-section';
 export interface EntityDetailsSectionProps {
   displayTaskName: string;
   entityDetails: any[]; // TODO: @cafe add better types here
   isEditable: boolean;
+  objectValue?: string;
   onChangeFilterVisible?: (isVisible: boolean) => void;
   slots?: Slot[];
   taskName: string;
@@ -48,43 +58,24 @@ const Toolbar = styled(MuiToolbar)({
   justifyContent: 'center',
 });
 
-const useStyles = makeStyles(() => ({
-  drawerClose: {
-    height: '100%',
-    overflowX: 'hidden',
-    alignItems: 'center',
-    width: 'var(--wh-1XS)',
-    borderRadius: 'var(--card-border-radius)',
-    border: 'var(--card-border)',
-  },
-  iconEntity: {
-    margin: 'var(--pm-4XS)',
-    width: 'var(--wh-2XS)',
-    backgroundColor: 'var(--secondary-color)',
-    borderRadius: 'var(--wh-4XS)',
-    '&.MuiSvgIcon-root': {
-      color: 'var(--on-secondary-color)',
-    },
-    '&:hover': {
-      backgroundColor: 'var(--secondary-color-variant)',
-      color: 'var(--on-secondary-color-variant)',
-      cursor: 'pointer',
-    },
-  },
-}));
-
 export function EntityDetailsSectionBase({ translate, ...props }: EntityDetailsSectionProps): ReactElement {
-  const { taskName } = props;
+  const { objectValue, taskName } = props;
   if (isNilOrEmpty(taskName)) {
     // TODO: @jcvalerio should throw an exception
     // throw new Error('The attribute taskName was null');
     return null;
   }
   const { updateRequest } = useKleeenActions(taskName);
-  const [attributeEventList, { addEvent, clearEventList }] = useEntityDetailsEventHandler();
-  const [open, setOpen] = useState(true);
-  const [isEditing, setEditing] = useState(false);
   const classes = useStyles();
+  const [attributeEventList, { addEvent, clearEventList }] = useEntityDetailsEventHandler();
+  const [imageLoaded, setImageLoaded] = useState(false);
+  const [isEditing, setEditing] = useState(false);
+  const [open, setOpen] = useState(true);
+  const entityData = useKleeenContext<{ isLoading: boolean }>(taskName);
+  const getDisplayMedia = pathOr({ value: '' }, ['entity', objectValue, 'displayMedia']);
+  const displayMedia = getDisplayMedia(entityData);
+  const shouldDisplayAvatar =
+    !entityData.isLoading && displayMedia.type === DisplayMediaType.Src && imageLoaded;
 
   useEffect(() => {
     return clearEventList;
@@ -149,6 +140,16 @@ export function EntityDetailsSectionBase({ translate, ...props }: EntityDetailsS
                   : translate('app.subHeader.container.button.editOn')}
               </KsButton>
             )}
+          </div>
+          <div>
+            <Collapse in={shouldDisplayAvatar}>
+              <Avatar
+                onLoad={() => setImageLoaded(true)}
+                alt="Ks"
+                src={displayMedia.value}
+                className={classes.avatar}
+              />
+            </Collapse>
           </div>
           <SummaryPanel
             entityDetails={props.entityDetails}

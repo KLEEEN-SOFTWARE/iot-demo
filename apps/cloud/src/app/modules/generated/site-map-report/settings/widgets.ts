@@ -1,21 +1,20 @@
 export const widgets = [
   {
     actions: [],
-    addModalAttributes: [],
     attributes: [],
     chartType: undefined,
     component: undefined,
-    description: undefined,
+    entityId: undefined,
     id: undefined,
     params: {},
     statisticalType: undefined,
     title: undefined,
+    type: 'report',
     viableSolutions: [],
     viewId: 'ks-view-bp8VvnmqwCGBPG4xX3ZeYm',
     widgets: [
       {
         actions: [],
-        addModalAttributes: [],
         attributes: [
           {
             crossLinking: [],
@@ -45,15 +44,15 @@ export const widgets = [
         ],
         chartType: `[WIDGET] AREA_GRADIENT`,
         component: undefined,
-        description: undefined,
+        entityId: undefined,
         id: `6b3abce7-9ad3-4e09-8f10-e4806284237d`,
         params: {
           cardinality: 'SINGLE',
           groupBy: { name: 'timestamp', transformation: 'selfMulti', formatType: 'timestamp' },
           operationName: 'widget_6b3abce7_9ad3_4e09_8f10_e4806284237d',
-          taskName: 'Site Map Report',
           value: { name: 'siteMap', transformation: 'countTotal', formatType: 'prime' },
         },
+        sortOrder: 0,
         statisticalType: undefined,
         title: `Site Map Status`,
         viableSolutions: [
@@ -62,12 +61,10 @@ export const widgets = [
           '[WIDGET] AREA',
           '[WIDGET] SIMPLE_LIST_RANKED',
         ],
-        sortOrder: 0,
         viewId: 'ks-view-bp8VvnmqwCGBPG4xX3ZeYm',
       },
       {
         actions: [],
-        addModalAttributes: [],
         attributes: [
           {
             crossLinking: [{ title: 'Node Details', slug: 'node-details' }],
@@ -118,24 +115,22 @@ export const widgets = [
         ],
         chartType: `[WIDGET] COLUMN_BAR`,
         component: undefined,
-        description: undefined,
+        entityId: undefined,
         id: `831078f7-ef51-4751-8d76-3ed1b4647d4e`,
         params: {
           cardinality: 'SINGLE',
           groupBy: { name: 'node', transformation: 'selfMulti', formatType: 'prime' },
           operationName: 'widget_831078f7_ef51_4751_8d76_3ed1b4647d4e',
-          taskName: 'Site Map Report',
           value: { name: 'nodeStatus', transformation: 'selfSingle', formatType: 'severity_level' },
         },
+        sortOrder: 1,
         statisticalType: undefined,
         title: `Node Status`,
         viableSolutions: ['[WIDGET] SIMPLE_LIST'],
-        sortOrder: 1,
         viewId: 'ks-view-bp8VvnmqwCGBPG4xX3ZeYm',
       },
       {
         actions: [],
-        addModalAttributes: [],
         attributes: [
           {
             crossLinking: [],
@@ -392,11 +387,10 @@ export const widgets = [
         ],
         chartType: `[WIDGET] SUMMARY_STATISTICS`,
         component: undefined,
-        description: undefined,
+        entityId: undefined,
         id: `074508ac-6c71-4c53-bae4-29f37200164b`,
         params: {
           operationName: 'widget_statistics074508ac_6c71_4c53_bae4_29f37200164b',
-          taskName: 'Site Map Report',
           value: {
             label: 'Node Status',
             name: 'nodeStatus',
@@ -465,15 +459,14 @@ export const widgets = [
             formatType: 'severity_level',
           },
         },
+        sortOrder: 2,
         statisticalType: undefined,
         title: `Node Summary`,
         viableSolutions: [],
-        sortOrder: 2,
         viewId: 'ks-view-bp8VvnmqwCGBPG4xX3ZeYm',
       },
       {
         actions: [],
-        addModalAttributes: [],
         attributes: [
           {
             dataType: 'string',
@@ -596,23 +589,26 @@ export const widgets = [
             aggregationMetadata: {},
           },
         ],
-        chartType: `[WIDGET] CONFIG_TABLE`,
+        chartType: `[WIDGET] TABLE`,
         component: undefined,
-        description: undefined,
+        entityId: undefined,
         id: `83d2ffac-502b-4730-ab9a-af59e46419da`,
         params: {
           baseModel: 'SiteMap',
           operationName: 'object_listing_83d2ffac_502b_4730_ab9a_af59e46419da',
-          taskName: 'siteMapReport',
+          value: {
+            format: { examples: ['Site 1', 'Site 2', 'Site 3', 'Site 4', 'Site 5'] },
+            formatType: 'prime',
+            name: 'siteMap',
+          },
         },
+        sortOrder: 3,
         statisticalType: undefined,
         title: `Site Map`,
         viableSolutions: [],
-        sortOrder: 3,
       },
       {
         actions: [],
-        addModalAttributes: [],
         attributes: [
           {
             crossLinking: [{ title: 'Site Map Details', slug: 'site-map-details' }],
@@ -656,24 +652,22 @@ export const widgets = [
         ],
         chartType: `[WIDGET] POLAR_AREA`,
         component: undefined,
-        description: undefined,
+        entityId: undefined,
         id: `3ee9f2eb-56f5-413d-885c-2b50b4fe77ce`,
         params: {
           cardinality: 'SINGLE',
           groupBy: { name: 'siteMap', transformation: 'selfMulti', formatType: 'prime' },
           operationName: 'widget_3ee9f2eb_56f5_413d_885c_2b50b4fe77ce',
-          taskName: 'Site Map Report',
           value: { name: 'node', transformation: 'countTotal', formatType: 'prime' },
         },
+        sortOrder: 4,
         statisticalType: undefined,
         title: `Node Breakdown`,
         viableSolutions: ['[WIDGET] SIMPLE_LIST_RANKED'],
-        sortOrder: 4,
         viewId: 'ks-view-bp8VvnmqwCGBPG4xX3ZeYm',
       },
       {
         actions: [],
-        addModalAttributes: [],
         attributes: [
           {
             crossLinking: [],
@@ -704,22 +698,20 @@ export const widgets = [
         ],
         chartType: `[WIDGET] BUBBLE_CHART`,
         component: undefined,
-        description: undefined,
+        entityId: undefined,
         id: `54091272-9393-4593-9876-f39a3b43ca18`,
         params: {
           cardinality: 'SINGLE',
           groupBy: { name: 'event', transformation: 'selfMulti', formatType: 'uuid' },
           operationName: 'widget_54091272_9393_4593_9876_f39a3b43ca18',
-          taskName: 'Site Map Report',
           value: { name: 'eventLength', transformation: 'selfSingle', formatType: 'integer' },
         },
+        sortOrder: 5,
         statisticalType: undefined,
         title: `Event Length`,
         viableSolutions: ['[WIDGET] SINGLE_BAR_HIGHLIGHT_MAX', '[WIDGET] SIMPLE_LIST_RANKED'],
-        sortOrder: 5,
         viewId: 'ks-view-bp8VvnmqwCGBPG4xX3ZeYm',
       },
     ],
-    type: 'report',
   },
 ];

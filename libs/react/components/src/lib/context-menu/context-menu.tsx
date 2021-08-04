@@ -1,28 +1,34 @@
 import { ContextMenuProps, MenuItemType } from './context-menu.model';
+import { FilterTypes, Widget } from '@kleeen/types';
 import { Menu, MenuGroupItem, MenuGroupName, MenuTitle } from './contextual-menu.style';
-import React, { useEffect, useRef } from 'react';
-import { isNilOrEmpty, roleAccessKeyTag } from '@kleeen/common/utils';
 import {
+  PreviewItem,
   useCrossLinkingItems,
-  useTheme,
   useFilterItems,
   useHoverIntent,
+  usePreviewItems,
+  usePreviewPanel,
   useTextFormatter,
+  useTheme,
 } from '@kleeen/react/hooks';
+import { isNilOrEmpty, roleAccessKeyTag } from '@kleeen/common/utils';
+import { useEffect, useRef } from 'react';
 
 import { AccessControl } from '@kleeen/core-react';
 import Tooltip from '@material-ui/core/Tooltip';
 import { Translate } from '@kleeen/core-react';
-
-import { FilterTypes } from '@kleeen/types';
+import { WidgetScope } from '@kleeen/widgets';
 
 const hidePermission = 'HIDE';
+
 export const KsContextMenu = ({
+  anchorEl,
   autoClose,
   attr,
   cell,
+  displayColumnAttribute,
   handleClose,
-  anchorEl,
+  row,
 }: ContextMenuProps): JSX.Element => {
   const { themeClass } = useTheme();
   const timerRef = useRef(null);
@@ -48,6 +54,15 @@ export const KsContextMenu = ({
     cell: { ...cell, formattedValue },
     handleClose,
   });
+
+  const previewItems = usePreviewItems({
+    attr,
+    cell: { ...cell, formattedValue },
+    displayColumnAttribute,
+    row,
+  });
+  // TODO: Move these inside a useEffect
+  const previewSectionAndItems = getPreviewItemsAsMenuItems({ handleClose, previewItems });
 
   useEffect(() => {
     if (autoClose) {
@@ -116,10 +131,12 @@ export const KsContextMenu = ({
         ...filterOutMenuItems,
       ]
     : [];
+
   const menuItems = [
     ...prepareCrossLinkingSectionAndItems,
     ...prepareFilterInSectionAndItems,
     ...prepareFilterOutSectionAndItems,
+    ...previewSectionAndItems,
   ];
 
   if (isNilOrEmpty(menuItems)) return null;
@@ -173,3 +190,54 @@ export const KsContextMenu = ({
     </>
   );
 };
+
+//#region Private Members
+interface GetPreviewItemsAsMenuItemsParams {
+  handleClose: () => void;
+  previewItems: PreviewItem[];
+}
+
+function getPreviewItemsAsMenuItems({ handleClose, previewItems }: GetPreviewItemsAsMenuItemsParams) {
+  const previewContext = usePreviewPanel();
+
+  if (isNilOrEmpty(previewItems)) {
+    return [];
+  }
+
+  return [
+    {
+      type: MenuItemType.Section,
+      label: <Translate id="app.contextMenu.preview" type="html" />,
+    },
+    ...previewItems.map(({ entity, filteredBy, scope, value, widgets }) => {
+      return scope === WidgetScope.Single
+        ? {
+            label: <Translate id="app.contextMenu.preview.single" type="html" values={{ value }} />,
+            handleClick: () => () => {
+              handleClose();
+              previewContext.setPreviewWidgets(widgets as Widget[]);
+              previewContext.openPreviewPanel();
+            },
+            key: `preview.single`,
+            roleAccessKey: `preview.single`,
+          }
+        : {
+            label: (
+              <Translate
+                id="app.contextMenu.preview.collection"
+                type="html"
+                values={{ entity, filteredBy }}
+              />
+            ),
+            handleClick: () => () => {
+              handleClose();
+              previewContext.setPreviewWidgets(widgets as Widget[]);
+              previewContext.openPreviewPanel();
+            },
+            key: `preview.collection`,
+            roleAccessKey: `preview.collection`,
+          };
+    }),
+  ];
+}
+//#endregion

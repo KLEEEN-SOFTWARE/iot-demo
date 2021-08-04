@@ -1,78 +1,58 @@
+import { IsOnboardingEnable, OnBoardingTask } from './modules/generated/components';
+import React, { useState } from 'react';
+import { useKleeenActions, useKleeenContext, useSyncUserPreferences } from '@kleeen/react/hooks';
+
 import { Authenticator } from './modules/custom/components';
+import Highcharts from 'highcharts';
+import { HookableContextMenu } from '@kleeen/react/atomic-elements';
+import { KUIConnect } from '@kleeen/core-react';
+import Layout from './layout';
 import { BrowserRouter as Router } from 'react-router-dom';
 import { fontFamily } from './settings/font-family';
-import { HookableContextMenu } from '@kleeen/react/atomic-elements';
-import { IsOnboardingEnable, OnBoardingTask } from './modules/generated/components';
-import { KSAuth } from '@kleeen/auth';
-import { KsContextMenu } from '@kleeen/react/components';
-import { KUIConnect } from '@kleeen/core-react';
-import { useKleeenActions, useKleeenContext, useSyncUserPreferences } from '@kleeen/react/hooks';
 import getModules from './modules';
-import Highcharts from 'highcharts';
-import Layout from './layout';
-import React, { useEffect, useState } from 'react';
 
 const IsAuthEnabled = true;
 
-async function setUser(setCurrentUser, currentUser) {
-  let currentAuthenticatedUser = {};
+async function syncUser(setCurrentUser, currentUser, currentAuthenticatedUser) {
   try {
-    currentAuthenticatedUser = await KSAuth.currentAuthenticatedUser();
+    if (currentAuthenticatedUser?.username !== currentUser?.username) {
+      setCurrentUser(currentAuthenticatedUser);
+    }
   } catch (err) {
     console.error(err);
   }
-  if (currentAuthenticatedUser !== currentUser) {
-    setCurrentUser(currentAuthenticatedUser);
-  }
 }
 
+const modulesToLoad = [
+  {
+    folder: require.context('./modules/generated', true, /\.jsx$/),
+    modulePath: './modules/generated',
+  },
+  {
+    folder: require.context('./modules/custom', true, /\.jsx$/),
+    modulePath: './modules/custom',
+    priority: 1,
+  },
+];
+
 function PagesManager() {
-  const [modules, setModules] = useState([]);
-  const [isReady, setIsReady] = useState(false);
-  const [authState, setAuthState] = useState('');
+  const [modules, setModules] = useState(null);
   const [{ showOnboardingPage }] = useSyncUserPreferences();
   const { currentUser } = useKleeenContext('endUser');
   const { setCurrentUser } = useKleeenActions('endUser');
 
   initializeHighcharts();
 
-  // eslint-disable-next-line react-hooks/exhaustive-deps
-  useEffect(() => setUser(setCurrentUser, currentUser), [authState]);
-
-  useEffect(() => {
-    getModules([
-      {
-        folder: require.context('./modules/generated', true, /\.jsx$/),
-        modulePath: './modules/generated',
-      },
-      {
-        folder: require.context('./modules/custom', true, /\.jsx$/),
-        modulePath: './modules/custom',
-        priority: 1,
-      },
-    ])
-      .then((modulesLoaded) => {
-        setModules(modulesLoaded);
-        setIsReady(true);
-        setAuthState(KSAuth.getCurrentState());
-      })
-      .catch((error) => {
-        console.warn(error);
-        setIsReady(true);
-      });
-  }, []);
-
-  if (!isReady) {
-    return null;
-  }
-
   return (
     <Router>
       <Authenticator
-        authState={authState}
+        afterLoginSuccess={async ({ currentAuthenticatedUser }) => {
+          const loadedModules = await getModules(modulesToLoad);
+          syncUser(setCurrentUser, currentUser, currentAuthenticatedUser);
+          setModules(loadedModules);
+        }}
         hideDefault={true}
         isEnabled={IsAuthEnabled}
-        setAuthState={setAuthState}
       >
         <RenderLayout modules={modules} showOnboardingPage={IsOnboardingEnable && showOnboardingPage} />
       </Authenticator>

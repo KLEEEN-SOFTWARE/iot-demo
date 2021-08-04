@@ -223,14 +223,18 @@ export class AuthClass {
   }
 
   private async dispatchSignedIn(user: IUser, message: string): Promise<void> {
-    if (this.#authenticationHandler?.signedIn) {
-      try {
-        await this.#authenticationHandler?.signedIn(user);
-      } catch (error) {
-        console.error(error);
-      }
+    if (!this.#authenticationHandler?.signedIn) {
+      this.dispatchAuthEvent(AuthMessage.SignedIn, user, message);
     }
-    this.dispatchAuthEvent(AuthMessage.SignedIn, user, message);
+
+    try {
+      await this.#authenticationHandler?.signedIn(user);
+      this.dispatchAuthEvent(AuthMessage.SignedIn, user, message);
+    } catch (error) {
+      console.error(error);
+      this.signOut();
+      throw error;
+    }
   }
 
   //#endregion sign in implementation

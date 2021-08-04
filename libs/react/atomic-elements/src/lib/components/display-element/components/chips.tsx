@@ -15,7 +15,7 @@ export function Chips({ attribute, format, value }: DisplayComponentProps) {
     <>
       <ClickableChipsCell
         attribute={attribute}
-        cellItems={value || []}
+        cellItems={value}
         columnLabel={attribute.label}
         format={format}
         openShowMoreModal={() => setIsOpen(true)}

@@ -1,7 +1,7 @@
 import { KeyValueProps } from './key-value.model';
-import { useStyles } from './key-value.styles';
-import classNames from 'classnames';
 import MuiTooltip from '@material-ui/core/Tooltip';
+import classNames from 'classnames';
+import { useStyles } from './key-value.styles';
 
 const bem = 'ks-key-values';
 

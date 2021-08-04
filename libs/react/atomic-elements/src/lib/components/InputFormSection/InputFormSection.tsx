@@ -1,7 +1,8 @@
 import './InputFormSection.scss';
 
 import { ReactElement, useState } from 'react';
-import { StatisticalType } from '@kleeen/render-utils';
+
+import { StatisticalDataType } from '@kleeen/types';
 import { TransformToElement } from '../Widgets/ConfigInputWidget/components/transform-to-element';
 import classnames from 'classnames';
 
@@ -74,7 +75,7 @@ export const InputFormSection = ({ ...props }: InputFormSectionProps): ReactElem
             inputValue={value ? value : inputValue}
             setInputValue={onSetInputValue}
             setSelectedOption={setSelectedOption}
-            statisticalType={StatisticalType.Data}
+            statisticalType={StatisticalDataType.Data}
             hideTitle={false}
             inSummaryDetails={false}
             refValue={inputRef}

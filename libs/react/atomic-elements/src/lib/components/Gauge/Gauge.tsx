@@ -1,15 +1,17 @@
 import './Gauge.scss';
 
+import { ValuesProps, VizCommonParams } from '@kleeen/types';
 import { clone, isEmpty, isNil, pathOr } from 'ramda';
-import { getFullLabel, ValuesProps, VizCommonParams } from '../../../types';
-import { getOptions } from './options';
-import { Loader } from '@kleeen/react/components';
-import { TextFormatter } from '@kleeen/react/components';
+
 import Highcharts from 'highcharts';
 import HighchartsReact from 'highcharts-react-official';
-import more from 'highcharts/highcharts-more';
+import { Loader } from '@kleeen/react/components';
 import React from 'react';
+import { TextFormatter } from '@kleeen/react/components';
 import classnames from 'classnames';
+import { getFullLabel } from '../../../types';
+import { getOptions } from './options';
+import more from 'highcharts/highcharts-more';
 
 const bem = 'ks-gauge';
 

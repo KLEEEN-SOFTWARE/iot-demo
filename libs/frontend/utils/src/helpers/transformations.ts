@@ -9,7 +9,7 @@ export const transformationsAvailableForFilterIn = [
   AggregationType.Latest,
   AggregationType.Oldest,
 ];
-export const isATransformationsAvailableForFilterIn = (transformation: AggregationType) =>
+export const isSingleCardinalityTransformation = (transformation: AggregationType) =>
   transformationsAvailableForFilterIn.includes(transformation);
 export const countTransformations = [AggregationType.CountTotal, AggregationType.CountUnique];
 export const isCountTransformations = (transformation: AggregationType) =>

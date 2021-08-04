@@ -4,8 +4,9 @@ import {
   Attribute,
   AutocompleteState,
   FormatProps,
-  Translate,
   GenericFunction,
+  Translate,
+  Widget,
 } from '@kleeen/types';
 
 import { Order } from './stableSort';
@@ -54,6 +55,7 @@ interface GridSectionProps {
   getMoreRows?: any;
   className?: string;
   columnWidth?: number;
+  widget?: Widget;
 }
 
 interface Row {
