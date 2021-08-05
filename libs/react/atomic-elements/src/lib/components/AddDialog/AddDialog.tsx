@@ -1,117 +1,41 @@
 import { AttributeInputEvents, useEntityDetailsEventHandler, useTheme } from '@kleeen/react/hooks';
 import { BaseAddDialogProps, KsButton } from '@kleeen/react/components';
-import { ConfigInputWidget } from '../Widgets';
-import { Dialog as KsDialog } from './AddDialog.styles';
+import { Dialog as KsDialog, useStyles } from './AddDialog.styles';
 import { MouseEvent, useEffect } from 'react';
-import { startCase } from 'lodash';
-import { Translate } from '@kleeen/core-react';
-import capitalize from 'lodash.capitalize';
-import classnames from 'classnames';
+
 import DialogActions from '@material-ui/core/DialogActions';
 import DialogContent from '@material-ui/core/DialogContent';
 import DialogTitle from '@material-ui/core/DialogTitle';
+import { InputElement } from '../input-element';
+import { KeyValue } from '../key-value';
+import { Translate } from '@kleeen/core-react';
+import capitalize from 'lodash.capitalize';
+import classnames from 'classnames';
 
-interface BuildEntityProps {
+type BuildEntityProps = {
   attributeEventList: AttributeInputEvents[];
-  entityKey: string;
-}
+};
+
+const layoutProps = {
+  keyWidth: 125,
+  valueWidth: 300,
+};
 
 const bem = 'ks-dialog';
 
-const CreateFormField = ({
-  attr,
-  registerEvents,
-  taskName,
-}: {
-  attr: { name: string; canAddValues?: boolean };
-  registerEvents: (event: any) => void;
-  taskName: string;
-}) => {
-  const configInputAttr = [
-    {
-      canAddValues: attr.canAddValues ?? true,
-      format: {
-        aggregations: null,
-        dateTime: null,
-        examples: null,
-        max: null,
-        min: null,
-        prefix: null,
-        severityBad: null,
-        severityGood: null,
-        severityLevels: null,
-        suffix: null,
-        valueLabels: null,
-      },
-      formatType: 'text',
-      hasMany: null,
-      label: startCase(attr.name),
-      name: attr.name,
-      rawEntityName: attr.name,
-    },
-  ];
-
-  return (
-    <div
-      className={classnames(bem)}
-      style={{ minWidth: 'calc(var(--wh-9XL) - var(--wh-S) - var(--wh-4XS))' }}
-    >
-      <ConfigInputWidget
-        attributes={configInputAttr as any}
-        disabled={false}
-        hideSaveAndClose={true}
-        hideTitle={true}
-        icon={false}
-        inSummaryDetails={true}
-        registerEvents={registerEvents}
-        statisticalType={'Data - Categorical - free form' as any}
-        taskName={taskName}
-        title={''}
-        widgetId={attr.name}
-      />
-    </div>
-  );
-};
-
-const buildEntity = ({ attributeEventList, entityKey }: BuildEntityProps) => {
-  const widgetsData = attributeEventList.map((event) => event.onSave()).filter((data) => data);
-
-  const data = widgetsData.reduce((previous: any, current: any) => {
-    return {
-      ...current,
-      params: {
-        ...previous.params,
-        ...current.params,
-      },
-    };
-  }, {});
-
-  const rawForm = Object.entries(data?.params)
-    .filter(([, values]) => values)
-    .map(([key, value]: any) => [key, value]);
-
-  const form = rawForm.reduce((acc: Record<string, any>, [key, value]) => {
-    if (key === entityKey) {
-      acc.displayValue = value.displayValue;
-    }
-    acc[key] = value;
-    return acc;
-  }, {});
-
-  return form;
-};
-
 export function AddDialog({
-  attributes = [],
   open,
   onAction,
   onClose,
   parent,
   title,
   taskName,
+  action,
 }: BaseAddDialogProps): JSX.Element {
+  const attributes = action.addModalAttributes;
   const { themeClass } = useTheme();
   const [attributeEventList, { addEvent, clearEventList }] = useEntityDetailsEventHandler();
+  const classes = useStyles();
 
   useEffect(() => {
     return clearEventList;
@@ -122,11 +46,10 @@ export function AddDialog({
   };
 
   const onSave = (e: MouseEvent): void => {
-    const entityKey = attributes[0]?.name;
-    const form = buildEntity({
-      entityKey,
-      attributeEventList,
-    });
+    const baseAttribute = attributes.find(({ isDisplayValue }) => isDisplayValue);
+    const entityKey = baseAttribute?.params?.baseModel || attributes[0]?.params?.baseModel;
+    const form = buildEntity({ attributeEventList });
+
     const isFormValid = Object.keys(form).includes(entityKey);
     const payload = {
       entity: form,
@@ -140,6 +63,10 @@ export function AddDialog({
     onClose();
   };
 
+  useEffect(() => {
+    return () => clearEventList();
+  }, []);
+
   function handleClose(): void {
     onClose();
   }
@@ -151,15 +78,26 @@ export function AddDialog({
       onClose={handleClose}
       open={open}
     >
-      <DialogTitle id="form-dialog-title">{capitalize(title)}</DialogTitle>
+      <DialogTitle id="form-dialog-title">
+        {typeof title === 'string' ? capitalize(title.toString()) : title}
+      </DialogTitle>
       <DialogContent>
         {attributes.map((attr) => (
-          <div className={classnames(`${bem}__content`)} style={{ marginBottom: 'var(--pm-S)' }}>
-            <CreateFormField
-              attr={attr}
-              key={attr.name}
-              taskName={taskName}
-              registerEvents={registerEvents}
+          <div className={classnames(`${bem}__form-group`, classes.formGroup)}>
+            <KeyValue
+              key={attr.id}
+              keyComponent={attr.label}
+              layoutProps={layoutProps}
+              valueComponent={
+                <InputElement
+                  attributes={[attr]}
+                  elements={attr.elements}
+                  registerEvents={registerEvents}
+                  params={attr.params}
+                  taskName={taskName}
+                  widgetId={attr.id}
+                />
+              }
             />
           </div>
         ))}
@@ -175,3 +113,19 @@ export function AddDialog({
     </KsDialog>
   );
 }
+//#region private methods
+
+function buildEntity({ attributeEventList }: BuildEntityProps) {
+  const widgetsData = attributeEventList.map((event) => event.onSave()).filter((data) => data?.entity);
+
+  const data = widgetsData.reduce((acc: any, current: any) => {
+    return {
+      ...acc,
+      [current.entity]: current.params,
+    };
+  }, {});
+
+  return data;
+}
+
+//#endregion

@@ -1,8 +1,7 @@
-import { GroupByProps, ValueProp, ValuesProps, VizCommonParams } from '../../../../types/types';
+import { Attribute, GroupByProps, ValueProp, ValuesProps, VizCommonParams } from '@kleeen/types';
 import { RankedListItem, SimpleList } from '@kleeen/react/components';
 import { formatDataList, formatSeverity, parseAttributes } from '@kleeen/frontend/utils';
 
-import { Attribute } from '@kleeen/types';
 import React from 'react';
 import { makeStyles } from '@material-ui/core';
 import { useWidgetContext } from '@kleeen/react/hooks';

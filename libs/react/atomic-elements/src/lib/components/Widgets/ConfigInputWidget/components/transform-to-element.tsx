@@ -1,4 +1,4 @@
-import { AggregationType, ListItem } from '@kleeen/types';
+import { AggregationType, ListItem, StatisticalDataType } from '@kleeen/types';
 import {
   CheckBoxGroup,
   ColorPicker,
@@ -232,13 +232,13 @@ export function TransformToElement(props: TransformToElementProps): JSX.Element 
 
   const getStaticalTypeElement = (): JSX.Element => {
     switch (statisticalType) {
-      case StatisticalType.NumericTemporal:
+      case StatisticalDataType.NumericTemporal:
         return getDateInput();
-      case StatisticalType.CategoricalBinary:
+      case StatisticalDataType.Binary:
         return getSwitchInput();
-      case StatisticalType.Image:
+      case StatisticalDataType.Image:
         return getUploadInput();
-      case StatisticalType.Color:
+      case StatisticalDataType.Color:
         return getColorPickerInput();
       default:
         return getAutocompleteInput();

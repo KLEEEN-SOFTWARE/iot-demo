@@ -1,97 +1,59 @@
 import { KUIConnect, AccessControl } from '@kleeen/core-react';
 import { roleAccessKeyTag } from '@kleeen/common/utils';
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import {
-  ConfigureLayoutStyle,
-  PageIntroSection,
-  CardSection02,
-  SnackBarSection,
+  EntireProductDomainLayoutStyle,
+  DataViewControlSection,
+  DataViewDisplaySectionAtomic,
 } from '@kleeen/react/atomic-elements';
-import { useEntityDetailsEventHandler, useKleeenActions } from '@kleeen/react/hooks';
+import { viewOptions } from './settings/view-options';
+import { useKleeenActions } from '@kleeen/react/hooks';
 import { widgets } from './settings/widgets';
 
 function Workflow({ translate, ...props }) {
   const taskName = `configureSensorNode`;
+  const [selectedViewOption, setSelectedViewOption] = useState(widgets[0]);
+  const [cardsNumber, setCardsNumber] = useState(0);
   const [selectedRows, setSelectedRows] = useState([]);
-  const classes = ConfigureLayoutStyle();
+  const classes = EntireProductDomainLayoutStyle();
   const workflowName = `Configure Sensor/Node`;
-  const workflowDescription = undefined;
-  const [showSnackBar, setShowSnackBar] = useState(false);
-  const [attributeEventList, eventList] = useEntityDetailsEventHandler();
-  function snackBarRegisterEvents(event) {
-    eventList.addEvent(event);
+  function handleOnTabIndexChanged(newTabIndex, option) {
+    setSelectedViewOption(option);
   }
-  function onInputChange(hasChanged) {
-    setShowSnackBar(hasChanged);
-  }
-  const mainContainerId = `container-id-${classes.configCardSection}`;
-
-  useEffect(() => {
-    const { clearEventList } = eventList;
-    return clearEventList;
-  }, []);
-
   const configureSensorNodeActions = useKleeenActions(taskName);
-  function snackBarOnCancel() {
-    setShowSnackBar(false);
-    attributeEventList.map((event) => event.onCancel());
-  }
-  function snackBarOnSave() {
-    setShowSnackBar(false);
-    const widgetsData = attributeEventList.map((event) => event.onSave()).filter((data) => data);
-    const dataList = widgetsData.map((current) => {
-      return {
-        ...current,
-        params: {
-          ...current.params,
-        },
-      };
-    });
-
-    dataList.map((data) => configureSensorNodeActions.updateRequest(data));
-  }
 
   return (
     <AccessControl id={roleAccessKeyTag(`navigation.${taskName}`)}>
-      <div className={classes.configTask}>
-        <div className={classes.pageIntro}>
-          <PageIntroSection title={workflowName} description={workflowDescription} showActions />
-        </div>
-        <div
-          id={mainContainerId}
-          className={`${classes.configCardSection} ${showSnackBar ? classes.snackbarNavTop : ''} `}
-        >
-          <CardSection02
-            justifyContent={'center'}
-            hideSaveAndClose
-            widgets={widgets}
-            containerId={mainContainerId}
-            registerEvents={snackBarRegisterEvents}
-            onInputChange={onInputChange}
-            selectedRows={selectedRows}
-            setSelectedRows={setSelectedRows}
-            taskName={taskName}
-          />
-        </div>
-        <div>
-          <SnackBarSection
-            entityActions={configureSensorNodeActions}
-            selectedRows={selectedRows}
-            setSelectedRows={setSelectedRows}
-            showSnackBar={showSnackBar}
-            actions={[
-              {
-                type: 'CUSTOM',
-                label: 'SAVE',
-                func: snackBarOnSave,
-              },
-              {
-                type: 'CUSTOM',
-                label: 'CANCEL',
-                func: snackBarOnCancel,
-              },
-            ]}
-          />
+      <div className={`${classes.entityBrowserTask} subhead-dynamic`}>
+        <div className={`${classes.entityBrowserArea} browserArea`}>
+          <div className={`${classes.gridPageIntro} ${cardsNumber > 0 ? `max-card-${cardsNumber}` : ''}`}>
+            <DataViewControlSection
+              entityActions={configureSensorNodeActions}
+              hideRefreshControl
+              onTabIndexChanged={handleOnTabIndexChanged}
+              selectedOption={selectedViewOption}
+              setSelectedOption={setSelectedViewOption}
+              taskName={taskName}
+              title={workflowName}
+              viewOptions={viewOptions}
+            />
+          </div>
+          <div
+            className={`${classes.gridGridSection} ${
+              selectedRows.length > 0 && selectedViewOption.sortOrder === 0 ? classes.snackbar : ''
+            }`}
+          >
+            <DataViewDisplaySectionAtomic
+              widgets={widgets}
+              selectedOption={selectedViewOption}
+              selectedRows={selectedRows}
+              setCardsNumber={setCardsNumber}
+              setSelectedRows={setSelectedRows}
+              taskName={taskName}
+              value={selectedViewOption}
+              entityActions={configureSensorNodeActions}
+            />
+          </div>
         </div>
       </div>
     </AccessControl>

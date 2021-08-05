@@ -1,5 +1,6 @@
 import { WidgetInitialState, WidgetState } from '../store/ducks/widget';
 
+import { VizParams } from '@kleeen/types';
 import { getWidgetContextName } from '../helpers';
 import { isNilOrEmpty } from '@kleeen/common/utils';
 import { useEffect } from 'react';
@@ -9,7 +10,8 @@ import { useKleeenContext } from './useKleeenContext';
 import useUrlQueryParams from './useUrlQueryParams';
 
 export interface WidgetContextProps {
-  params: any;
+  // TODO: @cafe unify params into the VizParams interface alone
+  params: VizParams & Record<string, any>;
   taskName: string;
   widgetId: string | number;
 }
@@ -20,7 +22,7 @@ export enum WidgetContextAttributes {
 }
 
 export function useWidgetContext({ params, taskName, widgetId }: WidgetContextProps): WidgetState {
-  const { operationName } = params;
+  const { filters, operationName } = params;
   const isCustomWidget = isNilOrEmpty(operationName);
   if (isCustomWidget) {
     return WidgetInitialState;
@@ -34,7 +36,7 @@ export function useWidgetContext({ params, taskName, widgetId }: WidgetContextPr
   const widgetData: WidgetState = useKleeenContext(widgetContext);
   const { status = { version: 0 } } = useKleeenContext(taskName) ?? {};
 
-  const paramsBasedOnRoute = useUrlQueryParams({ useNestedObjects: true });
+  const paramsBasedOnRoute = useUrlQueryParams({ filters, useNestedObjects: true });
 
   useEffect(() => {
     const canContinue = isContextReady && !isNilOrEmpty(entityActions);

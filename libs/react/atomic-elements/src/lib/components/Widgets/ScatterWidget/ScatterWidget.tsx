@@ -1,4 +1,4 @@
-import { GroupByProps, ValueProp, ValuesProps, VizCommonParams } from '../../../../types';
+import { GroupByProps, ValueProp, ValuesProps, VizCommonParams } from '@kleeen/types';
 import React, { ReactElement } from 'react';
 
 import { Loader } from '@kleeen/react/components';

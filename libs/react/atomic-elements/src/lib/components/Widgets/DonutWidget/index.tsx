@@ -2,7 +2,7 @@ import { Attribute } from '@kleeen/types';
 import { Donut } from '../../donut';
 import { Loader } from '@kleeen/react/components';
 import React from 'react';
-import { VizCommonParams } from '../../../../types/types';
+import { VizCommonParams } from '@kleeen/types';
 import { makeStyles } from '@material-ui/core';
 import { useWidgetContext } from '@kleeen/react/hooks';
 

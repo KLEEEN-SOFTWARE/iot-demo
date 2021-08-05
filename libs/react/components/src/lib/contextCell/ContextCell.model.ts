@@ -1,13 +1,14 @@
-import { Attribute, Cell, ChangeDirectionsProps, FormatProps } from '@kleeen/types';
-interface RowProps {
+import { Attribute, Cell, ChangeDirectionsProps, FormatProps, Row } from '@kleeen/types';
+export interface RowProps {
   id?: string;
 }
 export interface ContextMenuProps {
   attr: Attribute;
   cell: Cell | Cell[];
+  displayColumnAttribute?: Attribute;
   format?: FormatProps;
-  rowDisplayValue?: string;
-  row?: RowProps;
+  rowDisplayValue?: boolean | number | string;
+  row?: Row;
   openShowMoreModal?: (ListingModalSettings) => void;
   hasDisplayMedia?: boolean;
 }

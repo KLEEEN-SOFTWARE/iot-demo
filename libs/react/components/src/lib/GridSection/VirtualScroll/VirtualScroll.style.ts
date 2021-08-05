@@ -230,6 +230,7 @@ export const styles = () =>
       '& .editable-cell': {
         display: 'flex',
         alignItems: 'center',
+        paddingRight: 0,
         '& > :first-child': {
           flex: '1 0',
           width: '100%',
@@ -281,8 +282,9 @@ export const styles = () =>
         backgroundColor: 'var(--row-even)',
       },
       '& .actions-form-cell': {
-        width: 'auto',
+        width: '40%',
         textAlign: 'right',
+        paddingLeft: '0px',
         '& .actions-form-container': {
           visibility: 'hidden',
         },
@@ -352,6 +354,7 @@ export const styles = () =>
           paddingLeft: 'var(--pm-S)',
         },
         '& .actions-form-cell': {
+          paddingLeft: '0px',
           '& .actions-form-container': {
             visibility: 'visible',
           },
@@ -431,6 +434,7 @@ export const styles = () =>
           color: 'var(--on-secondary-color-variant)',
         },
         '& .actions-form-cell': {
+          paddingLeft: '0px',
           '& .actions-form-container': {
             visibility: 'visible',
           },

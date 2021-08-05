@@ -15,6 +15,7 @@ import React from 'react';
 import { SortableHandle } from 'react-sortable-hoc';
 import { TableCell } from '../../components';
 import classnames from 'classnames';
+import { getRowDisplayValue } from '@kleeen/common/utils';
 import { validateOrderColum } from './utils';
 
 const DragHandle = SortableHandle(({ children }) => <div>{children}</div>);
@@ -53,7 +54,7 @@ function EditDataView({
   draggable,
   setEditingCell,
 }: EditDataViewProps): JSX.Element {
-  const { displayValue: rowDisplayValue } = rowData[`displayValue::${displayColumnAttribute?.name}`] || {};
+  const rowDisplayValue = getRowDisplayValue(rowData, displayColumnAttribute?.name);
   const isInputEditable = Boolean(attr?.settings?.isEditable);
   const hasMany = Boolean(attr?.hasMany);
   const cellIsBeingEdited = editingCell.rowId === rowData.id && editingCell.attributeName === attr.name;

@@ -18,6 +18,15 @@
 .text-align-left {
   display: flex;
   justify-content: flex-start;
+  &,
+  span .text-formatter {
+    max-width: 100%;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    overflow: hidden;
+    text-align: left;
+    display: inline-block;
+  }
 }
 .cell {
   white-space: nowrap;

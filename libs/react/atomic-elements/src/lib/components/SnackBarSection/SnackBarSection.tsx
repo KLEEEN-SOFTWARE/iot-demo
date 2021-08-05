@@ -83,11 +83,12 @@ const Dialog = styled(MuiDialog)({
 export interface SnackBarSectionProps {
   actions: Action[];
   entityActions: { [key: string]: Function };
-  showSelectAndExecute: boolean;
-  selectedRows: any[];
-  entity: string;
+  showSelectAndExecute?: boolean;
+  selectedRows?: any[];
+  entity?: string;
   showSnackBar: boolean;
-  setSelectedRows: any;
+  className?: string;
+  setSelectedRows?: any;
 }
 
 interface DeleteDialogProps {
@@ -243,7 +244,7 @@ export const DeleteDialog = (props: DeleteDialogProps) => {
   };
 
   const handleDelete = () => {
-    props.entityActions['deleteRequest']({ id: props.selectedRows[0].id });
+    props.entityActions['deleteRequest']({ id: (props.selectedRows || [])[0].id });
     props.setOpen(false);
     props.setSelectedRows([]);
   };
@@ -292,6 +293,7 @@ export const SnackBarSection = (props: SnackBarSectionProps) => {
       <Slide in={props.showSnackBar} mountOnEnter unmountOnExit direction="up" timeout={400}>
         <Paper
           className={classnames(
+            props.className,
             `${bem}__snack-bar`,
             `snack-bar ${props.showSnackBar ? 'visible' : 'hidden'}`,
           )}
@@ -300,14 +302,14 @@ export const SnackBarSection = (props: SnackBarSectionProps) => {
             <Grid container spacing={3}>
               <Grid item xs={12} sm={2} />
               <Grid container item xs={12} sm={8} justify="center" alignItems="center">
-                {props.selectedRows.length > 0 && (
+                {(props.selectedRows || []).length > 0 && (
                   <>
                     <TypographyBold
                       variant="button"
                       display="block"
                       className={classnames(`${bem}__snack-bar--button`, 'snackbar-text')}
                     >
-                      {props.selectedRows.length}
+                      {(props.selectedRows || []).length}
                     </TypographyBold>
                     <MuiTypography
                       variant="caption"
@@ -325,7 +327,7 @@ export const SnackBarSection = (props: SnackBarSectionProps) => {
                 />
               </Grid>
               <Grid container item xs={12} sm={2} justify="flex-end" alignItems="center">
-                {props.selectedRows.length > 0 && (
+                {(props.selectedRows || []).length > 0 && (
                   <Button
                     variant="contained"
                     color="primary"
@@ -347,7 +349,7 @@ export const SnackBarSection = (props: SnackBarSectionProps) => {
         open={open}
         setOpen={setOpen}
         entityActions={props.entityActions}
-        selectedRows={props.selectedRows}
+        selectedRows={props.selectedRows || []}
         setSelectedRows={props.setSelectedRows}
       />
     </>

@@ -7,4 +7,5 @@ module.exports = {
   coverageDirectory: '../../../coverage/libs/react/atomic-elements',
   globals: { 'ts-jest': { tsconfig: '<rootDir>/tsconfig.spec.json' } },
   displayName: 'react-atomic-elements',
+  transformIgnorePatterns: ['/node_modules/(?!react-calendar-datetime-picker)'],
 };

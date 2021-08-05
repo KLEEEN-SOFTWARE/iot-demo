@@ -1,4 +1,4 @@
-import React, { Suspense } from 'react';
+import React, { Suspense, memo } from 'react';
 import { Redirect, Route, Switch } from 'react-router-dom';
 
 import { uuid } from '@kleeen/core-react';
@@ -73,10 +73,22 @@ async function manageRoutes(modules, dyloApi, routing = [], defaultHomePage = '/
   injectRoutes(dyloApi, routesToInject, defaultHomePage);
 }
 
+const DyloComponent = memo(
+  ({ attachRoutes }) => {
+    const SwitchWithDylo = withDylo(Switch);
+
+    return (
+      <Suspense fallback={<div>Loading...</div>}>
+        <SwitchWithDylo onDyloApiReady={attachRoutes} />
+      </Suspense>
+    );
+  },
+  (prevProps, nextProps) => prevProps.attachRoutes && nextProps.attachRoutes,
+);
+
 const useKleeenRouting = (modules, routing, defaultHomePage) => {
   const dyloApiRef = React.useRef();
   const [isReady, setIsReady] = React.useState(false);
-  const SwitchWithDylo = withDylo(Switch);
   const attachRoutes = (dyloApi) => {
     dyloApiRef.current = dyloApi;
     setIsReady(true);
@@ -88,13 +100,7 @@ const useKleeenRouting = (modules, routing, defaultHomePage) => {
     }
   }, [isReady, modules, routing]);
 
-  return () => (
-    <>
-      <Suspense fallback={<div>Loading...</div>}>
-        <SwitchWithDylo onDyloApiReady={attachRoutes} />
-      </Suspense>
-    </>
-  );
+  return <DyloComponent attachRoutes={attachRoutes} />;
 };
 
 export default useKleeenRouting;

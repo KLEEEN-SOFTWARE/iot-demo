@@ -1,69 +1,89 @@
 [
   {
     "name": "Timestamp",
+    "formatType": "timestamp",
     "initialQuantity": 50,
     "properties": {
       "displayValue": {
+        "format": {},
+        "formatType": "timestamp",
         "name": "displayValue",
-        "statisticalType": "Data - Numeric - Temporal",
-        "type": "timestamp",
         "params": [],
-        "format": {}
+        "statisticalType": "Data - Numeric - Temporal",
+        "type": "timestamp"
       }
     }
   },
   {
     "name": "Event",
     "description": "",
+    "formatType": "uuid",
     "initialQuantity": 50,
     "properties": {
       "displayValue": {
-        "name": "displayValue",
         "description": "",
-        "statisticalType": "Data - Categorical - free form",
-        "type": "uuid",
+        "format": {},
+        "formatType": "uuid",
+        "name": "displayValue",
         "params": [],
-        "format": {}
+        "statisticalType": "Data - Categorical - free form",
+        "type": "uuid"
       },
       "eventLength": {
-        "name": "eventLength",
         "description": "",
-        "statisticalType": "Data - Numeric - NTG - Discrete",
-        "type": "EventLength",
+        "format": {
+          "max": 500,
+          "min": 1
+        },
+        "formatType": "integer",
+        "name": "eventLength",
         "params": [
           1,
           500
         ],
-        "format": {
-          "max": 500,
-          "min": 1
-        }
+        "statisticalType": "Data - Numeric - NTG - Discrete",
+        "type": "EventLength"
       },
       "timestamp": {
-        "name": "timestamp",
-        "statisticalType": "Data - Numeric - Temporal",
-        "type": "Timestamp",
-        "params": [],
         "format": {
           "dateTime": {
             "day": "2-digit",
             "month": "2-digit",
             "year": "numeric"
           }
-        }
+        },
+        "formatType": "timestamp",
+        "name": "timestamp",
+        "params": [],
+        "statisticalType": "Data - Numeric - Temporal",
+        "type": "Timestamp"
       }
     }
   },
   {
     "name": "Node",
     "description": "Network Nodes",
+    "formatType": "prime",
     "initialQuantity": 10,
     "properties": {
       "displayValue": {
-        "name": "displayValue",
         "description": "Network Nodes",
-        "statisticalType": "Data - Categorical",
-        "type": "oneOfEach",
+        "format": {
+          "examples": [
+            "452220955-X",
+            "124233324-X",
+            "400991223-5",
+            "616225596-4",
+            "394359908-6",
+            "779526478-6",
+            "275677011-6",
+            "672357182-7",
+            "468597930-3",
+            "190975058-1"
+          ]
+        },
+        "formatType": "prime",
+        "name": "displayValue",
         "params": [
           [
             "452220955-X",
@@ -78,31 +98,11 @@
             "190975058-1"
           ]
         ],
-        "format": {
-          "examples": [
-            "452220955-X",
-            "124233324-X",
-            "400991223-5",
-            "616225596-4",
-            "394359908-6",
-            "779526478-6",
-            "275677011-6",
-            "672357182-7",
-            "468597930-3",
-            "190975058-1"
-          ]
-        }
+        "statisticalType": "Data - Categorical",
+        "type": "oneOfEach"
       },
       "sensor": {
-        "name": "sensor",
         "description": "",
-        "statisticalType": "Data - Categorical",
-        "type": "arrayOf",
-        "params": [
-          "Sensor",
-          20,
-          []
-        ],
         "format": {
           "examples": [
             "A03",
@@ -116,17 +116,19 @@
             "C6990",
             "C8172"
           ]
-        }
+        },
+        "formatType": "prime",
+        "name": "sensor",
+        "params": [
+          "Sensor",
+          20,
+          []
+        ],
+        "statisticalType": "Data - Categorical",
+        "type": "arrayOf"
       },
       "nodeOverallStatus": {
-        "name": "nodeOverallStatus",
         "description": "",
-        "statisticalType": "Data - Categorical - ordered - Severity Ranking",
-        "type": "NodeOverallStatus",
-        "params": [
-          1,
-          3
-        ],
         "format": {
           "examples": [
             "Bad",
@@ -152,17 +154,18 @@
           "severityBad": 1,
           "severityGood": 3,
           "severityLevels": 3
-        }
+        },
+        "formatType": "severity_level",
+        "name": "nodeOverallStatus",
+        "params": [
+          1,
+          3
+        ],
+        "statisticalType": "Data - Categorical - ordered - Severity Ranking",
+        "type": "NodeOverallStatus"
       },
       "nodeStatus": {
-        "name": "nodeStatus",
         "description": "",
-        "statisticalType": "Data - Categorical - ordered - Severity Ranking",
-        "type": "NodeStatus",
-        "params": [
-          1,
-          3
-        ],
         "format": {
           "examples": [
             "Bad",
@@ -188,14 +191,18 @@
           "severityBad": 1,
           "severityGood": 3,
           "severityLevels": 3
-        }
+        },
+        "formatType": "severity_level",
+        "name": "nodeStatus",
+        "params": [
+          1,
+          3
+        ],
+        "statisticalType": "Data - Categorical - ordered - Severity Ranking",
+        "type": "NodeStatus"
       },
       "siteMap": {
-        "name": "siteMap",
         "description": "",
-        "statisticalType": "Data - Categorical",
-        "type": "SiteMap",
-        "params": [],
         "format": {
           "examples": [
             "Site 1",
@@ -204,43 +211,23 @@
             "Site 4",
             "Site 5"
           ]
-        }
+        },
+        "formatType": "prime",
+        "name": "siteMap",
+        "params": [],
+        "statisticalType": "Data - Categorical",
+        "type": "SiteMap"
       }
     }
   },
   {
     "name": "NodeOverallStatus",
     "description": "",
+    "formatType": "severity_level",
     "initialQuantity": 3,
     "properties": {
       "displayValue": {
-        "name": "displayValue",
         "description": "",
-        "statisticalType": "Data - Categorical - ordered - Severity Ranking",
-        "type": "severity_level",
-        "params": [
-          1,
-          3,
-          {
-            "severityGood": 3,
-            "severityBad": 1,
-            "severityLevels": 3,
-            "valueLabels": [
-              {
-                "label": "Bad",
-                "value": 1
-              },
-              {
-                "label": "Ok",
-                "value": 2
-              },
-              {
-                "label": "Excellent",
-                "value": 3
-              }
-            ]
-          }
-        ],
         "format": {
           "examples": [
             "Bad",
@@ -266,14 +253,37 @@
           "severityBad": 1,
           "severityGood": 3,
           "severityLevels": 3
-        }
+        },
+        "formatType": "severity_level",
+        "name": "displayValue",
+        "params": [
+          1,
+          3,
+          {
+            "severityGood": 3,
+            "severityBad": 1,
+            "severityLevels": 3,
+            "valueLabels": [
+              {
+                "label": "Bad",
+                "value": 1
+              },
+              {
+                "label": "Ok",
+                "value": 2
+              },
+              {
+                "label": "Excellent",
+                "value": 3
+              }
+            ]
+          }
+        ],
+        "statisticalType": "Data - Categorical - ordered - Severity Ranking",
+        "type": "severity_level"
       },
       "node": {
-        "name": "node",
         "description": "Network Nodes",
-        "statisticalType": "Data - Categorical",
-        "type": "Node",
-        "params": [],
         "format": {
           "examples": [
             "452220955-X",
@@ -287,56 +297,37 @@
             "468597930-3",
             "190975058-1"
           ]
-        }
+        },
+        "formatType": "prime",
+        "name": "node",
+        "params": [],
+        "statisticalType": "Data - Categorical",
+        "type": "Node"
       },
       "timestamp": {
-        "name": "timestamp",
-        "statisticalType": "Data - Numeric - Temporal",
-        "type": "Timestamp",
-        "params": [],
         "format": {
           "dateTime": {
             "day": "2-digit",
             "month": "2-digit",
             "year": "numeric"
           }
-        }
+        },
+        "formatType": "timestamp",
+        "name": "timestamp",
+        "params": [],
+        "statisticalType": "Data - Numeric - Temporal",
+        "type": "Timestamp"
       }
     }
   },
   {
     "name": "NodeStatus",
     "description": "",
+    "formatType": "severity_level",
     "initialQuantity": 3,
     "properties": {
       "displayValue": {
-        "name": "displayValue",
         "description": "",
-        "statisticalType": "Data - Categorical - ordered - Severity Ranking",
-        "type": "severity_level",
-        "params": [
-          1,
-          3,
-          {
-            "severityGood": 3,
-            "severityBad": 1,
-            "severityLevels": 3,
-            "valueLabels": [
-              {
-                "label": "Bad",
-                "value": 1
-              },
-              {
-                "label": "Ok",
-                "value": 2
-              },
-              {
-                "label": "Excellent",
-                "value": 3
-              }
-            ]
-          }
-        ],
         "format": {
           "examples": [
             "Bad",
@@ -362,14 +353,37 @@
           "severityBad": 1,
           "severityGood": 3,
           "severityLevels": 3
-        }
+        },
+        "formatType": "severity_level",
+        "name": "displayValue",
+        "params": [
+          1,
+          3,
+          {
+            "severityGood": 3,
+            "severityBad": 1,
+            "severityLevels": 3,
+            "valueLabels": [
+              {
+                "label": "Bad",
+                "value": 1
+              },
+              {
+                "label": "Ok",
+                "value": 2
+              },
+              {
+                "label": "Excellent",
+                "value": 3
+              }
+            ]
+          }
+        ],
+        "statisticalType": "Data - Categorical - ordered - Severity Ranking",
+        "type": "severity_level"
       },
       "node": {
-        "name": "node",
         "description": "Network Nodes",
-        "statisticalType": "Data - Categorical",
-        "type": "Node",
-        "params": [],
         "format": {
           "examples": [
             "452220955-X",
@@ -383,33 +397,48 @@
             "468597930-3",
             "190975058-1"
           ]
-        }
+        },
+        "formatType": "prime",
+        "name": "node",
+        "params": [],
+        "statisticalType": "Data - Categorical",
+        "type": "Node"
       },
       "timestamp": {
-        "name": "timestamp",
-        "statisticalType": "Data - Numeric - Temporal",
-        "type": "Timestamp",
-        "params": [],
         "format": {
           "dateTime": {
             "day": "2-digit",
             "month": "2-digit",
             "year": "numeric"
           }
-        }
+        },
+        "formatType": "timestamp",
+        "name": "timestamp",
+        "params": [],
+        "statisticalType": "Data - Numeric - Temporal",
+        "type": "Timestamp"
       }
     }
   },
   {
     "name": "SiteMap",
     "description": "",
+    "formatType": "prime",
     "initialQuantity": 5,
     "properties": {
       "displayValue": {
-        "name": "displayValue",
         "description": "",
-        "statisticalType": "Data - Categorical",
-        "type": "oneOfEach",
+        "format": {
+          "examples": [
+            "Site 1",
+            "Site 2",
+            "Site 3",
+            "Site 4",
+            "Site 5"
+          ]
+        },
+        "formatType": "prime",
+        "name": "displayValue",
         "params": [
           [
             "Site 1",
@@ -419,25 +448,11 @@
             "Site 5"
           ]
         ],
-        "format": {
-          "examples": [
-            "Site 1",
-            "Site 2",
-            "Site 3",
-            "Site 4",
-            "Site 5"
-          ]
-        }
+        "statisticalType": "Data - Categorical",
+        "type": "oneOfEach"
       },
       "systemHealth": {
-        "name": "systemHealth",
         "description": "",
-        "statisticalType": "Data - Categorical - ordered - Severity Ranking",
-        "type": "SystemHealth",
-        "params": [
-          1,
-          3
-        ],
         "format": {
           "examples": [
             "Bad",
@@ -463,18 +478,18 @@
           "severityBad": 1,
           "severityGood": 3,
           "severityLevels": 3
-        }
+        },
+        "formatType": "severity_level",
+        "name": "systemHealth",
+        "params": [
+          1,
+          3
+        ],
+        "statisticalType": "Data - Categorical - ordered - Severity Ranking",
+        "type": "SystemHealth"
       },
       "sensor": {
-        "name": "sensor",
         "description": "",
-        "statisticalType": "Data - Categorical",
-        "type": "arrayOf",
-        "params": [
-          "Sensor",
-          20,
-          []
-        ],
         "format": {
           "examples": [
             "A03",
@@ -488,17 +503,19 @@
             "C6990",
             "C8172"
           ]
-        }
+        },
+        "formatType": "prime",
+        "name": "sensor",
+        "params": [
+          "Sensor",
+          20,
+          []
+        ],
+        "statisticalType": "Data - Categorical",
+        "type": "arrayOf"
       },
       "siteStatus": {
-        "name": "siteStatus",
         "description": "",
-        "statisticalType": "Data - Categorical - ordered - Severity Ranking",
-        "type": "SiteStatus",
-        "params": [
-          1,
-          3
-        ],
         "format": {
           "examples": [
             "Bad",
@@ -524,18 +541,18 @@
           "severityBad": 1,
           "severityGood": 3,
           "severityLevels": 3
-        }
+        },
+        "formatType": "severity_level",
+        "name": "siteStatus",
+        "params": [
+          1,
+          3
+        ],
+        "statisticalType": "Data - Categorical - ordered - Severity Ranking",
+        "type": "SiteStatus"
       },
       "node": {
-        "name": "node",
         "description": "Network Nodes",
-        "statisticalType": "Data - Categorical",
-        "type": "arrayOf",
-        "params": [
-          "Node",
-          20,
-          []
-        ],
         "format": {
           "examples": [
             "452220955-X",
@@ -549,20 +566,43 @@
             "468597930-3",
             "190975058-1"
           ]
-        }
+        },
+        "formatType": "prime",
+        "name": "node",
+        "params": [
+          "Node",
+          20,
+          []
+        ],
+        "statisticalType": "Data - Categorical",
+        "type": "arrayOf"
       }
     }
   },
   {
     "name": "Sensor",
     "description": "",
+    "formatType": "prime",
     "initialQuantity": 10,
     "properties": {
       "displayValue": {
-        "name": "displayValue",
         "description": "",
-        "statisticalType": "Data - Categorical",
-        "type": "oneOfEach",
+        "format": {
+          "examples": [
+            "A03",
+            "A5279",
+            "B1001",
+            "B35",
+            "B40",
+            "B9719",
+            "C4351",
+            "C641",
+            "C6990",
+            "C8172"
+          ]
+        },
+        "formatType": "prime",
+        "name": "displayValue",
         "params": [
           [
             "A03",
@@ -577,35 +617,20 @@
             "C8172"
           ]
         ],
-        "format": {
-          "examples": [
-            "A03",
-            "A5279",
-            "B1001",
-            "B35",
-            "B40",
-            "B9719",
-            "C4351",
-            "C641",
-            "C6990",
-            "C8172"
-          ]
-        }
+        "statisticalType": "Data - Categorical",
+        "type": "oneOfEach"
       },
       "ppm": {
-        "name": "ppm",
         "description": "",
-        "statisticalType": "Data - Numeric - NTG - Discrete",
-        "type": "Ppm",
+        "format": {},
+        "formatType": "integer",
+        "name": "ppm",
         "params": [],
-        "format": {}
+        "statisticalType": "Data - Numeric - NTG - Discrete",
+        "type": "Ppm"
       },
       "node": {
-        "name": "node",
         "description": "Network Nodes",
-        "statisticalType": "Data - Categorical",
-        "type": "Node",
-        "params": [],
         "format": {
           "examples": [
             "452220955-X",
@@ -619,17 +644,15 @@
             "468597930-3",
             "190975058-1"
           ]
-        }
+        },
+        "formatType": "prime",
+        "name": "node",
+        "params": [],
+        "statisticalType": "Data - Categorical",
+        "type": "Node"
       },
       "sensorOverallStatus": {
-        "name": "sensorOverallStatus",
         "description": "",
-        "statisticalType": "Data - Categorical - ordered - Severity Ranking",
-        "type": "SensorOverallStatus",
-        "params": [
-          1,
-          3
-        ],
         "format": {
           "examples": [
             "Bad",
@@ -655,17 +678,18 @@
           "severityBad": 1,
           "severityGood": 3,
           "severityLevels": 3
-        }
+        },
+        "formatType": "severity_level",
+        "name": "sensorOverallStatus",
+        "params": [
+          1,
+          3
+        ],
+        "statisticalType": "Data - Categorical - ordered - Severity Ranking",
+        "type": "SensorOverallStatus"
       },
       "sensorStatus": {
-        "name": "sensorStatus",
         "description": "",
-        "statisticalType": "Data - Categorical - ordered - Severity Ranking",
-        "type": "SensorStatus",
-        "params": [
-          1,
-          3
-        ],
         "format": {
           "examples": [
             "Bad",
@@ -691,14 +715,18 @@
           "severityBad": 1,
           "severityGood": 3,
           "severityLevels": 3
-        }
+        },
+        "formatType": "severity_level",
+        "name": "sensorStatus",
+        "params": [
+          1,
+          3
+        ],
+        "statisticalType": "Data - Categorical - ordered - Severity Ranking",
+        "type": "SensorStatus"
       },
       "siteMap": {
-        "name": "siteMap",
         "description": "",
-        "statisticalType": "Data - Categorical",
-        "type": "SiteMap",
-        "params": [],
         "format": {
           "examples": [
             "Site 1",
@@ -707,43 +735,23 @@
             "Site 4",
             "Site 5"
           ]
-        }
+        },
+        "formatType": "prime",
+        "name": "siteMap",
+        "params": [],
+        "statisticalType": "Data - Categorical",
+        "type": "SiteMap"
       }
     }
   },
   {
     "name": "SensorOverallStatus",
     "description": "",
+    "formatType": "severity_level",
     "initialQuantity": 3,
     "properties": {
       "displayValue": {
-        "name": "displayValue",
         "description": "",
-        "statisticalType": "Data - Categorical - ordered - Severity Ranking",
-        "type": "severity_level",
-        "params": [
-          1,
-          3,
-          {
-            "severityGood": 3,
-            "severityBad": 1,
-            "severityLevels": 3,
-            "valueLabels": [
-              {
-                "label": "Bad",
-                "value": 1
-              },
-              {
-                "label": "Ok",
-                "value": 2
-              },
-              {
-                "label": "Excellent",
-                "value": 3
-              }
-            ]
-          }
-        ],
         "format": {
           "examples": [
             "Bad",
@@ -769,14 +777,37 @@
           "severityBad": 1,
           "severityGood": 3,
           "severityLevels": 3
-        }
+        },
+        "formatType": "severity_level",
+        "name": "displayValue",
+        "params": [
+          1,
+          3,
+          {
+            "severityGood": 3,
+            "severityBad": 1,
+            "severityLevels": 3,
+            "valueLabels": [
+              {
+                "label": "Bad",
+                "value": 1
+              },
+              {
+                "label": "Ok",
+                "value": 2
+              },
+              {
+                "label": "Excellent",
+                "value": 3
+              }
+            ]
+          }
+        ],
+        "statisticalType": "Data - Categorical - ordered - Severity Ranking",
+        "type": "severity_level"
       },
       "sensor": {
-        "name": "sensor",
         "description": "",
-        "statisticalType": "Data - Categorical",
-        "type": "Sensor",
-        "params": [],
         "format": {
           "examples": [
             "A03",
@@ -790,56 +821,37 @@
             "C6990",
             "C8172"
           ]
-        }
+        },
+        "formatType": "prime",
+        "name": "sensor",
+        "params": [],
+        "statisticalType": "Data - Categorical",
+        "type": "Sensor"
       },
       "timestamp": {
-        "name": "timestamp",
-        "statisticalType": "Data - Numeric - Temporal",
-        "type": "Timestamp",
-        "params": [],
         "format": {
           "dateTime": {
             "day": "2-digit",
             "month": "2-digit",
             "year": "numeric"
           }
-        }
+        },
+        "formatType": "timestamp",
+        "name": "timestamp",
+        "params": [],
+        "statisticalType": "Data - Numeric - Temporal",
+        "type": "Timestamp"
       }
     }
   },
   {
     "name": "SensorStatus",
     "description": "",
+    "formatType": "severity_level",
     "initialQuantity": 3,
     "properties": {
       "displayValue": {
-        "name": "displayValue",
         "description": "",
-        "statisticalType": "Data - Categorical - ordered - Severity Ranking",
-        "type": "severity_level",
-        "params": [
-          1,
-          3,
-          {
-            "severityGood": 3,
-            "severityBad": 1,
-            "severityLevels": 3,
-            "valueLabels": [
-              {
-                "label": "Bad",
-                "value": 1
-              },
-              {
-                "label": "Ok",
-                "value": 2
-              },
-              {
-                "label": "Excellent",
-                "value": 3
-              }
-            ]
-          }
-        ],
         "format": {
           "examples": [
             "Bad",
@@ -865,14 +877,37 @@
           "severityBad": 1,
           "severityGood": 3,
           "severityLevels": 3
-        }
+        },
+        "formatType": "severity_level",
+        "name": "displayValue",
+        "params": [
+          1,
+          3,
+          {
+            "severityGood": 3,
+            "severityBad": 1,
+            "severityLevels": 3,
+            "valueLabels": [
+              {
+                "label": "Bad",
+                "value": 1
+              },
+              {
+                "label": "Ok",
+                "value": 2
+              },
+              {
+                "label": "Excellent",
+                "value": 3
+              }
+            ]
+          }
+        ],
+        "statisticalType": "Data - Categorical - ordered - Severity Ranking",
+        "type": "severity_level"
       },
       "sensor": {
-        "name": "sensor",
         "description": "",
-        "statisticalType": "Data - Categorical",
-        "type": "Sensor",
-        "params": [],
         "format": {
           "examples": [
             "A03",
@@ -886,56 +921,37 @@
             "C6990",
             "C8172"
           ]
-        }
+        },
+        "formatType": "prime",
+        "name": "sensor",
+        "params": [],
+        "statisticalType": "Data - Categorical",
+        "type": "Sensor"
       },
       "timestamp": {
-        "name": "timestamp",
-        "statisticalType": "Data - Numeric - Temporal",
-        "type": "Timestamp",
-        "params": [],
         "format": {
           "dateTime": {
             "day": "2-digit",
             "month": "2-digit",
             "year": "numeric"
           }
-        }
+        },
+        "formatType": "timestamp",
+        "name": "timestamp",
+        "params": [],
+        "statisticalType": "Data - Numeric - Temporal",
+        "type": "Timestamp"
       }
     }
   },
   {
     "name": "SiteStatus",
     "description": "",
+    "formatType": "severity_level",
     "initialQuantity": 3,
     "properties": {
       "displayValue": {
-        "name": "displayValue",
         "description": "",
-        "statisticalType": "Data - Categorical - ordered - Severity Ranking",
-        "type": "severity_level",
-        "params": [
-          1,
-          3,
-          {
-            "severityGood": 3,
-            "severityBad": 1,
-            "severityLevels": 3,
-            "valueLabels": [
-              {
-                "label": "Bad",
-                "value": 1
-              },
-              {
-                "label": "Ok",
-                "value": 2
-              },
-              {
-                "label": "Excellent",
-                "value": 3
-              }
-            ]
-          }
-        ],
         "format": {
           "examples": [
             "Bad",
@@ -961,14 +977,37 @@
           "severityBad": 1,
           "severityGood": 3,
           "severityLevels": 3
-        }
+        },
+        "formatType": "severity_level",
+        "name": "displayValue",
+        "params": [
+          1,
+          3,
+          {
+            "severityGood": 3,
+            "severityBad": 1,
+            "severityLevels": 3,
+            "valueLabels": [
+              {
+                "label": "Bad",
+                "value": 1
+              },
+              {
+                "label": "Ok",
+                "value": 2
+              },
+              {
+                "label": "Excellent",
+                "value": 3
+              }
+            ]
+          }
+        ],
+        "statisticalType": "Data - Categorical - ordered - Severity Ranking",
+        "type": "severity_level"
       },
       "siteMap": {
-        "name": "siteMap",
         "description": "",
-        "statisticalType": "Data - Categorical",
-        "type": "SiteMap",
-        "params": [],
         "format": {
           "examples": [
             "Site 1",
@@ -977,56 +1016,37 @@
             "Site 4",
             "Site 5"
           ]
-        }
+        },
+        "formatType": "prime",
+        "name": "siteMap",
+        "params": [],
+        "statisticalType": "Data - Categorical",
+        "type": "SiteMap"
       },
       "timestamp": {
-        "name": "timestamp",
-        "statisticalType": "Data - Numeric - Temporal",
-        "type": "Timestamp",
-        "params": [],
         "format": {
           "dateTime": {
             "day": "2-digit",
             "month": "2-digit",
             "year": "numeric"
           }
-        }
+        },
+        "formatType": "timestamp",
+        "name": "timestamp",
+        "params": [],
+        "statisticalType": "Data - Numeric - Temporal",
+        "type": "Timestamp"
       }
     }
   },
   {
     "name": "SystemHealth",
     "description": "",
+    "formatType": "severity_level",
     "initialQuantity": 3,
     "properties": {
       "displayValue": {
-        "name": "displayValue",
         "description": "",
-        "statisticalType": "Data - Categorical - ordered - Severity Ranking",
-        "type": "severity_level",
-        "params": [
-          1,
-          3,
-          {
-            "severityGood": 3,
-            "severityBad": 1,
-            "severityLevels": 3,
-            "valueLabels": [
-              {
-                "label": "Bad",
-                "value": 1
-              },
-              {
-                "label": "Ok",
-                "value": 2
-              },
-              {
-                "label": "Excellent",
-                "value": 3
-              }
-            ]
-          }
-        ],
         "format": {
           "examples": [
             "Bad",
@@ -1052,18 +1072,37 @@
           "severityBad": 1,
           "severityGood": 3,
           "severityLevels": 3
-        }
+        },
+        "formatType": "severity_level",
+        "name": "displayValue",
+        "params": [
+          1,
+          3,
+          {
+            "severityGood": 3,
+            "severityBad": 1,
+            "severityLevels": 3,
+            "valueLabels": [
+              {
+                "label": "Bad",
+                "value": 1
+              },
+              {
+                "label": "Ok",
+                "value": 2
+              },
+              {
+                "label": "Excellent",
+                "value": 3
+              }
+            ]
+          }
+        ],
+        "statisticalType": "Data - Categorical - ordered - Severity Ranking",
+        "type": "severity_level"
       },
       "siteMap": {
-        "name": "siteMap",
         "description": "",
-        "statisticalType": "Data - Categorical",
-        "type": "arrayOf",
-        "params": [
-          "SiteMap",
-          20,
-          []
-        ],
         "format": {
           "examples": [
             "Site 1",
@@ -1072,29 +1111,36 @@
             "Site 4",
             "Site 5"
           ]
-        }
+        },
+        "formatType": "prime",
+        "name": "siteMap",
+        "params": [
+          "SiteMap",
+          20,
+          []
+        ],
+        "statisticalType": "Data - Categorical",
+        "type": "arrayOf"
       }
     }
   },
   {
     "name": "Ppm",
     "description": "",
+    "formatType": "integer",
     "initialQuantity": 50,
     "properties": {
       "displayValue": {
-        "name": "displayValue",
         "description": "",
-        "statisticalType": "Data - Numeric - NTG - Discrete",
-        "type": "integer",
+        "format": {},
+        "formatType": "integer",
+        "name": "displayValue",
         "params": [],
-        "format": {}
+        "statisticalType": "Data - Numeric - NTG - Discrete",
+        "type": "integer"
       },
       "sensor": {
-        "name": "sensor",
         "description": "",
-        "statisticalType": "Data - Categorical",
-        "type": "Sensor",
-        "params": [],
         "format": {
           "examples": [
             "A03",
@@ -1108,36 +1154,44 @@
             "C6990",
             "C8172"
           ]
-        }
+        },
+        "formatType": "prime",
+        "name": "sensor",
+        "params": [],
+        "statisticalType": "Data - Categorical",
+        "type": "Sensor"
       }
     }
   },
   {
     "name": "EventLength",
     "description": "",
+    "formatType": "integer",
     "initialQuantity": 50,
     "properties": {
       "displayValue": {
-        "name": "displayValue",
         "description": "",
-        "statisticalType": "Data - Numeric - NTG - Discrete",
-        "type": "integer",
+        "format": {
+          "max": 500,
+          "min": 1
+        },
+        "formatType": "integer",
+        "name": "displayValue",
         "params": [
           1,
           500
         ],
-        "format": {
-          "max": 500,
-          "min": 1
-        }
+        "statisticalType": "Data - Numeric - NTG - Discrete",
+        "type": "integer"
       },
       "event": {
-        "name": "event",
         "description": "",
-        "statisticalType": "Data - Categorical - free form",
-        "type": "Event",
+        "format": {},
+        "formatType": "uuid",
+        "name": "event",
         "params": [],
-        "format": {}
+        "statisticalType": "Data - Categorical - free form",
+        "type": "Event"
       }
     }
   }

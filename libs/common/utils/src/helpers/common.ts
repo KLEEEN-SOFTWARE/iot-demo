@@ -1,6 +1,6 @@
+import { FormatProps, Row } from '@kleeen/types';
 import { isNil, pipe } from 'ramda';
 
-import { FormatProps } from '@kleeen/types';
 import camelCase from 'lodash.camelcase';
 import { isNilOrEmpty } from '../validators';
 import mergeWith from 'lodash.mergewith';
@@ -16,6 +16,11 @@ export const average = (arr: number[]): number => arr.reduce((p, c) => p + c, 0)
 
 export const isValidArray = (maybeArray: unknown): boolean =>
   Array.isArray(maybeArray) && maybeArray.length > 0;
+
+export function getRowDisplayValue(row?: Row, entityName?: string): boolean | number | string | undefined {
+  const value = row?.[`displayValue::${entityName}`];
+  return value?.displayValue;
+}
 
 // TODO: these "any" should be changed for the correct type
 export function mergeByOrAppend<T>(source: T[] = [], override: T[] = [], predicate: string): T[] {

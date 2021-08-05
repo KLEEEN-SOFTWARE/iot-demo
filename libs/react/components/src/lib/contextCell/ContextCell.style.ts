@@ -9,6 +9,10 @@ export const useStyles = makeStyles({
       },
     },
     display: 'flex',
+    maxWidth: '100%',
+    whiteSpace: 'nowrap',
+    textOverflow: 'ellipsis',
+    overflow: 'hidden',
   },
   contextMenuButton: {
     textTransform: 'initial',

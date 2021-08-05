@@ -1,4 +1,5 @@
 import { AggregationType, Cell } from '@kleeen/types';
+
 import { CellInputProps } from './CellInput.model';
 import { KsAutocomplete } from '../../autocomplete';
 import React from 'react';
@@ -44,10 +45,11 @@ const FreeFormCellInput = ({
       inputValue={editingCell.temporaryValue}
       onChange={(e, option) => {
         if (option) {
+          const value = option?.displayValue ? option : { displayValue: option };
           amendCellUpdate({
             attributeName: editingCell.attributeName,
             rowId: editingCell.rowId,
-            value: option,
+            value,
           });
           changed = true;
         }

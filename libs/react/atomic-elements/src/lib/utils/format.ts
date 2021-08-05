@@ -1,4 +1,4 @@
-import { FormatProps } from '@kleeen/types';
+import { ElementDisplayType, FormatProps } from '@kleeen/types';
 import { isNilOrEmpty } from '@kleeen/common/utils';
 import { path } from 'ramda';
 
@@ -18,3 +18,17 @@ export function getAttributeBackendFormat(name: string) {
 export function getFormat({ attributeFormat, backendFormat }: GetFormat): FormatProps {
   return isNilOrEmpty(backendFormat) ? attributeFormat : backendFormat;
 }
+
+export const getFormatedResults = (component, results) => {
+  let formatedResults;
+  if (component === ElementDisplayType.Chips && Array.isArray(results) && results.length) {
+    formatedResults = results.map((result) => ({
+      displayValue: result,
+    }));
+  } else {
+    formatedResults = {
+      displayValue: results,
+    };
+  }
+  return formatedResults;
+};

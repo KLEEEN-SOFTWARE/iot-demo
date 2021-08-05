@@ -17,6 +17,11 @@ export const useEntityDetailsEventHandler = (): [
     configInputEventList,
     {
       addEvent: (event: AttributeInputEvents) => {
+        if (Object.prototype.hasOwnProperty.call(event, 'id')) {
+          configInputEventList = configInputEventList.filter(
+            (currentEvent) => !currentEvent.id || currentEvent.id !== event.id,
+          );
+        }
         configInputEventList.push(event);
       },
       clearEventList: () => {

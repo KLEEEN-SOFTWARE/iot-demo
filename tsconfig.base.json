@@ -29,7 +29,8 @@
       "@kleeen/react/state-management": ["libs/react/state-management/src/index.ts"],
       "@kleeen/render-utils": ["libs/render-utils/src/index.ts"],
       "@kleeen/styles": ["libs/styles/src/index.ts"],
-      "@kleeen/types": ["libs/types/src/index.ts"]
+      "@kleeen/types": ["libs/types/src/index.ts"],
+      "@kleeen/widgets": ["libs/widgets/src/index.ts"]
     },
     "strict": false,
     "noImplicitAny": false

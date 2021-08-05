@@ -1,18 +1,16 @@
+import { Filters } from '@kleeen/types';
 import queryString from 'query-string';
 import { useLocation } from 'react-router-dom';
 import { usePrevious } from './usePrevious';
 import { useRef } from 'react';
 
-function isValidJSONString(str): boolean {
-  try {
-    JSON.parse(str);
-  } catch (e) {
-    return false;
-  }
-  return true;
+interface UseUrlQueryParams {
+  filters?: Filters;
+  useNestedObjects?: boolean;
 }
-const useUrlQueryParams = ({ useNestedObjects }: { useNestedObjects?: boolean } = {}): {
-  paramsBasedOnRoute: Record<string, any>;
+
+const useUrlQueryParams = ({ filters, useNestedObjects }: UseUrlQueryParams = {}): {
+  paramsBasedOnRoute: Filters;
   version: number;
 } => {
   const location = useLocation();
@@ -40,11 +38,27 @@ const useUrlQueryParams = ({ useNestedObjects }: { useNestedObjects?: boolean } 
       {},
     );
 
-    return { paramsBasedOnRoute: mapWithParsed, version: version.current };
+    return { paramsBasedOnRoute: { ...mapWithParsed, ...filters }, version: version.current };
   }
-  // todo this extra parse should only happen in an case
 
-  return { paramsBasedOnRoute, version: version.current };
+  return {
+    paramsBasedOnRoute: {
+      ...paramsBasedOnRoute,
+      ...filters,
+    },
+    version: version.current,
+  };
 };
 
 export default useUrlQueryParams;
+
+//#region Private Members
+function isValidJSONString(str): boolean {
+  try {
+    JSON.parse(str);
+  } catch (e) {
+    return false;
+  }
+  return true;
+}
+//#endregion

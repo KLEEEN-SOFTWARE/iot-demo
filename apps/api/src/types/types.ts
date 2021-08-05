@@ -80,6 +80,7 @@ export interface DispatchCustomActionResults {
 }
 
 export interface MultiTransFormationArgs {
+  attributes?: string[];
   entity: string;
   filters: any;
   transformations: Transformation[];
