@@ -1,6 +1,6 @@
-import { makeStyles, NativeSelect, withStyles } from '@material-ui/core';
-import { styled } from '@material-ui/core';
 import { KsButton } from '@kleeen/react/components';
+import { makeStyles } from '@material-ui/core';
+import { styled } from '@material-ui/core';
 
 export const PreviewCloseButton = styled(KsButton)({
   backgroundColor: 'transparent !important',
@@ -10,29 +10,27 @@ export const PreviewCloseButton = styled(KsButton)({
   height: 'var(--wh-2XS)',
 });
 
-export const MockSelect = withStyles({
-  icon: {
-    color: 'var(--on-secondary-color-variant)',
-  },
-})(NativeSelect);
-
 export const useStyles = makeStyles({
+  previewContent: {
+    paddingTop: 'var(--pm-3XL)',
+  },
   previewHeader: {
     alignItems: 'center',
     backgroundColor: 'hsla(var(--on-surface-color-hsl), 0.7)',
     borderRadius: 'var(--pm-3XS)',
+    display: 'flex',
+    height: 'var(--wh-3XS)',
+    left: 0,
+    position: 'fixed',
+    right: 0,
+    transition: 'height var(--speed-medium)',
+    zIndex: 1,
     '&:hover': {
       height: 'var(--wh-S)',
       '& $previewCloseButtonContainer': {
-        visibility: 'visible',
-      },
-      '& $menuComponent': {
-        visibility: 'visible',
+        opacity: 1,
       },
     },
-    display: 'flex',
-    height: 'var(--wh-3XS)',
-    width: '100%',
   },
   previewHandler: {
     color: 'var(--on-secondary-color-variant)',
@@ -48,47 +46,22 @@ export const useStyles = makeStyles({
       '& ~ $previewHeader': {
         height: 'var(--wh-S)',
         '& $previewCloseButtonContainer': {
-          visibility: 'visible',
-        },
-        '& $menuComponent': {
-          visibility: 'visible',
+          opacity: 1,
         },
       },
     },
   },
-
   previewCloseButtonContainer: {
     marginRight: 'var(--pm-1XS)',
     position: 'absolute',
     right: 'var(--pm-0)',
-    visibility: 'hidden',
+    opacity: 0,
+    transition: 'opacity var(--speed-medium)',
   },
   previewSplitter: {
     backgroundColor: 'transparent',
     borderBottom: 'var(--pm-0) !important',
     borderTop: 'var(--pm-0) !important',
     height: 'var(--pm-0) !important',
-  },
-  reflexPanelHeader: {
-    height: '40%',
-    position: 'relative',
-  },
-  reflexPanelContainer: {
-    height: '100%',
-  },
-  reflexPanelElement: {
-    height: '60%',
-  },
-  topPanel: {
-    minHeight: 'var(--wh-6XL)',
-  },
-  bottomPanel: {
-    minHeight: 'var(--wh-S)',
-  },
-  //TODO remove this style for mock component preview layout
-  menuComponent: {
-    color: 'var(--on-secondary-color-variant)',
-    marginLeft: 'var(--pm-1XS)',
-    visibility: 'hidden',
   },
 });

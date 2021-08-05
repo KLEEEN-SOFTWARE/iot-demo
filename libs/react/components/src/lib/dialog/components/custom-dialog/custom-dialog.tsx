@@ -22,7 +22,9 @@ export function KsCustomDialog({ children, onAction, onClose, open, title }: Cus
   // TODO: @guaria check if this refactor make sense
   return (
     <KsDialog aria-labelledby="form-dialog-title" className={themeClass} onClose={handleClose} open={open}>
-      <DialogTitle id="form-dialog-title">{capitalize(title)}</DialogTitle>
+      <DialogTitle id="form-dialog-title">
+        {typeof title === 'string' ? capitalize(title.toString()) : title}
+      </DialogTitle>
       <DialogContent>{children}</DialogContent>
       <DialogActions>
         <KsButton onClick={handleClose}>Cancel</KsButton>

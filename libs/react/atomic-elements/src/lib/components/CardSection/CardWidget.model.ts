@@ -1,6 +1,6 @@
 import { AttributeInputEvents } from '@kleeen/react/hooks';
 import { ReactNode } from 'react';
-import { Widget } from '../../../types';
+import { Widget } from '@kleeen/types';
 
 interface CardWidgetProps {
   children: ReactNode;
@@ -75,5 +75,4 @@ export {
   CardWidgetProps,
   RenderChildrenProps,
   RenderWidgetProps,
-  Widget,
 };

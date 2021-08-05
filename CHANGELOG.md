@@ -1,3 +1,58 @@
+## [2.1.1](https://github.com/KLEEEN-SOFTWARE/template/compare/2.1.0...2.1.1) (2021-07-30)
+
+
+### Bug Fixes
+
+* **components:** Hovering on the entity name doesn't request backend multiple times [KSE3 3779] ([#1071](https://github.com/KLEEEN-SOFTWARE/template/issues/1071)) ([95cbfaa](https://github.com/KLEEEN-SOFTWARE/template/commit/95cbfaade54183c20d6f295c0801b09fb0f51e16))
+
+# [2.1.0](https://github.com/KLEEEN-SOFTWARE/template/compare/2.0.0...2.1.0) (2021-07-29)
+
+
+### Bug Fixes
+
+* **navigation:** fix company name on navigations ([#1054](https://github.com/KLEEEN-SOFTWARE/template/issues/1054)) ([143e17c](https://github.com/KLEEEN-SOFTWARE/template/commit/143e17c6f84945ced54b50dd0fb4d6af8b615c67))
+* **refresh-control:** restore refresh control selected indicator ([#1055](https://github.com/KLEEEN-SOFTWARE/template/issues/1055)) ([728ebf1](https://github.com/KLEEEN-SOFTWARE/template/commit/728ebf1b13f3ca0ea909691f6cd172d0d007260e))
+* **summary-title:** deprecate summary title ([#1064](https://github.com/KLEEEN-SOFTWARE/template/issues/1064)) ([d5b60ca](https://github.com/KLEEEN-SOFTWARE/template/commit/d5b60ca6202b8198b3bae07595a07a2181c16555))
+
+
+### Features
+
+* **avatar:** show avatar on left summary panel when available ([#1058](https://github.com/KLEEEN-SOFTWARE/template/issues/1058)) ([8803611](https://github.com/KLEEEN-SOFTWARE/template/commit/8803611db9dbad3574aca326e39a8db39f04adc1))
+* **elements:** add cross linking interaction ([#1062](https://github.com/KLEEEN-SOFTWARE/template/issues/1062)) ([c7b3091](https://github.com/KLEEEN-SOFTWARE/template/commit/c7b3091fb7856bafa10d794c6a8a886606e172d8))
+* **hooks:** avoid accumulated events for custom config table ([#1060](https://github.com/KLEEEN-SOFTWARE/template/issues/1060)) ([dbfed5b](https://github.com/KLEEEN-SOFTWARE/template/commit/dbfed5b9e29ea3a5d03af6e8cfbfecf167ab9978))
+
+# [2.0.0](https://github.com/KLEEEN-SOFTWARE/template/compare/1.47.1...2.0.0) (2021-07-22)
+
+
+* Merge pull request #1057 from KLEEEN-SOFTWARE/release/1.56.0-w-29 ([1f0aa72](https://github.com/KLEEEN-SOFTWARE/template/commit/1f0aa7240ba0c5195ddd50ad3ac9975292074191)), closes [#1057](https://github.com/KLEEEN-SOFTWARE/template/issues/1057)
+
+
+### Bug Fixes
+
+* **auth:** avoid signed in workflow if an error occurred ([#1044](https://github.com/KLEEEN-SOFTWARE/template/issues/1044)) ([e71b6d5](https://github.com/KLEEEN-SOFTWARE/template/commit/e71b6d52665c7fb7d9b9784139effd53c2bbec16))
+* **develop:** fix Long Text Ellipsis/Action Delete ([a4e33cf](https://github.com/KLEEEN-SOFTWARE/template/commit/a4e33cf1b6839b13b157f38478f020bbfb6a25a9))
+* **develop:** long Text Ellipsis/ContextMenu and the width calculation in simpleList works good ([#1045](https://github.com/KLEEEN-SOFTWARE/template/issues/1045)) ([4db5e20](https://github.com/KLEEEN-SOFTWARE/template/commit/4db5e20f144b55fea974d0fa12e5643b5f03a1bd))
+* **freefromcellinput:** problem when entering an enter inside the input cell ([#1049](https://github.com/KLEEEN-SOFTWARE/template/issues/1049)) ([abd32ce](https://github.com/KLEEEN-SOFTWARE/template/commit/abd32ce9f562a3f8db1b825d0a28f92e5332b6bf))
+* **help-icon:** use the right class for sizing the help icon ([#1037](https://github.com/KLEEEN-SOFTWARE/template/issues/1037)) ([39cd2eb](https://github.com/KLEEEN-SOFTWARE/template/commit/39cd2eb318d07610325bbf5ab0520d222581ec8a))
+* **layout:** fix render and snackbar adjust ([bdde902](https://github.com/KLEEEN-SOFTWARE/template/commit/bdde90275c80af793502b187b97368bb42f62f98))
+* **nav-top:** add wrapper for menu to preserve its size with the new grid ([#1050](https://github.com/KLEEEN-SOFTWARE/template/issues/1050)) ([971d9a1](https://github.com/KLEEEN-SOFTWARE/template/commit/971d9a12e753a4be75a4aa8f8323c42bd2722042))
+* **navigation:** failure at logout ([#1040](https://github.com/KLEEEN-SOFTWARE/template/issues/1040)) ([e18dbc6](https://github.com/KLEEEN-SOFTWARE/template/commit/e18dbc635256cd489e48aceaa142076979443397))
+* **react-atomic-elements:** send referenceId on config input payload ([#1046](https://github.com/KLEEEN-SOFTWARE/template/issues/1046)) ([daf7437](https://github.com/KLEEEN-SOFTWARE/template/commit/daf74379946ed7389817e2b85e0fd87f85719b23))
+* **table:** delete is being used by row ([#1043](https://github.com/KLEEEN-SOFTWARE/template/issues/1043)) ([678d4c5](https://github.com/KLEEEN-SOFTWARE/template/commit/678d4c5ba1d6c17bf50b8afddd050c9a3d8b94a2))
+
+
+### Features
+
+* **atomic-elements:** refactor components to align with the current implementation ([#1004](https://github.com/KLEEEN-SOFTWARE/template/issues/1004)) ([5fcb558](https://github.com/KLEEEN-SOFTWARE/template/commit/5fcb55814b6b34871da6f2df2a1671694cf13e73))
+* **develop:** add customURL in nav-top, nav-left, and hamburguer menu ([ec2e638](https://github.com/KLEEEN-SOFTWARE/template/commit/ec2e638fcc6de8fe40cf4dc9b5b24814af47243a))
+* **layout:** Preview panel ([#1038](https://github.com/KLEEEN-SOFTWARE/template/issues/1038)) ([a00cb37](https://github.com/KLEEEN-SOFTWARE/template/commit/a00cb374fe6f1f9bd2bfbaf19261f39c6dc6230c))
+* **nav:** add branding names to top and left navbars[KSE3-3537] ([#1048](https://github.com/KLEEEN-SOFTWARE/template/issues/1048)) ([2621218](https://github.com/KLEEEN-SOFTWARE/template/commit/262121898fb2c743b8f2d7b00b56b5a238be219b))
+
+
+### BREAKING CHANGES
+
+* Update the component library
+
 ## [1.47.1](https://github.com/KLEEEN-SOFTWARE/template/compare/1.47.0...1.47.1) (2021-07-07)
 
 

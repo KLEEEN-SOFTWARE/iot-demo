@@ -1,21 +1,20 @@
 export const widgets = [
   {
     actions: [],
-    addModalAttributes: [],
     attributes: [],
     chartType: undefined,
     component: undefined,
-    description: undefined,
+    entityId: undefined,
     id: undefined,
     params: {},
     statisticalType: undefined,
     title: undefined,
+    type: 'dashboard',
     viableSolutions: [],
     viewId: 'ks-view-5ehycKcM5CKMLjBnhE2GcB',
     widgets: [
       {
         actions: [],
-        addModalAttributes: [],
         attributes: [
           {
             crossLinking: [],
@@ -41,11 +40,10 @@ export const widgets = [
         ],
         chartType: `[WIDGET] GAUGE_SEVERITY_LEVEL`,
         component: undefined,
-        description: undefined,
+        entityId: undefined,
         id: `592242b4-67a8-4d1f-a98e-45527ebd46c3`,
         params: {
           operationName: 'widget_statistics592242b4_67a8_4d1f_a98e_45527ebd46c3',
-          taskName: 'Sensor Details',
           value: {
             label: 'Site Status',
             name: 'siteStatus',
@@ -61,15 +59,14 @@ export const widgets = [
             formatType: 'severity_level',
           },
         },
+        sortOrder: 0,
         statisticalType: undefined,
         title: `Site Status`,
         viableSolutions: [],
-        sortOrder: 0,
         viewId: 'ks-view-5ehycKcM5CKMLjBnhE2GcB',
       },
       {
         actions: [],
-        addModalAttributes: [],
         attributes: [
           {
             crossLinking: [],
@@ -95,11 +92,10 @@ export const widgets = [
         ],
         chartType: `[WIDGET] GAUGE_SEVERITY_LEVEL`,
         component: undefined,
-        description: undefined,
+        entityId: undefined,
         id: `86ae65f8-0d94-499f-86e2-60c17bc48f2c`,
         params: {
           operationName: 'widget_statistics86ae65f8_0d94_499f_86e2_60c17bc48f2c',
-          taskName: 'Sensor Details',
           value: {
             label: 'Sensor Status',
             name: 'sensorStatus',
@@ -115,15 +111,14 @@ export const widgets = [
             formatType: 'severity_level',
           },
         },
+        sortOrder: 1,
         statisticalType: undefined,
         title: `Status`,
         viableSolutions: [],
-        sortOrder: 1,
         viewId: 'ks-view-5ehycKcM5CKMLjBnhE2GcB',
       },
       {
         actions: [],
-        addModalAttributes: [],
         attributes: [
           {
             crossLinking: [],
@@ -160,19 +155,18 @@ export const widgets = [
         ],
         chartType: `[WIDGET] POSITIVE_NEGATIVE_AREA`,
         component: undefined,
-        description: undefined,
+        entityId: undefined,
         id: `f2e76b4e-b7ab-4a57-bb13-6e7c3c783e88`,
         params: {
           cardinality: 'SINGLE',
           groupBy: { name: 'timestamp', transformation: 'selfMulti', formatType: 'timestamp' },
           operationName: 'widget_f2e76b4e_b7ab_4a57_bb13_6e7c3c783e88',
-          taskName: 'Sensor Details',
           value: { name: 'sensorStatus', transformation: 'changeCount', formatType: 'severity_level' },
         },
+        sortOrder: 2,
         statisticalType: undefined,
         title: `Sensor Status`,
         viableSolutions: ['[WIDGET] SIMPLE_LIST_RANKED'],
-        sortOrder: 2,
         viewId: 'ks-view-5ehycKcM5CKMLjBnhE2GcB',
       },
       {
@@ -186,23 +180,28 @@ export const widgets = [
             type: `custom`,
           },
         ],
-        addModalAttributes: [],
         attributes: [],
         chartType: `[WIDGET] CUSTOM_ACTION`,
         component: undefined,
-        description: undefined,
+        entityId: 120425,
         id: `3b73adbb-d755-414b-b017-1d964567aa2d`,
         params: {
           baseModel: 'Sensor',
           displayName: 'Reboot',
           operationName: 'custom_action_3b73adbb_d755_414b_b017_1d964567aa2d',
+          value: {
+            format: {
+              examples: ['A03', 'A5279', 'B1001', 'B35', 'B40', 'B9719', 'C4351', 'C641', 'C6990', 'C8172'],
+            },
+            formatType: 'prime',
+            name: 'sensor',
+          },
         },
+        sortOrder: 3,
         statisticalType: undefined,
         title: `Reboot Sensor`,
         viableSolutions: [],
-        sortOrder: 3,
       },
     ],
-    type: 'dashboard',
   },
 ];

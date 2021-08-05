@@ -1,11 +1,11 @@
 import { Attribute, Cell } from '@kleeen/types';
 import { useEffect, useState } from 'react';
 
+import { Translate } from '@kleeen/core-react';
 import { flatten } from 'ramda';
 import { isLinkFilterableByEntityType } from '../helpers';
 import { isNilOrEmpty } from '@kleeen/common/utils';
 import { useCrosslinking } from './useCrosslinking';
-import { Translate } from '@kleeen/core-react';
 
 type CrossLinkItem = {
   handleClick: (item: CrossLinkItem) => (e: React.MouseEvent<HTMLLIElement, MouseEvent>) => void;

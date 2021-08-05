@@ -1,6 +1,8 @@
+import { ReactElement } from '@kleeen/types';
+
 export interface DialogProps {
-  description: string;
+  description: string | ReactElement;
   open: boolean;
   onClose: () => void;
-  title: string;
+  title: string | ReactElement;
 }

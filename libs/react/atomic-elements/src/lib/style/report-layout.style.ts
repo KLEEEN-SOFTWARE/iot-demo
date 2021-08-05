@@ -40,4 +40,9 @@ export const ReportLayoutStyle = makeStyles({
   snackbar: {
     height: 'calc(100% - var(--wh-L) - var(--pm-1XS) - var(--wh-M) - var(--pm-4XS))',
   },
+  entityBrowserFilterSection: {
+    height: 'calc(100% - var(--pm-L) - var(--pm-L))',
+    zIndex: 0,
+    margin: 'var(--pm-L) 0 var(--pm-L) var(--pm-L)',
+  },
 });

@@ -1,25 +1,27 @@
 import { DisplayValueTitle } from '../display-value-title';
+import { FormatProps } from '@kleeen/types';
 import React from 'react';
 import classnames from 'classnames';
 import { isNilOrEmpty } from '@kleeen/common/utils';
 
 const bem = 'ks-header-title';
 
-interface HeaderTitle {
-  objectValue?: string;
-  taskName?: string;
+interface HeaderTitleProps {
+  displayValue?: string;
+  format?: FormatProps;
+  formatType?: string;
+  subTitle?: string;
   title?: string;
-  results?: string;
 }
 
-export const HeaderTitleEllipsis = (props: HeaderTitle, split = true): React.ReactElement => {
+export const HeaderTitleEllipsis = (props: HeaderTitleProps, split = true): React.ReactElement => {
   return (
     <>
-      {props.objectValue && isNilOrEmpty(props.results) ? (
+      {props.displayValue && isNilOrEmpty(props.subTitle) ? (
         <div className={classnames(bem, 'header-title')}>
           <div className={classnames(`${bem}__title`, 'title-container')}>{props.title}</div>
           <div className={classnames(`${bem}__ellipsis`, 'with-ellipsis')}>
-            <DisplayValueTitle objectValue={props.objectValue} taskName={props.taskName} />
+            <DisplayValueTitle {...props} />
           </div>
         </div>
       ) : (
@@ -29,12 +31,12 @@ export const HeaderTitleEllipsis = (props: HeaderTitle, split = true): React.Rea
   );
 };
 
-export const HeaderTitle = (props: HeaderTitle, split = true): React.ReactElement => {
+export const HeaderTitle = (props: HeaderTitleProps, split = true): React.ReactElement => {
   return (
     <>
-      {props.objectValue && isNilOrEmpty(props.results) ? (
+      {props.displayValue && isNilOrEmpty(props.subTitle) ? (
         <>
-          <DisplayValueTitle objectValue={props.objectValue} taskName={props.taskName} />
+          <DisplayValueTitle {...props} />
           {split && ' | ' + props.title}
         </>
       ) : (

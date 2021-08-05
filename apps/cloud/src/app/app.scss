@@ -25,7 +25,7 @@
         height: calc(100% - var(--preview-handled-height));
       }
 
-      .layout-preview {
+      .main-layout {
         height: 100%;
       }
     }
@@ -39,9 +39,8 @@
         width: 100%;
       }
 
-      .layout-preview {
-        height: calc(100% - var(--preview-handled-height));
-        width: 100%;
+      .main-layout {
+        height: 100%;
       }
     }
 

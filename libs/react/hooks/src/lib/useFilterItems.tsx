@@ -1,26 +1,17 @@
 import { AggregationType, Attribute, Cell, FilterOperators, FilterTypes } from '@kleeen/types';
-import { areFiltersInUse, useLocalStorage, useUrlQueryParams, useUserInfo } from '@kleeen/react/hooks';
-
-import queryString from 'query-string';
-import { isNilOrEmpty, upperCamelCase } from '@kleeen/common/utils';
-import { useHistory } from 'react-router-dom';
-import { Translate } from '@kleeen/core-react';
-import moment from 'moment';
 import { ReactNode, useEffect, useState } from 'react';
+import { areFiltersInUse, useLocalStorage, useUrlQueryParams, useUserInfo } from '@kleeen/react/hooks';
+import { getFiltersInitialState, getTimestamp, manageOperations, mapWithStringify } from '../helpers';
 import {
-  isATransformationsAvailableForFilterIn,
   isCountTransformations,
   isNumericType,
+  isSingleCardinalityTransformation,
 } from '@kleeen/frontend/utils';
-import {
-  getFiltersInitialState,
-  getFromValueOf,
-  getRelativeDateValueOf,
-  getToValueOf,
-  manageOperations,
-  mapWithStringify,
-  getTimestamp,
-} from '../helpers';
+import { isNilOrEmpty, upperCamelCase } from '@kleeen/common/utils';
+
+import { Translate } from '@kleeen/core-react';
+import queryString from 'query-string';
+import { useHistory } from 'react-router-dom';
 
 const existsInFilter = (attribute, value, operator, filters) => {
   const capitalizedAttribute = upperCamelCase(attribute);
@@ -110,7 +101,7 @@ export const useFilterItems = ({
     };
     const items = [];
     const transformation = attr?.aggregation as AggregationType;
-    if (filtersInUse && isATransformationsAvailableForFilterIn(transformation)) {
+    if (filtersInUse && isSingleCardinalityTransformation(transformation)) {
       const inFiltersIn = existsInFilter(attr?.name, cell?.displayValue, FilterOperators.in, filtersAdded);
       items.push({
         label: (

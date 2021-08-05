@@ -1,10 +1,11 @@
-import { Chip } from '../FilterSection.styles';
 import { FilterOperators, ReactElement, TimestampKey } from '@kleeen/types';
-import { IconButton } from '@material-ui/core';
+
+import { Chip } from '../FilterSection.styles';
 import CloseIcon from '@material-ui/icons/Close';
-import moment from 'moment';
+import { IconButton } from '@material-ui/core';
 import MuiTooltip from '@material-ui/core/Tooltip';
 import classnames from 'classnames';
+import moment from 'moment';
 
 const bem = 'ks-filter-chips-and-categories';
 

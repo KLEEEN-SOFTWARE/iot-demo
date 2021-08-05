@@ -71,6 +71,7 @@ export class AuthError extends Error {
     // TODO: Delete the following 2 lines after we change the build target to >= es2015
     this.constructor = AuthError;
     Object.setPrototypeOf(this, AuthError.prototype);
+    Object.setPrototypeOf(this, new.target.prototype);
 
     this.name = 'AuthError';
     this.log = log || message;

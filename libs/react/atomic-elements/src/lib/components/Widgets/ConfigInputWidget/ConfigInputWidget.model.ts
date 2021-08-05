@@ -1,7 +1,6 @@
-import { Attribute, FormatProps } from '@kleeen/types';
+import { Attribute, FormatProps, StatisticalDataType } from '@kleeen/types';
 
 import { AttributeInputEvents } from '@kleeen/react/hooks';
-import { StatisticalType } from '@kleeen/render-utils';
 
 export enum elementCase {
   FIELD_NOT_ADD_HAVE_MANY = 'Field Can Not Add Values and Have Many',
@@ -42,7 +41,7 @@ export interface ConfigInputWidgetProps {
   taskName: string;
   title: string;
   widgetId: string | number;
-  statisticalType: StatisticalType;
+  statisticalType: StatisticalDataType;
 }
 
 export interface TransformToElementProps {
@@ -58,7 +57,7 @@ export interface TransformToElementProps {
   inSummaryDetails: boolean;
   setInputValue: any;
   setSelectedOption: any;
-  statisticalType: StatisticalType;
+  statisticalType: StatisticalDataType;
   transformation?: string;
   refValue?: any;
   errors?: any;

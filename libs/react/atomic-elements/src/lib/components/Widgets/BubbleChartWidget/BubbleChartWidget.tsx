@@ -1,11 +1,16 @@
+import { Loader, RankedListItem, SimpleList } from '@kleeen/react/components';
 import React, { ReactElement, useEffect } from 'react';
+import { formatDataList, parseAttributes } from '@kleeen/frontend/utils';
+import {
+  useGetNavigationStyle,
+  useMasonry,
+  useWidgetContext,
+  useWindowsDimension,
+} from '@kleeen/react/hooks';
 
 import BubbleChart from '../../BubbleChart/BubbleChart';
 import { BubbleChartWidgetProps } from './BubbleChartWidget.model';
-import { Loader, RankedListItem, SimpleList } from '@kleeen/react/components';
 import { makeStyles } from '@material-ui/core';
-import { useMasonry, useWidgetContext, useWindowsDimension } from '@kleeen/react/hooks';
-import { formatDataList, parseAttributes } from '@kleeen/frontend/utils';
 
 const useStyles = makeStyles({
   widgetContent: {
@@ -28,8 +33,8 @@ export function BubbleChartWidget({
   const hideHeader = false;
   const { updateLayout } = useMasonry();
   const size = useWindowsDimension();
-  const themeWrapper = document.getElementById('theme-wrapper-id');
-  const isNavTop = themeWrapper.classList.contains('nav-top');
+  const { isNavTop } = useGetNavigationStyle();
+
   const breakPoint = isNavTop ? 1069 : 1260;
   const bigWidget = size.width > breakPoint && disableHeightCalculation;
   const classes = useStyles({ bigWidget });

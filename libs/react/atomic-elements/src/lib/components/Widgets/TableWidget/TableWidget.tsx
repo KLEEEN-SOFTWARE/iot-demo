@@ -1,11 +1,11 @@
-import { Attribute } from '@kleeen/types';
+import { Attribute, GroupByProps, ValueProp, ValuesProps, VizCommonParams } from '@kleeen/types';
 import { formatDataList, formatSeverity, parseAttributes } from '@kleeen/frontend/utils';
-import { GroupByProps, ValueProp, ValuesProps, VizCommonParams } from '../../../../types/types';
-import { makeStyles } from '@material-ui/core';
-import { SimpleList } from '@kleeen/react/components';
-import { useWidgetContext } from '@kleeen/react/hooks';
-import classnames from 'classnames';
+
 import React from 'react';
+import { SimpleList } from '@kleeen/react/components';
+import classnames from 'classnames';
+import { makeStyles } from '@material-ui/core';
+import { useWidgetContext } from '@kleeen/react/hooks';
 
 const bem = 'ks-table';
 

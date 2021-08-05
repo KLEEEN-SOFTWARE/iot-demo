@@ -1,4 +1,4 @@
-import { AmendCellUpdate, Attribute, AutocompleteState } from '@kleeen/types';
+import { AmendCellUpdate, Attribute, AutocompleteState, Row } from '@kleeen/types';
 
 import { EditingCell } from '../../GridSection.model';
 import { ListingModalSettings } from '../../../ListingModal/ListingModal';
@@ -52,7 +52,7 @@ export interface DataViewRowProps {
   actions: Array<any>;
   triggerCustomAction: (action: any, id: string) => void;
   deleteContainer: Array<any>;
-  rowData: any;
+  rowData: Row;
   props: any;
   deleteProcess: (id: string) => void;
   displayColumnAttribute: Attribute;
@@ -75,7 +75,7 @@ export interface EditDataViewProps {
   orderColumnName?: string;
   props: any;
   row: any;
-  rowData: any;
+  rowData: Row;
   setEditingCell: React.Dispatch<React.SetStateAction<{}>>;
   draggable?: boolean;
 }

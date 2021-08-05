@@ -1,7 +1,7 @@
-import StepLine from '../../StepLine/StepLine';
 import { Loader } from '@kleeen/react/components';
 import React from 'react';
-import { VizCommonParams } from '../../../../types/types';
+import StepLine from '../../StepLine/StepLine';
+import { VizCommonParams } from '@kleeen/types';
 import { makeStyles } from '@material-ui/core';
 import { useWidgetContext } from '@kleeen/react/hooks';
 

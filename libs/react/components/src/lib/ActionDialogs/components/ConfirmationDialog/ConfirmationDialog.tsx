@@ -7,8 +7,9 @@ import DialogContentText from '@material-ui/core/DialogContentText';
 import DialogTitle from '@material-ui/core/DialogTitle';
 import { Button as KsButton } from '../../ActionDialogs.styles';
 import { KsDialog } from '../../../dialog';
-import capitalize from 'lodash.capitalize';
+import { ReactElement } from '@kleeen/types';
 import { Translate } from '@kleeen/core-react';
+import capitalize from 'lodash.capitalize';
 import { useTheme } from '@kleeen/react/hooks';
 
 export function ConfirmationActionDialog({
@@ -31,7 +32,9 @@ export function ConfirmationActionDialog({
 
   return (
     <KsDialog aria-labelledby="form-dialog-title" className={themeClass} onClose={handleClose} open={open}>
-      <DialogTitle id="form-dialog-title">{capitalize(title)}</DialogTitle>
+      <DialogTitle id="form-dialog-title">
+        {typeof title === 'string' ? capitalize(title.toString()) : title}
+      </DialogTitle>
       <DialogContent>
         <DialogContentText>{description}</DialogContentText>
       </DialogContent>

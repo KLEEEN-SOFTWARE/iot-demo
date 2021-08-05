@@ -3,11 +3,9 @@ import { roleAccessKeyTag } from '@kleeen/common/utils';
 import { useState } from 'react';
 import {
   ReportLayoutStyle,
-  FilterSection,
   DataViewControlSection,
   DataViewDisplaySectionAtomic,
 } from '@kleeen/react/atomic-elements';
-import { filterSectionFilters } from './settings/filter-section-filters';
 import { viewOptions } from './settings/view-options';
 import { widgets } from './settings/widgets';
 
@@ -26,11 +24,8 @@ function Workflow({ translate, ...props }) {
   return (
     <AccessControl id={roleAccessKeyTag(`navigation.${taskName}`)}>
       <div className={`${classes.dashboardTask} subhead-dynamic`}>
-        <div className={classes.entityBrowserFilterSection}>
-          <FilterSection filters={filterSectionFilters} taskName={taskName} />
-        </div>
         <div className={`${classes.dashboardArea} browserArea`}>
-          <div className={`${classes.gridPageIntro} ${cardsNumber > 0 ? `max-card-${cardsNumber}` : ''}`}>
+          <div className={classes.gridPageIntro}>
             <DataViewControlSection
               hideRefreshControl
               onTabIndexChanged={handleOnTabIndexChanged}

@@ -25,10 +25,7 @@ const RefreshControl = ({ onRefresh, translate, taskName }: RefreshControlProps)
   const _user = useUserInfo();
   const userName = _user?.userInfo?.username;
   const keyOfLocalStorage = userName ? `current-interval-${userName}-${taskName}` : '';
-  const { localStorageValue, setLocalStorageValue, removeLocalStorageValue } = useLocalStorage(
-    keyOfLocalStorage,
-    DEFAULT_INTERVAL,
-  );
+  const { localStorageValue, setLocalStorageValue } = useLocalStorage(keyOfLocalStorage, DEFAULT_INTERVAL);
   const classes = useStyles();
   const popoverClasses = usePopOverStyles();
   const { themeClass } = useTheme();
@@ -40,7 +37,7 @@ const RefreshControl = ({ onRefresh, translate, taskName }: RefreshControlProps)
   const currentTime = useRef(Date.now() + 5 * 60 * 1000);
   const { autoRefresh$ } = useAutoRefresh();
   let autoRefreshSubscription: Subscription;
-  currentInterval.current = localStorageValue;
+  currentInterval.current = Number(localStorageValue);
 
   const togglePause = (): void => {
     isTimerPaused.current = !isTimerPaused.current;

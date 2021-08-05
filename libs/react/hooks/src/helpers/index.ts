@@ -1,5 +1,7 @@
-import { FilterOperators, Link } from '@kleeen/types';
+import { FilterOperators, Link, crosslinkingInteractionType } from '@kleeen/types';
 import moment, { Moment } from 'moment';
+
+import { useCrosslinkingInteraction } from '@kleeen/react/hooks';
 
 export function getWidgetContextName({ taskName, widgetId }: { taskName: string; widgetId: string }): string {
   return `${taskName}_${widgetId}`;
@@ -60,4 +62,35 @@ export const getTimestamp = (params: Record<string, any>) => {
     if (relativeDate) Timestamp.relativeDate = relativeDate;
   }
   return Timestamp;
+};
+
+export const validateCrosslinkingInteraction = (
+  anchorEl: null | HTMLElement,
+  onCellClick: any,
+  openModal: boolean,
+  setOpenModal: any,
+) => {
+  const { crosslinkingInteraction } = useCrosslinkingInteraction();
+
+  switch (crosslinkingInteraction) {
+    case crosslinkingInteractionType.hoverIntent:
+      return { onClickFunction: onCellClick, onContextMenuFunction: null, validation: Boolean(anchorEl) };
+    case crosslinkingInteractionType.onClick:
+      return {
+        onClickFunction: () => setOpenModal(true),
+        onContextMenuFunction: null,
+        validation: openModal && Boolean(anchorEl),
+      };
+    case crosslinkingInteractionType.contextMenu:
+      document.oncontextmenu = function () {
+        return !openModal;
+      };
+      return {
+        onClickFunction: onCellClick,
+        onContextMenuFunction: () => setOpenModal(true),
+        validation: openModal && Boolean(anchorEl),
+      };
+    default:
+      return { onClickFunction: onCellClick, onContextMenuFunction: null, validation: Boolean(anchorEl) };
+  }
 };

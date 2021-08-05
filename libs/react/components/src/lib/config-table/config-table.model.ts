@@ -34,7 +34,6 @@ export interface KsConfigTableOnSaveData {
 
 export interface KsConfigTableProps {
   actions: Action[];
-  addModalAttributes?: AttributeProps[];
   attributes: Attribute[];
   customModalProps?: Record<string, any>;
   data: {

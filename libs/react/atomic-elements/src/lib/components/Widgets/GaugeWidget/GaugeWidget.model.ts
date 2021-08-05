@@ -1,4 +1,4 @@
-import { VizCommonParams } from '../../../../types';
+import { VizCommonParams } from '@kleeen/types';
 
 export interface GaugeWidgetProps extends VizCommonParams {
   taskName: string;

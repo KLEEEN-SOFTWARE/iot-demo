@@ -8,31 +8,42 @@ import {
   RefreshControl,
 } from '@kleeen/react/components';
 import { Container, Title, Typography } from './DataViewControlSection.styles';
-import { DataViewControlSectionProps } from './DataViewControlSection.model';
 import { HeaderTitle, HeaderTitleEllipsis } from '../HeaderTitle';
-import { isAddAction } from '@kleeen/render-utils';
+import { ReactElement, useState } from 'react';
 import { isEmpty, isNil } from 'ramda';
 import { isNilOrEmpty, sortByKeys } from '@kleeen/common/utils';
-import { ReactElement, useState } from 'react';
-import { useKleeenActions } from '@kleeen/react/hooks';
-import { ViewSwitcher } from './ViewSwitcher';
-import classnames from 'classnames';
+import { useGetDisplayValue, useKleeenActions } from '@kleeen/react/hooks';
+
+import { Action } from '@kleeen/types';
+import { DataViewControlSectionProps } from './DataViewControlSection.model';
 import Grid from '@material-ui/core/Grid';
 import MuiTooltip from '@material-ui/core/Tooltip';
-import { Action } from '@kleeen/types';
+import { ViewSwitcher } from './ViewSwitcher';
+import classnames from 'classnames';
+import { isAddAction } from '@kleeen/render-utils';
 
 const bem = 'ks-data-view-control-section';
 
 export function DataViewControlSection(props: DataViewControlSectionProps): ReactElement {
-  if (isNilOrEmpty(props.taskName)) {
+  const {
+    objectValue,
+    onTabIndexChanged,
+    results,
+    selectedOption,
+    taskName,
+    title,
+    viewOptions = [],
+  } = props;
+  if (isNilOrEmpty(taskName)) {
     throw new Error(`Value cannot be null. Parameter name: taskName`);
   }
-  const { refreshPage } = useKleeenActions(props.taskName);
+  const { refreshPage } = useKleeenActions(taskName);
   const [actionPayload, setActionPayload] = useState({});
   const [isConfirmationOpen, setIsConfirmationOpen] = useState(false);
   const [isCustomOpen, setIsCustomOpen] = useState(false);
 
-  const { selectedOption, onTabIndexChanged, viewOptions = [] } = props;
+  const { displayValue, format } = useGetDisplayValue({ objectValue, taskName });
+
   const viewOptionsBySortOrder = sortByKeys(viewOptions, ['viewOrder', 'viewId']);
 
   const getSelectedOption = () => {
@@ -53,9 +64,6 @@ export function DataViewControlSection(props: DataViewControlSectionProps): Reac
 
   const addActions = getAddActions();
   const entityName = isNilOrEmpty(viewOptionProps?.entityName) ? props.entity : viewOptionProps.entityName;
-  const modalAttributes = isNilOrEmpty(viewOptionProps?.modalAttributes)
-    ? props.attributes
-    : viewOptionProps.modalAttributes;
 
   function dispatchAction({ action, payload }: { action: Action; payload: AddDialogPayload }): void {
     const isCustomDialogOpen = isCustomOpen;
@@ -111,16 +119,26 @@ export function DataViewControlSection(props: DataViewControlSectionProps): Reac
             container
             direction="column"
           >
-            <MuiTooltip title={HeaderTitle(props)} placement="top-start">
+            <MuiTooltip
+              title={
+                <HeaderTitle displayValue={displayValue} format={format} title={title} subTitle={results} />
+              }
+              placement="top-start"
+            >
               <Title>
                 <Typography variant="h2" component="h1">
-                  {HeaderTitleEllipsis(props)}
+                  <HeaderTitleEllipsis
+                    displayValue={displayValue}
+                    format={format}
+                    subTitle={results}
+                    title={title}
+                  />
                 </Typography>
               </Title>
             </MuiTooltip>
-            {props.results != null && (
+            {results != null && (
               <Typography className={classnames(`${bem}__results`, 'results')}>
-                <>{props.results} Results</>
+                <>{results} Results</>
               </Typography>
             )}
           </Grid>
@@ -131,7 +149,7 @@ export function DataViewControlSection(props: DataViewControlSectionProps): Reac
               handleChangeTab={props.handleChangeTab}
               onTabIndexChanged={props.onTabIndexChanged}
               showDropDown={props.showDropDown}
-              taskName={props.taskName}
+              taskName={taskName}
               value={viewOptionsBySortOrder.indexOf(viewOptionProps)}
               viewOptions={viewOptionsBySortOrder}
             />
@@ -140,8 +158,8 @@ export function DataViewControlSection(props: DataViewControlSectionProps): Reac
         <Grid className="actions" container alignItems="center">
           {!props.hideRefreshControl && (
             <>
-              <RefreshControl onRefresh={refreshPage} taskName={props.taskName} />
-              <KsAutoRefreshControl taskName={props.taskName} onRefresh={refreshPage} />
+              <RefreshControl onRefresh={refreshPage} taskName={taskName} />
+              <KsAutoRefreshControl taskName={taskName} onRefresh={refreshPage} />
             </>
           )}
           {!isEmpty(addActions) && (
@@ -152,7 +170,7 @@ export function DataViewControlSection(props: DataViewControlSectionProps): Reac
       {addActions.map((action) => (
         <ActionDialogs
           action={action}
-          attributes={modalAttributes}
+          attributes={props.attributes}
           dispatchAction={dispatchAction}
           entity={entityName}
           isConfirmationOpen={isConfirmationOpen}
@@ -161,7 +179,7 @@ export function DataViewControlSection(props: DataViewControlSectionProps): Reac
           onIsConfirmationOpenChange={handleIsConfirmationOpenChange}
           onIsCustomOpenChange={handleIsCustomOpenChange}
           parent={props.parent}
-          taskName={props.taskName}
+          taskName={taskName}
         />
       ))}
     </>

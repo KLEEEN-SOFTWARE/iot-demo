@@ -1,11 +1,10 @@
-import { GroupByProps, ValueProp, ValuesProps } from '../../../../types';
+import { Action, GroupByProps, ValueProp, ValuesProps } from '@kleeen/types';
+import { ActionDialogs, Loader } from '@kleeen/react/components';
 import { Button, CircularProgress, useStyles } from './CustomActionWidget.styles';
 import React, { ReactElement, useEffect, useState } from 'react';
 import { useKleeenActions, useKleeenContext, useUrlQueryParams } from '@kleeen/react/hooks';
 
-import { ActionDialogs, Loader } from '@kleeen/react/components';
 import capitalize from 'lodash.capitalize';
-import { Action } from '@kleeen/types';
 
 interface CustomActionWidgetProps {
   actions?: Action[];

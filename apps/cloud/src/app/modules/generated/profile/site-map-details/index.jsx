@@ -23,10 +23,10 @@ function Workflow({ translate, ...props }) {
   const classes = SimpleLayoutStyle();
   const [isSummarizeOpen, setIsSummarizeOpen] = useState(true);
   const workflowName = `Site Map Details`;
+  const objectFocus = `siteMap`;
   function handleOnTabIndexChanged(newTabIndex, option) {
     setSelectedViewOption(option);
   }
-  const objectFocus = `siteMap`;
   const siteMapActions = useKleeenActions(taskName);
 
   return (
@@ -36,6 +36,7 @@ function Workflow({ translate, ...props }) {
           <EntityDetailsSection
             entityName={entity}
             isEditable
+            objectValue={objectFocus}
             entityDetails={entityDetailsSectionEntityDetails}
             taskName={taskName}
             displayTaskName={workflowName}

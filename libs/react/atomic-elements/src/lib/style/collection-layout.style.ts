@@ -51,6 +51,6 @@ export const CollectionLayoutStyle = makeStyles({
     transition: 'height 400ms cubic-bezier(0, 0, 0.2, 1) 0ms',
   },
   snackbarNavLeft: {
-    height: 'calc(100vh - var(--wh-5XL) - var(--wh-2XS))',
+    height: 'calc(100% - var(--wh-5XL) - var(--wh-2XS))',
   },
 });

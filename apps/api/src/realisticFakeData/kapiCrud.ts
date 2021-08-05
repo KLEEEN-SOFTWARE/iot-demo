@@ -23,7 +23,7 @@ const toDisplayValue = (
   const { id, displayValue, ...rest } = item || {};
   delete rest['$loki'];
   delete rest.meta;
-  const parsedDisplayValue = displayValue.displayValue ? displayValue : { displayValue };
+  const parsedDisplayValue = displayValue?.displayValue ? displayValue : { displayValue };
   const displayValueAttr: Attribute = findEntityByName(entityName, attributes);
   const isXor = displayValueAttr?.isXor;
   const randomXor = isXor

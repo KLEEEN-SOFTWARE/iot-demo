@@ -1,4 +1,4 @@
-import { GroupByProps, ValueProp, ValuesProps, VizCommonParams } from '../../../../types/types';
+import { GroupByProps, ValueProp, ValuesProps, VizCommonParams, WidgetTypes } from '@kleeen/types';
 
 import Area from '../../Area/Area';
 import AreaGradient from '../../AreaGradient/AreaGradient';
@@ -6,7 +6,6 @@ import AreaMacroMicro from '../../AreaMacroMicro/AreaMacroMicro';
 import AreaMasterDetail from '../../AreaMasterDetail/AreaMasterDetail';
 import { Loader } from '@kleeen/react/components';
 import React from 'react';
-import { WidgetTypes } from '../../../../enums';
 import { makeStyles } from '@material-ui/core';
 import { useWidgetContext } from '@kleeen/react/hooks';
 

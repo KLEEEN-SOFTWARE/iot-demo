@@ -11,7 +11,6 @@ export type ViewOption = {
   actions?: Action[];
   entity: string;
   entityName: string;
-  modalAttributes: { name: string }[];
   name: string;
   type: string;
   viewId?: string;

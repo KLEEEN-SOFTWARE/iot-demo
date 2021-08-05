@@ -2,13 +2,14 @@ import './ContextCell.scss';
 
 import { AggregationType, Attribute, Cell, DisplayMediaType, LabelResultsReturnProps } from '@kleeen/types';
 import { ContextMenuProps, LabelResultsProps } from './ContextCell.model';
-import React, { ReactElement } from 'react';
+import React, { ReactElement, useState } from 'react';
 import { isEmpty, isNil, pathOr } from 'ramda';
 import {
   isLinkFilterableByEntityType,
   useAnchorElement,
   useCrosslinking,
   useHoverIntent,
+  validateCrosslinkingInteraction,
 } from '@kleeen/react/hooks';
 
 import { ArrowPoint } from '../arrowPoint/ArrowPoint';
@@ -88,6 +89,7 @@ export function ContextCell(props: ContextMenuProps): ReactElement {
     'text-align-left': !isNumericType,
   };
   const tooltipTitle = showAppliedTruncated ? results : '';
+  const [openModal, setOpenModal] = useState(false);
 
   function onCellClick() {
     if (validCrosslinks) {
@@ -95,12 +97,23 @@ export function ContextCell(props: ContextMenuProps): ReactElement {
       crosslink(onlyValidLink.slug, cell, props.attr);
     }
   }
+  const { onClickFunction, onContextMenuFunction, validation } = validateCrosslinkingInteraction(
+    anchorEl,
+    onCellClick,
+    openModal,
+    setOpenModal,
+  );
+  const handleCloseHelper = () => {
+    setOpenModal(false);
+    handleClose();
+  };
 
   return (
     <>
       <span
         className={`${classes.mediaValueContainer} ${validCrosslinks.length > 0 && 'clickable'}`}
-        onClick={onCellClick}
+        onClick={onClickFunction}
+        onContextMenu={onContextMenuFunction}
         ref={ref}
       >
         {props.hasDisplayMedia && cell.displayMedia.type !== DisplayMediaType.Svg && (
@@ -113,21 +126,23 @@ export function ContextCell(props: ContextMenuProps): ReactElement {
         )}
         {validCrosslinks.length > 0 || props.attr?.isFilterable?.in ? (
           <BootstrapTooltip placement="top" title={tooltipTitle}>
-            <div className={classNames('context-menu-button', textClasses)}>{resultsElement}</div>
+            <span className={classNames('context-menu-button', textClasses)}>{resultsElement}</span>
           </BootstrapTooltip>
         ) : (
           <BootstrapTooltip placement="top" title={tooltipTitle}>
-            <div className={classNames('context-menu-only-text', textClasses)}>{resultsElement}</div>
+            <span className={classNames('context-menu-only-text', textClasses)}>{resultsElement}</span>
           </BootstrapTooltip>
         )}
       </span>
-      {Boolean(anchorEl) && (
+      {validation && (
         <KsContextMenu
           anchorEl={anchorEl}
           attr={props.attr}
           autoClose
           cell={cell}
-          handleClose={handleClose}
+          displayColumnAttribute={props.displayColumnAttribute}
+          handleClose={handleCloseHelper}
+          row={props.row}
         />
       )}
     </>
@@ -145,8 +160,8 @@ function applyFormat(value: any, attr: Attribute): any {
   return value;
 }
 
-function shouldTruncateText(text = ''): boolean {
-  return text ? text.toString().trim().length > MAX_TEXT_LENGTH : false;
+function shouldTruncateText(text): boolean {
+  return text ? text.toString().trim().length >= MAX_TEXT_LENGTH : false;
 }
 
 function labelResults({

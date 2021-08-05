@@ -10,7 +10,6 @@ export const widgets = [
         type: `delete`,
       },
     ],
-    addModalAttributes: [],
     attributes: [
       {
         editable: false,
@@ -135,7 +134,7 @@ export const widgets = [
     ],
     chartType: `[WIDGET] FULL_TABLE`,
     component: undefined,
-    description: undefined,
+    entityId: 120424,
     id: `aecfa22b-e76c-4402-b2ec-cf1c7a4e8781`,
     params: {
       baseModel: 'SiteMap',
@@ -144,9 +143,9 @@ export const widgets = [
     },
     statisticalType: undefined,
     title: undefined,
-    viableSolutions: [],
-    viewOrder: Infinity,
-    viewId: 'ks-view-nA1GN1aJqWsavD3vT7SZVK',
     type: 'table',
+    viableSolutions: [],
+    viewId: 'ks-view-nA1GN1aJqWsavD3vT7SZVK',
+    viewOrder: Infinity,
   },
 ];

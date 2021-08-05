@@ -1,16 +1,15 @@
-import { GroupByProps, ValueProp, ValuesProps, VizCommonParams } from '../../../types';
+import { Attribute, GroupByProps, ValueProp, ValuesProps, VizCommonParams } from '@kleeen/types';
 import React, { ReactElement } from 'react';
 import { generalBaseOptions, maxLabelLength, radialCrosshair, radialLegend } from '../generalBaseOptions';
 import { useCrossLinkingMenuOnViz, useTextFormattersForViz } from '@kleeen/react/hooks';
 
-import { Attribute } from '@kleeen/types';
 import Highcharts from 'highcharts';
 import HighchartsReact from 'highcharts-react-official';
 import { Loader } from '@kleeen/react/components';
 import VariablePie from 'highcharts/modules/variable-pie';
+import { clone } from 'ramda';
 import { formatRadialResults } from '@kleeen/frontend/utils';
 import merge from 'lodash.merge';
-import { clone } from 'ramda';
 
 const baseOptions: Highcharts.Options = merge({}, generalBaseOptions, {
   chart: {

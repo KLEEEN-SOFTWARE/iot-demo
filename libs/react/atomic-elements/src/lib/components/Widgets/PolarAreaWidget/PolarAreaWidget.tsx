@@ -1,10 +1,10 @@
+import { Attribute } from '@kleeen/types';
 import { Loader } from '@kleeen/react/components';
 import PolarArea from '../../PolarArea/PolarArea';
 import React from 'react';
-import { VizCommonParams } from '../../../../types/types';
+import { VizCommonParams } from '@kleeen/types';
 import { makeStyles } from '@material-ui/core';
 import { useWidgetContext } from '@kleeen/react/hooks';
-import { Attribute } from '@kleeen/types';
 
 const useStyles = makeStyles({
   widgetContent: {

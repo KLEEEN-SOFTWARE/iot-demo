@@ -1,5 +1,6 @@
+import { makeStyles, styled } from '@material-ui/core';
+
 import { KsDialog } from '@kleeen/react/components';
-import { styled } from '@material-ui/core';
 
 export const Dialog = styled(KsDialog)({
   '& .MuiDialog-paper': {
@@ -26,5 +27,11 @@ export const Dialog = styled(KsDialog)({
   },
   '& .MuiInput-underline:after': {
     borderBottom: '3px solid var(--secondary-color)',
+  },
+});
+
+export const useStyles = makeStyles({
+  formGroup: {
+    marginBottom: 'var(--pm-S)',
   },
 });

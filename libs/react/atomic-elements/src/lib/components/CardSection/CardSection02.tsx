@@ -1,13 +1,16 @@
 import './CardSection02.scss';
 
-const rolePermissionOk = 'SHOW';
-import { CardSectionProps, RenderChildrenProps, Widget } from './CardWidget.model';
-import { CardWidget02 } from './CardWidget02';
-import { isNilOrEmpty, roleAccessKeyTag } from '@kleeen/common/utils';
-import { TableContent, TransformToWidgetComponent } from './components';
-import { useAccessControlChecker } from '@kleeen/core-react';
-import classnames from 'classnames';
+import { CardSectionProps, RenderChildrenProps } from './CardWidget.model';
 import React, { ReactElement, ReactNode, useRef } from 'react';
+import { TableContent, TransformToWidgetComponent } from './components';
+import { isNilOrEmpty, roleAccessKeyTag } from '@kleeen/common/utils';
+
+import { CardWidget02 } from './CardWidget02';
+import { Widget } from '@kleeen/types';
+import classnames from 'classnames';
+import { useAccessControlChecker } from '@kleeen/core-react';
+
+const rolePermissionOk = 'SHOW';
 
 const bem = 'ks-card-section-02';
 
@@ -45,7 +48,7 @@ function renderChildren({
       const widgetCompleted = addCurrentWidgetTypeToViableSolutions(widget);
 
       return (
-        <div ref={widgetsRefs[widget.id]} id={widget.id.toString()}>
+        <div ref={widgetsRefs[widget.id]} id={widget?.id?.toString()}>
           <TransformToWidgetComponent
             key={`card-section-widget-${widget.id}`}
             taskName={taskName}

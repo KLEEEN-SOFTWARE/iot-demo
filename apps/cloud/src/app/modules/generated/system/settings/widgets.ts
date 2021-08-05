@@ -1,23 +1,22 @@
-import Widget_1MRtKroSqrEGDDNEs9CJDv from '../../../custom/pages/system/components/widget-1-m-rt-kro-sqr-egddn-es-9-cj-dv';
+import Widget_1MRtKroSqrEGDDNEs9CJDv from '../../../custom/system/components/widget-1-m-rt-kro-sqr-egddn-es-9-cj-dv';
 
 export const widgets = [
   {
     actions: [],
-    addModalAttributes: [],
     attributes: [],
     chartType: undefined,
     component: undefined,
-    description: undefined,
+    entityId: undefined,
     id: undefined,
     params: {},
     statisticalType: undefined,
     title: undefined,
+    type: 'dashboard',
     viableSolutions: [],
     viewId: 'ks-view-6M9TLFSHnbMdsMp9tJGEeA',
     widgets: [
       {
         actions: [],
-        addModalAttributes: [],
         attributes: [
           {
             crossLinking: [],
@@ -48,24 +47,22 @@ export const widgets = [
         ],
         chartType: `[WIDGET] BUBBLE_CHART`,
         component: undefined,
-        description: undefined,
+        entityId: undefined,
         id: `8b263bdb-cbd4-4d6c-ba39-1e8568529e85`,
         params: {
           cardinality: 'SINGLE',
           groupBy: { name: 'event', transformation: 'selfMulti', formatType: 'uuid' },
           operationName: 'widget_8b263bdb_cbd4_4d6c_ba39_1e8568529e85',
-          taskName: 'System',
           value: { name: 'eventLength', transformation: 'selfSingle', formatType: 'integer' },
         },
+        sortOrder: 0,
         statisticalType: undefined,
         title: `Event Length`,
         viableSolutions: ['[WIDGET] SINGLE_BAR_HIGHLIGHT_MAX', '[WIDGET] SIMPLE_LIST_RANKED'],
-        sortOrder: 0,
         viewId: 'ks-view-6M9TLFSHnbMdsMp9tJGEeA',
       },
       {
         actions: [],
-        addModalAttributes: [],
         attributes: [
           {
             crossLinking: [],
@@ -95,24 +92,22 @@ export const widgets = [
         ],
         chartType: `[WIDGET] STEP_LINE`,
         component: undefined,
-        description: undefined,
+        entityId: undefined,
         id: `16dee097-f374-4987-922e-53015c7934d9`,
         params: {
           cardinality: 'SINGLE',
           groupBy: { name: 'timestamp', transformation: 'selfMulti', formatType: 'timestamp' },
           operationName: 'widget_16dee097_f374_4987_922e_53015c7934d9',
-          taskName: 'System',
           value: { name: 'event', transformation: 'countTotal', formatType: 'uuid' },
         },
+        sortOrder: 1,
         statisticalType: undefined,
         title: `Historical Events`,
         viableSolutions: ['[WIDGET] SIMPLE_LIST_RANKED'],
-        sortOrder: 1,
         viewId: 'ks-view-6M9TLFSHnbMdsMp9tJGEeA',
       },
       {
         actions: [],
-        addModalAttributes: [],
         attributes: [
           {
             crossLinking: [],
@@ -285,11 +280,10 @@ export const widgets = [
         ],
         chartType: `[WIDGET] SUMMARY_STATISTICS`,
         component: undefined,
-        description: undefined,
+        entityId: undefined,
         id: `3a3b0785-d65d-4156-8025-0691da0cf99c`,
         params: {
           operationName: 'widget_statistics3a3b0785_d65d_4156_8025_0691da0cf99c',
-          taskName: 'System',
           value: {
             label: 'Sensor Status',
             name: 'sensorStatus',
@@ -338,15 +332,14 @@ export const widgets = [
             formatType: 'severity_level',
           },
         },
+        sortOrder: 2,
         statisticalType: undefined,
         title: `Sensors`,
         viableSolutions: [],
-        sortOrder: 2,
         viewId: 'ks-view-6M9TLFSHnbMdsMp9tJGEeA',
       },
       {
         actions: [],
-        addModalAttributes: [],
         attributes: [
           {
             crossLinking: [],
@@ -519,11 +512,10 @@ export const widgets = [
         ],
         chartType: `[WIDGET] SUMMARY_STATISTICS`,
         component: undefined,
-        description: undefined,
+        entityId: undefined,
         id: `423ff13b-de6b-451c-95c3-23288e4edced`,
         params: {
           operationName: 'widget_statistics423ff13b_de6b_451c_95c3_23288e4edced',
-          taskName: 'System',
           value: {
             label: 'Node Status',
             name: 'nodeStatus',
@@ -572,15 +564,14 @@ export const widgets = [
             formatType: 'severity_level',
           },
         },
+        sortOrder: 3,
         statisticalType: undefined,
         title: `Nodes`,
         viableSolutions: [],
-        sortOrder: 3,
         viewId: 'ks-view-6M9TLFSHnbMdsMp9tJGEeA',
       },
       {
         actions: [],
-        addModalAttributes: [],
         attributes: [
           {
             crossLinking: [{ title: 'Site Map Details', slug: 'site-map-details' }],
@@ -618,24 +609,22 @@ export const widgets = [
         ],
         chartType: `[WIDGET] SINGLE_BAR_HIGHLIGHT_MAX`,
         component: undefined,
-        description: undefined,
+        entityId: undefined,
         id: `ec00ac75-6320-4963-abcd-4c1aea91727b`,
         params: {
           cardinality: 'SINGLE',
           groupBy: { name: 'siteMap', transformation: 'selfMulti', formatType: 'prime' },
           operationName: 'widget_ec00ac75_6320_4963_abcd_4c1aea91727b',
-          taskName: 'System',
           value: { name: 'siteStatus', transformation: 'selfSingle', formatType: 'severity_level' },
         },
+        sortOrder: 4,
         statisticalType: undefined,
         title: `Site Map`,
         viableSolutions: ['[WIDGET] SIMPLE_LIST'],
-        sortOrder: 4,
         viewId: 'ks-view-6M9TLFSHnbMdsMp9tJGEeA',
       },
       {
         actions: [],
-        addModalAttributes: [],
         attributes: [
           {
             crossLinking: [],
@@ -678,15 +667,15 @@ export const widgets = [
         ],
         chartType: `[WIDGET] AREA_GRADIENT`,
         component: undefined,
-        description: undefined,
+        entityId: undefined,
         id: `5d346104-9524-4ba4-a30a-bb9c509fc439`,
         params: {
           cardinality: 'SINGLE',
           groupBy: { name: 'timestamp', transformation: 'selfMulti', formatType: 'timestamp' },
           operationName: 'widget_5d346104_9524_4ba4_a30a_bb9c509fc439',
-          taskName: 'System',
           value: { name: 'node', transformation: 'countTotal', formatType: 'prime' },
         },
+        sortOrder: 5,
         statisticalType: undefined,
         title: `Node Status`,
         viableSolutions: [
@@ -695,12 +684,10 @@ export const widgets = [
           '[WIDGET] AREA',
           '[WIDGET] SIMPLE_LIST_RANKED',
         ],
-        sortOrder: 5,
         viewId: 'ks-view-6M9TLFSHnbMdsMp9tJGEeA',
       },
       {
         actions: [],
-        addModalAttributes: [],
         attributes: [
           {
             crossLinking: [],
@@ -732,15 +719,15 @@ export const widgets = [
         ],
         chartType: `[WIDGET] AREA_GRADIENT`,
         component: undefined,
-        description: undefined,
+        entityId: undefined,
         id: `ec36d0ef-f9c6-4345-bc1d-552b19ceeccd`,
         params: {
           cardinality: 'SINGLE',
           groupBy: { name: 'timestamp', transformation: 'selfMulti', formatType: 'timestamp' },
           operationName: 'widget_ec36d0ef_f9c6_4345_bc1d_552b19ceeccd',
-          taskName: 'System',
           value: { name: 'sensor', transformation: 'countTotal', formatType: 'prime' },
         },
+        sortOrder: 6,
         statisticalType: undefined,
         title: `Sensor Status`,
         viableSolutions: [
@@ -749,12 +736,10 @@ export const widgets = [
           '[WIDGET] AREA',
           '[WIDGET] SIMPLE_LIST_RANKED',
         ],
-        sortOrder: 6,
         viewId: 'ks-view-6M9TLFSHnbMdsMp9tJGEeA',
       },
       {
         actions: [],
-        addModalAttributes: [],
         attributes: [
           {
             crossLinking: [],
@@ -822,11 +807,10 @@ export const widgets = [
         ],
         chartType: `[WIDGET] SUMMARY_STATISTICS`,
         component: undefined,
-        description: undefined,
+        entityId: undefined,
         id: `15d23aa3-6f00-4505-9199-85c2e2662aaa`,
         params: {
           operationName: 'widget_statistics15d23aa3_6f00_4505_9199_85c2e2662aaa',
-          taskName: 'System',
           value: {
             label: 'Sensor Overall Status',
             name: 'sensorOverallStatus',
@@ -846,15 +830,14 @@ export const widgets = [
             formatType: 'severity_level',
           },
         },
+        sortOrder: 7,
         statisticalType: undefined,
         title: `Sensor Overall Status`,
         viableSolutions: [],
-        sortOrder: 7,
         viewId: 'ks-view-6M9TLFSHnbMdsMp9tJGEeA',
       },
       {
         actions: [],
-        addModalAttributes: [],
         attributes: [
           {
             crossLinking: [],
@@ -922,11 +905,10 @@ export const widgets = [
         ],
         chartType: `[WIDGET] SUMMARY_STATISTICS`,
         component: undefined,
-        description: undefined,
+        entityId: undefined,
         id: `cd7fa114-5174-423f-9fdd-b14fc75dd1f1`,
         params: {
           operationName: 'widget_statisticscd7fa114_5174_423f_9fdd_b14fc75dd1f1',
-          taskName: 'System',
           value: {
             label: 'Node Overall Status',
             name: 'nodeOverallStatus',
@@ -946,15 +928,14 @@ export const widgets = [
             formatType: 'severity_level',
           },
         },
+        sortOrder: 8,
         statisticalType: undefined,
         title: `Node Overall Status`,
         viableSolutions: [],
-        sortOrder: 8,
         viewId: 'ks-view-6M9TLFSHnbMdsMp9tJGEeA',
       },
       {
         actions: [],
-        addModalAttributes: [],
         attributes: [
           {
             crossLinking: [],
@@ -980,11 +961,10 @@ export const widgets = [
         ],
         chartType: `[WIDGET] GAUGE_SEVERITY_LEVEL`,
         component: undefined,
-        description: undefined,
+        entityId: undefined,
         id: `324888f3-eb8c-4097-ba9f-21aa8cf6be4f`,
         params: {
           operationName: 'widget_statistics324888f3_eb8c_4097_ba9f_21aa8cf6be4f',
-          taskName: 'System',
           value: {
             label: 'System Health',
             name: 'systemHealth',
@@ -1000,27 +980,25 @@ export const widgets = [
             formatType: 'severity_level',
           },
         },
+        sortOrder: 9,
         statisticalType: undefined,
         title: `System Health`,
         viableSolutions: [],
-        sortOrder: 9,
         viewId: 'ks-view-6M9TLFSHnbMdsMp9tJGEeA',
       },
       {
         actions: [],
-        addModalAttributes: [],
         attributes: [],
         chartType: `[WIDGET] CUSTOM`,
         component: Widget_1MRtKroSqrEGDDNEs9CJDv,
-        description: undefined,
+        entityId: undefined,
         id: `0666f639-8ec2-4aa6-8dae-59b9e6611047`,
         params: {},
+        sortOrder: 10,
         statisticalType: undefined,
         title: `Utilization Saturation and Errors (USE)`,
         viableSolutions: [],
-        sortOrder: 10,
       },
     ],
-    type: 'dashboard',
   },
 ];

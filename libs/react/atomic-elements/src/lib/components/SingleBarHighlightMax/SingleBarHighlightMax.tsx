@@ -1,18 +1,19 @@
 import './SingleBarHighlightMax.scss';
 
+import { CrossLinkingProps, useCrossLinkingMenuOnViz, useTextFormattersForViz } from '@kleeen/react/hooks';
+import { KsButton, Loader } from '@kleeen/react/components';
+import React, { useState } from 'react';
 import { axisStyle, generalBaseOptions } from '../generalBaseOptions';
 import { backToClick, deltaOfResults, localization, singleBarOptions } from './options';
 import { clone, has, pathOr } from 'ramda';
-import { CrossLinkingProps, useCrossLinkingMenuOnViz, useTextFormattersForViz } from '@kleeen/react/hooks';
-import { IDeltaResults } from './interfaces';
-import { KsButton, Loader } from '@kleeen/react/components';
-import { KUIConnect } from '@kleeen/core-react';
-import drilldown from 'highcharts/modules/drilldown';
+
 import Highcharts from 'highcharts';
 import HighchartsReact from 'highcharts-react-official';
-import merge from 'lodash.merge';
-import React, { useState } from 'react';
+import { IDeltaResults } from './interfaces';
+import { KUIConnect } from '@kleeen/core-react';
 import classnames from 'classnames';
+import drilldown from 'highcharts/modules/drilldown';
+import merge from 'lodash.merge';
 
 const bem = 'ks-single-bar-highlight-max';
 

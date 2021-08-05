@@ -3,13 +3,13 @@ import './headerAndSubSections.scss';
 import { ButtonFilter, ButtonSelect, ButtonSummary, SubHeader } from '../SubHeader/SubHeader';
 import { ReactElement, useState } from 'react';
 import { isNilOrEmpty, sortByKeys } from '@kleeen/common/utils';
+import { useGetDisplayValue, useKleeenActions } from '@kleeen/react/hooks';
 
 import { ButtonDate } from '../SubHeader/component/ButtonsDate/ButtonsDate';
 import { HeaderAndSubSectionsProps } from './HeaderAndSubSections.model';
 import { HeaderTitle } from '../HeaderTitle';
 import { KUIConnect } from '@kleeen/core-react';
 import { KsHeader } from '../Header';
-import { useKleeenActions } from '@kleeen/react/hooks';
 
 function HeaderAndSubSectionsComponent({
   actionsProps,
@@ -32,14 +32,12 @@ function HeaderAndSubSectionsComponent({
 }: HeaderAndSubSectionsProps): ReactElement {
   const { refreshPage } = useKleeenActions(taskName);
   const [outContainer, setOutContainer] = useState<ReactElement>();
+  const { displayValue, format } = useGetDisplayValue({ objectValue, taskName });
 
   // TODO: @cafe move this logic to a shared util and re-use it in DataViewControlSection
   const viewOption = viewOptions && viewOptions[value];
   const orderedViewProps = sortByKeys(viewOptions, ['viewOrder', 'viewId']);
   const actions = isNilOrEmpty(actionsProps?.actions) ? viewOption?.actions : actionsProps.actions;
-  const attributes = isNilOrEmpty(viewOption?.modalAttributes)
-    ? actionsProps.attributes
-    : viewOption.modalAttributes;
   const props = {
     objectValue,
     slots,
@@ -58,13 +56,12 @@ function HeaderAndSubSectionsComponent({
         actionsProps={{
           ...actionsProps,
           actions,
-          attributes,
           taskName,
         }}
         hideRefreshControl={hideRefreshControl}
         onRefresh={refreshPage}
         subTitle={subTitle}
-        title={HeaderTitle(props)}
+        title={<HeaderTitle displayValue={displayValue} format={format} title={title} subTitle={subTitle} />}
         upText={upText}
         withoutSubHeader={!hasSubHeader()}
       />
