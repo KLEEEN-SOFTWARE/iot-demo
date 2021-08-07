@@ -4,6 +4,6 @@ export const viewOptions = [
     name: `Table of Sensor`,
     type: `listing`,
     viewId: `ks-view-gnRpJXqsZaxnoEGRxQVSY4`,
-    viewOrder: Infinity,
+    viewOrder: 1,
   },
 ];

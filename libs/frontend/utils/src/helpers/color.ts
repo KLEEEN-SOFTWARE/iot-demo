@@ -10,6 +10,11 @@ export const exportColorToHex = (color: string): string => {
   return tColor.toHexString();
 };
 
+export const exportColorToAlpha = (color: string): number => {
+  const tColor = tinycolor(color);
+  return tColor.getAlpha();
+};
+
 export const darkenColor = (color: string, amount: number): string => {
   const tColor = tinycolor(color);
   return tColor.darken(amount);

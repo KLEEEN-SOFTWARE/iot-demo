@@ -1,3 +1,29 @@
+## [2.2.2](https://github.com/KLEEEN-SOFTWARE/template/compare/2.2.1...2.2.2) (2021-08-05)
+
+
+### Bug Fixes
+
+* **navtop:** fixed nav top missing help link url ([#1086](https://github.com/KLEEEN-SOFTWARE/template/issues/1086)) ([8b2bca7](https://github.com/KLEEEN-SOFTWARE/template/commit/8b2bca70e2dbc0ba020494496d0db6cfba8aa3ce))
+
+## [2.2.1](https://github.com/KLEEEN-SOFTWARE/template/compare/2.2.0...2.2.1) (2021-08-05)
+
+
+### Bug Fixes
+
+* **color-picker:** Color picker on add modal - [Color picker on add modal] ([#1078](https://github.com/KLEEEN-SOFTWARE/template/issues/1078)) ([9559c82](https://github.com/KLEEEN-SOFTWARE/template/commit/9559c8290e825ac31b26edd83b76fd16485e75f3))
+
+# [2.2.0](https://github.com/KLEEEN-SOFTWARE/template/compare/2.1.1...2.2.0) (2021-08-04)
+
+
+### Bug Fixes
+
+* **cloud:** add missing types and fix format to reduce conflicts ([#1063](https://github.com/KLEEEN-SOFTWARE/template/issues/1063)) ([fda1c0b](https://github.com/KLEEEN-SOFTWARE/template/commit/fda1c0bf94487f3442a6150e7b728870f110c271))
+
+
+### Features
+
+* **summary-card:** Summary cards on report view ([#1069](https://github.com/KLEEEN-SOFTWARE/template/issues/1069)) ([c87fa13](https://github.com/KLEEEN-SOFTWARE/template/commit/c87fa137113d15f1351ae29f3bca23cdea2a36cb))
+
 ## [2.1.1](https://github.com/KLEEEN-SOFTWARE/template/compare/2.1.0...2.1.1) (2021-07-30)
 
 

@@ -217,6 +217,6 @@ export const widgets = [
     type: 'table',
     viableSolutions: [],
     viewId: 'ks-view-8yyhmnH4a88SWwvb4pJkWx',
-    viewOrder: Infinity,
+    viewOrder: 1,
   },
 ];

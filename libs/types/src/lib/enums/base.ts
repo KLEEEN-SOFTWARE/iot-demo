@@ -172,6 +172,12 @@ export enum TimestampKey {
   key = '--timestamp--:',
 }
 
+export enum Variant {
+  filled = 'filled',
+  outlined = 'outlined',
+  standard = 'standard',
+}
+
 export enum ViewType {
   config = 'configure',
   custom = 'custom',

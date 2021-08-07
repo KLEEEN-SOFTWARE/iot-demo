@@ -30,7 +30,7 @@ export * from './checkbox-form-with-dependency';
 export * from './chip';
 export * from './chip-input';
 export * from './circularProgress';
-export * from './colorPicker';
+export * from './color-picker';
 export * from './config-table';
 export * from './contextCell';
 export * from './context-menu';

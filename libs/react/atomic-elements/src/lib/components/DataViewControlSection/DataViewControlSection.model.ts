@@ -1,4 +1,4 @@
-import { Action, GenericFunctions } from '@kleeen/types';
+import { Action, GenericFunctions, ViewOption } from '@kleeen/types';
 
 export interface Attribute {
   name: string;
@@ -6,16 +6,6 @@ export interface Attribute {
 }
 
 export type HandleChangeTab = (value: number | unknown) => void;
-
-export type ViewOption = {
-  actions?: Action[];
-  entity: string;
-  entityName: string;
-  name: string;
-  type: string;
-  viewId?: string;
-  viewOrder?: number;
-};
 
 export interface TabSwitcherProps {
   handleChangeTab: HandleChangeTab;

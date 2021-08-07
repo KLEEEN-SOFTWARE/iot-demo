@@ -1,6 +1,6 @@
 .highcharts-column-series {
   .highcharts-point {
-    transition: all 200ms ease-in;
+    transition: all var(--speed-fastest) ease-in;
   }
   &:hover {
     .highcharts-point {

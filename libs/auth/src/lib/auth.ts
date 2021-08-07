@@ -1,3 +1,4 @@
+/* eslint-disable max-lines */
 import {
   AuthChannel,
   AuthErrorTypes,
@@ -24,9 +25,11 @@ import { isNilOrEmpty } from '@kleeen/common/utils';
 
 const logger = new Logger('AuthClass');
 
-const KLEEEN_AUTHORING_SYMBOL = (typeof Symbol !== 'undefined' && typeof Symbol.for === 'function'
-  ? Symbol.for('kleeen_authoring_default')
-  : '@@kleeen_authoring_default') as symbol;
+const KLEEEN_AUTHORING_SYMBOL = (
+  typeof Symbol !== 'undefined' && typeof Symbol.for === 'function'
+    ? Symbol.for('kleeen_authoring_default')
+    : '@@kleeen_authoring_default'
+) as symbol;
 
 /**
  * Provide authentication steps

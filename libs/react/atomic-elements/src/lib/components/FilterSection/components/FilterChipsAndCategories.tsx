@@ -7,6 +7,15 @@ import MuiTooltip from '@material-ui/core/Tooltip';
 import classnames from 'classnames';
 import moment from 'moment';
 
+type FilterItemProp = [
+  string,
+  {
+    _in: string[];
+    max?: string;
+    min?: string;
+  },
+];
+
 const bem = 'ks-filter-chips-and-categories';
 
 const FilterItem = ({ option, remove }): ReactElement => (
@@ -20,15 +29,8 @@ const FiltersComp = ({ filters = {}, removeValue, removeCategory }): ReactElemen
     removeCategory(cat);
   };
 
-  const FilterItemAdded = ({
-    filter,
-  }: {
-    filter: [string, { _in: string[]; max?: string; min?: string }];
-  }): ReactElement => {
-    const [cat, { _in: values = [], max, min }]: [
-      string,
-      { _in: string[]; max?: string; min?: string },
-    ] = filter;
+  const FilterItemAdded = ({ filter }: { filter: FilterItemProp }): ReactElement => {
+    const [cat, { _in: values = [], max, min }]: FilterItemProp = filter;
     return (
       <div>
         <div className={classnames(bem, 'category-section')}>

@@ -1,4 +1,5 @@
 import { ReactElement } from 'react';
+import { Action } from './actions';
 
 /**
  * Interfaces
@@ -103,3 +104,20 @@ export type Results = number[] | string[] | number | string;
 export type Translate = (key: string) => string;
 
 export type VizColor = 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9 | 10;
+
+export type ViewOption = {
+  actions?: Action[];
+  entity: string;
+  entityName: string;
+  name: string;
+  type: string;
+  viewId?: string;
+  viewOrder?: number;
+};
+
+export type ViewOptionFormattedType = {
+  label: string;
+  viewOrder: number;
+  value: string;
+  option: ViewOption;
+};

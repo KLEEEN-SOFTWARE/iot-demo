@@ -1,5 +1,6 @@
 import { TranslateProps } from '../../../../../types';
-import { ViewOption } from '../../../DataViewControlSection/DataViewControlSection.model';
+import { ViewOption } from '@kleeen/types';
+
 export interface ButtonSelectProps extends TranslateProps {
   viewOptions: ViewOption[];
   handleChangeTab: (e) => void;

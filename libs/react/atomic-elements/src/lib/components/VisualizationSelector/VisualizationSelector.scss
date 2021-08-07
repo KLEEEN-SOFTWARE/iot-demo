@@ -11,13 +11,13 @@
     width: var(--wh-5XS);
     height: var(--wh-9XS);
     background-color: var(--primary-color);
-    transition: height 0.2s ease;
+    transition: height var(--speed-fastest) ease;
   }
   .visualization-selector-item-selected {
     width: var(--wh-5XS);
     height: var(--wh-8XS);
     background-color: var(--secondary-color);
-    transition: height 0.2s ease;
+    transition: height var(--speed-fastest) ease;
   }
 }
 

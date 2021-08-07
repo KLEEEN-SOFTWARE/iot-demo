@@ -1,20 +1,17 @@
-import { DisplayViewType, SwitcherProps, TabSwitcherProps, ViewOption } from './DataViewControlSection.model';
+import { DisplayViewType, SwitcherProps, TabSwitcherProps } from './DataViewControlSection.model';
+import { formatViewOptions, isNilOrEmpty, SHOW_DROPDOWN_THRESHOLD } from '@kleeen/common/utils';
 import { KsSvgIcon, KsSvgIconSize } from '@kleeen/react/components';
-import { Tab, Tabs, useStyles } from './DataViewControlSection.styles';
-import { isNilOrEmpty, roleAccessKeyTag } from '@kleeen/common/utils';
-
-import Apps from '@material-ui/icons/Apps';
-import AspectRatio from '@material-ui/icons/AspectRatio';
 import { ReactElement } from 'react';
 import { SelectList } from '../SelectList/SelectList';
+import { Tab, Tabs, useStyles } from './DataViewControlSection.styles';
+import { useViewsFilteredByAccess } from '@kleeen/react/hooks';
+import { ViewOption } from '@kleeen/types';
+import Apps from '@material-ui/icons/Apps';
+import AspectRatio from '@material-ui/icons/AspectRatio';
+import classnames from 'classnames';
 import TableChart from '@material-ui/icons/TableChart';
 import Tooltip from '@material-ui/core/Tooltip';
-import classnames from 'classnames';
-import { formatViewOptions } from './index';
-import { useAccessControlChecker } from '@kleeen/core-react';
-
 const bem = 'ks-view-switcher';
-const rolePermissionOk = 'SHOW';
 
 const IconTable = ({ name }) => (
   <Tooltip title={name} placement="top">
@@ -90,7 +87,7 @@ const TabSwitcher = ({
   taskName,
   onTabIndexChanged,
 }: TabSwitcherProps): ReactElement => (
-  <Tabs value={value} scrollButtons="off" aria-label="tabs">
+  <Tabs value={value} scrollButtons="off" aria-label="tabs" data-testid="tab-switcher">
     {viewOptions.map((option, index) => {
       const { name = 'List', type, viewId, viewOrder } = option;
       const props = viewId
@@ -101,7 +98,6 @@ const TabSwitcher = ({
         <Tab
           key={index}
           {...props}
-          selected={value === index}
           onClick={(e) => {
             const selectedIndex = isNilOrEmpty(viewOrder) ? index : viewOrder;
             if (handleChangeTab) {
@@ -146,22 +142,35 @@ const SelectListWrapper = ({
   );
 };
 
-export const ViewSwitcher = ({ showDropDown = false, viewOptions, ...rest }: SwitcherProps): JSX.Element => {
-  const options = [];
-  viewOptions.forEach((vOption) => {
-    if (
-      rolePermissionOk ===
-      useAccessControlChecker(roleAccessKeyTag(`${rest.taskName}.views.${vOption.name}`)).permission
-    ) {
-      options.push(vOption);
-    }
-  });
-
+export const ViewSwitcher = ({
+  showDropDown = false,
+  viewOptions,
+  value,
+  ...rest
+}: SwitcherProps): JSX.Element => {
   if (!Array.isArray(viewOptions)) return null;
 
-  return showDropDown ? (
-    <SelectListWrapper viewOptions={options} {...rest} />
+  const viewOptionFilteredByAccess = useViewsFilteredByAccess(
+    viewOptions,
+    rest.taskName,
+    false,
+  ) as ViewOption[];
+
+  const currentSelectedView = viewOptions[value];
+  const valueOnFilteredViewOptions = viewOptionFilteredByAccess.indexOf(currentSelectedView);
+
+  const someViewsWereFiltered = viewOptions.length != viewOptionFilteredByAccess.length;
+  const showDropDownBasedOnFilteredViews = someViewsWereFiltered
+    ? viewOptionFilteredByAccess.length >= SHOW_DROPDOWN_THRESHOLD
+    : showDropDown;
+
+  return showDropDownBasedOnFilteredViews ? (
+    <SelectListWrapper
+      viewOptions={viewOptionFilteredByAccess}
+      value={valueOnFilteredViewOptions}
+      {...rest}
+    />
   ) : (
-    <TabSwitcher viewOptions={options} {...rest} />
+    <TabSwitcher viewOptions={viewOptionFilteredByAccess} value={valueOnFilteredViewOptions} {...rest} />
   );
 };

@@ -14,7 +14,7 @@ export const ConfigureLayoutStyle = makeStyles({
     height: '100%',
     margin: 'var(--pm-0) var(--pm-L)',
     overflow: 'auto',
-    transition: 'height 400ms cubic-bezier(0, 0, 0.2, 1) 0ms',
+    transition: 'height var(--speed-medium) cubic-bezier(0, 0, 0.2, 1) 0ms',
   },
   snackbarNavTop: {
     paddingBottom: 'var(--pm-5XL)',

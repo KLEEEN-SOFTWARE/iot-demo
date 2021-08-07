@@ -35,7 +35,7 @@ export const SimpleLayoutStyle = makeStyles({
   dataViewDisplaySection: {
     height: 'calc(100% - var(--wh-M) - var(--pm-L))',
     margin: '0 var(--pm-L)',
-    transition: 'height 400ms',
+    transition: 'height var(--speed-medium)',
   },
   snackbar: {
     height: 'calc(100% - var(--wh-L) - var(--pm-1XS) - var(--wh-M) - var(--pm-4XS))',

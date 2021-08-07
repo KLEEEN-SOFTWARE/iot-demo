@@ -56,10 +56,10 @@ function SingleBarHighlightMaxBase({ translate, ...props }: HighchartsReact.Prop
   if (!has('key', xAxis)) {
     xAxis['key'] = widgetId;
   }
-  const {
-    crossLinkingValuesForAxis,
-    openMenuIfCrossLink,
-  } = useCrossLinkingMenuOnViz(props as CrossLinkingProps, { xAxis });
+  const { crossLinkingValuesForAxis, openMenuIfCrossLink } = useCrossLinkingMenuOnViz(
+    props as CrossLinkingProps,
+    { xAxis },
+  );
 
   let firstSliceOfResults: Array<IDeltaResults> = [];
   const xAxisCategories = clone(xAxis.categories);

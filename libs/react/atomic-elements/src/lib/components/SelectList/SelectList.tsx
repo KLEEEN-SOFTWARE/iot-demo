@@ -2,12 +2,12 @@ import './SelectList.scss';
 
 import { FormControl, makeStyles, styled } from '@material-ui/core';
 import { KsMenuItem } from '@kleeen/react/components';
+import { useTheme } from '@kleeen/react/hooks';
+import { ViewOption } from '@kleeen/types';
+import classnames from 'classnames';
 import MuiInputLabel from '@material-ui/core/InputLabel';
 import MuiSelect, { SelectProps } from '@material-ui/core/Select';
 import React from 'react';
-import { useTheme } from '@kleeen/react/hooks';
-import { ViewOption } from '../DataViewControlSection/DataViewControlSection.model';
-import classnames from 'classnames';
 
 const bem = 'ks-select-list';
 
@@ -96,12 +96,17 @@ export const SelectList = ({
   const { themeClass } = useTheme();
   const styles = useStyles();
   return (
-    <FormControl variant="outlined" className={classnames(bem, 'select-action-container')}>
+    <FormControl
+      className={classnames(bem, 'select-action-container')}
+      data-testid="select-list"
+      variant="outlined"
+    >
       <InputLabel id="select-action-label" className={classnames(`${bem}__label`, 'select-action-label')}>
         {label}
       </InputLabel>
       <Select
         className={classnames(`${bem}__action`, 'select-action')}
+        data-testid="select-list-action"
         disabled={options?.length === 1}
         id={id}
         key={value.toString()}

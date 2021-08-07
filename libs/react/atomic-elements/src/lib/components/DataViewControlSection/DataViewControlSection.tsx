@@ -144,7 +144,12 @@ export function DataViewControlSection(props: DataViewControlSectionProps): Reac
           </Grid>
         </Grid>
         {viewOptionsBySortOrder.length > 1 && (
-          <Grid alignItems="center" className={classnames(`${bem}__options`, 'options')} container>
+          <Grid
+            alignItems="center"
+            className={classnames(`${bem}__options`, 'options')}
+            container
+            data-testid="view-switcher"
+          >
             <ViewSwitcher
               handleChangeTab={props.handleChangeTab}
               onTabIndexChanged={props.onTabIndexChanged}

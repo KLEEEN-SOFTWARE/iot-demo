@@ -4,6 +4,6 @@ export const viewOptions = [
     name: `Site Map`,
     type: `grid`,
     viewId: `ks-view-bp8VvnmqwCGBPG4xX3ZeYm`,
-    viewOrder: Infinity,
+    viewOrder: 1,
   },
 ];

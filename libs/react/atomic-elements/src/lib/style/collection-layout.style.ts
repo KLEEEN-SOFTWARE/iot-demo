@@ -37,7 +37,7 @@ export const CollectionLayoutStyle = makeStyles({
     height: 'calc(100% - var(--wh-M) - var(--pm-L))',
     marginBottom: 'var(--pm-L)',
     marginRight: 'var(--pm-L)',
-    transition: 'height 400ms',
+    transition: 'height var(--speed-medium)',
   },
   snackbar: {
     height: 'calc(100% - var(--wh-L) - var(--pm-1XS) - var(--wh-M) - var(--pm-4XS))',
@@ -48,7 +48,7 @@ export const CollectionLayoutStyle = makeStyles({
     margin: 'var(--pm-0) var(--pm-L)',
     'padding-bottom': 'var(--pm-L)',
     overflow: 'auto',
-    transition: 'height 400ms cubic-bezier(0, 0, 0.2, 1) 0ms',
+    transition: 'height var(--speed-medium) cubic-bezier(0, 0, 0.2, 1) 0ms',
   },
   snackbarNavLeft: {
     height: 'calc(100% - var(--wh-5XL) - var(--wh-2XS))',

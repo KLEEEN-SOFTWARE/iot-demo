@@ -2,20 +2,6 @@ import CustomView_6MxSUSiehmRP9kh7u543zo from '../../../../custom/profile/site-m
 
 export const widgets = [
   {
-    actions: [],
-    attributes: [],
-    chartType: `[WIDGET] CUSTOM`,
-    component: CustomView_6MxSUSiehmRP9kh7u543zo,
-    entityId: undefined,
-    id: `2ed9ceee-e3dd-4f0d-805b-87645661b690`,
-    params: {},
-    statisticalType: undefined,
-    title: undefined,
-    type: 'custom',
-    viableSolutions: [],
-    viewId: 'ks-view-6MxSUSiehmRP9kh7u543zo',
-  },
-  {
     actions: [
       {
         areYouSure: false,
@@ -110,6 +96,20 @@ export const widgets = [
     viableSolutions: [],
     viewId: 'ks-view-4QW2xvV3Vsfs1RDwBfmZ6Q',
     viewOrder: 1,
+  },
+  {
+    actions: [],
+    attributes: [],
+    chartType: `[WIDGET] CUSTOM`,
+    component: CustomView_6MxSUSiehmRP9kh7u543zo,
+    entityId: undefined,
+    id: `2ed9ceee-e3dd-4f0d-805b-87645661b690`,
+    params: {},
+    statisticalType: undefined,
+    title: `Overview`,
+    type: 'custom',
+    viableSolutions: [],
+    viewId: 'ks-view-6MxSUSiehmRP9kh7u543zo',
   },
   {
     actions: [
@@ -216,6 +216,6 @@ export const widgets = [
     type: 'table',
     viableSolutions: [],
     viewId: 'ks-view-ozFw5fbSFqWz82tFnVgnAm',
-    viewOrder: 2,
+    viewOrder: 3,
   },
 ];

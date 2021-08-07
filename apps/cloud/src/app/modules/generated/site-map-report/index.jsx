@@ -25,7 +25,7 @@ function Workflow({ translate, ...props }) {
     <AccessControl id={roleAccessKeyTag(`navigation.${taskName}`)}>
       <div className={`${classes.dashboardTask} subhead-dynamic`}>
         <div className={`${classes.dashboardArea} browserArea`}>
-          <div className={classes.gridPageIntro}>
+          <div className={classes.gridPageIntro} data-testid="page-intro">
             <DataViewControlSection
               hideRefreshControl
               onTabIndexChanged={handleOnTabIndexChanged}
@@ -36,7 +36,7 @@ function Workflow({ translate, ...props }) {
               viewOptions={viewOptions}
             />
           </div>
-          <div className={classes.dataViewDisplaySection}>
+          <div className={classes.dataViewDisplaySection} data-testid="content-section">
             <DataViewDisplaySectionAtomic
               widgets={widgets}
               selectedOption={selectedViewOption}

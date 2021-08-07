@@ -5,8 +5,9 @@ import React, { useState } from 'react';
 import { ButtonSelectProps } from './ButtonSelect.model';
 import { ButtonSubHeader } from '../ButtonHeader/ButtonSubHeader';
 import { SelectList } from '../../../SelectList/SelectList';
+import { useViewsFilteredByAccess } from '@kleeen/react/hooks';
+import { ViewOptionFormattedType } from '@kleeen/types';
 import classNames from 'classnames';
-import { formatViewOptions } from '../../../DataViewControlSection';
 
 const defaultIconKey = 'Apps';
 export const ButtonSelect = ({
@@ -18,7 +19,7 @@ export const ButtonSelect = ({
   taskName,
 }: ButtonSelectProps): React.ReactElement | null => {
   const [iconView, setIconView] = useState(viewOptions[value]?.viewId || defaultIconKey);
-  const options = formatViewOptions(viewOptions);
+  const options = useViewsFilteredByAccess(viewOptions, taskName) as ViewOptionFormattedType[];
   const navigation = viewOptions[value]?.name;
   const hasViewSwitch = options?.length > 1;
   const viewSwitchText = hasViewSwitch ? 'View switch' : undefined;
