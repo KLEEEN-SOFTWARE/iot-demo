@@ -31,13 +31,14 @@ export function useCrossLinkingItems({
 
   useEffect(generateCrossLinks, [cell?.id, attr?.name]);
 
-  const handleClick = ({ openNewTab }: { openNewTab: boolean }) => ({ slug }) => (
-    e: React.MouseEvent<HTMLLIElement, MouseEvent>,
-  ) => {
-    e.preventDefault();
-    handleClose();
-    crosslink(slug, cell, attr, openNewTab);
-  };
+  const handleClick =
+    ({ openNewTab }: { openNewTab: boolean }) =>
+    ({ slug }) =>
+    (e: React.MouseEvent<HTMLLIElement, MouseEvent>) => {
+      e.preventDefault();
+      handleClose();
+      crosslink(slug, cell, attr, openNewTab);
+    };
 
   function generateCrossLinks() {
     if (isNilOrEmpty(attr?.crossLinking)) {

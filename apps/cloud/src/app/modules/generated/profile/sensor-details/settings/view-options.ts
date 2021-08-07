@@ -4,6 +4,6 @@ export const viewOptions = [
     name: `Dashboard`,
     type: `grid`,
     viewId: `ks-view-5ehycKcM5CKMLjBnhE2GcB`,
-    viewOrder: Infinity,
+    viewOrder: 2,
   },
 ];

@@ -81,7 +81,7 @@ export const NavTop = (props: NavProps): JSX.Element => {
               ref={mainMenu}
               onClick={handleToggleMain}
               color="inherit"
-              data-testid="ks-dropdown-menu-button"
+              data-testid="dropdown-menu-button"
             >
               <MenuIcon className="nav-icons" />
             </Button>
@@ -168,7 +168,7 @@ export const NavTop = (props: NavProps): JSX.Element => {
         </div>
 
         <div className="settings">
-          {!props.helpUrl && (
+          {Boolean(props.helpUrl) && (
             <Button
               aria-controls="simple-menu"
               color="inherit"

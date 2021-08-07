@@ -4,6 +4,6 @@ export const viewOptions = [
     name: `Table of Node`,
     type: `listing`,
     viewId: `ks-view-8yyhmnH4a88SWwvb4pJkWx`,
-    viewOrder: Infinity,
+    viewOrder: 1,
   },
 ];

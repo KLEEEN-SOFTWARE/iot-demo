@@ -67,7 +67,7 @@ export const Button = styled(MuiButton)({
     height: 'var(--wh-7XS)',
     width: 'var(--wh-7XS)',
     borderRadius: '50%',
-    transition: 'background 200ms, border 200ms',
+    transition: 'background var(--speed-fastest), border var(--speed-fastest)',
   },
 });
 

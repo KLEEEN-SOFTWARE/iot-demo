@@ -200,14 +200,8 @@ export class BaseApiService {
   }
 
   static genericChartWidgetQuery = ({ payload }) => {
-    const {
-      baseModel,
-      aggregatedByType,
-      aggregatedBy,
-      aggregation_attribute,
-      aggregation,
-      ...restParams
-    } = payload.params;
+    const { baseModel, aggregatedByType, aggregatedBy, aggregation_attribute, aggregation, ...restParams } =
+      payload.params;
     const { paramsBasedOnRoute } = payload.paramsBasedOnRoute;
 
     let aggregationQueries = {};

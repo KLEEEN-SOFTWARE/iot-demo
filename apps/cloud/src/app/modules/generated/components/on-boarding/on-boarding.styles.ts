@@ -20,7 +20,7 @@ export const useStyles = makeStyles({
     overflow: 'auto',
     paddingBottom: 'var(--pm-L)',
     position: 'relative',
-    transition: 'height 400ms',
+    transition: 'height var(--speed-medium)',
   },
   snackbar: {
     height: 'calc(var(--size-pageHeight) - var(--pm-6XL) - var(--pm-1XS) - var(--pm-5XL) - var(--pm-4XS))',

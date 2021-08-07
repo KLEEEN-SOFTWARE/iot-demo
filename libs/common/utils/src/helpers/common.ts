@@ -1,4 +1,4 @@
-import { FormatProps, Row } from '@kleeen/types';
+import { FormatProps, Row, ViewOption, ViewOptionFormattedType } from '@kleeen/types';
 import { isNil, pipe } from 'ramda';
 
 import camelCase from 'lodash.camelcase';
@@ -65,6 +65,21 @@ export function roleAccessKeyTag(stringToValidate: string): string {
 export const upperCamelCase = (value = ''): string =>
   pipe<string, string, string>(camelCase, upperFirst)(value);
 
+export const NEW_ROW_ID_PREFIX = 'temporary';
+export const SHOW_DROPDOWN_THRESHOLD = 4;
+
+export function formatViewOptions(viewOptions: ViewOption[]): ViewOptionFormattedType[] {
+  return viewOptions.map((option, index) => {
+    const { name, viewOrder } = option;
+    return {
+      label: name,
+      viewOrder: isNilOrEmpty(viewOrder) ? index : viewOrder,
+      value: name,
+      option,
+    };
+  });
+}
+
 //#region Private Members
 
 // Lodash mergeByCustomizer, returns undefined to use the regular mergeBy function
@@ -115,5 +130,3 @@ export function sortByKeys<T>(
 }
 
 //#endregion
-
-export const NEW_ROW_ID_PREFIX = 'temporary';

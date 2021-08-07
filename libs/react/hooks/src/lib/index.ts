@@ -43,6 +43,7 @@ export * from './useWebSocket';
 export * from './useGetWidgetsAmount';
 export * from './useFilterItems';
 export * from './useLocalStorage';
+export * from './use-views-filtered-by-access';
 
 export * from '../helpers';
 export { MenuContextProvider, AttributeContextMenuProvider };

@@ -10,7 +10,7 @@ export const useStyles = makeStyles({
     alignSelf: 'stretch',
     backgroundColor: 'var(--row-odd)',
     borderRadius: 'var(--card-border-radius) var(--card-border-radius) 0 0',
-    transition: 'background-color 400ms',
+    transition: 'background-color var(--speed-medium)',
   },
   dependencyContainer: {
     backgroundColor: 'var(--row-odd)',

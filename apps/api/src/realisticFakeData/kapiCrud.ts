@@ -5,99 +5,127 @@ import { Attribute } from '../types';
 import { PrimitiveType } from './types';
 import { Transformation } from '../utils';
 import { calculateTransformation } from './transformation';
+import { omit } from 'ramda';
 
 interface ListItem {
   id: string;
-  displayValue: PrimitiveType;
+  $metadata?: Metadata;
+  displayValue: PrimitiveType & {
+    displayValue?: PrimitiveType;
+  };
 }
+
+type Metadata = { entityType: string };
 
 const DISPLAY_VALUE = 'displayValue';
 const METADATA = '$metadata';
 const SELF_TRANSFORMATION = [Transformation.SelfSingle, Transformation.SelfMulti];
+
+function getDisplayValueId(id: string, entity: Attribute, metadata: Metadata): string {
+  if (!metadata) return id;
+
+  if (entity?.isXor) {
+    const xor = KapiDb.findRandomOne(toEntityName(metadata?.entityType));
+
+    return xor.id;
+  }
+
+  return id;
+}
+
+function formatToDisplayValue(entityName: string, item: ListItem | any, attributes: Attribute[]) {
+  const displayValue = item.displayValue?.displayValue ?? item.displayValue;
+  const attribute: Attribute = findEntityByName(entityName, attributes);
+  const id = getDisplayValueId(item.id, attribute, displayValue && displayValue[METADATA]);
+
+  return {
+    id,
+    [toPropertyName(entityName)]: {
+      id,
+      [DISPLAY_VALUE]: displayValue,
+      displayMedia: generateDisplayMediaByType(attribute?.formatType, displayValue, attribute),
+    },
+    [`${DISPLAY_VALUE}::${toPropertyName(entityName)}`]: {
+      // we need to figure out other way to solve this
+      id,
+      [DISPLAY_VALUE]: displayValue,
+    },
+  };
+}
+
+function getRandomItemByEntityName(entityName: string, attribute: Attribute, values: ListItem) {
+  const randomEntity = KapiDb.findRandomOne(toEntityName(values?.$metadata?.entityType || entityName));
+  const displayMedia = attribute
+    ? generateDisplayMediaByType(attribute?.formatType, values[DISPLAY_VALUE], attribute)
+    : '';
+  return {
+    [entityName]: {
+      id: randomEntity?.id,
+      displayMedia,
+      [DISPLAY_VALUE]: values[DISPLAY_VALUE],
+      ...(values[METADATA] ? { [METADATA]: values[METADATA] } : {}),
+    },
+  };
+}
+
+function formatDefaultTransformation(entityName: string, attribute: Attribute, values: ListItem) {
+  return {
+    [entityName]: {
+      [DISPLAY_VALUE]: calculateTransformation(
+        Array.isArray(values) ? values.map((value) => value.displayValue) : [values.displayValue],
+        attribute.aggregation,
+      ),
+    },
+  };
+}
+
+function formatSelfMultiTransformation(entityName: string, values: ListItem) {
+  const randomEntity = KapiDb.findRandomOne(toEntityName(values?.$metadata?.entityType || entityName));
+
+  return {
+    [entityName]: Array.isArray(values)
+      ? values.map((value) => ({ ...value, id: randomEntity.id }))
+      : [values],
+  };
+}
+
+function formatAttributesToDisplayValue(row: { [key: string]: ListItem }, attributes: Attribute[]) {
+  const item = omit(['$loki', 'meta', 'id', DISPLAY_VALUE], row);
+  return Object.entries(item).reduce((acc, [entityName, values]: [string, any]) => {
+    const attribute: Attribute = findEntityByName(entityName, attributes);
+
+    if (attribute) {
+      // TODO @carreta remove this when XORs can be aggregated [KSE3-1735]
+      const isXorMultiple = attribute.isXor && attribute.hasMany;
+      const isNotSelf = attribute.aggregation && !SELF_TRANSFORMATION.includes(attribute.aggregation);
+
+      if ((attribute.aggregation && isNotSelf) || isXorMultiple) {
+        return {
+          ...acc,
+          ...formatDefaultTransformation(entityName, attribute, values),
+        };
+      }
+      if (attribute.hasMany || attribute.aggregation === Transformation.SelfMulti) {
+        return {
+          ...acc,
+          ...formatSelfMultiTransformation(entityName, values),
+        };
+      }
+    }
+
+    return { ...acc, ...getRandomItemByEntityName(entityName, attribute, values) };
+  }, {});
+}
 
 const toDisplayValue = (
   entityName: string,
   item: ListItem | any,
   attributes?: Attribute[],
 ): ListItem | unknown => {
-  const { id, displayValue, ...rest } = item || {};
-  delete rest['$loki'];
-  delete rest.meta;
-  const parsedDisplayValue = displayValue?.displayValue ? displayValue : { displayValue };
-  const displayValueAttr: Attribute = findEntityByName(entityName, attributes);
-  const isXor = displayValueAttr?.isXor;
-  const randomXor = isXor
-    ? KapiDb.findRandomOne(toEntityName(parsedDisplayValue?.$metadata?.entityType))
-    : null;
-  const displayValueId = isXor ? randomXor?.id : id;
-  const withDisplayValue = {
-    id,
-    [toPropertyName(entityName)]: {
-      id: displayValueId,
-      ...parsedDisplayValue,
-      displayMedia: generateDisplayMediaByType(
-        displayValueAttr?.formatType,
-        parsedDisplayValue.displayValue,
-        displayValueAttr,
-      ),
-    },
-    [`${DISPLAY_VALUE}::${toPropertyName(entityName)}`]: {
-      id: displayValueId,
-      ...parsedDisplayValue,
-    },
-  };
-  const withAggregations = Object.entries(rest).reduce((acc, [keyName, values]: [string, any]) => {
-    const attribute: Attribute = findEntityByName(keyName, attributes);
+  const formattedDisplayValue = formatToDisplayValue(entityName, item, attributes);
+  const formattedAttributes = formatAttributesToDisplayValue(item, attributes);
 
-    const useRandomEntity = () => {
-      const displayMedia = attribute
-        ? generateDisplayMediaByType(attribute?.formatType, values[DISPLAY_VALUE], attribute)
-        : '';
-
-      const randomEntity = KapiDb.findRandomOne(toEntityName(values?.$metadata?.entityType || keyName));
-
-      acc[keyName] = {
-        [DISPLAY_VALUE]: values[DISPLAY_VALUE],
-        id: randomEntity?.id,
-        displayMedia,
-      };
-      if (values[METADATA]) {
-        acc[keyName][METADATA] = values[METADATA];
-      }
-    };
-
-    if (!attribute) {
-      useRandomEntity();
-      return acc;
-    }
-
-    // TODO @carreta remove this when XORs can be aggregated [KSE3-1735]
-    const isXorMultiple = attribute.isXor && attribute.hasMany;
-    const isNotSelf = attribute.aggregation && !SELF_TRANSFORMATION.includes(attribute.aggregation);
-
-    if ((attribute.aggregation && isNotSelf) || isXorMultiple) {
-      acc[keyName] = {
-        [DISPLAY_VALUE]: calculateTransformation(
-          Array.isArray(values) ? values.map((value) => value.displayValue) : [values.displayValue],
-          attribute.aggregation,
-        ),
-      };
-      return acc;
-    }
-    if (attribute.hasMany || attribute.aggregation === Transformation.SelfMulti) {
-      const randomEntity = KapiDb.findRandomOne(toEntityName(values?.$metadata?.entityType || keyName));
-      acc[keyName] = Array.isArray(values)
-        ? values.map((value) => ({ ...value, id: randomEntity.id }))
-        : [values];
-      return acc;
-    }
-
-    useRandomEntity();
-
-    return acc;
-  }, {});
-
-  return { ...withDisplayValue, ...withAggregations };
+  return { ...formattedDisplayValue, ...formattedAttributes };
 };
 
 export class KapiCrud {

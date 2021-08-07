@@ -4,7 +4,7 @@ import { WidgetState } from './types';
 
 interface WidgetModel {
   initialState: WidgetState;
-  reducers: { [key: string]: (state: WidgetState, action?: PayloadAction<any>) => void };
+  reducers: Record<string, (state: WidgetState, action?: PayloadAction | any) => void>;
 }
 
 export const initialState = {
@@ -20,7 +20,7 @@ export const model: WidgetModel = {
      * Get Widget Data
      */
 
-    getData(state: WidgetState, action: PayloadAction<WidgetActions.GetDataInput>): void {
+    getData(state: WidgetState): void {
       state.isLoading = true;
       state.error = null;
     },
@@ -36,7 +36,7 @@ export const model: WidgetModel = {
       state.isLoading = false;
     },
 
-    getMoreData(state: WidgetState, action: PayloadAction<WidgetActions.GetDataInput>): void {
+    getMoreData(state: WidgetState): void {
       state.isLoading = false;
       state.error = null;
     },

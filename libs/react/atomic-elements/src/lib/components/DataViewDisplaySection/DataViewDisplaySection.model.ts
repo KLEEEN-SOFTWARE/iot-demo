@@ -1,7 +1,5 @@
-import { ViewType, Widget } from '@kleeen/types';
-
 import { ReactText } from 'react';
-import { ViewOption } from '../DataViewControlSection/DataViewControlSection.model';
+import { ViewOption, ViewType, Widget } from '@kleeen/types';
 
 export interface DataViewDisplaySectionAtomicProps {
   widgets: Widget[];

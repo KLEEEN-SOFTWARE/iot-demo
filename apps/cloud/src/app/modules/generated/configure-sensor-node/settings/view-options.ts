@@ -4,6 +4,6 @@ export const viewOptions = [
     name: `Configuration`,
     type: `grid`,
     viewId: `ks-view-iTK1TSzvSCNMyxp3xqv8mN`,
-    viewOrder: 0,
+    viewOrder: 1,
   },
 ];

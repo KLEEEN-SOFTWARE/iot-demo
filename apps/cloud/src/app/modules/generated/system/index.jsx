@@ -31,7 +31,10 @@ function Workflow({ translate, ...props }) {
               : `${classes.entityBrowserArea} browserArea`
           }
         >
-          <div className={`${classes.gridPageIntro} ${cardsNumber > 0 ? `max-card-${cardsNumber}` : ''}`}>
+          <div
+            className={`${classes.gridPageIntro} ${cardsNumber > 0 ? `max-card-${cardsNumber}` : ''}`}
+            data-testid="page-intro"
+          >
             <DataViewControlSection
               hideRefreshControl
               onTabIndexChanged={handleOnTabIndexChanged}
@@ -46,6 +49,7 @@ function Workflow({ translate, ...props }) {
             className={`${classes.gridGridSection} ${
               selectedRows.length > 0 && selectedViewOption.sortOrder === 0 ? classes.snackbar : ''
             }`}
+            data-testid="content-section"
           >
             <DataViewDisplaySectionAtomic
               widgets={widgets}

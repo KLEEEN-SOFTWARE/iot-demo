@@ -1,8 +1,8 @@
 export default {
-  // View Icon for Experience: Overview on Workflow: siteMapDetails
-  'ks-view-6MxSUSiehmRP9kh7u543zo': { path: './assets/icons/browser-gauge.svg', alt: 'View' },
   // View Icon for Experience: Sensors on Workflow: siteMapDetails
   'ks-view-4QW2xvV3Vsfs1RDwBfmZ6Q': { path: './assets/icons/alarm-clock-1-alternate.svg', alt: 'Listing' },
+  // View Icon for Experience: Overview on Workflow: siteMapDetails
+  'ks-view-6MxSUSiehmRP9kh7u543zo': { path: './assets/icons/browser-gauge.svg', alt: 'View' },
   // View Icon for Experience: Nodes on Workflow: siteMapDetails
   'ks-view-ozFw5fbSFqWz82tFnVgnAm': { path: './assets/icons/programming-search-browser.svg', alt: 'Listing' },
   // View Icon for Experience: Table of Node on Workflow: nodes
