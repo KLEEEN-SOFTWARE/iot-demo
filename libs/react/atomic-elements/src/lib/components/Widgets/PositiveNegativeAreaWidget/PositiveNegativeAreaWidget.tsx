@@ -1,4 +1,4 @@
-import { GroupByProps, ValueProp, ValuesProps, VizCommonParams } from '../../../../types/types';
+import { GroupByProps, ValueProp, ValuesProps, VizCommonParams } from '@kleeen/types';
 
 import { Loader } from '@kleeen/react/components';
 import PositiveNegativeArea from '../../PositiveNegativeArea/PositiveNegativeArea';

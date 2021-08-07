@@ -2,9 +2,15 @@ import './ContextCell.scss';
 
 import { AggregationType, Attribute, Cell, DisplayMediaType, LabelResultsReturnProps } from '@kleeen/types';
 import { ContextMenuProps, LabelResultsProps } from './ContextCell.model';
-import React, { ReactElement } from 'react';
+import React, { ReactElement, useState } from 'react';
 import { isEmpty, isNil, pathOr } from 'ramda';
-import { isLinkFilterableByEntityType, useAnchorElement } from '@kleeen/react/hooks';
+import {
+  isLinkFilterableByEntityType,
+  useAnchorElement,
+  useCrosslinking,
+  useHoverIntent,
+  validateCrosslinkingInteraction,
+} from '@kleeen/react/hooks';
 
 import { ArrowPoint } from '../arrowPoint/ArrowPoint';
 import { BootstrapTooltip } from './bootstrap-tooltip';
@@ -21,6 +27,11 @@ const MAX_TEXT_LENGTH = 15;
 
 export function ContextCell(props: ContextMenuProps): ReactElement {
   const { anchorEl, handleClick, handleClose } = useAnchorElement();
+  const { crosslink } = useCrosslinking();
+  const { ref } = useHoverIntent({
+    delayOnEnter: 800,
+    onMouseEnterFn: handleClick,
+  });
   const classes = useStyles();
 
   const cell = props.cell as Cell;
@@ -78,36 +89,61 @@ export function ContextCell(props: ContextMenuProps): ReactElement {
     'text-align-left': !isNumericType,
   };
   const tooltipTitle = showAppliedTruncated ? results : '';
+  const [openModal, setOpenModal] = useState(false);
+
+  function onCellClick() {
+    if (validCrosslinks) {
+      const [onlyValidLink] = validCrosslinks;
+      crosslink(onlyValidLink.slug, cell, props.attr);
+    }
+  }
+  const { onClickFunction, onContextMenuFunction, validation } = validateCrosslinkingInteraction(
+    anchorEl,
+    onCellClick,
+    openModal,
+    setOpenModal,
+  );
+  const handleCloseHelper = () => {
+    setOpenModal(false);
+    handleClose();
+  };
 
   return (
     <>
-      {props.hasDisplayMedia && cell.displayMedia.type !== DisplayMediaType.Svg && (
-        <KsDisplayMedia
-          className={classes.displayMedia}
-          value={cell.displayMedia.value}
-          type={cell.displayMedia.type}
-          size={21}
+      <span
+        className={`${classes.mediaValueContainer} ${validCrosslinks.length > 0 && 'clickable'}`}
+        onClick={onClickFunction}
+        onContextMenu={onContextMenuFunction}
+        ref={ref}
+      >
+        {props.hasDisplayMedia && cell.displayMedia.type !== DisplayMediaType.Svg && (
+          <KsDisplayMedia
+            className={classes.displayMedia}
+            size={21}
+            type={cell.displayMedia.type}
+            value={cell.displayMedia.value}
+          />
+        )}
+        {validCrosslinks.length > 0 || props.attr?.isFilterable?.in ? (
+          <BootstrapTooltip placement="top" title={tooltipTitle}>
+            <span className={classNames('context-menu-button', textClasses)}>{resultsElement}</span>
+          </BootstrapTooltip>
+        ) : (
+          <BootstrapTooltip placement="top" title={tooltipTitle}>
+            <span className={classNames('context-menu-only-text', textClasses)}>{resultsElement}</span>
+          </BootstrapTooltip>
+        )}
+      </span>
+      {validation && (
+        <KsContextMenu
+          anchorEl={anchorEl}
+          attr={props.attr}
+          autoClose
+          cell={cell}
+          displayColumnAttribute={props.displayColumnAttribute}
+          handleClose={handleCloseHelper}
+          row={props.row}
         />
-      )}
-      {validCrosslinks.length > 0 || props.attr?.isFilterable?.in ? (
-        <BootstrapTooltip placement="top" title={tooltipTitle}>
-          <div className={classNames('context-menu-button', textClasses)}>
-            <span className="cell" onClick={handleClick}>
-              {resultsElement}
-            </span>
-          </div>
-        </BootstrapTooltip>
-      ) : (
-        <BootstrapTooltip placement="top" title={tooltipTitle}>
-          <div className={classNames('context-menu-only-text', textClasses)}>
-            <span className="cell" onClick={handleClick}>
-              {resultsElement}
-            </span>
-          </div>
-        </BootstrapTooltip>
-      )}
-      {Boolean(anchorEl) && (
-        <KsContextMenu attr={props.attr} cell={cell} handleClose={handleClose} anchorEl={anchorEl} />
       )}
     </>
   );
@@ -119,13 +155,13 @@ function applyFormat(value: any, attr: Attribute): any {
   const type = attr?.deepDataType;
   if (type === 'boolean') return value ? 'True' : 'False';
   if (React.isValidElement(value)) return value; // FIXME: Please consider this comment: https://github.com/KLEEEN-SOFTWARE/kapitan/pull/1800/files?file-filters%5B%5D=.tsx#r600664986
-  if (typeof value === 'object') return value.displayValue;
+  if (typeof value === 'object') return value?.displayValue;
 
   return value;
 }
 
-function shouldTruncateText(text = ''): boolean {
-  return text ? text.toString().trim().length > MAX_TEXT_LENGTH : false;
+function shouldTruncateText(text): boolean {
+  return text ? text.toString().trim().length >= MAX_TEXT_LENGTH : false;
 }
 
 function labelResults({

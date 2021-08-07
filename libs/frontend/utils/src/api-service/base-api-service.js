@@ -1,4 +1,12 @@
 import {
+  httpStatusCode as HTTP_STATUS_CODE,
+  buildUrlQueryParams,
+  entityMap,
+  isNilOrEmpty,
+  removeTrailingSlash,
+  upperCamelCase,
+} from '@kleeen/common/utils';
+import {
   autoCompleteQuery,
   createEntityQuery,
   deleteEntityQuery,
@@ -13,19 +21,11 @@ import {
 } from './grahpql-operations';
 import { from, throwError } from 'rxjs';
 
-import { environment } from '@kleeen/environment';
 import { KSAuth } from '@kleeen/auth';
 import { _throw } from 'rxjs/observable/throw';
 import { ajax } from 'rxjs/ajax';
 import { dissoc } from 'ramda';
-import {
-  isNilOrEmpty,
-  entityMap,
-  httpStatusCode as HTTP_STATUS_CODE,
-  buildUrlQueryParams,
-  removeTrailingSlash,
-  upperCamelCase,
-} from '@kleeen/common/utils';
+import { environment } from '@kleeen/environment';
 import querystring from 'querystring';
 import { switchMap } from 'rxjs/operators';
 
@@ -200,14 +200,8 @@ export class BaseApiService {
   }
 
   static genericChartWidgetQuery = ({ payload }) => {
-    const {
-      baseModel,
-      aggregatedByType,
-      aggregatedBy,
-      aggregation_attribute,
-      aggregation,
-      ...restParams
-    } = payload.params;
+    const { baseModel, aggregatedByType, aggregatedBy, aggregation_attribute, aggregation, ...restParams } =
+      payload.params;
     const { paramsBasedOnRoute } = payload.paramsBasedOnRoute;
 
     let aggregationQueries = {};
@@ -257,13 +251,9 @@ export class BaseApiService {
     if (isNilOrEmpty(operationName)) {
       return throwError(new TypeError(`operationName has an invalid value`));
     }
-    const isListingOperation = [
-      'widget_config',
-      'entity_detail',
-      'summary_slot',
-      'summary_title',
-      'object_listing',
-    ].some((item) => operationName.includes(item));
+    const isListingOperation = ['widget_config', 'entity_detail', 'summary_slot', 'object_listing'].some(
+      (item) => operationName.includes(item),
+    );
 
     if (isListingOperation) {
       variables = {
@@ -285,6 +275,7 @@ export class BaseApiService {
     } else if (operationName.includes('widget_statistics')) {
       variables = {
         input: {
+          attributes: params.value.attributes?.map(({ name }) => name),
           filters: paramsBasedOnRoute,
           entity: params.value.name,
           transformations: params.value.transformations.map(({ transformation }) => transformation),

@@ -1,6 +1,7 @@
 .clickable-chips {
   display: flex;
   justify-content: space-between;
+  max-width: 100%;
 
   .chips-container {
     display: flex;
@@ -17,6 +18,7 @@
       white-space: nowrap;
       background-color: var(--table-chip-background);
       color: var(--table-chip-color);
+      min-width: var(--wh-1XS);
       &.clickable {
         background-color: hsla(var(--secondary-color-hsl), 0.15);
         color: var(--secondary-color);
@@ -35,7 +37,7 @@
     font-size: var(--tx-S);
     justify-content: center;
     line-height: var(--tx-S);
-    max-width: 10%;
+    min-width: var(--wh-2XS);
     width: var(--wh-2XS);
     &:hover {
       cursor: pointer;

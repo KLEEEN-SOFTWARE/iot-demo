@@ -1,18 +1,26 @@
 import './FooterNavLeft.scss';
 
 import { Button, UserAccountButton } from '../NavLeft.style';
+import { executeFunc, validateOpenInNewTab } from '../../../utils/navigationUtils';
+
 import { useTheme, useUserInfo } from '@kleeen/react/hooks';
 
 import AccountCircleOutlinedIcon from '@material-ui/icons/AccountCircleOutlined';
 import AppBar from '@material-ui/core/AppBar';
 import { FooterNavLeftProps } from './FooterNavLeft.model';
 import HelpOutlineOutlinedIcon from '@material-ui/icons/HelpOutlineOutlined';
+import { KsSvgIcon } from '@kleeen/react/components';
 import Menu from '@material-ui/core/Menu';
 import MenuItem from '@material-ui/core/MenuItem';
 import React from 'react';
 import Tooltip from '@material-ui/core/Tooltip';
-import classNames from 'classnames';
+import classnames from 'classnames';
+import { styled } from '@material-ui/core';
 import { useStyles } from './FooterNavLeft.style';
+
+const bem = 'ks-nav-left-footer';
+
+const AppBarFooter = styled(AppBar)({});
 
 export const FooterNavLeft = ({ helpUrl, accountMenuList, navigate }: FooterNavLeftProps): JSX.Element => {
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
@@ -33,14 +41,20 @@ export const FooterNavLeft = ({ helpUrl, accountMenuList, navigate }: FooterNavL
   };
 
   return (
-    <div className={classNames(classes.appBarContainer, 'nav-bar-footer')}>
-      <AppBar position="fixed" color="primary" className={classes.appBar}>
-        <div className={classes.appBarContent}>
+    <div className={classnames(bem, classes.appBarContainer, 'nav-bar-footer')}>
+      <AppBarFooter
+        position="fixed"
+        color="primary"
+        className={classnames(`${bem}__app-bar`, classes.appBar)}
+      >
+        <div className={classnames(`${bem}__content`, classes.appBarContent)}>
           <UserAccountButton onClick={handleClick}>
             <AccountCircleOutlinedIcon />
             <Tooltip title={getUserEmail(userInfo)}>
-              <div className={classes.userName}>
-                <div className={classes.userNameContent}>{getUserEmail(userInfo)}</div>
+              <div className={classnames(`${bem}__account--username`, classes.userName)}>
+                <div className={classnames(`${bem}__account--user-info`, classes.userNameContent)}>
+                  {getUserEmail(userInfo)}
+                </div>
               </div>
             </Tooltip>
           </UserAccountButton>
@@ -55,32 +69,30 @@ export const FooterNavLeft = ({ helpUrl, accountMenuList, navigate }: FooterNavL
             </Button>
           )}
           <Menu
-            id="simple-menu"
             anchorEl={anchorEl}
+            id="simple-menu"
             keepMounted
-            open={Boolean(anchorEl)}
-            onClose={handleClose}
             MenuListProps={{ className: `${themeClass}` }}
+            onClose={handleClose}
+            open={Boolean(anchorEl)}
           >
-            {accountMenuList.map(({ title, path, func }) => (
+            {accountMenuList.map(({ func, icon, path, title }) => (
               <MenuItem
                 key={title}
+                className={classnames(`${bem}__menu--item`)}
                 onClick={(e) => {
-                  e.preventDefault();
-                  if (func) {
-                    func();
-                    return;
-                  }
-                  navigate(path, false);
+                  executeFunc(func);
+                  validateOpenInNewTab(navigate, path, e);
                   handleClose();
                 }}
               >
+                <KsSvgIcon icon={icon} />
                 {title}
               </MenuItem>
             ))}
           </Menu>
         </div>
-      </AppBar>
+      </AppBarFooter>
     </div>
   );
 };

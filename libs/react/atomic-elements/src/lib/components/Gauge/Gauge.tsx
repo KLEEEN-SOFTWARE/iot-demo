@@ -1,6 +1,6 @@
 import './Gauge.scss';
 
-import { ValuesProps, VizCommonParams, getFullLabel } from '../../../types';
+import { ValuesProps, VizCommonParams } from '@kleeen/types';
 import { clone, isEmpty, isNil, pathOr } from 'ramda';
 
 import Highcharts from 'highcharts';
@@ -8,8 +8,12 @@ import HighchartsReact from 'highcharts-react-official';
 import { Loader } from '@kleeen/react/components';
 import React from 'react';
 import { TextFormatter } from '@kleeen/react/components';
+import classnames from 'classnames';
+import { getFullLabel } from '../../../types';
 import { getOptions } from './options';
 import more from 'highcharts/highcharts-more';
+
+const bem = 'ks-gauge';
 
 more(Highcharts);
 
@@ -42,13 +46,14 @@ export const Gauge = ({
   const gaugeWidth = hideLabel ? '100%' : '50%';
   const containerPropsPlus = { ...containerProps, style: { height: '100%', width: gaugeWidth } };
   const labelTransformation = pathOr('', ['transformations', 0, 'transformation'], value);
+
   const fullLabel = getFullLabel({
     label: (value as ValuesProps)?.label,
     transformation: labelTransformation,
   });
 
   return (
-    <div className="gauge-container">
+    <div className={classnames(bem, 'gauge-container')}>
       <HighchartsReact
         containerProps={containerPropsPlus}
         highcharts={Highcharts}
@@ -56,11 +61,11 @@ export const Gauge = ({
         {...rest}
       />
       {!hideLabel && (
-        <div className="gauge-value">
+        <div className={classnames(`${bem}__value`, 'gauge-value')}>
           <TextFormatter format={format} transformation={transformation} formatType={value?.formatType}>
             {results}
           </TextFormatter>
-          <p>{fullLabel}</p>
+          <p className={classnames(`${bem}__label`)}>{fullLabel}</p>
         </div>
       )}
     </div>

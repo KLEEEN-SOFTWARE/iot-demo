@@ -1,15 +1,18 @@
 import './CardSection02.scss';
 
-import { CardSectionProps, RenderChildrenProps, Widget } from './CardWidget.model';
+import { CardSectionProps, RenderChildrenProps } from './CardWidget.model';
 import React, { ReactElement, ReactNode, useRef } from 'react';
 import { TableContent, TransformToWidgetComponent } from './components';
+import { isNilOrEmpty, roleAccessKeyTag } from '@kleeen/common/utils';
 
 import { CardWidget02 } from './CardWidget02';
+import { Widget } from '@kleeen/types';
 import classnames from 'classnames';
-import { roleAccessKeyTag } from '@kleeen/common/utils';
 import { useAccessControlChecker } from '@kleeen/core-react';
 
 const rolePermissionOk = 'SHOW';
+
+const bem = 'ks-card-section-02';
 
 /**
  * viableSolutions needs the current chartType included
@@ -18,6 +21,11 @@ const rolePermissionOk = 'SHOW';
  */
 const addCurrentWidgetTypeToViableSolutions = (widget: Widget): Widget => {
   const resultWidget = { ...widget };
+
+  // TODO: @jcvalerio this method have to be refactored in a single place duplicated with libs/react/atomic-elements/src/lib/components/CardSection/CardSection02.tsx
+  if (isNilOrEmpty(resultWidget.viableSolutions)) {
+    return resultWidget;
+  }
 
   if (resultWidget.viableSolutions.length && !resultWidget.viableSolutions.includes(resultWidget.chartType)) {
     resultWidget.viableSolutions.unshift(resultWidget.chartType);
@@ -40,7 +48,7 @@ function renderChildren({
       const widgetCompleted = addCurrentWidgetTypeToViableSolutions(widget);
 
       return (
-        <div ref={widgetsRefs[widget.id]} id={widget.id.toString()}>
+        <div ref={widgetsRefs[widget.id]} id={widget?.id?.toString()}>
           <TransformToWidgetComponent
             key={`card-section-widget-${widget.id}`}
             taskName={taskName}
@@ -98,14 +106,14 @@ export const CardSection02 = ({
 
   return (
     <div
-      className={classnames('card-section02', { 'hide-toc': hideTOC, 'full-width': fullWidth })}
-      style={{ justifyContent }}
+      className={classnames(bem, 'card-section02', { 'hide-toc': hideTOC, 'full-width': fullWidth })}
       key={`card-section-${taskName}`}
+      style={{ justifyContent }}
     >
       {!hideTOC && (
         <TableContent widgets={filteredWidgets} widgetsRefs={widgetsRefs} containerId={containerId} />
       )}
-      <div className={classnames('card-widgets-section', { 'full-width': fullWidth })}>
+      <div className={classnames(`${bem}__widgets`, 'card-widgets-section', { 'full-width': fullWidth })}>
         {renderChildren({
           taskName,
           widgets: filteredWidgets,

@@ -1,19 +1,15 @@
-import {
-  DashboardView,
-  DataViewDisplaySectionAtomicProps,
-  DisplaySectionViews,
-  ViewType,
-} from './DataViewDisplaySection.model';
+import { DataViewDisplaySectionAtomicProps, DisplaySectionViews } from './DataViewDisplaySection.model';
+import { ViewType, Widget } from '@kleeen/types';
 import { isNilOrEmpty, roleAccessKeyTag, sortByKeys } from '@kleeen/common/utils';
 
 import CardSection from '../CardSection/CardSection';
 import { CardSectionLayout } from '../CardSection/CardWidget.model';
+import ConfigView from '../ConfigView/ConfigView';
 import CustomView from '../CustomView/CustomView';
 import DataViewDisplaySection from './DataViewDisplaySection';
 import FullViewViz from '../FullViewViz/FullViewViz';
 import GridAreaSection from '../GridAreaSection/GridAreaSection';
 import React from 'react';
-import { Widget } from '@kleeen/react/atomic-elements';
 import { useAccessControlChecker } from '@kleeen/core-react';
 import { useGetWidgetsAmount } from '@kleeen/react/hooks';
 
@@ -21,18 +17,16 @@ const permissionOk = 'SHOW';
 
 export const DataViewDisplaySectionAtomic = React.memo((props: DataViewDisplaySectionAtomicProps) => {
   const {
-    atomicCustomViews = [],
-    dashboardWidgets = [],
-    hasReportView = false,
+    selectedOption,
+    widgets = [],
     selectedRows,
     setSelectedRows,
-    singleViewWidgets = [],
-    tableWidgets = [],
     taskName,
-    value: indexToRender,
+    value: indexToRender = 0,
+    entityActions,
   } = props;
 
-  const accessControlFilterViews = (view: Widget & { type: ViewType }): boolean => {
+  const accessControlFilterViews = (view: Widget): boolean => {
     if (view.type === ViewType.dashboard || view.type === ViewType.report) {
       return (
         useAccessControlChecker(roleAccessKeyTag(`${props.taskName}.views.dashboard`)).permission ===
@@ -41,39 +35,32 @@ export const DataViewDisplaySectionAtomic = React.memo((props: DataViewDisplaySe
     }
     return (
       useAccessControlChecker(
-        roleAccessKeyTag(`${props.taskName}.views.${view.title || view.params.baseModel}`),
+        roleAccessKeyTag(`${props.taskName}.views.${view.title || view.params?.baseModel}`),
       ).permission === permissionOk
     );
   };
+  const taskViews = widgets;
 
-  const taskViews = [
-    ...singleViewWidgets.map((widget) => ({ ...widget, type: ViewType.single })),
-    ...atomicCustomViews.map((widget) => ({ ...widget, type: ViewType.custom })),
-    ...tableWidgets.map((widget) => ({ ...widget, type: ViewType.table })),
-    ...generateCardSectionViews(dashboardWidgets, hasReportView),
-  ];
-
-  const orderedTaskViews = sortByKeys<Widget & { type: ViewType }>(taskViews, ['viewOrder', 'viewId']);
+  const orderedTaskViews = sortByKeys<Widget>(taskViews, ['viewOrder', 'viewId']);
 
   useGetWidgetsAmount(props.setCardsNumber);
 
   // TODO: @Guaria this is just a workaround, the solution should be assign an ID to each entry on the DataViewControlSection
   // then use that selected ID to identify which section should be render.
-  let currentIndex = -1;
-  const isTheIndexToRender = (): boolean => {
-    currentIndex += 1;
-    return currentIndex === indexToRender;
+  const isTheIndexToRender = (view: Widget): boolean => {
+    return view.viewId === selectedOption?.viewId;
   };
 
   const children = orderedTaskViews.reduce((views, view) => {
-    if (!isNilOrEmpty(view) && isTheIndexToRender() && accessControlFilterViews(view)) {
+    if (!isNilOrEmpty(view) && isTheIndexToRender(view) && accessControlFilterViews(view)) {
       return resolveViews({
-        dashboardWidgets,
+        dashboardWidgets: [],
         indexToRender,
         selectedRows,
         setSelectedRows,
         taskName,
         widget: view,
+        entityActions,
       });
     }
     return views;
@@ -81,28 +68,13 @@ export const DataViewDisplaySectionAtomic = React.memo((props: DataViewDisplaySe
   return <DataViewDisplaySection value={0}>{children}</DataViewDisplaySection>;
 });
 
-// This will work just for the current implementation of one dashboard per task
-function generateCardSectionViews(dashboardWidgets: Widget[], hasReportView: boolean): DashboardView[] {
-  if (isNilOrEmpty(dashboardWidgets)) return [];
-  const viewType = hasReportView ? ViewType.report : ViewType.dashboard;
-  const [firstWidget] = dashboardWidgets;
-  return [
-    {
-      dashboardWidgets,
-      type: viewType,
-      viewOrder: firstWidget?.viewOrder,
-      viewId: firstWidget?.viewId,
-    },
-  ];
-}
-
 function resolveViews({
   widget,
   taskName,
   setSelectedRows,
   selectedRows,
-  dashboardWidgets,
   indexToRender,
+  entityActions,
 }: DisplaySectionViews) {
   const viewResolvers = {
     [ViewType.custom]: () => (
@@ -120,7 +92,7 @@ function resolveViews({
         justifyContent="center"
         key={`data-view-display-section-card-section-${indexToRender}`}
         taskName={taskName}
-        widgets={dashboardWidgets}
+        widgets={widget.widgets}
       />
     ),
     [ViewType.report]: () => (
@@ -129,12 +101,15 @@ function resolveViews({
         justifyContent="center"
         key={`data-view-display-section-card-section-${indexToRender}`}
         taskName={taskName}
-        widgets={dashboardWidgets}
+        widgets={widget.widgets}
       />
+    ),
+    [ViewType.config]: () => (
+      <ConfigView widgets={widget.widgets} entityActions={entityActions} taskName={taskName} />
     ),
     [ViewType.table]: () => (
       <GridAreaSection
-        entityId={widget.attributes[0].id}
+        entityId={widget.attributes[0]?.id}
         entityName={widget.params.baseModel}
         key={`data-view-display-section-grid-area-section-${widget.id}`}
         selectedRows={selectedRows}
@@ -146,7 +121,14 @@ function resolveViews({
     ),
   };
 
-  return viewResolvers[widget.type]();
+  const componentToRender = viewResolvers[widget.type];
+  if (!componentToRender) {
+    console.error(`There is no valid component for widget type ${widget.type}.`);
+    return;
+  }
+
+  const ViewComponentBaseOnType = viewResolvers[widget.type];
+  return <ViewComponentBaseOnType />;
 }
 
 export default DataViewDisplaySectionAtomic;

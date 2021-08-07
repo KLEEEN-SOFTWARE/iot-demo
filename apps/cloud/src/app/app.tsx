@@ -1,9 +1,10 @@
 import './app.scss';
-import './assets/styles/custom.scss';
 import './assets/styles/custom.css';
+import './assets/styles/custom.scss';
 
 import {
   AttributeContextMenuProvider,
+  CrosslinkingInteractionProvider,
   MenuContextProvider,
   ThemeContextProvider,
   WebSocketProvider,
@@ -27,6 +28,7 @@ import iconRegistry from '../assets/icon-registry';
 import localeData from './settings/strings-translations.json';
 import { merge } from 'lodash';
 import permissions from './settings/role-access-keys.json';
+import settings from './settings/app.json';
 import { useServiceWorker } from './useServiceWorker';
 
 merge(permissions, customPermissions);
@@ -34,9 +36,9 @@ merge(permissions, customPermissions);
 const AccessControlProvider = ({ children }) => (
   <KsAccessControlProvider
     accessControlSettings={{
-      permissions,
-      pathToRoleOnState: 'endUser.currentUser.role',
       defaultRole: DEFAULT_ROLE,
+      pathToRoleOnState: 'endUser.currentUser.role',
+      permissions,
     }}
   >
     {children}
@@ -47,13 +49,14 @@ function App(): ReactElement {
   useServiceWorker();
   const { language } = useLocalization();
   const TranslateProvider = TranslationProvider({
-    localeData,
-    locale: language,
     defaultLocale: 'en',
+    locale: language,
+    localeData,
     onError: (err: string): void => {
       console.debug('TranslateProvider', err);
     },
   });
+  const crosslinkingInteractionValue = settings.crossLinkingInteraction;
 
   return (
     <React.StrictMode>
@@ -62,18 +65,20 @@ function App(): ReactElement {
           <KUICombineProviders
             providers={[
               AccessControlProvider,
+              AttributeContextMenuProvider,
               IconRegistryProvider({ iconRegistry }),
               MenuContextProvider,
-              AttributeContextMenuProvider,
-              WebSocketProvider,
               ThemeContextProvider,
+              WebSocketProvider,
             ]}
           >
-            <KsNotifications />
-            <ThemeWrapper>
-              <Router />
-              <footer>{environment.deployment.version}</footer>
-            </ThemeWrapper>
+            <CrosslinkingInteractionProvider crosslinkingInteraction={crosslinkingInteractionValue}>
+              <KsNotifications />
+              <ThemeWrapper>
+                <Router />
+                <footer data-testid="app-version">{environment.deployment.version}</footer>
+              </ThemeWrapper>
+            </CrosslinkingInteractionProvider>
           </KUICombineProviders>
         </TranslateProvider>
       </div>

@@ -61,16 +61,16 @@ export function ConfigInputWidget({
   const widgetData = params
     ? useWidgetContext({ taskName, widgetId, params: { ...params, attributes } })
     : { isLoading: false };
+  const attrName = widgetData && soloAttribute.name;
   const autoCompleteValues = useKsAutoComplete({
     taskName,
     widgetId,
-    entity: soloAttribute.rawEntityName,
+    entity: attrName,
   });
   const { updateRequest } = useKleeenActions(taskName);
   const { updateLayout } = useMasonry();
   const { paramsBasedOnRoute } = useUrlQueryParams();
   const attrLabel = widgetData && soloAttribute.label;
-  const attrName = widgetData && soloAttribute.name;
   const canAddValues = widgetData && soloAttribute.canAddValues;
   const hasMany = widgetData && soloAttribute.hasMany;
   const isClickable =
@@ -81,6 +81,8 @@ export function ConfigInputWidget({
   const transformation = pathOr('', ['value', 'transformation'], params);
   const formatType = pathOr('', ['value', 'formatType'], params);
   let elementToUse;
+  const isGlobalModel = params?.baseModel === KS_GLOBAL_APP;
+  const isDisplayValue = attrName === camelcase(params?.baseModel);
 
   const getElementBasedOnTransformationAndType = (transformation, type) => {
     switch (transformation) {
@@ -201,25 +203,46 @@ export function ConfigInputWidget({
     setSelectedOption(null);
   };
 
-  const getWidgetPayload = (): Record<string, unknown> => {
-    const isDisplayValue = attrNameRef.current === camelcase(params?.baseModel);
-    const inputObject = {
+  const buildParams = () => {
+    const baseValue = {
       displayValue: inputValueRef.current,
       id: selectedOptionRef?.current?.id,
     };
+    if (isGlobalModel) {
+      //config workflow
+      return {
+        [attrNameRef.current]: [baseValue],
+      };
+    }
+
+    if (!isGlobalModel && isDisplayValue) {
+      //single workflow
+      const [firstParamOnRoute] = Object.values(paramsBasedOnRoute);
+      return {
+        id: firstParamOnRoute,
+        displayValue: inputValueRef.current,
+        referenceId: selectedOptionRef?.current?.id,
+      };
+    }
+
+    if (!isGlobalModel && !isDisplayValue) {
+      //add modal
+      return {
+        [attrNameRef.current]: baseValue,
+      };
+    }
+  };
+
+  const getWidgetPayload = (): Record<string, unknown> => {
     attrValueRef.current = inputValueRef.current;
-    return {
-      entity: params?.baseModel === KS_GLOBAL_APP ? soloAttribute.rawEntityName : params?.baseModel,
-      params: {
-        id: paramsBasedOnRoute[camelcase(params?.baseModel)],
-        [isDisplayValue ? WidgetDataAttributes.DisplayValue : attrNameRef.current]:
-          hasMany || isDisplayValue
-            ? inputValueRef.current
-            : params?.baseModel === KS_GLOBAL_APP
-            ? [inputObject]
-            : inputObject,
-      },
+    const entity = isGlobalModel ? attrName : params?.baseModel;
+    const payloadParams = buildParams();
+    const payload = {
+      entity,
+      params: payloadParams,
     };
+
+    return payload;
   };
   const onSave = (): any => {
     if (inputValueRef.current !== attrValueRef.current) {

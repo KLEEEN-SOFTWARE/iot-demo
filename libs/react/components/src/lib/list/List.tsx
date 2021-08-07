@@ -1,9 +1,12 @@
 import React, { ReactElement } from 'react';
 
+import { DataListItem } from '@kleeen/types';
 import { ListHeader } from './ListHeader';
 import { ListProps } from './List.model';
-import { isEmpty } from 'ramda';
+import classnames from 'classnames';
 import { styleList } from './list.style';
+
+const bem = 'ks-list';
 
 function categoricalSort(a: string, b: string): number {
   return a.localeCompare(b);
@@ -29,31 +32,32 @@ export function List({
   const classesStyleList = styleList();
   const [searchTerm, setSearchTerm] = React.useState('');
   const [searchKey, setSearchKey] = React.useState('');
-  let [sortedData, setSearchResults] = React.useState(data);
+  const [sortedData, setSearchResults] = React.useState(data);
 
   React.useEffect(() => {
-    renderData(searchTerm);
-  }, [searchTerm]);
+    if (data) renderData(data, searchTerm);
+  }, [data, searchTerm]);
 
-  function renderData(searchTerm) {
+  function renderData(dataResults: DataListItem[], searchTermParam: string) {
     let results = sortBy
-      ? data.sort(function (a, b) {
+      ? dataResults.sort(function (a, b) {
           const aValue = a[sortBy].displayValue;
           const bValue = b[sortBy].displayValue;
-          return sortByType[typeof aValue](aValue, bValue);
+          return sortByType?.[typeof aValue]?.(aValue, bValue);
         })
-      : data;
-    if (searchTerm) {
+      : dataResults;
+    if (searchTermParam) {
       results = results.filter((dataPoint) => {
-        return String(dataPoint[searchKey]?.displayValue).toLowerCase().includes(searchTerm.toLowerCase());
+        return String(dataPoint[searchKey]?.displayValue)
+          .toLowerCase()
+          .includes(searchTermParam.toLowerCase());
       });
     }
     setSearchResults(results);
   }
-  if (isEmpty(sortedData) && !searchTerm) sortedData = data;
 
   return (
-    <ul className={classesStyleList.list}>
+    <ul className={classnames(bem, classesStyleList.list)}>
       {!hideHeader ? (
         <ListHeader columns={columns} setSearchTerm={setSearchTerm} setSearchKey={setSearchKey}></ListHeader>
       ) : (

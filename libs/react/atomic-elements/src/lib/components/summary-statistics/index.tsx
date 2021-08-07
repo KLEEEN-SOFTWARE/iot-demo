@@ -3,9 +3,9 @@ import { Loader } from '@kleeen/react/components';
 import MuiTooltip from '@material-ui/core/Tooltip';
 import { SummaryLayout } from '../summary-layout';
 import { SummaryStatisticsProps } from './summary-statistics.model';
-import { TransformationResponse } from '@kleeen/types';
+import { ElementDisplayType, TransformationResponse } from '@kleeen/types';
 import { getDisplayElement } from '../display-element/display-element-catalog';
-import { getFormat } from '../../utils';
+import { getFormat, getFormatedResults } from '../../utils';
 import { isNilOrEmpty } from '@kleeen/common/utils';
 import { useStyles } from './summary-statistics.styles';
 
@@ -36,6 +36,8 @@ export function SummaryStatistics({ attributes, data }: SummaryStatisticsProps) 
   const { displayComponent: mainElement } = mainElements;
   const MainDisplayComponent = getDisplayElement(mainElement);
 
+  const mainFormatedResults = getFormatedResults(mainElement, mainResults);
+
   return (
     <div className={classes.content}>
       <div className="primary">
@@ -50,9 +52,7 @@ export function SummaryStatistics({ attributes, data }: SummaryStatisticsProps) 
             formatType={mainFormatType}
             transformation={mainTransformation}
             highlighted
-            value={{
-              displayValue: mainResults,
-            }}
+            value={mainFormatedResults}
           />
         </div>
       </div>
@@ -69,6 +69,7 @@ export function SummaryStatistics({ attributes, data }: SummaryStatisticsProps) 
             const { displayComponent } = elements;
             const DisplayComponent = getDisplayElement(displayComponent);
 
+            const formatedResults = getFormatedResults(displayComponent, results);
             return (
               <KeyValue
                 layoutProps={layoutProps}
@@ -81,9 +82,7 @@ export function SummaryStatistics({ attributes, data }: SummaryStatisticsProps) 
                     format={format}
                     formatType={formatType}
                     transformation={transformation}
-                    value={{
-                      displayValue: results,
-                    }}
+                    value={formatedResults}
                   />
                 }
               />

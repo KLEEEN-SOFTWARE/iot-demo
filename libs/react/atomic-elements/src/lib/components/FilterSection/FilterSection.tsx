@@ -16,6 +16,8 @@ import { KUIConnect } from '@kleeen/core-react';
 import { Loader } from '@kleeen/react/components';
 import MuiTypography from '@material-ui/core/Typography';
 import { FilterOperators } from '@kleeen/types';
+import { isSomeFilterUnavailable, cleanUnavailableFilters } from '@kleeen/frontend/utils';
+import { isNilOrEmpty } from '@kleeen/common/utils';
 
 const parseToFilterOptions = (options: string[], translate): FilterOption[] =>
   options.map((option) => ({
@@ -27,7 +29,7 @@ const parseToFilterOptions = (options: string[], translate): FilterOption[] =>
 const FilterSectionComponent = ({ translate, ...props }: FilterSectionProps): ReactElement => {
   const classes = useStyles();
   const [open, setOpen] = React.useState(false);
-  const availableAttributesToFilter = props.filters;
+  const availableAttributesToFilter = props.filters ?? [];
   const categoryFilterOptions: FilterOption[] = availableAttributesToFilter.map(
     ({ name, statisticalType }) => ({
       name,
@@ -72,6 +74,14 @@ const FilterSectionComponent = ({ translate, ...props }: FilterSectionProps): Re
     datePickerState,
   } = useFilters(props.hasDateFilter);
 
+  const shouldClearUnavailableFilters =
+    !isNilOrEmpty(filtersAdded) &&
+    !isNilOrEmpty(filterOptionsByCategory) &&
+    isSomeFilterUnavailable(filtersAdded, filterOptionsByCategory);
+  const filtersAvailable = shouldClearUnavailableFilters
+    ? cleanUnavailableFilters(filtersAdded, filterOptionsByCategory)
+    : filtersAdded;
+
   return (
     <>
       {open ? (
@@ -110,11 +120,11 @@ const FilterSectionComponent = ({ translate, ...props }: FilterSectionProps): Re
                   categoryFilterOptions={categoryFilterOptions}
                   filterOptionsByCategory={filterOptionsByCategory}
                   addFilter={addFilter}
-                  filtersAdded={filtersAdded}
+                  filtersAdded={filtersAvailable}
                   setIsApplyDisabled={setIsApplyDisabled}
                 />
                 <FiltersComp
-                  filters={filtersAdded}
+                  filters={filtersAvailable}
                   removeValue={removeValue}
                   removeCategory={removeCategory}
                 />
@@ -127,7 +137,7 @@ const FilterSectionComponent = ({ translate, ...props }: FilterSectionProps): Re
         </Paper>
       ) : (
         <Paper elevation={3} className={classes.drawerClose}>
-          <FilterTooltip paramsBasedOnRoute={queryParams.paramsBasedOnRoute}>
+          <FilterTooltip paramsBasedOnRoute={filtersAvailable}>
             <KsIconButton onClick={handleDrawerOpen}>
               <KsIcon icon="ks-filter" />
             </KsIconButton>

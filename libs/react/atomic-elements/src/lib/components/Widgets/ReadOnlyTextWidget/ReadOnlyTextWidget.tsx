@@ -3,7 +3,7 @@ import React, { ReactElement } from 'react';
 import { Attribute } from '@kleeen/types';
 import { Loader } from '@kleeen/react/components';
 import ReadOnlyText from '../../ReadOnlyText/ReadOnlyText';
-import { VizCommonParams } from '../../../../types/types';
+import { VizCommonParams } from '@kleeen/types';
 import { makeStyles } from '@material-ui/core';
 import { useWidgetContext } from '@kleeen/react/hooks';
 

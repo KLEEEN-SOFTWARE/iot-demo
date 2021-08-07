@@ -1,11 +1,13 @@
-import React, { ReactElement, SyntheticEvent } from 'react';
-import { makeStyles, styled } from '@material-ui/core/styles';
-
 import { KsMenuItem } from '@kleeen/react/components';
+import { makeStyles, styled } from '@material-ui/core/styles';
+import { useKleeenActions } from '@kleeen/react/hooks';
 import MoreHorizIcon from '@material-ui/icons/MoreHoriz';
 import MuiButton from '@material-ui/core/Button';
 import MuiMenu from '@material-ui/core/Menu';
-import { useKleeenActions } from '@kleeen/react/hooks';
+import React, { ReactElement, SyntheticEvent } from 'react';
+import classnames from 'classnames';
+
+const bem = 'ks-page-intro-section';
 
 const Menu = styled(MuiMenu)({
   color: 'var(--secondary-color)',
@@ -15,9 +17,8 @@ const Menu = styled(MuiMenu)({
   },
 });
 
-
 const Button = styled(MuiButton)({
-  boxShadow: 'var(--shadow-button)', 
+  boxShadow: 'var(--shadow-button)',
   minWidth: 'var(--pm-2XL)',
   height: 'var(--pm-2XL)',
   color: 'var(--on-surface-color)',
@@ -39,11 +40,15 @@ enum ActionTypes {
   Download = 'download',
 }
 
-export type ActionShape = { type: ActionTypes; link?: string | { url: string, target: string }; title?: string };
+export type ActionShape = {
+  type: ActionTypes;
+  link?: string | { url: string; target: string };
+  title?: string;
+};
 
-const hardRefreshPage = ()=>{
+const hardRefreshPage = () => {
   window.location.reload();
-}
+};
 
 const actionEventManager = (taskName: string): ((e: SyntheticEvent, action: ActionShape) => void) => {
   const { refreshPage = hardRefreshPage } = useKleeenActions(taskName) || {};
@@ -52,13 +57,13 @@ const actionEventManager = (taskName: string): ((e: SyntheticEvent, action: Acti
     e.preventDefault();
 
     if (action.type === ActionTypes.Navigation || action.type === ActionTypes.Download) {
-      if(typeof action?.link === 'object') {
+      if (typeof action?.link === 'object') {
         window.open(action.link.url, action.link.target || '_blank');
       } else {
         window.open(action.link, '_blank');
       }
     }
-    
+
     if (action.type === ActionTypes.Reload) {
       refreshPage();
     }
@@ -74,7 +79,11 @@ const Actions = ({
 }): ReactElement => (
   <>
     {actions.map((action) => (
-      <KsMenuItem key={action.title} className="menu-item" onClick={(e) => actionEventHandler(e, action)}>
+      <KsMenuItem
+        key={action.title}
+        className={classnames(`${bem}__menu-item`, 'menu-item')}
+        onClick={(e) => actionEventHandler(e, action)}
+      >
         {action.title}
       </KsMenuItem>
     ))}
@@ -105,22 +114,22 @@ export const NotificationActionsMenu = ({
       {actions && (
         <>
           {actions.length > 2 ? (
-            <div>
+            <div className={classnames(`${bem}__actions`)}>
               <Button aria-controls="simple-menu" aria-haspopup="true" onClick={handleClick}>
                 <MoreHorizIcon />
               </Button>
               <Menu
-                id="simple-menu"
                 anchorEl={anchorEl}
+                id="simple-menu"
                 keepMounted
-                open={Boolean(anchorEl)}
                 onClose={handleClose}
+                open={Boolean(anchorEl)}
               >
                 <Actions actions={actions} actionEventHandler={actionEventHandler} />
               </Menu>
             </div>
           ) : (
-            <div className={classes.actionContainer}>
+            <div className={classnames(`${bem}__actions`, classes.actionContainer)}>
               <Actions actions={actions} actionEventHandler={actionEventHandler} />
             </div>
           )}

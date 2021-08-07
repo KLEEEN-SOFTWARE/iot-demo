@@ -1,9 +1,8 @@
-import { GroupByProps, ValueProp, ValuesProps, VizCommonParams } from '../../../../types';
-
-import { Attribute } from '@kleeen/types';
+import { Attribute, GroupByProps, ValueProp, ValuesProps, VizCommonParams } from '@kleeen/types';
 
 export interface BubbleChartWidgetProps extends VizCommonParams {
   attributes?: Attribute[];
+  disableHeightCalculation?: boolean;
   params: {
     baseModel: string;
     aggregatedByType?: string;

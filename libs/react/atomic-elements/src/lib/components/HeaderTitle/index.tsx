@@ -1,25 +1,27 @@
 import { DisplayValueTitle } from '../display-value-title';
+import { FormatProps } from '@kleeen/types';
 import React from 'react';
+import classnames from 'classnames';
+import { isNilOrEmpty } from '@kleeen/common/utils';
 
-interface HeaderTitle {
-  slots?: any[];
-  objectValue?: string;
-  taskName?: string;
+const bem = 'ks-header-title';
+
+interface HeaderTitleProps {
+  displayValue?: string;
+  format?: FormatProps;
+  formatType?: string;
+  subTitle?: string;
   title?: string;
 }
 
-export const HeaderTitleEllipsis = (props: HeaderTitle, split = true): React.ReactElement => {
+export const HeaderTitleEllipsis = (props: HeaderTitleProps, split = true): React.ReactElement => {
   return (
     <>
-      {props.slots && props.objectValue ? (
-        <div className="header-title">
-          <div className="title-container">{props.title}</div>
-          <div className="with-ellipsis">
-            <DisplayValueTitle
-              objectValue={props.objectValue}
-              operationName={props.slots[0]?.params?.operationName}
-              taskName={props.taskName}
-            />
+      {props.displayValue && isNilOrEmpty(props.subTitle) ? (
+        <div className={classnames(bem, 'header-title')}>
+          <div className={classnames(`${bem}__title`, 'title-container')}>{props.title}</div>
+          <div className={classnames(`${bem}__ellipsis`, 'with-ellipsis')}>
+            <DisplayValueTitle {...props} />
           </div>
         </div>
       ) : (
@@ -29,16 +31,12 @@ export const HeaderTitleEllipsis = (props: HeaderTitle, split = true): React.Rea
   );
 };
 
-export const HeaderTitle = (props: HeaderTitle, split = true): React.ReactElement => {
+export const HeaderTitle = (props: HeaderTitleProps, split = true): React.ReactElement => {
   return (
     <>
-      {props.slots && props.objectValue ? (
+      {props.displayValue && isNilOrEmpty(props.subTitle) ? (
         <>
-          <DisplayValueTitle
-            objectValue={props.objectValue}
-            operationName={props.slots[0]?.params?.operationName}
-            taskName={props.taskName}
-          />
+          <DisplayValueTitle {...props} />
           {split && ' | ' + props.title}
         </>
       ) : (

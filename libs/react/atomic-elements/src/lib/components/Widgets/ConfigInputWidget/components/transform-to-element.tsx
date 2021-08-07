@@ -1,10 +1,10 @@
-import { AggregationType, ListItem } from '@kleeen/types';
+import { AggregationType, ListItem, StatisticalDataType, Variant } from '@kleeen/types';
 import {
   CheckBoxGroup,
-  ColorPicker,
   DateTime,
   FileResult,
   KsAutocomplete,
+  KsColorPicker,
   KsTextField,
   KsToken,
   RadioGroup,
@@ -111,11 +111,12 @@ export function TransformToElement(props: TransformToElementProps): JSX.Element 
   };
   const getColorPickerInput = (): JSX.Element => {
     return (
-      <ColorPicker
+      <KsColorPicker
         disabled={disabled}
         label={attrLabel}
         defaultValue={inputValue}
-        variant={!canAddValues && !disabled ? 'outlined' : 'standard'}
+        formatType={formatType}
+        variant={!canAddValues && !disabled ? Variant.outlined : Variant.standard}
         handleOnChange={(newValue) => {
           setInputValue(newValue);
           setSelectedOption && setSelectedOption(newValue);
@@ -212,7 +213,7 @@ export function TransformToElement(props: TransformToElementProps): JSX.Element 
         disabled={disabled}
         renderInput={(params) => (
           <KsTextField
-            variant={!canAddValues && !disabled ? 'outlined' : 'standard'}
+            variant={!canAddValues && !disabled ? Variant.outlined : Variant.standard}
             label={attrLabel}
             {...params}
             InputProps={{ ...params.InputProps, ...extraInputProps }}
@@ -232,13 +233,13 @@ export function TransformToElement(props: TransformToElementProps): JSX.Element 
 
   const getStaticalTypeElement = (): JSX.Element => {
     switch (statisticalType) {
-      case StatisticalType.NumericTemporal:
+      case StatisticalDataType.NumericTemporal:
         return getDateInput();
-      case StatisticalType.CategoricalBinary:
+      case StatisticalDataType.Binary:
         return getSwitchInput();
-      case StatisticalType.Image:
+      case StatisticalDataType.Image:
         return getUploadInput();
-      case StatisticalType.Color:
+      case StatisticalDataType.Color:
         return getColorPickerInput();
       default:
         return getAutocompleteInput();

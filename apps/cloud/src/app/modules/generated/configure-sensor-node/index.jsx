@@ -1,109 +1,67 @@
-import React, { useState } from 'react';
 import { KUIConnect, AccessControl } from '@kleeen/core-react';
-import { useEntityDetailsEventHandler, useKleeenActions } from '@kleeen/react/hooks';
 import { roleAccessKeyTag } from '@kleeen/common/utils';
-import { useStyles } from './styles/styles';
-import { PageIntroSection, CardSection02, SnackBarSection } from '@kleeen/react/atomic-elements';
-import { pageIntroSectionActions } from './settings/page-intro-section-actions';
-import { pageIntroSectionAttributes } from './settings/page-intro-section-attributes';
-import { cardSectionWidgets } from './settings/card-section-widgets';
+import { useState } from 'react';
+import {
+  EntireProductDomainLayoutStyle,
+  DataViewControlSection,
+  DataViewDisplaySectionAtomic,
+} from '@kleeen/react/atomic-elements';
+import { viewOptions } from './settings/view-options';
+import { useKleeenActions } from '@kleeen/react/hooks';
+import { widgets } from './settings/widgets';
 
-function ConfigTask({ translate, ...props }) {
+function Workflow({ translate, ...props }) {
   const taskName = `configureSensorNode`;
-  const pageIntroSectionTitle = `Configure Sensor/Node`;
-  const pageIntroSectionDescription = undefined;
-  const classes = useStyles();
-  const cardSectionContainerId = `container-id-${classes.configCardSection}`;
-  const [showSubmit, setShowSubmit] = useState(false);
+  const [selectedViewOption, setSelectedViewOption] = useState(widgets[0]);
+  const [cardsNumber, setCardsNumber] = useState(0);
+  const [selectedRows, setSelectedRows] = useState([]);
+  const classes = EntireProductDomainLayoutStyle();
+  const workflowName = `Configure Sensor/Node`;
+  function handleOnTabIndexChanged(newTabIndex, option) {
+    setSelectedViewOption(option);
+  }
   const configureSensorNodeActions = useKleeenActions(taskName);
-
-  const [attributeEventList, { addEvent, clearEventList }] = useEntityDetailsEventHandler();
-
-  React.useEffect(() => {
-    return clearEventList;
-  }, []);
-
-  function onCancel() {
-    setShowSubmit(false);
-    attributeEventList.map((event) => event.onCancel());
-  }
-
-  function onInputChange(hasChanged) {
-    setShowSubmit(hasChanged);
-  }
-
-  function onSave() {
-    setShowSubmit(false);
-    const widgetsData = attributeEventList.map((event) => event.onSave()).filter((data) => data);
-    const dataList = widgetsData.map((current) => {
-      return {
-        ...current,
-        params: {
-          ...current.params,
-        },
-      };
-    });
-
-    dataList.map((data) => configureSensorNodeActions.updateRequest(data));
-  }
-
-  function registerEvents(event) {
-    addEvent(event);
-  }
 
   return (
     <AccessControl id={roleAccessKeyTag(`navigation.${taskName}`)}>
-      <div className={classes.configTask}>
-        <div className={classes.pageIntro}>
-          <PageIntroSection
-            actions={pageIntroSectionActions}
-            attributes={pageIntroSectionAttributes}
-            description={pageIntroSectionDescription}
-            entity={''}
-            entityActions={{}}
-            showActions={false}
-            title={pageIntroSectionTitle}
-          />
-        </div>
-        <div
-          id={cardSectionContainerId}
-          className={`${classes.configCardSection} ${showSubmit ? classes.snackbarNavLeft : ''} `}
-        >
-          <CardSection02
-            justifyContent="center"
-            taskName={taskName}
-            widgets={cardSectionWidgets}
-            hideSaveAndClose={true}
-            onInputChange={onInputChange}
-            registerEvents={registerEvents}
-            containerId={cardSectionContainerId}
-          />
-        </div>
-        <div>
-          <SnackBarSection
-            actions={[
-              {
-                type: 'CUSTOM',
-                label: 'SAVE',
-                func: onSave,
-              },
-              {
-                type: 'CUSTOM',
-                label: 'CANCEL',
-                func: onCancel,
-              },
-            ]}
-            entity=""
-            entityActions={{}}
-            selectedRows={[]}
-            setSelectedRows={[]}
-            showSelectAndExecute={false}
-            showSnackBar={showSubmit}
-          />
+      <div className={`${classes.entityBrowserTask} subhead-dynamic`}>
+        <div className={`${classes.entityBrowserArea} browserArea`}>
+          <div
+            className={`${classes.gridPageIntro} ${cardsNumber > 0 ? `max-card-${cardsNumber}` : ''}`}
+            data-testid="page-intro"
+          >
+            <DataViewControlSection
+              entityActions={configureSensorNodeActions}
+              hideRefreshControl
+              onTabIndexChanged={handleOnTabIndexChanged}
+              selectedOption={selectedViewOption}
+              setSelectedOption={setSelectedViewOption}
+              taskName={taskName}
+              title={workflowName}
+              viewOptions={viewOptions}
+            />
+          </div>
+          <div
+            className={`${classes.gridGridSection} ${
+              selectedRows.length > 0 && selectedViewOption.sortOrder === 0 ? classes.snackbar : ''
+            }`}
+            data-testid="content-section"
+          >
+            <DataViewDisplaySectionAtomic
+              widgets={widgets}
+              selectedOption={selectedViewOption}
+              selectedRows={selectedRows}
+              setCardsNumber={setCardsNumber}
+              setSelectedRows={setSelectedRows}
+              taskName={taskName}
+              value={selectedViewOption}
+              entityActions={configureSensorNodeActions}
+            />
+          </div>
         </div>
       </div>
     </AccessControl>
   );
 }
 
-export default KUIConnect(({ translate }) => ({ translate }))(ConfigTask);
+export default KUIConnect(({ translate }) => ({ translate }))(Workflow);

@@ -1,7 +1,7 @@
 import './date-interval.scss';
 import 'react-calendar-datetime-picker/dist/index.css';
 
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 
 import { DateTimeIntervalProps } from './date-interval.model';
 import { DtCalendar } from 'react-calendar-datetime-picker';
@@ -11,10 +11,11 @@ import { KsButton } from '../button';
 import moment from 'moment';
 
 function DateIntervalBase(props: DateTimeIntervalProps): JSX.Element {
-  const { translate, datePickerState, handleCloseDateFilter } = props;
+  const { translate, datePickerState, handleCloseDateFilter, setOpenCustomRange } = props;
   const { from = moment(), to = moment(), setFrom, setTo } = datePickerState;
   const fromValue = from.toDate();
   const toValue = to.toDate();
+
   const defaultValue = {
     from: {
       year: fromValue.getFullYear(),
@@ -22,6 +23,7 @@ function DateIntervalBase(props: DateTimeIntervalProps): JSX.Element {
       day: fromValue.getDate(),
       hours: fromValue.getHours(),
       minutes: fromValue.getMinutes(),
+      seconds: fromValue.getSeconds(),
     },
     to: {
       year: toValue.getFullYear(),
@@ -29,10 +31,18 @@ function DateIntervalBase(props: DateTimeIntervalProps): JSX.Element {
       day: toValue.getDate(),
       hours: toValue.getHours(),
       minutes: toValue.getMinutes(),
+      seconds: toValue.getSeconds(),
     },
   };
 
   const [value, setValue] = useState(defaultValue);
+  const [initValue, setInitValue] = useState(defaultValue);
+  const [toggleClear, setToggleClear] = useState(false);
+
+  useEffect(() => {
+    setValue(defaultValue);
+    setInitValue(defaultValue);
+  }, [toggleClear]);
 
   const parseValue = (valueParser) => {
     return valueParser < 10 ? `0${valueParser}` : valueParser;
@@ -57,6 +67,7 @@ function DateIntervalBase(props: DateTimeIntervalProps): JSX.Element {
         day: dateToday.getDate(),
         hours: dateToday.getHours(),
         minutes: dateToday.getMinutes(),
+        seconds: dateToday.getSeconds(),
       }).moment;
       const parsedMomentFrom = parserMoment({
         year: value.from.year,
@@ -64,6 +75,7 @@ function DateIntervalBase(props: DateTimeIntervalProps): JSX.Element {
         day: value.from.day,
         hours: dateToday.getHours(),
         minutes: dateToday.getMinutes(),
+        seconds: dateToday.getSeconds(),
       }).moment;
       if (moment(dateToday).isBefore(`${value.from.year}-${value.from.month + 1}-${value.from.day}`)) {
         datePickerState.setFrom(parsedMomentToday);
@@ -73,21 +85,21 @@ function DateIntervalBase(props: DateTimeIntervalProps): JSX.Element {
         datePickerState.setTo(parsedMomentToday);
       }
     }
-
+    setOpenCustomRange(false);
     handleCloseDateFilter();
   };
 
   const clear = () => {
-    setValue(defaultValue);
     datePickerState.setTo(undefined);
     datePickerState.setFrom(undefined);
+    setToggleClear(!toggleClear);
   };
 
   return (
     <>
       <DtCalendar
         onChange={setValue}
-        initValue={defaultValue}
+        initValue={initValue}
         type="range"
         withTime
         todayBtn

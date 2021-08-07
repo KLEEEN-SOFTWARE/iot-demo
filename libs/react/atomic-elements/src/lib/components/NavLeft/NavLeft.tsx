@@ -1,18 +1,22 @@
-import React, { useEffect, useState } from 'react';
-import { Theme, createStyles, makeStyles } from '@material-ui/core/styles';
-
-import { AccessControl } from '@kleeen/core-react';
-import Drawer from '@material-ui/core/Drawer';
+import { AccessControl, Translate } from '@kleeen/core-react';
+import { ConfirmationActionDialog, KsSvgIcon } from '@kleeen/react/components';
 import { FooterNavLeft } from './Footer/Index';
 import { HeaderNavLeft } from './Header/Index';
-import { KsSvgIcon } from '@kleeen/react/components';
+import { NavProps } from '../../../types/types';
+import { Theme, createStyles, makeStyles } from '@material-ui/core/styles';
+import { executeFunc, validateOpenInNewTab } from '../../utils/navigationUtils';
+import { useEffect, useState } from 'react';
+import { useHistory, useLocation } from 'react-router-dom';
+
+import Drawer from '@material-ui/core/Drawer';
 import List from '@material-ui/core/List';
 import ListItem from '@material-ui/core/ListItem';
 import ListItemText from '@material-ui/core/ListItemText';
-import { NavLeftProps } from './NavLeft.model';
+import classnames from 'classnames';
 import { roleAccessKeyTag } from '@kleeen/common/utils';
-import { useLocation } from 'react-router-dom';
 import { useNavigation } from '@kleeen/react/hooks';
+
+const bem = 'ks-nav-left';
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -76,19 +80,29 @@ const useStyles = makeStyles((theme: Theme) =>
     },
   }),
 );
+interface optionNavigation {
+  title: string;
+  type: string;
+  func: any;
+  path: string;
+  openInNewTab: boolean;
+}
 
 export const NavLeft = ({
-  menuList,
   accountMenuList,
-  logo,
+  accountName,
   helpUrl,
+  logo,
+  menuList,
   productName,
-  children,
-}: NavLeftProps): JSX.Element => {
+}: NavProps): JSX.Element => {
   const location = useLocation();
   const classes = useStyles();
   const navigate = useNavigation();
+  const history = useHistory();
   const [activePath, setActivePath] = useState('');
+  const [isConfirmationOpen, setIsConfirmationOpen] = useState(false);
+  const [currentNavigation, setCurrentNavigation] = useState<optionNavigation>();
 
   useEffect(() => {
     if (location.pathname) {
@@ -96,40 +110,44 @@ export const NavLeft = ({
     }
   }, [location]);
 
-  const isActivePath = (path: string): string => {
-    if (path === activePath) {
-      return 'active';
-    }
-    return '';
-  };
+  const isActivePath = (path: string): string => path === activePath && 'active';
+
+  function handleOnClose(): void {
+    setIsConfirmationOpen(false);
+  }
+
+  function openAnNewTab(func: any, path: string, openInNewTab: boolean, type: string, e?: any): void {
+    executeFunc(func);
+    validateOpenInNewTab(navigate, path, e, type, history, openInNewTab);
+    setActivePath(path);
+  }
 
   return (
     <Drawer
-      className={classes.drawer}
-      variant="permanent"
+      anchor="left"
       classes={{
         paper: classes.drawerPaper,
       }}
-      anchor="left"
+      className={classnames(bem, classes.drawer)}
+      variant="permanent"
     >
-      {logo || productName ? <HeaderNavLeft logo={logo} productName={productName} /> : null}
-      <List className={classes.list}>
-        {menuList.map(({ title, path, func, icon }) => {
+      <HeaderNavLeft logo={logo} accountName={accountName} productName={productName} />
+      <List className={classnames(`${bem}__lists`, classes.list)}>
+        {menuList.map(({ title, func, icon, path, type, areYouSure, openInNewTab }) => {
           const navigationTitle = roleAccessKeyTag(`navigation.${title}`);
           return (
             <AccessControl key={navigationTitle} id={navigationTitle}>
               <ListItem
                 button
                 key={title}
-                className={isActivePath(path)}
+                className={classnames(`${bem}__lists-item`, isActivePath(path))}
                 onClick={(e) => {
-                  e.preventDefault();
-                  if (func) {
-                    func();
-                    return;
+                  if (areYouSure) {
+                    setIsConfirmationOpen(true);
+                    setCurrentNavigation({ title, func, path, openInNewTab, type });
+                  } else {
+                    openAnNewTab(func, path, openInNewTab, type, e);
                   }
-                  setActivePath(path);
-                  navigate(path, false);
                 }}
               >
                 {icon && <KsSvgIcon icon={icon} />}
@@ -138,6 +156,32 @@ export const NavLeft = ({
             </AccessControl>
           );
         })}
+
+        {currentNavigation && (
+          <ConfirmationActionDialog
+            description={
+              <Translate id="app.navigation.modal.description" type="html" values={{ productName }} />
+            }
+            key={`go-out-confirmation`}
+            open={isConfirmationOpen}
+            onAction={() => {
+              openAnNewTab(
+                currentNavigation.func,
+                currentNavigation.path,
+                currentNavigation.openInNewTab,
+                currentNavigation.type,
+              );
+            }}
+            onClose={handleOnClose}
+            title={
+              <Translate
+                id="app.navigation.modal.title"
+                type="html"
+                values={{ title: currentNavigation.title }}
+              />
+            }
+          />
+        )}
       </List>
       <FooterNavLeft helpUrl={helpUrl} accountMenuList={accountMenuList} navigate={navigate} />
     </Drawer>

@@ -68,24 +68,32 @@ function ReactVirtualizedTableComponent({
   }
 
   function toggleDelete(id: string): void {
-    deleteContainer.includes(id)
-      ? setStatusDeleteContainer(deleteContainer.filter((q) => q != id))
-      : setStatusDeleteContainer([...deleteContainer, id]);
+    if (deleteContainer.includes(id)) {
+      setStatusDeleteContainer(deleteContainer.filter((q) => q != id));
+      return;
+    }
+    setStatusDeleteContainer([...deleteContainer, id]);
   }
 
   function triggerCustomAction(action: Action, id: string): void {
+    const { widget } = props;
     const dispatchCustomAction = props?.entityActions?.dispatchCustomAction || (() => ({}));
+    const entityId = widget?.entityId || props.entityId;
 
-    dispatchCustomAction({
+    const dataCustomAction = {
       params: {
         baseModel: props.entityName,
         displayName: action.displayName,
-        operationName: `${action.name}${props.entityId}`,
+        operationName: `${action.name}${entityId}`,
       },
-      paramsBasedOnRoute: { [props.entityName]: id },
+      paramsBasedOnRoute: {
+        paramsBasedOnRoute: { [props.entityName]: id },
+      },
       taskName: props.taskName,
       widgetId: '',
-    });
+    };
+
+    dispatchCustomAction(dataCustomAction);
   }
 
   function typeOf(row): allComponentEnum {

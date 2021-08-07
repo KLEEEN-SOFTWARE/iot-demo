@@ -9,12 +9,12 @@ export const useStyles = makeStyles(() => ({
     justifyContent: 'space-between',
 
     '&:nth-of-type(odd)': {
-      color: 'var(--on-row-odd)',
       backgroundColor: 'var(--row-odd)',
+      color: 'var(--on-row-odd)',
     },
     '&:nth-of-type(even)': {
-      color: 'var(--on-row-even)',
       backgroundColor: 'var(--row-even)',
+      color: 'var(--on-row-even)',
     },
   },
   cell: {
@@ -23,27 +23,27 @@ export const useStyles = makeStyles(() => ({
       paddingTop: 'var(--pm-2XS)',
     },
     '&:last-of-type': {
-      textAlign: 'right',
       paddingTop: 'var(--pm-1XS)',
+      textAlign: 'right',
     },
+    height: '100%',
+    padding: '0 var(--pm-L)',
     position: 'relative',
     width: '50%',
-    padding: '0 var(--pm-L)',
-    height: '100%',
   },
   numericBar: {
-    position: 'absolute',
-    width: '100%',
-    height: '80%',
-    top: '10%',
-    left: 0,
     display: 'flex',
+    height: '80%',
+    left: 0,
+    position: 'absolute',
+    top: '10%',
+    width: '100%',
   },
   barSpace: {
-    width: '50%',
     height: '100%',
     right: 0,
     top: 0,
+    width: '50%',
   },
   bar: {
     height: '100%',

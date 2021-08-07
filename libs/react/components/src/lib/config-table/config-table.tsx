@@ -32,7 +32,6 @@ import { v4 as uuid } from 'uuid';
  */
 export function KsConfigTable({
   actions,
-  addModalAttributes,
   attributes,
   customModalProps,
   data: tableData,
@@ -241,9 +240,15 @@ export function KsConfigTable({
     if (entityActions) {
       const { bulkAddRequest, bulkDeleteRequest, bulkUpdateRequest } = entityActions;
 
-      bulkAddRequest && bulkAddRequest(addPayload);
-      bulkDeleteRequest && bulkDeleteRequest(deletePayload);
-      bulkUpdateRequest && bulkUpdateRequest(updatePayload);
+      if (bulkAddRequest) {
+        bulkAddRequest(addPayload);
+      }
+      if (bulkDeleteRequest) {
+        bulkDeleteRequest(deletePayload);
+      }
+      if (bulkUpdateRequest) {
+        bulkUpdateRequest(updatePayload);
+      }
     }
 
     return {
@@ -282,7 +287,7 @@ export function KsConfigTable({
           // TODO: @cafe Allow custom actions later on
           ({ type }) => type === ActionType.Add,
         )}
-        attributes={!isNilOrEmpty(addModalAttributes) ? addModalAttributes : attributes}
+        attributes={attributes}
         context={{ editedRows, customModalProps, currentRows: mergedData }}
         entityActions={entityActions}
         entityName={params.baseModel}

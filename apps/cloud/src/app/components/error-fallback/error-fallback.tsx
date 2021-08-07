@@ -1,19 +1,21 @@
 import './error-fallback-style.scss';
 
 import { CardWidget } from '@kleeen/react/atomic-elements';
-import { KsButton } from '@kleeen/react/components';
 import { environment } from '@kleeen/environment';
+import { KsButton } from '@kleeen/react/components';
 import { useTheme } from '@kleeen/react/hooks';
+import classnames from 'classnames';
 
 export function ErrorFallback({ error, info }): JSX.Element {
   const { themeClass } = useTheme();
+  const bem = 'ks-error-fallback';
 
   function handleClick() {
     window.location.replace('/');
   }
 
   return (
-    <div className={`${themeClass} error-page`}>
+    <div className={classnames(bem, themeClass, 'error-page')}>
       <svg
         xmlns="http://www.w3.org/2000/svg"
         version="1.1"
@@ -166,7 +168,7 @@ export function ErrorFallback({ error, info }): JSX.Element {
         <div>
           <p>{error?.message}</p>
           <div
-            className="error-log"
+            className={classnames(`${bem}__log`, 'error-log')}
             onClick={() => navigator.clipboard.writeText(`${error?.message} \n ${info?.componentStack}`)}
           >
             {info?.componentStack}

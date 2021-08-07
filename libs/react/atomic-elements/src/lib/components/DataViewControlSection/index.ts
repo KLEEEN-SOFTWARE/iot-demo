@@ -1,16 +1,3 @@
-import {
-  DataViewControlSectionProps as DataViewControlSectionPropsType,
-  ViewOption,
-} from './DataViewControlSection.model';
-
-import { isNilOrEmpty } from '@kleeen/common/utils';
-
+import { DataViewControlSectionProps as DataViewControlSectionPropsType } from './DataViewControlSection.model';
 export * from './DataViewControlSection';
 export type DataViewControlSectionProps = DataViewControlSectionPropsType;
-
-export function formatViewOptions(viewOptions: ViewOption[]) {
-  return viewOptions.map(({ name, viewOrder }, index) => ({
-    label: name,
-    value: isNilOrEmpty(viewOrder) ? index : viewOrder,
-  }));
-}

@@ -1,6 +1,6 @@
-import { Action } from '@kleeen/types';
+import { Action, WidgetTypes } from '@kleeen/types';
+
 import { PopperProps } from '@material-ui/core';
-import { WidgetTypes } from '../../../enums';
 
 export interface ActionList extends Partial<PopperProps> {
   actions: Action[];

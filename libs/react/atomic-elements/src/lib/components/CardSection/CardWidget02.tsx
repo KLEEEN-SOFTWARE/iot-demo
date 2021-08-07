@@ -2,8 +2,9 @@ import './CardSection02.scss';
 
 import { CardTitle } from './components/CardTitle';
 import { CardWidgetProps } from './CardWidget.model';
-import React from 'react';
 import classnames from 'classnames';
+
+const bem = 'ks-card-widget-02';
 
 export const CardWidget02 = ({
   children,
@@ -13,11 +14,10 @@ export const CardWidget02 = ({
   widgetSelector = null,
   disabled,
 }: CardWidgetProps): JSX.Element => {
-
   return (
-    <div className={classnames('card-widget', { 'disabled': disabled })}>
+    <div className={classnames(bem, 'card-widget', { disabled })}>
       {!hideTitle && <CardTitle title={title} icon={icon} />}
-      <div className="content">
+      <div className={classnames(`${bem}__content`, 'content')}>
         {children}
         {widgetSelector}
       </div>

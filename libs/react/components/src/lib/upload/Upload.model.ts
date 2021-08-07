@@ -7,26 +7,32 @@ export interface FileResult {
   filteredFilesRead: Array<string>;
 }
 interface Localization {
-  uploadLabel: string;
   filesAllowed: string;
+  uploadLabel: string;
 }
+
 interface UploadProps {
-  onChange: (result: FileResult) => void;
-  label?: string;
   allowedExtensions?: [];
-  hasMultiple?: boolean;
+  badgeConfig?: MuiBadgeProps;
+  buttonConfig?: MuiButtonProps;
+  fileExtensions?: string[];
+  label?: string;
+  multiple?: boolean;
+  onChange: (result: FileResult) => void;
   translate?: Translate;
-  buttonConfig?: MuiButtonProps;
-  badgeConfig?: MuiBadgeProps;
 }
+
 interface ButtonUploadProps {
-  label?: string;
-  onChange: (result: FileResult) => void;
   allowedExtensions?: [];
-  hasMultiple?: boolean;
-  localization: Localization;
-  buttonConfig?: MuiButtonProps;
   badgeConfig?: MuiBadgeProps;
+  badgeCounter?: number;
+  buttonConfig?: MuiButtonProps;
+  fileExtensions?: string[];
+  label?: string;
+  localization: Localization;
+  multiple?: boolean;
+  onChange: (result: FileResult) => void;
+  shouldResetState?: boolean;
 }
 
 export { UploadProps, ButtonUploadProps };

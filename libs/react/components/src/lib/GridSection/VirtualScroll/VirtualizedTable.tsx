@@ -101,8 +101,8 @@ function MuiVirtualizedTable({
   ...tableProps
 }: MuiVirtualizedTableProps): ReactElement {
   const minWidth = columnWidth * columns.length;
-  const list = columns[0].props?.entity?.data;
-  const pagination = columns[0].props?.entity?.pagination;
+  const list = columns[0]?.props?.entity?.data;
+  const pagination = columns[0]?.props?.entity?.pagination;
   const remoteRowCount = pagination?.totalCount ?? list?.length;
 
   const [listingModalSettings, setIsListingModalOpen] = useState<ListingModalSettings>(initialModelSettings);

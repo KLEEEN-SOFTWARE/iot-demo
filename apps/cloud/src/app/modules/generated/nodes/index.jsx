@@ -1,94 +1,74 @@
-import React, { useState } from 'react';
 import { KUIConnect, AccessControl } from '@kleeen/core-react';
 import { roleAccessKeyTag } from '@kleeen/common/utils';
-import { useStyles } from './styles/styles';
-import { useKleeenActions, useWidgetContext } from '@kleeen/react/hooks';
-import { actions } from './settings/actions';
-import { attributes } from './settings/attributes';
-import { dataViewControlSectionViewOptions } from './settings/data-view-control-section-view-options';
+import { useState } from 'react';
 import {
-  HeaderAndSubSections,
+  CollectionLayoutStyle,
+  DataViewControlSection,
+  getRowsCountFromFirstTable,
   DataViewDisplaySectionAtomic,
-  SnackBarSection,
 } from '@kleeen/react/atomic-elements';
-import { availableFilters } from './settings/available-filters';
-import { dataViewDisplaySectionAtomicSingleTableWidgets } from './settings/data-view-display-section-atomic-single-table-widgets';
-import { dataViewDisplaySectionAtomicDashboardWidgets } from './settings/data-view-display-section-atomic-dashboard-widgets';
-import { dataViewDisplaySectionAtomicSingleViewWidgets } from './settings/data-view-display-section-atomic-single-view-widgets';
-import { dataViewDisplaySectionAtomicCustomViews } from './settings/data-view-display-section-atomic-custom-views';
-import { snackBarSectionActions } from './settings/snack-bar-section-actions';
+import { useKleeenActions, useUrlQueryParams } from '@kleeen/react/hooks';
+import { viewOptions } from './settings/view-options';
+import { workflowAction } from './settings/workflow-action';
+import { attributesOnCreate } from './settings/attributes-on-create';
+import { widgets } from './settings/widgets';
 
-function EntityBrowserTask({ translate, ...props }) {
+function Workflow({ translate, ...props }) {
   const taskName = `nodes`;
   const entity = `Node`;
-  const nodeActions = useKleeenActions(taskName);
-  const title = `Nodes`;
-  const objectValue = `node`;
-  const [selectedTabIndex, setSelectedTabIndex] = useState(0);
-  function handleOnTabIndexChange(newTabIndex) {
-    setSelectedTabIndex(newTabIndex);
-  }
-  const [mainWidget] = dataViewDisplaySectionAtomicSingleTableWidgets;
-  const nodesMainWidgetData = useWidgetContext({
-    taskName,
-    widgetId: mainWidget?.id,
-    params: { ...mainWidget?.params, attributes: mainWidget?.attributes },
-  });
-  const [selectedRows, setSelectedRows] = useState([]);
+  const [selectedViewOption, setSelectedViewOption] = useState(widgets[0]);
   const [cardsNumber, setCardsNumber] = useState(0);
-  const undefinedActions = useKleeenActions(taskName);
-  const classes = useStyles();
+  const [selectedRows, setSelectedRows] = useState([]);
+  const classes = CollectionLayoutStyle();
+  const workflowName = `Nodes`;
+  function handleOnTabIndexChanged(newTabIndex, option) {
+    setSelectedViewOption(option);
+  }
+  const objectFocus = `node`;
+  const nodeActions = useKleeenActions(taskName);
+  const paramsBasedOnRoute = useUrlQueryParams();
+  const currentEntity = { id: paramsBasedOnRoute[entity], entity };
 
   return (
     <AccessControl id={roleAccessKeyTag(`navigation.${taskName}`)}>
       <div className={`${classes.entityBrowserTask} subhead-dynamic`}>
         <div className={`${classes.entityBrowserArea} browserArea`}>
-          <div className={`${classes.gridPageIntro} ${cardsNumber > 0 ? `max-card-${cardsNumber}` : ''}`}>
-            <HeaderAndSubSections
-              title={title}
-              subTitle={`${nodesMainWidgetData.data?.data?.length} Count of ${entity}`}
+          <div
+            className={`${classes.gridPageIntro} ${cardsNumber > 0 ? `max-card-${cardsNumber}` : ''}`}
+            data-testid="page-intro"
+          >
+            <DataViewControlSection
+              actions={workflowAction}
+              attributes={attributesOnCreate}
+              entity={entity}
+              entityActions={nodeActions}
               hideRefreshControl
+              objectValue={objectFocus}
+              onTabIndexChanged={handleOnTabIndexChanged}
+              parent={currentEntity}
+              results={`${getRowsCountFromFirstTable(widgets)} Count of ${entity}`}
+              selectedOption={selectedViewOption}
+              setSelectedOption={setSelectedViewOption}
               taskName={taskName}
-              filters={availableFilters}
-              actionsProps={{
-                actions: actions,
-                entityName: entity,
-                attributes: attributes,
-                entityActions: nodeActions,
-              }}
-              viewOptions={dataViewControlSectionViewOptions}
-              handleChangeTab={handleOnTabIndexChange}
-              value={selectedTabIndex}
+              title={workflowName}
+              viewOptions={viewOptions}
             />
           </div>
           <div
             className={`${classes.gridGridSection} ${
-              selectedRows.length > 0 && selectedTabIndex === 0 ? classes.snackbar : ''
+              selectedRows.length > 0 && selectedViewOption.sortOrder === 0 ? classes.snackbar : ''
             }`}
+            data-testid="content-section"
           >
             <DataViewDisplaySectionAtomic
-              atomicCustomViews={dataViewDisplaySectionAtomicCustomViews}
-              dashboardWidgets={dataViewDisplaySectionAtomicDashboardWidgets}
+              widgets={widgets}
               entityName={entity}
-              hasReportView={false}
+              selectedOption={selectedViewOption}
               selectedRows={selectedRows}
               setCardsNumber={setCardsNumber}
               setSelectedRows={setSelectedRows}
-              singleViewWidgets={dataViewDisplaySectionAtomicSingleViewWidgets}
-              tableWidgets={dataViewDisplaySectionAtomicSingleTableWidgets}
               taskName={taskName}
-              value={selectedTabIndex}
-            />
-          </div>
-          <div>
-            <SnackBarSection
-              actions={snackBarSectionActions}
-              entity={''}
-              entityActions={undefinedActions}
-              selectedRows={selectedRows}
-              setSelectedRows={setSelectedRows}
-              showSelectAndExecute={false}
-              showSnackBar={selectedRows && selectedRows.length > 0}
+              value={selectedViewOption}
             />
           </div>
         </div>
@@ -97,4 +77,4 @@ function EntityBrowserTask({ translate, ...props }) {
   );
 }
 
-export default KUIConnect(({ translate }) => ({ translate }))(EntityBrowserTask);
+export default KUIConnect(({ translate }) => ({ translate }))(Workflow);

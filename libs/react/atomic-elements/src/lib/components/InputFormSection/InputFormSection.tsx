@@ -1,44 +1,47 @@
 import './InputFormSection.scss';
 
-import React, { ReactElement, useState } from 'react';
+import { ReactElement, useState } from 'react';
 
-import { StatisticalType } from '@kleeen/render-utils';
+import { StatisticalDataType } from '@kleeen/types';
 import { TransformToElement } from '../Widgets/ConfigInputWidget/components/transform-to-element';
+import classnames from 'classnames';
+
+const bem = 'ks-input-form-section';
 interface InputFormSectionProps {
-  inputValue?: any;
-  setInputValue?: any;
   autoCompleteValues?: any;
-  icon?: JSX.Element;
-  name?: string;
+  component?: any;
   connector?: string;
   defaultValue?: any;
-  inputRef?: any;
-  isTextField?: boolean;
-  setSelectedOption?;
-  placeholder?;
   errors?: any;
+  helpText?: string;
+  icon?: JSX.Element;
+  inputRef?: any;
+  inputValue?: any;
+  isTextField?: boolean;
+  name?: string;
+  placeholder?;
+  setInputValue?: any;
+  setSelectedOption?;
   setValue?: any;
   value?: any;
-  helpText?: string;
-  component?: any;
 }
 
 export const InputFormSection = ({ ...props }: InputFormSectionProps): ReactElement => {
   const {
     autoCompleteValues,
-    setSelectedOption,
-    isTextField,
-    icon,
-    name,
+    component,
     connector,
     defaultValue,
-    inputRef,
-    placeholder,
     errors,
+    helpText,
+    icon,
+    inputRef,
+    isTextField,
+    name,
+    placeholder,
+    setSelectedOption,
     setValue,
     value,
-    helpText,
-    component,
   } = props;
   const [inputValue, setInputValue] = useState(defaultValue ? defaultValue.displayValue : '');
   const onSetInputValue = (event) => {
@@ -46,13 +49,18 @@ export const InputFormSection = ({ ...props }: InputFormSectionProps): ReactElem
   };
 
   return (
-    <div className="input-form-section">
-      <div className="input-form-section-label">
-        <div className="icon-container">{icon}</div>
-        <div className="name-container">{name}</div>
-        <div className="connector-container">{connector}</div>
+    <div className={classnames(bem, 'input-form-section')}>
+      <div className={classnames(`${bem}__label`, 'input-form-section-label')}>
+        <div className={classnames(`${bem}__label--icon`, 'icon-container')}>{icon}</div>
+        <div className={classnames(`${bem}__label--name`, 'name-container')}>{name}</div>
+        <div className={classnames(`${bem}__label--connector`, 'connector-container')}>{connector}</div>
       </div>
-      <div className={isTextField ? `input-form-section-input input-field` : `input-form-section-input`}>
+      <div
+        className={classnames(
+          `${bem}__form`,
+          isTextField ? `input-form-section-input input-field` : `input-form-section-input`,
+        )}
+      >
         {component ? (
           component
         ) : (
@@ -67,7 +75,7 @@ export const InputFormSection = ({ ...props }: InputFormSectionProps): ReactElem
             inputValue={value ? value : inputValue}
             setInputValue={onSetInputValue}
             setSelectedOption={setSelectedOption}
-            statisticalType={StatisticalType.Data}
+            statisticalType={StatisticalDataType.Data}
             hideTitle={false}
             inSummaryDetails={false}
             refValue={inputRef}

@@ -1,7 +1,9 @@
 import './SnackBarSection.scss';
 
 import { KsButton as Button, KsSnackbarContainer } from '@kleeen/react/components';
-
+import { styled } from '@material-ui/core/styles';
+import { useTheme } from '@kleeen/react/hooks';
+import classnames from 'classnames';
 import DialogActions from '@material-ui/core/DialogActions';
 import DialogContent from '@material-ui/core/DialogContent';
 import DialogContentText from '@material-ui/core/DialogContentText';
@@ -17,8 +19,8 @@ import MuiTypography from '@material-ui/core/Typography';
 import React from 'react';
 import Slide from '@material-ui/core/Slide';
 import Toolbar from '@material-ui/core/Toolbar';
-import { styled } from '@material-ui/core/styles';
-import { useTheme } from '@kleeen/react/hooks';
+
+const bem = 'ks-snack-bar-section';
 
 const Paper = styled(KsSnackbarContainer)({
   borderRadius: '0',
@@ -81,11 +83,12 @@ const Dialog = styled(MuiDialog)({
 export interface SnackBarSectionProps {
   actions: Action[];
   entityActions: { [key: string]: Function };
-  showSelectAndExecute: boolean;
-  selectedRows: any[];
-  entity: string;
+  showSelectAndExecute?: boolean;
+  selectedRows?: any[];
+  entity?: string;
   showSnackBar: boolean;
-  setSelectedRows: any;
+  className?: string;
+  setSelectedRows?: any;
 }
 
 interface DeleteDialogProps {
@@ -126,26 +129,30 @@ const SelectedStatsSection1 = (props: {
 }) => {
   return (
     <>
-      <FormControl variant="outlined" className="select-action-form">
-        <InputLabel id="select-action-label" className="select-action-label">
+      <FormControl variant="outlined" className={classnames(bem, 'select-action-form')}>
+        <InputLabel id="select-action-label" className={classnames(`${bem}__label`, 'select-action-label')}>
           Select Action
         </InputLabel>
         <Select
           labelId="select-action-label"
           id="select-action-label"
-          className="select-action"
+          className={classnames(`${bem}__action`, 'select-action')}
           label="Select Action"
         >
           <MenuItem value="delete">Delete</MenuItem>
         </Select>
-        <MuiTypography variant="caption" display="block" className="action-tip">
+        <MuiTypography
+          variant="caption"
+          display="block"
+          className={classnames(`${bem}__action-tip`, 'action-tip')}
+        >
           Select an action to bulk perform
         </MuiTypography>
       </FormControl>
       <Button
         variant="contained"
         color="primary"
-        className="action-button"
+        className={classnames(`${bem}__cta`, 'action-button')}
         onClick={() => {
           console.log('GO');
         }}
@@ -174,15 +181,15 @@ const SelectedStatsSection2 = (props: {
               <MuiTooltip key={`${label}-${index}`} title={tooltip} placement="top">
                 <span>
                   <Button
-                    key={'delete'}
-                    variant="contained"
+                    className={classnames(`${bem}__cta--delete`, 'multi-button')}
                     color="primary"
-                    className="multi-button"
-                    onClick={handleClickOpen}
-                    disabled={disabled}
-                    data-kleeen-analytics-on="click"
-                    data-kleeen-analytics-name="click"
                     data-kleeen-analytics-attrs={`component:ActionsSection,action:${type.toLowerCase()}`}
+                    data-kleeen-analytics-name="click"
+                    data-kleeen-analytics-on="click"
+                    disabled={disabled}
+                    key={'delete'}
+                    onClick={handleClickOpen}
+                    variant="contained"
                   >
                     DELETE
                   </Button>
@@ -194,16 +201,16 @@ const SelectedStatsSection2 = (props: {
               <MuiTooltip key={`${label}-${index}`} title={tooltip} placement="top">
                 <span>
                   <Button
-                    key={label}
-                    data-testid={`${(label || '').toLowerCase()}-action`}
-                    variant="contained"
+                    className={classnames(`${bem}__cta--custom`, 'multi-button')}
                     color="primary"
-                    className="multi-button"
-                    onClick={func}
-                    disabled={disabled}
-                    data-kleeen-analytics-on="click"
-                    data-kleeen-analytics-name="click"
                     data-kleeen-analytics-attrs={`component:ActionsSection,action:${type.toLowerCase()}`}
+                    data-kleeen-analytics-name="click"
+                    data-kleeen-analytics-on="click"
+                    data-testid={`${(label || '').toLowerCase()}-action`}
+                    disabled={disabled}
+                    key={label}
+                    onClick={func}
+                    variant="contained"
                   >
                     {label}
                   </Button>
@@ -237,17 +244,17 @@ export const DeleteDialog = (props: DeleteDialogProps) => {
   };
 
   const handleDelete = () => {
-    props.entityActions['deleteRequest']({ id: props.selectedRows[0].id });
+    props.entityActions['deleteRequest']({ id: (props.selectedRows || [])[0].id });
     props.setOpen(false);
     props.setSelectedRows([]);
   };
 
   return (
     <Dialog
-      className={themeClass}
-      open={props.open}
-      onClose={handleClose}
       aria-labelledby="form-dialog-title"
+      className={classnames(`${bem}__dialog`, themeClass)}
+      onClose={handleClose}
+      open={props.open}
     >
       <DialogTitle id="form-dialog-title">{title}</DialogTitle>
       <DialogContent>
@@ -255,21 +262,21 @@ export const DeleteDialog = (props: DeleteDialogProps) => {
       </DialogContent>
       <DialogActions>
         <Button
-          onClick={handleClose}
-          data-testid="cancel-action"
-          data-kleeen-analytics-on="click"
-          data-kleeen-analytics-name="click"
           data-kleeen-analytics-attrs="component:DeleteDialog,action:cancel"
+          data-kleeen-analytics-name="click"
+          data-kleeen-analytics-on="click"
+          data-testid="cancel-action"
+          onClick={handleClose}
         >
           Cancel
         </Button>
         <Button
-          onClick={handleDelete}
           color="primary"
-          data-testid="delete-action"
-          data-kleeen-analytics-on="click"
-          data-kleeen-analytics-name="click"
           data-kleeen-analytics-attrs="component:DeleteDialog,action:delete"
+          data-kleeen-analytics-name="click"
+          data-kleeen-analytics-on="click"
+          data-testid="delete-action"
+          onClick={handleDelete}
         >
           Delete
         </Button>
@@ -284,17 +291,31 @@ export const SnackBarSection = (props: SnackBarSectionProps) => {
   return (
     <>
       <Slide in={props.showSnackBar} mountOnEnter unmountOnExit direction="up" timeout={400}>
-        <Paper className={`snack-bar ${props.showSnackBar ? 'visible' : 'hidden'}`}>
+        <Paper
+          className={classnames(
+            props.className,
+            `${bem}__snack-bar`,
+            `snack-bar ${props.showSnackBar ? 'visible' : 'hidden'}`,
+          )}
+        >
           <Toolbar>
             <Grid container spacing={3}>
               <Grid item xs={12} sm={2} />
               <Grid container item xs={12} sm={8} justify="center" alignItems="center">
-                {props.selectedRows.length > 0 && (
+                {(props.selectedRows || []).length > 0 && (
                   <>
-                    <TypographyBold variant="button" display="block" className="snackbar-text">
-                      {props.selectedRows.length}
+                    <TypographyBold
+                      variant="button"
+                      display="block"
+                      className={classnames(`${bem}__snack-bar--button`, 'snackbar-text')}
+                    >
+                      {(props.selectedRows || []).length}
                     </TypographyBold>
-                    <MuiTypography variant="caption" display="block" className="snackbar-text">
+                    <MuiTypography
+                      variant="caption"
+                      display="block"
+                      className={classnames(`${bem}__snack-bar--caption`, 'snackbar-text')}
+                    >
                       {props.entity} selected
                     </MuiTypography>
                   </>
@@ -306,11 +327,11 @@ export const SnackBarSection = (props: SnackBarSectionProps) => {
                 />
               </Grid>
               <Grid container item xs={12} sm={2} justify="flex-end" alignItems="center">
-                {props.selectedRows.length > 0 && (
+                {(props.selectedRows || []).length > 0 && (
                   <Button
                     variant="contained"
                     color="primary"
-                    className="action-button"
+                    className={classnames(`${bem}__cta--selected`, 'action-button')}
                     onClick={() => {
                       props.setSelectedRows([]);
                     }}
@@ -328,7 +349,7 @@ export const SnackBarSection = (props: SnackBarSectionProps) => {
         open={open}
         setOpen={setOpen}
         entityActions={props.entityActions}
-        selectedRows={props.selectedRows}
+        selectedRows={props.selectedRows || []}
         setSelectedRows={props.setSelectedRows}
       />
     </>

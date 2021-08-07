@@ -5,7 +5,7 @@
  */
 
 * {
-  transition: 100ms ease-in;
+  transition: var(--speed-fastest) ease-in;
   transition-property: background-color, border-color;
 }
 
@@ -45,7 +45,7 @@ button {
     visibility: hidden;
     opacity: 0;
     transform: scale(0.5);
-    transition: opacity 100ms ease-in 300ms, top 100ms ease-in 300ms, transform 100ms ease-in 300ms;
+    transition: opacity var(--speed-fastest) ease-in var(--speed-fast), top var(--speed-fastest) ease-in var(--speed-fast), transform var(--speed-fastest) ease-in var(--speed-fast);
     z-index: 1;
   }
 }

@@ -28,11 +28,8 @@ export const getListingData = (
   };
 
   if (input.entity === '[KS] GlobalApp') {
-    const propName = toPropertyName(camelcase(input.attributes[0].rawEntityName));
-    const rawData = KapiCrud.rawList(
-      camelcase(input.attributes[0].rawEntityName),
-      params,
-    ) as GenericEntityItem[];
+    const propName = toPropertyName(camelcase(input.attributes[0].name));
+    const rawData = KapiCrud.rawList(camelcase(input.attributes[0].name), params) as GenericEntityItem[];
 
     const format = addAttributesFormat(propName, input.attributes);
 

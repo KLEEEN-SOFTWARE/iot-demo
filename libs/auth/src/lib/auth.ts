@@ -1,3 +1,4 @@
+/* eslint-disable max-lines */
 import {
   AuthChannel,
   AuthErrorTypes,
@@ -24,9 +25,11 @@ import { isNilOrEmpty } from '@kleeen/common/utils';
 
 const logger = new Logger('AuthClass');
 
-const KLEEEN_AUTHORING_SYMBOL = (typeof Symbol !== 'undefined' && typeof Symbol.for === 'function'
-  ? Symbol.for('kleeen_authoring_default')
-  : '@@kleeen_authoring_default') as symbol;
+const KLEEEN_AUTHORING_SYMBOL = (
+  typeof Symbol !== 'undefined' && typeof Symbol.for === 'function'
+    ? Symbol.for('kleeen_authoring_default')
+    : '@@kleeen_authoring_default'
+) as symbol;
 
 /**
  * Provide authentication steps
@@ -223,14 +226,18 @@ export class AuthClass {
   }
 
   private async dispatchSignedIn(user: IUser, message: string): Promise<void> {
-    if (this.#authenticationHandler?.signedIn) {
-      try {
-        await this.#authenticationHandler?.signedIn(user);
-      } catch (error) {
-        console.error(error);
-      }
+    if (!this.#authenticationHandler?.signedIn) {
+      this.dispatchAuthEvent(AuthMessage.SignedIn, user, message);
     }
-    this.dispatchAuthEvent(AuthMessage.SignedIn, user, message);
+
+    try {
+      await this.#authenticationHandler?.signedIn(user);
+      this.dispatchAuthEvent(AuthMessage.SignedIn, user, message);
+    } catch (error) {
+      console.error(error);
+      this.signOut();
+      throw error;
+    }
   }
 
   //#endregion sign in implementation

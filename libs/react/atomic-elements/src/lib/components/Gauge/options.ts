@@ -1,7 +1,6 @@
+import { FormatProps, ValuesProps, VizCommonParams } from '@kleeen/types';
 import { GetSeveritiesResultProps, getSeverities } from '@kleeen/frontend/utils';
-import { ValuesProps, VizCommonParams } from '../../../types';
 
-import { FormatProps } from '@kleeen/types';
 import { YAxisPlotBandsOptions } from 'highcharts';
 import { generalBaseOptions } from '../generalBaseOptions';
 import { isEmpty } from 'ramda';

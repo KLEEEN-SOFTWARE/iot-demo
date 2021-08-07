@@ -1,16 +1,19 @@
 import './SelectList.scss';
 
 import { FormControl, makeStyles, styled } from '@material-ui/core';
-import MuiSelect, { SelectProps } from '@material-ui/core/Select';
-
 import { KsMenuItem } from '@kleeen/react/components';
-import MuiInputLabel from '@material-ui/core/InputLabel';
-import React from 'react';
 import { useTheme } from '@kleeen/react/hooks';
+import { ViewOption } from '@kleeen/types';
+import classnames from 'classnames';
+import MuiInputLabel from '@material-ui/core/InputLabel';
+import MuiSelect, { SelectProps } from '@material-ui/core/Select';
+import React from 'react';
+
+const bem = 'ks-select-list';
 
 interface SelectListProps extends SelectProps {
   onChange: (value: unknown, child?: React.ReactNode) => void;
-  options: { label: string; value: string | number }[];
+  options: { label: string; value: string | number; option?: ViewOption }[];
   taskName?: string;
 }
 
@@ -93,12 +96,17 @@ export const SelectList = ({
   const { themeClass } = useTheme();
   const styles = useStyles();
   return (
-    <FormControl variant="outlined" className="select-action-container">
-      <InputLabel id="select-action-label" className="select-action-label">
+    <FormControl
+      className={classnames(bem, 'select-action-container')}
+      data-testid="select-list"
+      variant="outlined"
+    >
+      <InputLabel id="select-action-label" className={classnames(`${bem}__label`, 'select-action-label')}>
         {label}
       </InputLabel>
       <Select
-        className="select-action"
+        className={classnames(`${bem}__action`, 'select-action')}
+        data-testid="select-list-action"
         disabled={options?.length === 1}
         id={id}
         key={value.toString()}
@@ -112,13 +120,14 @@ export const SelectList = ({
         value={value}
         {...rest}
       >
-        {options.map(({ value: optionValue, label: optionLabel }) => {
+        {options.map((option) => {
+          const { value: optionValue, label: optionLabel, option: rawOption } = option;
           return (
             <MenuItem
               key={optionValue}
               value={optionValue}
               onClick={() => {
-                onChange(optionValue, null);
+                onChange(optionValue, rawOption);
               }}
             >
               {optionLabel}

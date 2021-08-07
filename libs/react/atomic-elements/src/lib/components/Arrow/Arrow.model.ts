@@ -1,4 +1,4 @@
-import { TransformationProps } from '../../../types';
+import { TransformationProps } from '@kleeen/types';
 
 export interface ArrowProps {
   highlighted?: boolean;

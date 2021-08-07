@@ -4,9 +4,10 @@ import {
   baseSchema,
   customResolvers,
   customSchema,
-  dataSources,
+  dataSources as generatedDataSources,
   generatedResolvers,
   generatedSchema,
+  customDataSources,
 } from '../graphql';
 
 import { Express } from 'express';
@@ -16,6 +17,10 @@ import { plugins } from './plugins';
 export const configureGraphQLServer = async (app: Express): Promise<void> => {
   const typeDefs = [baseSchema, ...generatedSchema, ...customSchema];
   const resolvers = [baseResolvers, ...generatedResolvers, ...customResolvers];
+  const dataSources = () => ({
+    ...generatedDataSources(),
+    ...customDataSources(),
+  });
 
   const apolloServer = new ApolloServer({
     typeDefs,

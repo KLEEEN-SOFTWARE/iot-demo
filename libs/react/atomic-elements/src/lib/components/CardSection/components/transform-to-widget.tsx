@@ -23,19 +23,19 @@ import {
   TableWidget,
 } from '../../Widgets';
 import { ReactElement, useState } from 'react';
-import GridAreaSection from '../../GridAreaSection/GridAreaSection';
+import { Widget, WidgetTypes } from '@kleeen/types';
 
 import { AttributeInputEvents } from '@kleeen/react/hooks';
 import CardWidget from '../CardWidget';
+import GridAreaSection from '../../GridAreaSection/GridAreaSection';
 import { RenderWidgetProps } from '../CardWidget.model';
 import { VisualizationSelector } from '../../VisualizationSelector/VisualizationSelector';
 import WaterfallWidget from '../../Widgets/WaterfallWidget/WaterfallWidget';
-import { Widget } from '../../../../types';
-import { WidgetTypes } from '../../../../enums';
 import { isNilOrEmpty } from '@kleeen/common/utils';
 
 export function TransformToWidgetComponent({
   CardWidgetElement = CardWidget,
+  disableHeightCalculation = false,
   hideSaveAndClose,
   onInputChange,
   registerEvents,
@@ -43,6 +43,7 @@ export function TransformToWidgetComponent({
   widget,
 }: {
   CardWidgetElement?: any;
+  disableHeightCalculation?: boolean;
   hideSaveAndClose?: boolean;
   onInputChange?: (hasChanged: boolean) => void;
   registerEvents?: (event: AttributeInputEvents) => void;
@@ -65,9 +66,17 @@ export function TransformToWidgetComponent({
   }
 
   return widget.chartType === WidgetTypes.CUSTOM ? (
-    renderWidget({ preferredWidget: getChartTypeToRender(), widget, taskName, onInputChange, registerEvents })
+    renderWidget({
+      disableHeightCalculation,
+      onInputChange,
+      preferredWidget: getChartTypeToRender(),
+      registerEvents,
+      taskName,
+      widget,
+    })
   ) : (
     <CardWidgetElement
+      disableHeightCalculation={disableHeightCalculation}
       icon={false}
       selectedViz={preferredWidgetIndex}
       title={widget.title}
@@ -88,6 +97,7 @@ export function TransformToWidgetComponent({
         registerEvents,
         taskName,
         widget,
+        disableHeightCalculation,
       })}
     </CardWidgetElement>
   );
@@ -95,6 +105,7 @@ export function TransformToWidgetComponent({
 
 //#region Private members
 function renderWidget({
+  disableHeightCalculation,
   hideSaveAndClose,
   onInputChange,
   preferredWidget,
@@ -122,6 +133,7 @@ function renderWidget({
       return (
         <BubbleChartWidget
           attributes={widget.attributes}
+          disableHeightCalculation={disableHeightCalculation}
           params={widget.params}
           taskName={taskName}
           widgetId={widget.id}
@@ -157,12 +169,10 @@ function renderWidget({
           widgetId={widget.id}
         />
       );
-
     case WidgetTypes.CONFIG_TABLE:
       return (
         <ConfigTableWidget
           actions={widget.actions}
-          addModalAttributes={widget.addModalAttributes}
           attributes={widget.attributes}
           onInputChange={onInputChange}
           params={widget.params}
@@ -173,7 +183,14 @@ function renderWidget({
       );
 
     case WidgetTypes.CUSTOM: {
-      return <CustomWidget widget={widget} onInputChange={onInputChange} registerEvents={registerEvents} />;
+      return (
+        <CustomWidget
+          disableHeightCalculation={disableHeightCalculation}
+          widget={widget}
+          onInputChange={onInputChange}
+          registerEvents={registerEvents}
+        />
+      );
     }
 
     case WidgetTypes.CUSTOM_ACTION:

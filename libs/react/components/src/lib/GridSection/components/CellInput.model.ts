@@ -9,6 +9,6 @@ export interface CellInputProps {
   editingCell: EditingCell;
   setEditingCell: React.Dispatch<React.SetStateAction<{}>>;
   row: any; // TODO add row types everywhere
-  rowDisplayValue: string;
+  rowDisplayValue: string | number | boolean;
   translate?: Translate;
 }

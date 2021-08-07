@@ -1,3 +1,213 @@
+## [2.2.2](https://github.com/KLEEEN-SOFTWARE/template/compare/2.2.1...2.2.2) (2021-08-05)
+
+
+### Bug Fixes
+
+* **navtop:** fixed nav top missing help link url ([#1086](https://github.com/KLEEEN-SOFTWARE/template/issues/1086)) ([8b2bca7](https://github.com/KLEEEN-SOFTWARE/template/commit/8b2bca70e2dbc0ba020494496d0db6cfba8aa3ce))
+
+## [2.2.1](https://github.com/KLEEEN-SOFTWARE/template/compare/2.2.0...2.2.1) (2021-08-05)
+
+
+### Bug Fixes
+
+* **color-picker:** Color picker on add modal - [Color picker on add modal] ([#1078](https://github.com/KLEEEN-SOFTWARE/template/issues/1078)) ([9559c82](https://github.com/KLEEEN-SOFTWARE/template/commit/9559c8290e825ac31b26edd83b76fd16485e75f3))
+
+# [2.2.0](https://github.com/KLEEEN-SOFTWARE/template/compare/2.1.1...2.2.0) (2021-08-04)
+
+
+### Bug Fixes
+
+* **cloud:** add missing types and fix format to reduce conflicts ([#1063](https://github.com/KLEEEN-SOFTWARE/template/issues/1063)) ([fda1c0b](https://github.com/KLEEEN-SOFTWARE/template/commit/fda1c0bf94487f3442a6150e7b728870f110c271))
+
+
+### Features
+
+* **summary-card:** Summary cards on report view ([#1069](https://github.com/KLEEEN-SOFTWARE/template/issues/1069)) ([c87fa13](https://github.com/KLEEEN-SOFTWARE/template/commit/c87fa137113d15f1351ae29f3bca23cdea2a36cb))
+
+## [2.1.1](https://github.com/KLEEEN-SOFTWARE/template/compare/2.1.0...2.1.1) (2021-07-30)
+
+
+### Bug Fixes
+
+* **components:** Hovering on the entity name doesn't request backend multiple times [KSE3 3779] ([#1071](https://github.com/KLEEEN-SOFTWARE/template/issues/1071)) ([95cbfaa](https://github.com/KLEEEN-SOFTWARE/template/commit/95cbfaade54183c20d6f295c0801b09fb0f51e16))
+
+# [2.1.0](https://github.com/KLEEEN-SOFTWARE/template/compare/2.0.0...2.1.0) (2021-07-29)
+
+
+### Bug Fixes
+
+* **navigation:** fix company name on navigations ([#1054](https://github.com/KLEEEN-SOFTWARE/template/issues/1054)) ([143e17c](https://github.com/KLEEEN-SOFTWARE/template/commit/143e17c6f84945ced54b50dd0fb4d6af8b615c67))
+* **refresh-control:** restore refresh control selected indicator ([#1055](https://github.com/KLEEEN-SOFTWARE/template/issues/1055)) ([728ebf1](https://github.com/KLEEEN-SOFTWARE/template/commit/728ebf1b13f3ca0ea909691f6cd172d0d007260e))
+* **summary-title:** deprecate summary title ([#1064](https://github.com/KLEEEN-SOFTWARE/template/issues/1064)) ([d5b60ca](https://github.com/KLEEEN-SOFTWARE/template/commit/d5b60ca6202b8198b3bae07595a07a2181c16555))
+
+
+### Features
+
+* **avatar:** show avatar on left summary panel when available ([#1058](https://github.com/KLEEEN-SOFTWARE/template/issues/1058)) ([8803611](https://github.com/KLEEEN-SOFTWARE/template/commit/8803611db9dbad3574aca326e39a8db39f04adc1))
+* **elements:** add cross linking interaction ([#1062](https://github.com/KLEEEN-SOFTWARE/template/issues/1062)) ([c7b3091](https://github.com/KLEEEN-SOFTWARE/template/commit/c7b3091fb7856bafa10d794c6a8a886606e172d8))
+* **hooks:** avoid accumulated events for custom config table ([#1060](https://github.com/KLEEEN-SOFTWARE/template/issues/1060)) ([dbfed5b](https://github.com/KLEEEN-SOFTWARE/template/commit/dbfed5b9e29ea3a5d03af6e8cfbfecf167ab9978))
+
+# [2.0.0](https://github.com/KLEEEN-SOFTWARE/template/compare/1.47.1...2.0.0) (2021-07-22)
+
+
+* Merge pull request #1057 from KLEEEN-SOFTWARE/release/1.56.0-w-29 ([1f0aa72](https://github.com/KLEEEN-SOFTWARE/template/commit/1f0aa7240ba0c5195ddd50ad3ac9975292074191)), closes [#1057](https://github.com/KLEEEN-SOFTWARE/template/issues/1057)
+
+
+### Bug Fixes
+
+* **auth:** avoid signed in workflow if an error occurred ([#1044](https://github.com/KLEEEN-SOFTWARE/template/issues/1044)) ([e71b6d5](https://github.com/KLEEEN-SOFTWARE/template/commit/e71b6d52665c7fb7d9b9784139effd53c2bbec16))
+* **develop:** fix Long Text Ellipsis/Action Delete ([a4e33cf](https://github.com/KLEEEN-SOFTWARE/template/commit/a4e33cf1b6839b13b157f38478f020bbfb6a25a9))
+* **develop:** long Text Ellipsis/ContextMenu and the width calculation in simpleList works good ([#1045](https://github.com/KLEEEN-SOFTWARE/template/issues/1045)) ([4db5e20](https://github.com/KLEEEN-SOFTWARE/template/commit/4db5e20f144b55fea974d0fa12e5643b5f03a1bd))
+* **freefromcellinput:** problem when entering an enter inside the input cell ([#1049](https://github.com/KLEEEN-SOFTWARE/template/issues/1049)) ([abd32ce](https://github.com/KLEEEN-SOFTWARE/template/commit/abd32ce9f562a3f8db1b825d0a28f92e5332b6bf))
+* **help-icon:** use the right class for sizing the help icon ([#1037](https://github.com/KLEEEN-SOFTWARE/template/issues/1037)) ([39cd2eb](https://github.com/KLEEEN-SOFTWARE/template/commit/39cd2eb318d07610325bbf5ab0520d222581ec8a))
+* **layout:** fix render and snackbar adjust ([bdde902](https://github.com/KLEEEN-SOFTWARE/template/commit/bdde90275c80af793502b187b97368bb42f62f98))
+* **nav-top:** add wrapper for menu to preserve its size with the new grid ([#1050](https://github.com/KLEEEN-SOFTWARE/template/issues/1050)) ([971d9a1](https://github.com/KLEEEN-SOFTWARE/template/commit/971d9a12e753a4be75a4aa8f8323c42bd2722042))
+* **navigation:** failure at logout ([#1040](https://github.com/KLEEEN-SOFTWARE/template/issues/1040)) ([e18dbc6](https://github.com/KLEEEN-SOFTWARE/template/commit/e18dbc635256cd489e48aceaa142076979443397))
+* **react-atomic-elements:** send referenceId on config input payload ([#1046](https://github.com/KLEEEN-SOFTWARE/template/issues/1046)) ([daf7437](https://github.com/KLEEEN-SOFTWARE/template/commit/daf74379946ed7389817e2b85e0fd87f85719b23))
+* **table:** delete is being used by row ([#1043](https://github.com/KLEEEN-SOFTWARE/template/issues/1043)) ([678d4c5](https://github.com/KLEEEN-SOFTWARE/template/commit/678d4c5ba1d6c17bf50b8afddd050c9a3d8b94a2))
+
+
+### Features
+
+* **atomic-elements:** refactor components to align with the current implementation ([#1004](https://github.com/KLEEEN-SOFTWARE/template/issues/1004)) ([5fcb558](https://github.com/KLEEEN-SOFTWARE/template/commit/5fcb55814b6b34871da6f2df2a1671694cf13e73))
+* **develop:** add customURL in nav-top, nav-left, and hamburguer menu ([ec2e638](https://github.com/KLEEEN-SOFTWARE/template/commit/ec2e638fcc6de8fe40cf4dc9b5b24814af47243a))
+* **layout:** Preview panel ([#1038](https://github.com/KLEEEN-SOFTWARE/template/issues/1038)) ([a00cb37](https://github.com/KLEEEN-SOFTWARE/template/commit/a00cb374fe6f1f9bd2bfbaf19261f39c6dc6230c))
+* **nav:** add branding names to top and left navbars[KSE3-3537] ([#1048](https://github.com/KLEEEN-SOFTWARE/template/issues/1048)) ([2621218](https://github.com/KLEEEN-SOFTWARE/template/commit/262121898fb2c743b8f2d7b00b56b5a238be219b))
+
+
+### BREAKING CHANGES
+
+* Update the component library
+
+## [1.47.1](https://github.com/KLEEEN-SOFTWARE/template/compare/1.47.0...1.47.1) (2021-07-07)
+
+
+### Bug Fixes
+
+* **components:** end user preferences required components ([18c1bf6](https://github.com/KLEEEN-SOFTWARE/template/commit/18c1bf6e1069b7cf4c7148834687c99814c01746))
+
+# [1.47.0](https://github.com/KLEEEN-SOFTWARE/template/compare/1.46.0...1.47.0) (2021-07-05)
+
+
+### Bug Fixes
+
+* **component:** fix missing prop custom widgets ([#1024](https://github.com/KLEEEN-SOFTWARE/template/issues/1024)) ([b920f27](https://github.com/KLEEEN-SOFTWARE/template/commit/b920f2744c54731eb82c32ff38717d11e2270f0f))
+* **component:** fix timepicker error and styles ([#1019](https://github.com/KLEEEN-SOFTWARE/template/issues/1019)) ([82ef576](https://github.com/KLEEEN-SOFTWARE/template/commit/82ef5760d404d02e24e7d9bdf26cf34dc963d251))
+* **cross-link-on-display-media:** fix of width ([#1028](https://github.com/KLEEEN-SOFTWARE/template/issues/1028)) ([ffce6b0](https://github.com/KLEEEN-SOFTWARE/template/commit/ffce6b04ffa90d875621f1a13d97b2d8cfb6876f))
+* **develop:** fix chart  with example data ([#1014](https://github.com/KLEEEN-SOFTWARE/template/issues/1014)) ([49fab85](https://github.com/KLEEEN-SOFTWARE/template/commit/49fab856f8fae79a18e32021c4dd94f1aecdd13f))
+* **elements:** fix order cart title styles ([#1027](https://github.com/KLEEEN-SOFTWARE/template/issues/1027)) ([d1fa6f8](https://github.com/KLEEEN-SOFTWARE/template/commit/d1fa6f8cc4357095db4b461670ff694ba2ca4a83))
+* **list:** avoid infinite loop re-render ([#1017](https://github.com/KLEEEN-SOFTWARE/template/issues/1017)) ([d377fc6](https://github.com/KLEEEN-SOFTWARE/template/commit/d377fc6ec2b2e3ef4c88e087906499e038b93f08))
+
+
+### Features
+
+* **bubble-chart-report:** fix on simple list ([#1026](https://github.com/KLEEEN-SOFTWARE/template/issues/1026)) ([5c70c9b](https://github.com/KLEEEN-SOFTWARE/template/commit/5c70c9b792f12306150584669518c8a45e9c9924))
+* **components:** add upload optional dependency to reset the state ([#1008](https://github.com/KLEEEN-SOFTWARE/template/issues/1008)) ([b0073ab](https://github.com/KLEEEN-SOFTWARE/template/commit/b0073ab10d64ae29fff8f1b2ded22991af1b8c20))
+* **cross-link:** cross-link on display media ([#1023](https://github.com/KLEEEN-SOFTWARE/template/issues/1023)) ([4049c27](https://github.com/KLEEEN-SOFTWARE/template/commit/4049c27ade5a69c0dfc328d57c3de1745cf45895))
+* **topnav-icons:** add icons to top navigation menu [KSE-3434] ([#1025](https://github.com/KLEEEN-SOFTWARE/template/issues/1025)) ([aed2370](https://github.com/KLEEEN-SOFTWARE/template/commit/aed2370c764f5116f86a10bc07578c3c86bd3159))
+
+# [1.46.0](https://github.com/KLEEEN-SOFTWARE/template/compare/1.45.0...1.46.0) (2021-06-29)
+
+
+### Bug Fixes
+
+* **access-manager:** set GUEST as the default role ([#908](https://github.com/KLEEEN-SOFTWARE/template/issues/908)) ([e66f4ed](https://github.com/KLEEEN-SOFTWARE/template/commit/e66f4ed2ba8d928efb86744b52afc9d393d441d4))
+* **api:** add the right structure for the custom graphql ([#958](https://github.com/KLEEEN-SOFTWARE/template/issues/958)) ([27e5668](https://github.com/KLEEEN-SOFTWARE/template/commit/27e566830e9bea6796e859ecfdebb270b58b1f89))
+* **api:** changing data generation ([d4d0228](https://github.com/KLEEEN-SOFTWARE/template/commit/d4d0228307b58693c862e6c811feff75230b6a5e))
+* **api:** changing data generation ([#935](https://github.com/KLEEEN-SOFTWARE/template/issues/935)) ([3dd7fd5](https://github.com/KLEEEN-SOFTWARE/template/commit/3dd7fd5643866ac48027f6049f584ce7915cbfd9))
+* **api:** fix ts errors ([#838](https://github.com/KLEEEN-SOFTWARE/template/issues/838)) ([f99a67b](https://github.com/KLEEEN-SOFTWARE/template/commit/f99a67b461463c48e0d81f506ae29c6d07c6d5f6))
+* **atomic-elements:** use the right onSelect logic in the radio button ([#948](https://github.com/KLEEEN-SOFTWARE/template/issues/948)) ([2bc9dfd](https://github.com/KLEEEN-SOFTWARE/template/commit/2bc9dfd0cbc3824310ba71f13a97d8f235708eb1))
+* **auth:** extends the authentication to notify when a user signed ([#927](https://github.com/KLEEEN-SOFTWARE/template/issues/927)) ([0a616a6](https://github.com/KLEEEN-SOFTWARE/template/commit/0a616a6c757366ddbb6339796b6b78b483ab93a6))
+* **card-overlap:** fix card overlap ([#979](https://github.com/KLEEEN-SOFTWARE/template/issues/979)) ([fdc1828](https://github.com/KLEEEN-SOFTWARE/template/commit/fdc18289e91fcbcb7b4b629ccac4da504c9ba6d7))
+* **card-section:** address pr feedback ([6dbee40](https://github.com/KLEEEN-SOFTWARE/template/commit/6dbee408b510e0343ad7be82fc53de446c23c473))
+* **cloud:** add the app version as part of the error page ([#916](https://github.com/KLEEEN-SOFTWARE/template/issues/916)) ([631c27a](https://github.com/KLEEEN-SOFTWARE/template/commit/631c27a3aebe2a57d46d83fc05ac22b5b581337d))
+* **component:** fix console errors ([#997](https://github.com/KLEEEN-SOFTWARE/template/issues/997)) ([ee78d29](https://github.com/KLEEEN-SOFTWARE/template/commit/ee78d29d52c677ab6265a445be5dfe6e7014402f))
+* **components:** add entity name prop to the config table actions ([#991](https://github.com/KLEEEN-SOFTWARE/template/issues/991)) ([980308f](https://github.com/KLEEEN-SOFTWARE/template/commit/980308f3e9d700015eb9c22dd9b4a911c551c87b))
+* **components:** export confirmation dialog as component ([#957](https://github.com/KLEEEN-SOFTWARE/template/issues/957)) ([7e1ac47](https://github.com/KLEEEN-SOFTWARE/template/commit/7e1ac4791b346642b77e97f39fea3855bfcac6d8))
+* **components:** remove unnecessary max height rule ([#981](https://github.com/KLEEEN-SOFTWARE/template/issues/981)) ([61e78c5](https://github.com/KLEEEN-SOFTWARE/template/commit/61e78c57df183eca509b854665cdbb9e0540d67b))
+* **components:** State cleanup - login with different accounts [KSE3-2727] ([#989](https://github.com/KLEEEN-SOFTWARE/template/issues/989)) ([1f10824](https://github.com/KLEEEN-SOFTWARE/template/commit/1f10824177250df11fb42e9235df3181601d7ac0))
+* **components:** table order on delete, views order on access management ([#928](https://github.com/KLEEEN-SOFTWARE/template/issues/928)) ([8fa5031](https://github.com/KLEEEN-SOFTWARE/template/commit/8fa50312820dfe52d9becb4f808f2f6bd00ca8e6))
+* **components-react:** fix ts issues in the clickable chips ([#974](https://github.com/KLEEEN-SOFTWARE/template/issues/974)) ([6141da1](https://github.com/KLEEEN-SOFTWARE/template/commit/6141da124acc28319a8b708388d23f80b4780bf9))
+* **config:** restore versioning ([#1005](https://github.com/KLEEEN-SOFTWARE/template/issues/1005)) ([8c3e2b7](https://github.com/KLEEEN-SOFTWARE/template/commit/8c3e2b7bdfd8f1c815b6ab623ebfc41560557813))
+* **config-input-widget:** allow to remove the default landing page ([#924](https://github.com/KLEEEN-SOFTWARE/template/issues/924)) ([1754885](https://github.com/KLEEEN-SOFTWARE/template/commit/1754885d5764379ce33a391f261dd377b730c6fd))
+* **config-table:** avoid memory leak on KsConfigTable ([c1cd5fd](https://github.com/KLEEEN-SOFTWARE/template/commit/c1cd5fd2d16b1f7580f4729618c2a1d645c274aa))
+* **config-table:** avoid memory leak on KsConfigTable ([#901](https://github.com/KLEEEN-SOFTWARE/template/issues/901)) ([b103669](https://github.com/KLEEEN-SOFTWARE/template/commit/b103669662253add7110cded51500022dc3e2f01))
+* **data aggr:** fix Data Aggr format and data generation ([#939](https://github.com/KLEEEN-SOFTWARE/template/issues/939)) ([1a544a0](https://github.com/KLEEEN-SOFTWARE/template/commit/1a544a026e817f8c66c6af84bce0e1a5af38e448))
+* **develop:** add ellipsis and tooltip on nav bar buttons ([#987](https://github.com/KLEEEN-SOFTWARE/template/issues/987)) ([7e1cffe](https://github.com/KLEEEN-SOFTWARE/template/commit/7e1cffe6b68a44b8b2032f2c930926504b00bea5))
+* **develop:** fix crosslinkins multiples on chips ([#975](https://github.com/KLEEEN-SOFTWARE/template/issues/975)) ([64d2ecc](https://github.com/KLEEEN-SOFTWARE/template/commit/64d2ecc738744c468618cf006eda7caa8af4f7e8))
+* **develop:** fix scrollbar in summarypanel ([#955](https://github.com/KLEEEN-SOFTWARE/template/issues/955)) ([178b21f](https://github.com/KLEEEN-SOFTWARE/template/commit/178b21fecb69bebc87fe5e54b7551a5278b57c1b))
+* **dialog:** handle dialog title height with variable ([c075c07](https://github.com/KLEEEN-SOFTWARE/template/commit/c075c0721453bff9480bc4e038fdd2fa73e447b3))
+* **dialog:** handle dialog title height with variable ([#877](https://github.com/KLEEEN-SOFTWARE/template/issues/877)) ([e88d317](https://github.com/KLEEEN-SOFTWARE/template/commit/e88d317791baf10a4a09a40e0c6107846f6fa6c8))
+* **elements:** clear autocomplete list when is selected an option ([#956](https://github.com/KLEEEN-SOFTWARE/template/issues/956)) ([4859e71](https://github.com/KLEEEN-SOFTWARE/template/commit/4859e71ef9b8e615da68e9cb20fd054cd3c20190))
+* **elements:** Summary Stats layout improvement ([#990](https://github.com/KLEEEN-SOFTWARE/template/issues/990)) ([3e2d51b](https://github.com/KLEEEN-SOFTWARE/template/commit/3e2d51b6bbee7f5aaf54a7b63e5ae19d43505260))
+* **filters:** validate array values on the filters applied [KSE3-3501 2] ([#1009](https://github.com/KLEEEN-SOFTWARE/template/issues/1009)) ([abc5b02](https://github.com/KLEEEN-SOFTWARE/template/commit/abc5b02a882d7abff31b35a77d15973ed02bf43e))
+* **fix-use-filter:** fix filter when it gets empty ([#999](https://github.com/KLEEEN-SOFTWARE/template/issues/999)) ([f8bc44c](https://github.com/KLEEEN-SOFTWARE/template/commit/f8bc44c44da285d998b51df1cc6d2e25795a94be))
+* **hook hover intent:** Tooltip is not working on summary stats ([#1013](https://github.com/KLEEEN-SOFTWARE/template/issues/1013)) ([5314c29](https://github.com/KLEEEN-SOFTWARE/template/commit/5314c29ce266e00f2e6061708ba13b365db3a18f))
+* **icons:** add model file for svg icon ([12469bf](https://github.com/KLEEEN-SOFTWARE/template/commit/12469bf67fb1795ad7cf63dd5a2f135f9c6a3ba4))
+* **kapi:** fix data aggr generation ([#929](https://github.com/KLEEEN-SOFTWARE/template/issues/929)) ([601edd9](https://github.com/KLEEEN-SOFTWARE/template/commit/601edd98c97bfabcb3f95cf44f31b7514ae52f95))
+* **kapi:** update casualjs library ([#914](https://github.com/KLEEEN-SOFTWARE/template/issues/914)) ([8b99060](https://github.com/KLEEEN-SOFTWARE/template/commit/8b990601a553b8f10e5b931c6cf13b43b3f10546))
+* **kapi crud:** fix error on display media with aggrs ([#944](https://github.com/KLEEEN-SOFTWARE/template/issues/944)) ([2f5c88f](https://github.com/KLEEEN-SOFTWARE/template/commit/2f5c88f5dff082cd287c31060e7f943a99dc7e0b))
+* **logo:** update new gray logo ([16a7ffc](https://github.com/KLEEEN-SOFTWARE/template/commit/16a7ffc6871a25ab44d219d23e8bfe272aa599e2))
+* **main:** Things overview not working on prod ([#964](https://github.com/KLEEEN-SOFTWARE/template/issues/964)) ([ad2b1e8](https://github.com/KLEEEN-SOFTWARE/template/commit/ad2b1e86f321bc3d62b30a691a22b5a2fad209c9))
+* **media-query:** address pr feedback ([fe9d731](https://github.com/KLEEEN-SOFTWARE/template/commit/fe9d7311c9511bda76b25e47e092c3602230a35d))
+* **modals:** Missing translations on Modals ([#1002](https://github.com/KLEEEN-SOFTWARE/template/issues/1002)) ([4544893](https://github.com/KLEEEN-SOFTWARE/template/commit/454489387541cff2648829aac9fddd2c294e806e))
+* **nav-bar:** create variable for left nav header color ([2998ea6](https://github.com/KLEEEN-SOFTWARE/template/commit/2998ea680931928a1742be31e14099902852c5f9))
+* **navigation:** remove console.log ([ab9c41f](https://github.com/KLEEEN-SOFTWARE/template/commit/ab9c41f4025c76d7da197bf77243f1b786af791f))
+* **radio-group:** error in structure the hook and type component ([#909](https://github.com/KLEEEN-SOFTWARE/template/issues/909)) ([addea17](https://github.com/KLEEEN-SOFTWARE/template/commit/addea17864c84aa4df91031df9a00ae353eee0ff))
+* **radio-group:** set the right value in the radio group ([#921](https://github.com/KLEEEN-SOFTWARE/template/issues/921)) ([bfd54e8](https://github.com/KLEEEN-SOFTWARE/template/commit/bfd54e8b20cb150bfd25f6141a4c193bb3adcee8))
+* **radio-group:** validation data options ([#951](https://github.com/KLEEEN-SOFTWARE/template/issues/951)) ([865ffeb](https://github.com/KLEEEN-SOFTWARE/template/commit/865ffeb2d43fa908ee97bbdb0e9f9583ec3be29d))
+* **radiogroup:** Error in the construction of the object to return in a radiogroup ([#906](https://github.com/KLEEEN-SOFTWARE/template/issues/906)) ([220ae56](https://github.com/KLEEEN-SOFTWARE/template/commit/220ae567a47191f0dac77867e724646dea788524))
+* **react-atomic-elements:** add modal is not showing required fields ([fe0a4e0](https://github.com/KLEEEN-SOFTWARE/template/commit/fe0a4e0f52e0e3d3d1af66563cd5c1ed3e9368b6))
+* **react-atomic-elements:** add modal is not showing required fields ([#886](https://github.com/KLEEEN-SOFTWARE/template/issues/886)) ([094172b](https://github.com/KLEEEN-SOFTWARE/template/commit/094172b0ea7971f43620ed61f2e4723377dd0437))
+* **react-compoents:** validate the displayColumnAttribute ([#861](https://github.com/KLEEEN-SOFTWARE/template/issues/861)) ([09d26ff](https://github.com/KLEEEN-SOFTWARE/template/commit/09d26ff773d4b09ce88227ddb5fa98956c48ea84))
+* **react-components:** add disabled styles to checkbox like components ([#895](https://github.com/KLEEEN-SOFTWARE/template/issues/895)) ([80c8607](https://github.com/KLEEEN-SOFTWARE/template/commit/80c8607afc40e2719f3e32ca42df7d079a8173fb))
+* **react-components:** fix context cell text truncate ([#879](https://github.com/KLEEEN-SOFTWARE/template/issues/879)) ([4a81f04](https://github.com/KLEEEN-SOFTWARE/template/commit/4a81f04639f9a3a17d0aff09f6454812411175b8))
+* **react-components:** validate if the cellItems has a display value ([#973](https://github.com/KLEEEN-SOFTWARE/template/issues/973)) ([50b31cf](https://github.com/KLEEEN-SOFTWARE/template/commit/50b31cf3182ad8ec6a002442502d2736cc9208fd))
+* **react-hooks:** fix default interval date ([#917](https://github.com/KLEEEN-SOFTWARE/template/issues/917)) ([4689aae](https://github.com/KLEEEN-SOFTWARE/template/commit/4689aaea62842a66716802082d73a2d41bcaf613))
+* **react-hooks:** fix format of decimal digits and allow customization ([#934](https://github.com/KLEEEN-SOFTWARE/template/issues/934)) ([5f7fe5a](https://github.com/KLEEEN-SOFTWARE/template/commit/5f7fe5a59341ef47d4f7fc1efd16add319998781))
+* **react-hooks:** fix severity score and integer decimal digits ([#960](https://github.com/KLEEEN-SOFTWARE/template/issues/960)) ([29aa62f](https://github.com/KLEEEN-SOFTWARE/template/commit/29aa62fdcb77ace4eb69dfec97905b5aac21e59f))
+* **refresh control:** reset refresh control on auto-refresh event ([#995](https://github.com/KLEEEN-SOFTWARE/template/issues/995)) ([d4fca7e](https://github.com/KLEEEN-SOFTWARE/template/commit/d4fca7e7d0bc949c168d7b125dc470ff367f8408))
+* **report:** add media query to handle narrow report view ([cc37776](https://github.com/KLEEEN-SOFTWARE/template/commit/cc37776b13bc33426192962cef8b20b4f9ca72e5))
+* donut ([3b230e9](https://github.com/KLEEEN-SOFTWARE/template/commit/3b230e95e873dbea07fd0705e746b3c4561c06ad))
+* **sign-in:** set max width and height for the logo ([1572e6a](https://github.com/KLEEEN-SOFTWARE/template/commit/1572e6aff2cd8f1b656d8c0e9e2835ab23dcae3e))
+* **summary-statistics:** hide SummaryLayout when there is only one transformation ([c4fe5d5](https://github.com/KLEEEN-SOFTWARE/template/commit/c4fe5d5027bc1ec4002395bbaefcdeb35606e787))
+* **summary-stats:** move styles for primary statistic ([5102d35](https://github.com/KLEEEN-SOFTWARE/template/commit/5102d35601d7a65459d23a1d5b35be7cf5fb6eb6))
+* **theme:** fix missing color on filter bar ([a17f8df](https://github.com/KLEEEN-SOFTWARE/template/commit/a17f8dfb44604e74d469a5346efd428e7e9c4fe0))
+* **typescript:** add missing model ([c0d762e](https://github.com/KLEEEN-SOFTWARE/template/commit/c0d762e8954a013f96735f1531f02fcefb4a1529))
+* **viz:** fixed  random number generator ([#963](https://github.com/KLEEEN-SOFTWARE/template/issues/963)) ([4e35f8a](https://github.com/KLEEEN-SOFTWARE/template/commit/4e35f8a5c1ecdcf41ddf3258f123fb6f9ecdbc13))
+
+
+### Features
+
+* **add dialog:** update add dialog to support select only inputs ([#865](https://github.com/KLEEEN-SOFTWARE/template/issues/865)) ([4cd4fb6](https://github.com/KLEEEN-SOFTWARE/template/commit/4cd4fb656b941bcb23a6555f267ed34ffd76db1b))
+* **api:** add custom operations interface ([#943](https://github.com/KLEEEN-SOFTWARE/template/issues/943)) ([b58323b](https://github.com/KLEEEN-SOFTWARE/template/commit/b58323bc5c13701716c698a52fe159314f299177))
+* **appstack:** add new appstack theme ([1ee8c0d](https://github.com/KLEEEN-SOFTWARE/template/commit/1ee8c0d0d68c2de84a1fe738de965eccb2747e2b))
+* **auto-refresh:** automatically refresh data through web socket ([#982](https://github.com/KLEEEN-SOFTWARE/template/issues/982)) ([e0bb4ef](https://github.com/KLEEEN-SOFTWARE/template/commit/e0bb4ef434f8025042570c1f471ed6a53d61b9f9))
+* **business-theme:** update styles of list and navbar ([87f327e](https://github.com/KLEEEN-SOFTWARE/template/commit/87f327e02a869ffbb2f045c892b3a450822011ee))
+* **business-theme:** update styles of list and navbar ([#891](https://github.com/KLEEEN-SOFTWARE/template/issues/891)) ([10bf618](https://github.com/KLEEEN-SOFTWARE/template/commit/10bf618117ac215923c1e15225c2ab5c224c30a0))
+* **charts:** increase macro micro chart height ([#881](https://github.com/KLEEEN-SOFTWARE/template/issues/881)) ([7612808](https://github.com/KLEEEN-SOFTWARE/template/commit/7612808518b4feb580a0f66996c1f981e19a899b))
+* **cloud:** split utils library into front-end, back-end and common libraries ([#866](https://github.com/KLEEEN-SOFTWARE/template/issues/866)) ([2ff1fcd](https://github.com/KLEEEN-SOFTWARE/template/commit/2ff1fcd19f51bf0487b6bed6b22ae6674b4e42b6))
+* **components:** add custom icons [KSE3-2682] ([#870](https://github.com/KLEEEN-SOFTWARE/template/issues/870)) ([a83a60c](https://github.com/KLEEEN-SOFTWARE/template/commit/a83a60c3e512a36b6616ed45a22eca8c09322970))
+* **components:** add open in a new tab menu item to context menu [KSE3-3365] ([#977](https://github.com/KLEEEN-SOFTWARE/template/issues/977)) ([738d053](https://github.com/KLEEEN-SOFTWARE/template/commit/738d053a31a082531e0a4380f9bf2a943690e13e))
+* **components:** add tooltip to icon ([481787f](https://github.com/KLEEEN-SOFTWARE/template/commit/481787ffa5b149c29b8b2b5df518487c99c5834b))
+* **components:** reorder Views [KSE3-2697] ([#893](https://github.com/KLEEEN-SOFTWARE/template/issues/893)) ([f960e1e](https://github.com/KLEEEN-SOFTWARE/template/commit/f960e1ea805d04df090b5535605b41413f6431e7))
+* **context menu:** hover intent on contextual menu ([#1012](https://github.com/KLEEEN-SOFTWARE/template/issues/1012)) ([e1f917d](https://github.com/KLEEEN-SOFTWARE/template/commit/e1f917d933fca08730286015af63575cf1d0dad9))
+* **elements:** Severity SVGs ([#976](https://github.com/KLEEEN-SOFTWARE/template/issues/976)) ([e195ecf](https://github.com/KLEEEN-SOFTWARE/template/commit/e195ecfc37f54d85bf1d495491f420cf12b3f5db))
+* **header-config-table:** styel of header without DnD ([a8d1bb6](https://github.com/KLEEEN-SOFTWARE/template/commit/a8d1bb6168dbffac621e7a7f92ac470ad1cda49c))
+* **icons:** add icons to use randomly in nav ([ba1e0b4](https://github.com/KLEEEN-SOFTWARE/template/commit/ba1e0b4fbe61e2b0857b92a540399a7f6c3161ac))
+* **icons:** evolve icon registry into a folder-like structure ([87329b2](https://github.com/KLEEEN-SOFTWARE/template/commit/87329b2c7cf47cdd161c705d38d931753ed55598))
+* **icons:** make icon optional on left nav ([35765ce](https://github.com/KLEEEN-SOFTWARE/template/commit/35765ceba62c3a16923c6c8564380328cefc7c6f))
+* **navigation-icons:** simulated generation of icons ([d06f226](https://github.com/KLEEEN-SOFTWARE/template/commit/d06f2265af094e581014fece87b3273d23fa4cce))
+* **Persist filters:** use local storage ([#998](https://github.com/KLEEEN-SOFTWARE/template/issues/998)) ([6c2e9ab](https://github.com/KLEEEN-SOFTWARE/template/commit/6c2e9abedc37aeea17fd6da57dcbf1873b5867ea))
+* **react-components:** always show total of chips per row ([b196935](https://github.com/KLEEEN-SOFTWARE/template/commit/b19693547b74781e4e9638817634fc408f2b45d7))
+* **react-hooks:** update default time interval for date filter ([466f199](https://github.com/KLEEEN-SOFTWARE/template/commit/466f199e339c49af7e871c3fe257b47348497f80))
+* **refresh-interval-localstorage:** keep the refresh interval in localStorage ([ace1f44](https://github.com/KLEEEN-SOFTWARE/template/commit/ace1f44c8bebca81337dd57406c0cb19c670e02f))
+* **report-view:** add single wide column layout to card section ([0c54913](https://github.com/KLEEEN-SOFTWARE/template/commit/0c54913c94667ea17c713a00292dfcdcef288953))
+* **review:** using new states and utilities ([#988](https://github.com/KLEEEN-SOFTWARE/template/issues/988)) ([68c40dc](https://github.com/KLEEEN-SOFTWARE/template/commit/68c40dc20a8d1b245d35784246211faee5ee4e80))
+* **token-background:** fix in material light ([#922](https://github.com/KLEEEN-SOFTWARE/template/issues/922)) ([429f2d2](https://github.com/KLEEEN-SOFTWARE/template/commit/429f2d249b53e9184cdbe73d99d506d3da35abf7))
+* **token-background:** opacity of background .15 ([#923](https://github.com/KLEEEN-SOFTWARE/template/issues/923)) ([e3c7891](https://github.com/KLEEEN-SOFTWARE/template/commit/e3c78913607dc935e41eccbbbf9fd02051dfee56))
+* Add Display Media support to listings [KSE3-3110] ([#912](https://github.com/KLEEEN-SOFTWARE/template/issues/912)) ([89bdc22](https://github.com/KLEEEN-SOFTWARE/template/commit/89bdc2269c3134ea16407850e60eff2011cda32c))
+
 # [1.45.0](https://github.com/KLEEEN-SOFTWARE/template/compare/1.44.0...1.45.0) (2021-04-14)
 
 

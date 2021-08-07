@@ -1,18 +1,17 @@
 import { DisplayViewType, SwitcherProps, TabSwitcherProps } from './DataViewControlSection.model';
+import { formatViewOptions, isNilOrEmpty, SHOW_DROPDOWN_THRESHOLD } from '@kleeen/common/utils';
 import { KsSvgIcon, KsSvgIconSize } from '@kleeen/react/components';
-import React, { ReactElement } from 'react';
+import { ReactElement } from 'react';
+import { SelectList } from '../SelectList/SelectList';
 import { Tab, Tabs, useStyles } from './DataViewControlSection.styles';
-import { isNilOrEmpty, roleAccessKeyTag } from '@kleeen/common/utils';
-
+import { useViewsFilteredByAccess } from '@kleeen/react/hooks';
+import { ViewOption } from '@kleeen/types';
 import Apps from '@material-ui/icons/Apps';
 import AspectRatio from '@material-ui/icons/AspectRatio';
-import { SelectList } from '../SelectList/SelectList';
+import classnames from 'classnames';
 import TableChart from '@material-ui/icons/TableChart';
 import Tooltip from '@material-ui/core/Tooltip';
-import { formatViewOptions } from './index';
-import { useAccessControlChecker } from '@kleeen/core-react';
-
-const rolePermissionOk = 'SHOW';
+const bem = 'ks-view-switcher';
 
 const IconTable = ({ name }) => (
   <Tooltip title={name} placement="top">
@@ -72,7 +71,7 @@ const getViewOptionPropsBasedOnId = ({
     id: viewId,
     icon: (
       <Tooltip title={name} placement="top">
-        <div className={classes.IconContainer}>
+        <div className={classnames(bem, classes.IconContainer)}>
           <KsSvgIcon size={KsSvgIconSize.ExtraLarge} icon={viewId} />
         </div>
       </Tooltip>
@@ -81,9 +80,16 @@ const getViewOptionPropsBasedOnId = ({
   };
 };
 
-const TabSwitcher = ({ handleChangeTab, viewOptions, value, taskName }: TabSwitcherProps): ReactElement => (
-  <Tabs value={value} scrollButtons="off" aria-label="tabs">
-    {viewOptions.map(({ name = 'List', type, viewId, viewOrder }, index) => {
+const TabSwitcher = ({
+  handleChangeTab,
+  viewOptions,
+  value,
+  taskName,
+  onTabIndexChanged,
+}: TabSwitcherProps): ReactElement => (
+  <Tabs value={value} scrollButtons="off" aria-label="tabs" data-testid="tab-switcher">
+    {viewOptions.map((option, index) => {
+      const { name = 'List', type, viewId, viewOrder } = option;
       const props = viewId
         ? getViewOptionPropsBasedOnId({ name, viewId })
         : getViewOptionPropsBasedOnType({ id: index, name, type });
@@ -92,9 +98,14 @@ const TabSwitcher = ({ handleChangeTab, viewOptions, value, taskName }: TabSwitc
         <Tab
           key={index}
           {...props}
-          selected={value === index}
           onClick={(e) => {
-            handleChangeTab(isNilOrEmpty(viewOrder) ? index : viewOrder);
+            const selectedIndex = isNilOrEmpty(viewOrder) ? index : viewOrder;
+            if (handleChangeTab) {
+              handleChangeTab(selectedIndex);
+            }
+            if (onTabIndexChanged) {
+              onTabIndexChanged(selectedIndex, option);
+            }
           }}
         />
       );
@@ -104,6 +115,7 @@ const TabSwitcher = ({ handleChangeTab, viewOptions, value, taskName }: TabSwitc
 
 const SelectListWrapper = ({
   handleChangeTab,
+  onTabIndexChanged,
   value,
   viewOptions,
   taskName,
@@ -115,32 +127,50 @@ const SelectListWrapper = ({
       id="select-view"
       label="Select View"
       labelId="select-view"
-      onChange={(value) => {
-        handleChangeTab(value);
+      onChange={(selectedIndex, option) => {
+        if (handleChangeTab) {
+          handleChangeTab(selectedIndex);
+        }
+        if (onTabIndexChanged) {
+          onTabIndexChanged(selectedIndex as number, option as ViewOption);
+        }
       }}
       options={options}
-      value={value}
+      value={options[value].label}
       taskName={taskName}
     />
   );
 };
 
-export const ViewSwitcher = ({ showDropDown, viewOptions, ...rest }: SwitcherProps): JSX.Element => {
-  const options = [];
-  viewOptions.forEach((vOption) => {
-    if (
-      rolePermissionOk ===
-      useAccessControlChecker(roleAccessKeyTag(`${rest.taskName}.views.${vOption.name}`)).permission
-    ) {
-      options.push(vOption);
-    }
-  });
-
+export const ViewSwitcher = ({
+  showDropDown = false,
+  viewOptions,
+  value,
+  ...rest
+}: SwitcherProps): JSX.Element => {
   if (!Array.isArray(viewOptions)) return null;
 
-  return showDropDown ? (
-    <SelectListWrapper viewOptions={options} {...rest} />
+  const viewOptionFilteredByAccess = useViewsFilteredByAccess(
+    viewOptions,
+    rest.taskName,
+    false,
+  ) as ViewOption[];
+
+  const currentSelectedView = viewOptions[value];
+  const valueOnFilteredViewOptions = viewOptionFilteredByAccess.indexOf(currentSelectedView);
+
+  const someViewsWereFiltered = viewOptions.length != viewOptionFilteredByAccess.length;
+  const showDropDownBasedOnFilteredViews = someViewsWereFiltered
+    ? viewOptionFilteredByAccess.length >= SHOW_DROPDOWN_THRESHOLD
+    : showDropDown;
+
+  return showDropDownBasedOnFilteredViews ? (
+    <SelectListWrapper
+      viewOptions={viewOptionFilteredByAccess}
+      value={valueOnFilteredViewOptions}
+      {...rest}
+    />
   ) : (
-    <TabSwitcher viewOptions={options} {...rest} />
+    <TabSwitcher viewOptions={viewOptionFilteredByAccess} value={valueOnFilteredViewOptions} {...rest} />
   );
 };

@@ -1,6 +1,10 @@
 import React, { useEffect, useState } from 'react';
+import { useGetNavigationStyle, useGetWidgetsAmount } from '@kleeen/react/hooks';
+
+import classnames from 'classnames';
 import { makeStyles } from '@material-ui/core';
-import { useGetWidgetsAmount } from '@kleeen/react/hooks';
+
+const bem = 'ks-data-display-section';
 
 const useStyles = makeStyles({
   dataViewDisplaySection: {
@@ -25,8 +29,8 @@ const useStyles = makeStyles({
 
 interface DataViewDisplaySectionProps {
   children?: React.ReactNode;
-  value: any;
   setCardsNumber?: (e: number) => void;
+  value: any;
 }
 
 interface TabPanelProps {
@@ -42,7 +46,7 @@ const TabPanel = React.memo((props: TabPanelProps) => {
 
   return (
     <div
-      className={classes.tabPanel}
+      className={classnames(`${bem}__tabs`, classes.tabPanel)}
       style={{ visibility: value === index ? 'visible' : 'hidden' }}
       role="tabpanel"
       hidden={value !== index}
@@ -60,8 +64,7 @@ export const DataViewDisplaySection = React.memo((props: DataViewDisplaySectionP
 
   useEffect(() => {
     const subHeader = document.getElementById('sub-header-element-id');
-    const themeWrapper = document.getElementById('theme-wrapper-id');
-    const isNavLeft = themeWrapper.classList.contains('nav-left');
+    const { isNavLeft } = useGetNavigationStyle();
     if (!subHeader && isNavLeft) {
       setWithoutSubHeader(true);
     }
@@ -70,7 +73,7 @@ export const DataViewDisplaySection = React.memo((props: DataViewDisplaySectionP
   const classes = useStyles({ withoutSubHeader: withouSubHeader });
   useGetWidgetsAmount(props.setCardsNumber);
   return (
-    <div className={classes.dataViewDisplaySection}>
+    <div className={classnames(bem, classes.dataViewDisplaySection)}>
       {React.Children.map(props.children, (Child, index) => (
         <TabPanel value={props.value} index={index}>
           {Child}

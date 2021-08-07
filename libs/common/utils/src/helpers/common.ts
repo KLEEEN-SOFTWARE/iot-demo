@@ -1,6 +1,6 @@
+import { FormatProps, Row, ViewOption, ViewOptionFormattedType } from '@kleeen/types';
 import { isNil, pipe } from 'ramda';
 
-import { FormatProps } from '@kleeen/types';
 import camelCase from 'lodash.camelcase';
 import { isNilOrEmpty } from '../validators';
 import mergeWith from 'lodash.mergewith';
@@ -16,6 +16,11 @@ export const average = (arr: number[]): number => arr.reduce((p, c) => p + c, 0)
 
 export const isValidArray = (maybeArray: unknown): boolean =>
   Array.isArray(maybeArray) && maybeArray.length > 0;
+
+export function getRowDisplayValue(row?: Row, entityName?: string): boolean | number | string | undefined {
+  const value = row?.[`displayValue::${entityName}`];
+  return value?.displayValue;
+}
 
 // TODO: these "any" should be changed for the correct type
 export function mergeByOrAppend<T>(source: T[] = [], override: T[] = [], predicate: string): T[] {
@@ -60,6 +65,21 @@ export function roleAccessKeyTag(stringToValidate: string): string {
 export const upperCamelCase = (value = ''): string =>
   pipe<string, string, string>(camelCase, upperFirst)(value);
 
+export const NEW_ROW_ID_PREFIX = 'temporary';
+export const SHOW_DROPDOWN_THRESHOLD = 4;
+
+export function formatViewOptions(viewOptions: ViewOption[]): ViewOptionFormattedType[] {
+  return viewOptions.map((option, index) => {
+    const { name, viewOrder } = option;
+    return {
+      label: name,
+      viewOrder: isNilOrEmpty(viewOrder) ? index : viewOrder,
+      value: name,
+      option,
+    };
+  });
+}
+
 //#region Private Members
 
 // Lodash mergeByCustomizer, returns undefined to use the regular mergeBy function
@@ -95,7 +115,12 @@ export function sortByKeys<T>(
 ): T[] {
   const sortedViewsByOrder = viewOptions
     .filter((view) => !isNilOrEmpty(view[firstKey]))
-    .sort((first, second) => (first[firstKey] > second[firstKey] ? 1 : -1));
+    .sort((first, second) => {
+      if (first[firstKey] === Infinity || second[firstKey] === Infinity) {
+        return 0;
+      }
+      return first[firstKey] > second[firstKey] ? 1 : -1;
+    });
 
   const sortedViewsById = viewOptions
     .filter((view) => isNilOrEmpty(view[firstKey]))
@@ -105,5 +130,3 @@ export function sortByKeys<T>(
 }
 
 //#endregion
-
-export const NEW_ROW_ID_PREFIX = 'temporary';

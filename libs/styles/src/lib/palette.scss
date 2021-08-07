@@ -1,35 +1,35 @@
 :root {
-  --A1-hsl: 317, 100%, 85%;
+  --A1-hsl: 167, 36%, 48%;
   --A1-hsla: hsla(var(--A1-hsl), 1);
 
-  --A1A-light-hsl: 316, 97%, 71%;
+  --A1A-light-hsl: 167, 61%, 62%;
   --A1A-light-hsla: hsla(var(--A1A-light-hsl), 1);
 
-  --A1A-dark-hsl: 316, 97%, 71%;
+  --A1A-dark-hsl: 167, 62%, 62%;
   --A1A-dark-hsla: hsla(var(--A1A-dark-hsl), 1);
 
-  --A2-light-hsl: 295, 63%, 59%;
+  --A2-light-hsl: 199, 77%, 61%;
   --A2-light-hsla: hsla(var(--A2-light-hsl), 1);
 
-  --A2-dark-hsl: 268, 100%, 79%;
+  --A2-dark-hsl: 199, 100%, 65%;
   --A2-dark-hsla: hsla(var(--A2-dark-hsl), 1);
 
-  --A2A-light-hsl: 283, 74%, 39%;
+  --A2A-light-hsl: 207, 77%, 44%;
   --A2A-light-hsla: hsla(var(--A2A-light-hsl), 1);
 
-  --A2A-dark-hsl: 316, 100%, 77%;
+  --A2A-dark-hsl: 185, 100%, 73%;
   --A2A-dark-hsla: hsla(var(--A2A-dark-hsl), 1);
 
-  --GR1-light-hsl: 315, 69%, 67%;
+  --GR1-light-hsl: 192, 95%, 59%;
   --GR1-light-hsla: hsla(var(--GR1-light-hsl), 1);
 
-  --GR1-dark-hsl: 312, 100%, 79%;
+  --GR1-dark-hsl: 188, 84%, 73%;
   --GR1-dark-hsla: hsla(var(--GR1-dark-hsl), 1);
 
-  --GR2-light-hsl: 283, 69%, 39%;
+  --GR2-light-hsl: 208, 66%, 40%;
   --GR2-light-hsla: hsla(var(--GR2-light-hsl), 1);
 
-  --GR2-dark-hsl: 288, 37%, 47%;
+  --GR2-dark-hsl: 204, 55%, 46%;
   --GR2-dark-hsla: hsla(var(--GR2-dark-hsl), 1);
 
   --flatAlert-light-hsl: 12, 100%, 50%;
@@ -386,7 +386,7 @@
   --onA1A-dark-hsl: 0, 0%, 6%;
   --onA1A-dark-hsla: hsla(var(--onA1A-dark-hsl), 1);
 
-  --onA2-light-hsl: 0, 0%, 94%;
+  --onA2-light-hsl: 0, 0%, 6%;
   --onA2-light-hsla: hsla(var(--onA2-light-hsl), 1);
 
   --onA2-dark-hsl: 0, 0%, 6%;
@@ -470,10 +470,10 @@
   --onViz2-dark-hsl: 0, 0%, 6%;
   --onViz2-dark-hsla: hsla(var(--onViz2-dark-hsl), 1);
 
-  --onViz3-light-hsl: 0, 0%, 6%;
+  --onViz3-light-hsl: 0, 0%, 94%;
   --onViz3-light-hsla: hsla(var(--onViz3-light-hsl), 1);
 
-  --onViz3-dark-hsl: 0, 0%, 6%;
+  --onViz3-dark-hsl: 0, 0%, 94%;
   --onViz3-dark-hsla: hsla(var(--onViz3-dark-hsl), 1);
 
   --onViz4-light-hsl: 0, 0%, 6%;
@@ -482,7 +482,7 @@
   --onViz4-dark-hsl: 0, 0%, 6%;
   --onViz4-dark-hsla: hsla(var(--onViz4-dark-hsl), 1);
 
-  --onViz5-light-hsl: 0, 0%, 6%;
+  --onViz5-light-hsl: 0, 0%, 94%;
   --onViz5-light-hsla: hsla(var(--onViz5-light-hsl), 1);
 
   --onViz5-dark-hsl: 0, 0%, 6%;
@@ -494,10 +494,10 @@
   --onViz6-dark-hsl: 0, 0%, 6%;
   --onViz6-dark-hsla: hsla(var(--onViz6-dark-hsl), 1);
 
-  --onViz7-light-hsl: 0, 0%, 94%;
+  --onViz7-light-hsl: 0, 0%, 6%;
   --onViz7-light-hsla: hsla(var(--onViz7-light-hsl), 1);
 
-  --onViz7-dark-hsl: 0, 0%, 94%;
+  --onViz7-dark-hsl: 0, 0%, 6%;
   --onViz7-dark-hsla: hsla(var(--onViz7-dark-hsl), 1);
 
   --onViz8-light-hsl: 0, 0%, 6%;
@@ -554,69 +554,69 @@
   --sevOn-dark-hsl: 89, 100%, 42%;
   --sevOn-dark-hsla: hsla(var(--sevOn-dark-hsl), 1);
 
-  --viz1-light-hsl: 269, 100%, 68%;
+  --viz1-light-hsl: 118, 64%, 60%;
   --viz1-light-hsla: hsla(var(--viz1-light-hsl), 1);
 
-  --viz1-dark-hsl: 269, 100%, 68%;
+  --viz1-dark-hsl: 117, 86%, 62%;
   --viz1-dark-hsla: hsla(var(--viz1-dark-hsl), 1);
 
-  --viz10-light-hsl: 223, 100%, 77%;
+  --viz10-light-hsl: 159, 100%, 70%;
   --viz10-light-hsla: hsla(var(--viz10-light-hsl), 1);
 
-  --viz10-dark-hsl: 223, 100%, 77%;
+  --viz10-dark-hsl: 272, 100%, 80%;
   --viz10-dark-hsla: hsla(var(--viz10-dark-hsl), 1);
 
-  --viz2-light-hsl: 275, 100%, 73%;
+  --viz2-light-hsl: 117, 100%, 86%;
   --viz2-light-hsla: hsla(var(--viz2-light-hsl), 1);
 
-  --viz2-dark-hsl: 275, 100%, 73%;
+  --viz2-dark-hsl: 118, 100%, 81%;
   --viz2-dark-hsla: hsla(var(--viz2-dark-hsl), 1);
 
-  --viz3-light-hsl: 360, 100%, 67%;
+  --viz3-light-hsl: 214, 69%, 52%;
   --viz3-light-hsla: hsla(var(--viz3-light-hsl), 1);
 
-  --viz3-dark-hsl: 360, 100%, 67%;
+  --viz3-dark-hsl: 214, 69%, 52%;
   --viz3-dark-hsla: hsla(var(--viz3-dark-hsl), 1);
 
-  --viz4-light-hsl: 7, 100%, 77%;
+  --viz4-light-hsl: 208, 100%, 67%;
   --viz4-light-hsla: hsla(var(--viz4-light-hsl), 1);
 
-  --viz4-dark-hsl: 7, 100%, 77%;
+  --viz4-dark-hsl: 208, 100%, 67%;
   --viz4-dark-hsla: hsla(var(--viz4-dark-hsl), 1);
 
-  --viz5-light-hsl: 246, 95%, 60%;
+  --viz5-light-hsl: 142, 19%, 50%;
   --viz5-light-hsla: hsla(var(--viz5-light-hsl), 1);
 
-  --viz5-dark-hsl: 246, 95%, 60%;
+  --viz5-dark-hsl: 167, 97%, 41%;
   --viz5-dark-hsla: hsla(var(--viz5-dark-hsl), 1);
 
-  --viz6-light-hsl: 250, 100%, 71%;
+  --viz6-light-hsl: 138, 30%, 67%;
   --viz6-light-hsla: hsla(var(--viz6-light-hsl), 1);
 
-  --viz6-dark-hsl: 250, 100%, 71%;
+  --viz6-dark-hsl: 159, 100%, 70%;
   --viz6-dark-hsla: hsla(var(--viz6-dark-hsl), 1);
 
-  --viz7-light-hsl: 316, 73%, 58%;
+  --viz7-light-hsl: 202, 69%, 53%;
   --viz7-light-hsla: hsla(var(--viz7-light-hsl), 1);
 
-  --viz7-dark-hsl: 316, 73%, 58%;
+  --viz7-dark-hsl: 202, 69%, 53%;
   --viz7-dark-hsla: hsla(var(--viz7-dark-hsl), 1);
 
-  --viz8-light-hsl: 317, 100%, 75%;
+  --viz8-light-hsl: 208, 53%, 64%;
   --viz8-light-hsla: hsla(var(--viz8-light-hsl), 1);
 
-  --viz8-dark-hsl: 317, 100%, 75%;
+  --viz8-dark-hsl: 190, 100%, 72%;
   --viz8-dark-hsla: hsla(var(--viz8-dark-hsl), 1);
 
-  --viz9-light-hsl: 223, 100%, 60%;
+  --viz9-light-hsl: 167, 67%, 49%;
   --viz9-light-hsla: hsla(var(--viz9-light-hsl), 1);
 
-  --viz9-dark-hsl: 223, 100%, 60%;
+  --viz9-dark-hsl: 272, 100%, 70%;
   --viz9-dark-hsla: hsla(var(--viz9-dark-hsl), 1);
 
-  --vizOther-light-hsl: 244, 16%, 57%;
+  --vizOther-light-hsl: 213, 9%, 58%;
   --vizOther-light-hsla: hsla(var(--vizOther-light-hsl), 1);
 
-  --vizOther-dark-hsl: 244, 16%, 57%;
+  --vizOther-dark-hsl: 213, 9%, 58%;
   --vizOther-dark-hsla: hsla(var(--vizOther-dark-hsl), 1);
 }

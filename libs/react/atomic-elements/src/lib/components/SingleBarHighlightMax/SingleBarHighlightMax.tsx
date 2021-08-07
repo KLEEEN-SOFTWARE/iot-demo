@@ -11,8 +11,11 @@ import Highcharts from 'highcharts';
 import HighchartsReact from 'highcharts-react-official';
 import { IDeltaResults } from './interfaces';
 import { KUIConnect } from '@kleeen/core-react';
+import classnames from 'classnames';
 import drilldown from 'highcharts/modules/drilldown';
 import merge from 'lodash.merge';
+
+const bem = 'ks-single-bar-highlight-max';
 
 drilldown(Highcharts);
 
@@ -53,10 +56,10 @@ function SingleBarHighlightMaxBase({ translate, ...props }: HighchartsReact.Prop
   if (!has('key', xAxis)) {
     xAxis['key'] = widgetId;
   }
-  const {
-    crossLinkingValuesForAxis,
-    openMenuIfCrossLink,
-  } = useCrossLinkingMenuOnViz(props as CrossLinkingProps, { xAxis });
+  const { crossLinkingValuesForAxis, openMenuIfCrossLink } = useCrossLinkingMenuOnViz(
+    props as CrossLinkingProps,
+    { xAxis },
+  );
 
   let firstSliceOfResults: Array<IDeltaResults> = [];
   const xAxisCategories = clone(xAxis.categories);
@@ -111,11 +114,11 @@ function SingleBarHighlightMaxBase({ translate, ...props }: HighchartsReact.Prop
   }
 
   return (
-    <div className="singlebar-hightlightmax-container">
+    <div className={classnames(bem, 'singlebar-hightlightmax-container')}>
       <div
-        ref={backButtonRef}
-        className="back-to"
+        className={classnames(`${bem}__cta--back`, 'back-to')}
         id={`singlebar-hightlightmax-${widgetId}-container__backButton`}
+        ref={backButtonRef}
       >
         <KsButton
           onClick={() => {

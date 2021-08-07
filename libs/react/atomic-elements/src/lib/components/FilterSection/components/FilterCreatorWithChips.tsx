@@ -1,23 +1,26 @@
 import './styles/FilterCreatorWithChips.scss';
 
-import { Chip, IconButton } from '@material-ui/core';
 import {
-  FilterOption,
-  FilterSectionEnum,
-  FiltersAddedState,
   addFilterText,
+  FilterOption,
+  FiltersAddedState,
+  FilterSectionEnum,
   materialAutocompleteClearSignal,
   optionsByStatisticalType,
 } from '../FilterSection.model';
 import React, { ReactElement, useEffect, useState } from 'react';
 import { FilterOperators, TimestampKey, Translate } from '@kleeen/types';
+import { Chip, IconButton } from '@material-ui/core';
 
 import { ChipsGroupByCategoryProps } from './FilterCreatorWithChips.model';
+import { useStyles } from './styles/FilterCreatorWithChips.style';
 import CloseIcon from '@material-ui/icons/Close';
 import FilterAutocomplete from '../../FilterAutocomplete/FilterAutocomplete';
-import MuiTooltip from '@material-ui/core/Tooltip';
-import { useStyles } from './styles/FilterCreatorWithChips.style';
 import moment from 'moment';
+import MuiTooltip from '@material-ui/core/Tooltip';
+import classnames from 'classnames';
+
+const bem = 'ks-filter-creator-with-chips';
 
 const ChipsGroupByCategory = ({
   filters,
@@ -30,10 +33,10 @@ const ChipsGroupByCategory = ({
   return (
     <>
       {Object.entries(filters).map(([key, values], i) => (
-        <div key={key}>
+        <div className={classnames(bem)} key={key}>
           <div>
-            <div className={classes.categoryTitle}>{key}</div>
-            <div className={classes.categoryContent}>
+            <div className={classnames(`${bem}__title`, classes.categoryTitle)}>{key}</div>
+            <div className={classnames(`${bem}__content`, classes.categoryContent)}>
               {(values._in || []).map((option: string, index) => {
                 const auxKey = option.toString().split(TimestampKey.key);
                 const auxLabel =
@@ -88,9 +91,9 @@ const ChipsGroupByCategory = ({
                 <span>
                   <IconButton
                     aria-label="delete"
-                    className={classes.categorybutton}
-                    onClick={() => removeCategory(key)}
+                    className={classnames(`${bem}__cta--delete`, classes.categorybutton)}
                     disabled={false}
+                    onClick={() => removeCategory(key)}
                   >
                     <CloseIcon />
                   </IconButton>

@@ -1,111 +1,41 @@
 import { AttributeInputEvents, useEntityDetailsEventHandler, useTheme } from '@kleeen/react/hooks';
 import { BaseAddDialogProps, KsButton } from '@kleeen/react/components';
-import React, { MouseEvent, useEffect } from 'react';
+import { Dialog as KsDialog, useStyles } from './AddDialog.styles';
+import { MouseEvent, useEffect } from 'react';
 
-import { ConfigInputWidget } from '../Widgets';
 import DialogActions from '@material-ui/core/DialogActions';
 import DialogContent from '@material-ui/core/DialogContent';
 import DialogTitle from '@material-ui/core/DialogTitle';
-import { Dialog as KsDialog } from './AddDialog.styles';
+import { InputElement } from '../input-element';
+import { KeyValue } from '../key-value';
+import { Translate } from '@kleeen/core-react';
 import capitalize from 'lodash.capitalize';
-import { startCase } from 'lodash';
+import classnames from 'classnames';
 
-interface BuildEntityProps {
+type BuildEntityProps = {
   attributeEventList: AttributeInputEvents[];
-  entityKey: string;
-}
-
-const CreateFormField = ({
-  attr,
-  registerEvents,
-  taskName,
-}: {
-  attr: { name: string; canAddValues?: boolean };
-  registerEvents: (event: any) => void;
-  taskName: string;
-}) => {
-  const configInputAttr = [
-    {
-      canAddValues: attr.canAddValues ?? true,
-      format: {
-        aggregations: null,
-        dateTime: null,
-        examples: null,
-        valueLabels: null,
-        max: null,
-        min: null,
-        prefix: null,
-        severityBad: null,
-        severityGood: null,
-        severityLevels: null,
-        suffix: null,
-      },
-      formatType: 'text',
-      hasMany: null,
-      label: `Display value of ${startCase(attr.name)}`,
-      name: attr.name,
-      rawEntityName: attr.name,
-    },
-  ];
-
-  return (
-    <div style={{ minWidth: 'calc(var(--wh-9XL) - var(--wh-S) - var(--wh-4XS))' }}>
-      <ConfigInputWidget
-        taskName={taskName}
-        title={''}
-        widgetId={attr.name}
-        attributes={configInputAttr as any}
-        icon={false}
-        disabled={false}
-        hideSaveAndClose={true}
-        hideTitle={true}
-        inSummaryDetails={true}
-        registerEvents={registerEvents}
-        statisticalType={'Data - Categorical - free form' as any}
-      />
-    </div>
-  );
 };
 
-const buildEntity = ({ attributeEventList, entityKey }: BuildEntityProps) => {
-  const widgetsData = attributeEventList.map((event) => event.onSave()).filter((data) => data);
-
-  const data = widgetsData.reduce((previous: any, current: any) => {
-    return {
-      ...current,
-      params: {
-        ...previous.params,
-        ...current.params,
-      },
-    };
-  }, {});
-
-  const rawForm = Object.entries(data?.params)
-    .filter(([, values]) => values)
-    .map(([key, value]: any) => [key, value]);
-
-  const form = rawForm.reduce((acc: Record<string, any>, [key, value]) => {
-    if (key === entityKey) {
-      acc.displayValue = value.displayValue;
-    }
-    acc[key] = value;
-    return acc;
-  }, {});
-
-  return form;
+const layoutProps = {
+  keyWidth: 125,
+  valueWidth: 300,
 };
+
+const bem = 'ks-dialog';
 
 export function AddDialog({
-  attributes,
   open,
   onAction,
   onClose,
   parent,
   title,
   taskName,
+  action,
 }: BaseAddDialogProps): JSX.Element {
+  const attributes = action.addModalAttributes;
   const { themeClass } = useTheme();
   const [attributeEventList, { addEvent, clearEventList }] = useEntityDetailsEventHandler();
+  const classes = useStyles();
 
   useEffect(() => {
     return clearEventList;
@@ -116,11 +46,10 @@ export function AddDialog({
   };
 
   const onSave = (e: MouseEvent): void => {
-    const entityKey = attributes[0]?.name;
-    const form = buildEntity({
-      entityKey,
-      attributeEventList,
-    });
+    const baseAttribute = attributes.find(({ isDisplayValue }) => isDisplayValue);
+    const entityKey = baseAttribute?.params?.baseModel || attributes[0]?.params?.baseModel;
+    const form = buildEntity({ attributeEventList });
+
     const isFormValid = Object.keys(form).includes(entityKey);
     const payload = {
       entity: form,
@@ -134,27 +63,49 @@ export function AddDialog({
     onClose();
   };
 
+  useEffect(() => {
+    return () => clearEventList();
+  }, []);
+
   function handleClose(): void {
     onClose();
   }
 
   return (
-    <KsDialog aria-labelledby="form-dialog-title" className={themeClass} onClose={handleClose} open={open}>
-      <DialogTitle id="form-dialog-title">{capitalize(title)}</DialogTitle>
+    <KsDialog
+      aria-labelledby="form-dialog-title"
+      className={classnames(`${bem}`, themeClass)}
+      onClose={handleClose}
+      open={open}
+    >
+      <DialogTitle id="form-dialog-title">
+        {typeof title === 'string' ? capitalize(title.toString()) : title}
+      </DialogTitle>
       <DialogContent>
         {attributes.map((attr) => (
-          <div style={{ marginBottom: 'var(--pm-S)' }}>
-            <CreateFormField
-              attr={attr}
-              key={attr.name}
-              taskName={taskName}
-              registerEvents={registerEvents}
+          <div className={classnames(`${bem}__form-group`, classes.formGroup)}>
+            <KeyValue
+              key={attr.id}
+              keyComponent={attr.label}
+              layoutProps={layoutProps}
+              valueComponent={
+                <InputElement
+                  attributes={[attr]}
+                  elements={attr.elements}
+                  registerEvents={registerEvents}
+                  params={attr.params}
+                  taskName={taskName}
+                  widgetId={attr.id}
+                />
+              }
             />
           </div>
         ))}
       </DialogContent>
       <DialogActions>
-        <KsButton onClick={handleClose}>Cancel</KsButton>
+        <KsButton onClick={handleClose}>
+          <Translate id="app.modal.action.cancel" type="html" />
+        </KsButton>
         <KsButton color="primary" onClick={onSave}>
           {title}
         </KsButton>
@@ -162,3 +113,19 @@ export function AddDialog({
     </KsDialog>
   );
 }
+//#region private methods
+
+function buildEntity({ attributeEventList }: BuildEntityProps) {
+  const widgetsData = attributeEventList.map((event) => event.onSave()).filter((data) => data?.entity);
+
+  const data = widgetsData.reduce((acc: any, current: any) => {
+    return {
+      ...acc,
+      [current.entity]: current.params,
+    };
+  }, {});
+
+  return data;
+}
+
+//#endregion

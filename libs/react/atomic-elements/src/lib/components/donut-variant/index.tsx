@@ -1,17 +1,19 @@
 import './donut-variant.scss';
 
+import { clone, pathOr } from 'ramda';
 import { HighchartsLegendClickEvent, drillUp, getRadialSharedOptions, showDrillUpButton } from '../../utils';
 import { KsButton, Loader } from '@kleeen/react/components';
-import { clone, pathOr } from 'ramda';
-
-import Highcharts from 'highcharts';
-import HighchartsReact from 'highcharts-react-official';
 import { KUIConnect } from '@kleeen/core-react';
-import React from 'react';
-import drilldown from 'highcharts/modules/drilldown';
-import merge from 'lodash.merge';
 import { useRadialDataParser } from '../../hooks/useRadialDataParser';
 import { vizColors } from '../generalBaseOptions';
+import classnames from 'classnames';
+import drilldown from 'highcharts/modules/drilldown';
+import Highcharts from 'highcharts';
+import HighchartsReact from 'highcharts-react-official';
+import merge from 'lodash.merge';
+import React from 'react';
+
+const bem = 'ks-donut-variant';
 
 drilldown(Highcharts);
 
@@ -29,7 +31,7 @@ function DonutVariantBase(props: HighchartsReact.Props): React.ReactElement {
     highchartState: { highChartUpdate, setHighChartUpdate },
     localization,
     openMenuIfCrossLink,
-    results: { firstSliceOfResults, secondHalfOfResults },
+    results: { firstSliceOfResults },
   } = parsedRadialData;
 
   const baseOptions = getRadialSharedOptions(parsedRadialData);
@@ -102,8 +104,8 @@ function DonutVariantBase(props: HighchartsReact.Props): React.ReactElement {
   const options = merge({}, baseOptions, donutVariantOptions);
 
   return (
-    <div className="High-charts">
-      <div ref={backButtonRef} className="back-to">
+    <div className={classnames(bem, 'High-charts')}>
+      <div ref={backButtonRef} className={classnames(`${bem}__back`, 'back-to')}>
         <KsButton
           onClick={() => {
             drillUp({ backButtonRef, highChartUpdate });
@@ -112,7 +114,7 @@ function DonutVariantBase(props: HighchartsReact.Props): React.ReactElement {
           ◁ {localization.backTo}
         </KsButton>
       </div>
-      <div className="donut-shadow"></div>
+      <div className={classnames(`${bem}__shadow`, 'donut-shadow')}></div>
       <HighchartsReact
         containerProps={containerProps}
         highcharts={Highcharts}

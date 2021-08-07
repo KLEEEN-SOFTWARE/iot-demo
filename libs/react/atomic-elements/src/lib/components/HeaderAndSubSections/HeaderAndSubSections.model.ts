@@ -3,11 +3,13 @@ import { EntityDetailsSectionProps } from '../EntityDetailsSection/EntityDetails
 import { FilterProps } from '../SubHeader/component/ButtonFilter/ButtonFilter.model';
 import { Slot } from '../DetailSummary/DetailSummary.model';
 import { TranslateProps } from '../../../types';
-import { ViewOption } from '../DataViewControlSection/DataViewControlSection.model';
+import { ViewOption } from '@kleeen/types';
+
 export interface HeaderAndSubSectionsProps extends TranslateProps {
   actionsProps: ActionsManagerProps;
   filters?: FilterProps[];
   handleChangeTab: (e: boolean) => void;
+  onTabIndexChanged?: (index: number, option: ViewOption) => void;
   hideRefreshControl?: boolean;
   objectValue: string;
   slots?: Slot[];

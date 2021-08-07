@@ -2,6 +2,11 @@ import { createStyles, makeStyles } from '@material-ui/core/styles';
 
 export const useStyles = makeStyles(() =>
   createStyles({
+    accountName: {
+      fontSize: ' var(--tx-S)',
+      lineHeight: 1.2,
+      textTransform: 'capitalize',
+    },
     appBar: {
       top: 0,
       bottom: 'auto',
@@ -28,7 +33,15 @@ export const useStyles = makeStyles(() =>
       height: 'var(--wh-M)',
     },
     logoContainer: {
-      marginRight: 'var(--pm-L)',
+      marginRight: 'var(--pm-M)',
+    },
+    namesContainer: {
+      margin: 'var(--pm-0)',
+    },
+    productName: {
+      fontSize: 'var(--tx-L)',
+      fontWeight: 'bold',
+      textTransform: 'capitalize',
     },
   }),
 );

@@ -1,11 +1,18 @@
 import './EntityDetailsSection.scss';
 
-import { AttributeInputEvents, useEntityDetailsEventHandler, useKleeenActions } from '@kleeen/react/hooks';
+import {
+  AttributeInputEvents,
+  useEntityDetailsEventHandler,
+  useKleeenActions,
+  useKleeenContext,
+} from '@kleeen/react/hooks';
+import { DisplayMediaType, Translate } from '@kleeen/types';
 import { KsButton, KsMenuContainer } from '@kleeen/react/components';
 import { ReactElement, useEffect, useState } from 'react';
-import { makeStyles, styled } from '@material-ui/core';
+import { styled } from '@material-ui/core';
 
 import ArrowLeftIcon from '@material-ui/icons/ArrowLeft';
+import { Avatar, Collapse } from '@material-ui/core';
 import EditOutlinedIcon from '@material-ui/icons/EditOutlined';
 import { KUIConnect } from '@kleeen/core-react';
 import MuiButton from '@material-ui/core/Button';
@@ -13,13 +20,18 @@ import MuiToolbar from '@material-ui/core/Toolbar';
 import MuiTooltip from '@material-ui/core/Tooltip';
 import { Slot } from '../DetailSummary/DetailSummary.model';
 import { SummaryPanel } from '../summary-panel';
-import { Translate } from '@kleeen/types';
+import { useStyles } from './entity-details-section.styles';
+import classnames from 'classnames';
 import { getUpdateRequestPayload } from '../../utils';
+import { isNilOrEmpty } from '@kleeen/common/utils';
+import { pathOr } from 'ramda';
 
+const bem = 'ks-entity-details-section';
 export interface EntityDetailsSectionProps {
   displayTaskName: string;
   entityDetails: any[]; // TODO: @cafe add better types here
   isEditable: boolean;
+  objectValue?: string;
   onChangeFilterVisible?: (isVisible: boolean) => void;
   slots?: Slot[];
   taskName: string;
@@ -46,37 +58,24 @@ const Toolbar = styled(MuiToolbar)({
   justifyContent: 'center',
 });
 
-const useStyles = makeStyles(() => ({
-  drawerClose: {
-    height: '100%',
-    overflowX: 'hidden',
-    alignItems: 'center',
-    width: 'var(--wh-1XS)',
-    borderRadius: 'var(--card-border-radius)',
-    border: 'var(--card-border)',
-  },
-  iconEntity: {
-    margin: 'var(--pm-4XS)',
-    width: 'var(--wh-2XS)',
-    backgroundColor: 'var(--secondary-color)',
-    borderRadius: 'var(--wh-4XS)',
-    '&.MuiSvgIcon-root': {
-      color: 'var(--on-secondary-color)',
-    },
-    '&:hover': {
-      backgroundColor: 'var(--secondary-color-variant)',
-      color: 'var(--on-secondary-color-variant)',
-      cursor: 'pointer',
-    },
-  },
-}));
-
 export function EntityDetailsSectionBase({ translate, ...props }: EntityDetailsSectionProps): ReactElement {
-  const { updateRequest } = useKleeenActions(props.taskName);
-  const [attributeEventList, { addEvent, clearEventList }] = useEntityDetailsEventHandler();
-  const [open, setOpen] = useState(true);
-  const [isEditing, setEditing] = useState(false);
+  const { objectValue, taskName } = props;
+  if (isNilOrEmpty(taskName)) {
+    // TODO: @jcvalerio should throw an exception
+    // throw new Error('The attribute taskName was null');
+    return null;
+  }
+  const { updateRequest } = useKleeenActions(taskName);
   const classes = useStyles();
+  const [attributeEventList, { addEvent, clearEventList }] = useEntityDetailsEventHandler();
+  const [imageLoaded, setImageLoaded] = useState(false);
+  const [isEditing, setEditing] = useState(false);
+  const [open, setOpen] = useState(true);
+  const entityData = useKleeenContext<{ isLoading: boolean }>(taskName);
+  const getDisplayMedia = pathOr({ value: '' }, ['entity', objectValue, 'displayMedia']);
+  const displayMedia = getDisplayMedia(entityData);
+  const shouldDisplayAvatar =
+    !entityData.isLoading && displayMedia.type === DisplayMediaType.Src && imageLoaded;
 
   useEffect(() => {
     return clearEventList;
@@ -116,19 +115,24 @@ export function EntityDetailsSectionBase({ translate, ...props }: EntityDetailsS
   }
 
   return open ? (
-    <Paper className={'entity-details-section'} elevation={3}>
-      <div className="paper-container">
-        <div className="attributes-container">
-          <div className="attributes-navigation">
-            <KsButton className="attributes-navigation-left" onClick={handleDrawerClose}>
-              <ArrowLeftIcon className="icon-close" />
+    <Paper className={classnames(bem, 'entity-details-section')} elevation={3}>
+      <div className={classnames(`${bem}__container`, 'paper-container')}>
+        <div className={classnames(`${bem}__attributes`, 'attributes-container')}>
+          <div className={classnames(`${bem}__navigation`, 'attributes-navigation')}>
+            <KsButton
+              className={classnames(`${bem}__navigation--left`, 'attributes-navigation-left')}
+              onClick={handleDrawerClose}
+            >
+              <ArrowLeftIcon className={classnames(`${bem}__close`, 'icon-close')} />
               {translate('app.subHeader.buttonSummary.summaryDetails')}
             </KsButton>
             {props.isEditable && (
               <KsButton
-                className={
-                  'attributes-navigation-right ' + (isEditing ? 'attributes-navigation-edit-on' : '')
-                }
+                className={classnames(
+                  `${bem}__navigation--right`,
+                  'attributes-navigation-right',
+                  isEditing && 'attributes-navigation-edit-on',
+                )}
                 onClick={() => setEditing(!isEditing)}
               >
                 {isEditing
@@ -136,6 +140,16 @@ export function EntityDetailsSectionBase({ translate, ...props }: EntityDetailsS
                   : translate('app.subHeader.container.button.editOn')}
               </KsButton>
             )}
+          </div>
+          <div>
+            <Collapse in={shouldDisplayAvatar}>
+              <Avatar
+                onLoad={() => setImageLoaded(true)}
+                alt="Ks"
+                src={displayMedia.value}
+                className={classes.avatar}
+              />
+            </Collapse>
           </div>
           <SummaryPanel
             entityDetails={props.entityDetails}
@@ -153,7 +167,7 @@ export function EntityDetailsSectionBase({ translate, ...props }: EntityDetailsS
         </div>
         {isEditing && (
           <Toolbar>
-            <Button className="primary-button" onClick={onSave}>
+            <Button className={classnames(`${bem}__cta`, 'primary-button')} onClick={onSave}>
               {translate('app.subHeader.container.button.save')}
             </Button>
           </Toolbar>
@@ -161,7 +175,7 @@ export function EntityDetailsSectionBase({ translate, ...props }: EntityDetailsS
       </div>
     </Paper>
   ) : (
-    <Paper elevation={3} className={classes.drawerClose}>
+    <Paper elevation={3} className={classnames(`${bem}__container--close`, classes.drawerClose)}>
       <MuiTooltip title="View your entity" placement="top">
         <EditOutlinedIcon className={classes.iconEntity} onClick={handleDrawerOpen} />
       </MuiTooltip>

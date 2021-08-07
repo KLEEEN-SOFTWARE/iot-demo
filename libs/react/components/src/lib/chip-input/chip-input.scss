@@ -1,6 +1,6 @@
 .chip-input {
   .MuiChip-root {
-    transition: border-color 0.4s;
+    transition: border-color var(--speed-medium);
   }
   &[class*=' severity-chips'] {
     .MuiChip-root:first-child {

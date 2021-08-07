@@ -1,69 +1,64 @@
-import React, { useState } from 'react';
 import { KUIConnect, AccessControl } from '@kleeen/core-react';
 import { roleAccessKeyTag } from '@kleeen/common/utils';
-import { useStyles } from './styles/styles';
-import { actions } from './settings/actions';
-import { attributes } from './settings/attributes';
-import { dataViewControlSectionViewOptions } from './settings/data-view-control-section-view-options';
-import { HeaderAndSubSections, DataViewDisplaySectionAtomic } from '@kleeen/react/atomic-elements';
-import { availableFilters } from './settings/available-filters';
-import { dataViewDisplaySectionAtomicDashboardWidgets } from './settings/data-view-display-section-atomic-dashboard-widgets';
-import { dataViewDisplaySectionAtomicSingleViewWidgets } from './settings/data-view-display-section-atomic-single-view-widgets';
-import { dataViewDisplaySectionAtomicCustomViews } from './settings/data-view-display-section-atomic-custom-views';
+import { useState } from 'react';
+import {
+  EntireProductDomainLayoutStyle,
+  DataViewControlSection,
+  DataViewDisplaySectionAtomic,
+} from '@kleeen/react/atomic-elements';
+import { viewOptions } from './settings/view-options';
+import { widgets } from './settings/widgets';
 
-function DashboardTask({ translate, ...props }) {
-  const [selectedRows, setSelectedRows] = useState([]);
+function Workflow({ translate, ...props }) {
   const taskName = `system`;
-  const [selectedTabIndex, setSelectedTabIndex] = useState(0);
+  const [selectedViewOption, setSelectedViewOption] = useState(widgets[0]);
   const [cardsNumber, setCardsNumber] = useState(0);
-  const title = `System`;
-  const objectValue = undefined;
-  function handleOnTabIndexChange(newTabIndex) {
-    setSelectedTabIndex(newTabIndex);
+  const [selectedRows, setSelectedRows] = useState([]);
+  const [isFilterOpen, setIsFilterOpen] = useState(false);
+  const classes = EntireProductDomainLayoutStyle();
+  const workflowName = `System`;
+  function handleOnTabIndexChanged(newTabIndex, option) {
+    setSelectedViewOption(option);
   }
-  const classes = useStyles();
-  const classSubHeaderDynamics =
-    dataViewControlSectionViewOptions &&
-    dataViewControlSectionViewOptions[selectedTabIndex] &&
-    dataViewControlSectionViewOptions[selectedTabIndex].type === 'grid'
-      ? 'subhead-dynamic'
-      : '';
 
   return (
     <AccessControl id={roleAccessKeyTag(`navigation.${taskName}`)}>
-      <div className={`${classes.dashboardTask} ${classSubHeaderDynamics}`}>
-        <div className={`${classes.dashboardArea} browserArea`}>
-          <div className={`${classes.gridPageIntro} max-card-${cardsNumber}`}>
-            <HeaderAndSubSections
-              title={title}
-              withFilterSection
+      <div className={`${classes.entityBrowserTask} subhead-dynamic`}>
+        <div
+          className={
+            isFilterOpen
+              ? `${classes.entityBrowserAreaWithFilterSection} openFilterSection`
+              : `${classes.entityBrowserArea} browserArea`
+          }
+        >
+          <div
+            className={`${classes.gridPageIntro} ${cardsNumber > 0 ? `max-card-${cardsNumber}` : ''}`}
+            data-testid="page-intro"
+          >
+            <DataViewControlSection
               hideRefreshControl
+              onTabIndexChanged={handleOnTabIndexChanged}
+              selectedOption={selectedViewOption}
+              setSelectedOption={setSelectedViewOption}
               taskName={taskName}
-              filters={availableFilters}
-              actionsProps={{
-                actions: actions,
-                entityName: '',
-                attributes: attributes,
-                entityActions: {},
-              }}
-              viewOptions={dataViewControlSectionViewOptions}
-              handleChangeTab={handleOnTabIndexChange}
-              value={selectedTabIndex}
+              title={workflowName}
+              viewOptions={viewOptions}
             />
           </div>
-          <div className={classes.dataViewDisplaySection}>
+          <div
+            className={`${classes.gridGridSection} ${
+              selectedRows.length > 0 && selectedViewOption.sortOrder === 0 ? classes.snackbar : ''
+            }`}
+            data-testid="content-section"
+          >
             <DataViewDisplaySectionAtomic
-              atomicCustomViews={dataViewDisplaySectionAtomicCustomViews}
-              dashboardWidgets={dataViewDisplaySectionAtomicDashboardWidgets}
-              entityName={''}
-              hasReportView={false}
+              widgets={widgets}
+              selectedOption={selectedViewOption}
               selectedRows={selectedRows}
               setCardsNumber={setCardsNumber}
               setSelectedRows={setSelectedRows}
-              singleViewWidgets={dataViewDisplaySectionAtomicSingleViewWidgets}
-              tableWidgets={[]}
               taskName={taskName}
-              value={selectedTabIndex}
+              value={selectedViewOption}
             />
           </div>
         </div>
@@ -72,4 +67,4 @@ function DashboardTask({ translate, ...props }) {
   );
 }
 
-export default KUIConnect(({ translate }) => ({ translate }))(DashboardTask);
+export default KUIConnect(({ translate }) => ({ translate }))(Workflow);

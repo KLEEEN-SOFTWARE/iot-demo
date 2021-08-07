@@ -1,6 +1,19 @@
 import { makeStyles } from '@material-ui/core/styles';
 
 export const useStyles = makeStyles({
+  mediaValueContainer: {
+    alignItems: 'center',
+    '&.clickable': {
+      '&:hover': {
+        cursor: 'pointer',
+      },
+    },
+    display: 'flex',
+    maxWidth: '100%',
+    whiteSpace: 'nowrap',
+    textOverflow: 'ellipsis',
+    overflow: 'hidden',
+  },
   contextMenuButton: {
     textTransform: 'initial',
     color: 'var(--secondary-color)',

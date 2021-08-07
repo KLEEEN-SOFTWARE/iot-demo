@@ -1,3 +1,4 @@
+export * from './helpers';
 export * from './lib/components/AddDialog';
 export * from './lib/components/CardSection/CardSection';
 export * from './lib/components/CardSection/CardSection02';
@@ -42,3 +43,5 @@ export * from './lib/components/WidgetSection01/WidgetSection01';
 export * from './lib/components/WidgetSection02/WidgetSection02';
 export * from './lib/components/WidgetSection03/WidgetSection03';
 export * from './lib/components/Widgets';
+export * from './lib/components/summary-statistics';
+export * from './lib/style';

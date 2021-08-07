@@ -32,8 +32,8 @@ export const dispatchCustomAction = (input: CustomActionArgs): DispatchCustomAct
 export const getMultiTransFormationData = (
   input: MultiTransFormationArgs,
 ): MultiTransFormationResults | any => {
-  const transformationsData = input.transformations.map((transformation) => {
-    const pointFormat = { name: input.entity, transformation };
+  const transformationsData = input.transformations.map((transformation, index) => {
+    const pointFormat = { name: input.attributes ? input.attributes[index] : input.entity, transformation };
     const dataByTransformation = VisualizationData.getWidgetData({ value: pointFormat });
 
     return { ...dataByTransformation, transformation };

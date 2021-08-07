@@ -1,6 +1,5 @@
-import { GroupByProps, ValueProp, ValuesProps } from '../../../../types/types';
+import { Attribute, GroupByProps, ValueProp, ValuesProps } from '@kleeen/types';
 
-import { Attribute } from '@kleeen/types';
 import ColumnBar from '../../ColumnBar/ColumnBar';
 import { Loader } from '@kleeen/react/components';
 import React from 'react';
