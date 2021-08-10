@@ -116,9 +116,6 @@ export function sortByKeys<T>(
   const sortedViewsByOrder = viewOptions
     .filter((view) => !isNilOrEmpty(view[firstKey]))
     .sort((first, second) => {
-      if (first[firstKey] === Infinity || second[firstKey] === Infinity) {
-        return 0;
-      }
       return first[firstKey] > second[firstKey] ? 1 : -1;
     });
 
