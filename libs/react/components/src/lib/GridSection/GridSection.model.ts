@@ -6,10 +6,11 @@ import {
   FormatProps,
   GenericFunction,
   Translate,
+  Sorting,
   Widget,
 } from '@kleeen/types';
 
-import { Order } from './stableSort';
+import { Order } from '@kleeen/common/utils';
 
 export interface EditingCell {
   rowId?: string;
@@ -45,10 +46,15 @@ interface GridSectionProps {
   onDeleteRow?: (id: string) => void;
   onSortRow?: (newI: number, oldI: number) => void;
   orderColumnName?: string;
+  order?: Order;
+  orderBy?: string;
+  onSort?: (value: string) => void;
   selectedRows: Row[];
   setSelectedRows: any;
   sortable?: boolean;
   sortableColumns?: boolean;
+  sorting?: Sorting;
+  setSorting?: (value: string) => void;
   taskName?: string;
   translate?: Translate;
   widgetId: string | number;

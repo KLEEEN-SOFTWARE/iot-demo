@@ -1,11 +1,14 @@
 import { KsAutocomplete, KsMenuContainer } from '@kleeen/react/components';
 import MuiTextField, { TextFieldProps } from '@material-ui/core/TextField';
-import React, { ReactElement } from 'react';
+import React, { ReactElement, useEffect, useState } from 'react';
 import { makeStyles, styled } from '@material-ui/core/styles';
 
 import { AutocompleteProps } from '@material-ui/lab/Autocomplete';
-import { useTheme } from '@kleeen/react/hooks';
+import { FilterOption } from '../FilterSection/FilterSection.model';
 import { KUIConnect } from '@kleeen/core-react';
+import camelcase from 'lodash.camelcase';
+import { isNilOrEmpty } from '@kleeen/common/utils';
+import { useTheme } from '@kleeen/react/hooks';
 
 interface FilterAutocompleteProps
   extends Omit<AutocompleteProps<any, boolean, boolean, boolean>, 'renderInput'> {
@@ -13,7 +16,7 @@ interface FilterAutocompleteProps
   textFieldProps?: TextFieldProps;
   withoutMenuTransform?: boolean;
   defaultSelectedValue?: any[];
-  options: any[];
+  options: FilterOption[];
   noHelperText?: boolean;
   translate?: any;
 }
@@ -85,9 +88,32 @@ const FilterAutocomplete = ({
 }: FilterAutocompleteProps): ReactElement => {
   const { themeClass } = useTheme();
   const classes = useStyles({ withoutMenuTransform });
+
+  const [optionsFormatted, setOptionsFormatted] = useState<FilterOption[]>([]);
+
+  useEffect(() => {
+    if (isNilOrEmpty(options)) {
+      return;
+    }
+
+    const newOptionsFormatted = options.map((option) => {
+      const key = camelcase(option.name);
+      const translationOption = `entities.${key}.${key}`;
+      const optionTranslated = translate(translationOption);
+      return {
+        name: option.name,
+        displayName: optionTranslated !== translationOption ? optionTranslated : null,
+        section: option.section,
+        statisticalType: option.statisticalType,
+      };
+    });
+
+    setOptionsFormatted(newOptionsFormatted);
+  }, [options?.length]);
+
   return (
     <KsAutocomplete
-      options={options}
+      options={optionsFormatted}
       filterSelectedOptions
       forcePopupIcon={false}
       disableClearable={false}

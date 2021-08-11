@@ -2,10 +2,11 @@ import { CrossLinking, DataAggregationArgs, DataAggregationArgsDataPoint, ListIt
 
 import { Transformation } from '../utils/enumerators';
 
+import { Sorting } from '@kleeen/types';
+
 export type PrimitiveType = boolean | number | string;
 
 export interface DataListingArgs {
-  entity: string;
   attributes: {
     name: string;
     aggregation?: Transformation;
@@ -13,8 +14,10 @@ export interface DataListingArgs {
     transformation?: Transformation;
     rawEntityName: string;
   }[];
+  entity: string;
   filters?: any;
-  pagination?: { startIndex: number, stopIndex: number };
+  pagination?: { startIndex: number; stopIndex: number };
+  sorting?: Sorting;
 }
 
 export interface Entity {

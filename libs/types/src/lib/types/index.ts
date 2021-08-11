@@ -10,4 +10,5 @@ export * from './link';
 export * from './modules';
 export * from './react';
 export * from './responses';
+export * from './sort';
 export * from './widget';
