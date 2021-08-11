@@ -1,6 +1,4 @@
 const getBabelWebpackConfig = require('@nrwl/react/plugins/webpack');
-const path = require('path');
-const WorkboxPlugin = require('workbox-webpack-plugin');
 
 module.exports = (config) => {
   const cfg = getBabelWebpackConfig(config);

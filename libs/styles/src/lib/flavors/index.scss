@@ -45,7 +45,9 @@ button {
     visibility: hidden;
     opacity: 0;
     transform: scale(0.5);
-    transition: opacity var(--speed-fastest) ease-in var(--speed-fast), top var(--speed-fastest) ease-in var(--speed-fast), transform var(--speed-fastest) ease-in var(--speed-fast);
+    transition: opacity var(--speed-fastest) ease-in var(--speed-fast),
+      top var(--speed-fastest) ease-in var(--speed-fast),
+      transform var(--speed-fastest) ease-in var(--speed-fast);
     z-index: 1;
   }
 }

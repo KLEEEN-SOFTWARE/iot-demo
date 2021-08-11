@@ -9,6 +9,12 @@ import { useKleeenActions } from './useKleeenActions';
 import { useKleeenContext } from './useKleeenContext';
 import useUrlQueryParams from './useUrlQueryParams';
 
+enum Order {
+  asc,
+  desc,
+  none,
+}
+
 export interface WidgetContextProps {
   // TODO: @cafe unify params into the VizParams interface alone
   params: VizParams & Record<string, any>;
@@ -23,6 +29,8 @@ export enum WidgetContextAttributes {
 
 export function useWidgetContext({ params, taskName, widgetId }: WidgetContextProps): WidgetState {
   const { filters, operationName } = params;
+  const order = params.sorting?.length ? params.sorting[0].sort : Order.none;
+  const orderBy = params.sorting?.length ? params.sorting[0].columnName : '';
   const isCustomWidget = isNilOrEmpty(operationName);
   if (isCustomWidget) {
     return WidgetInitialState;
@@ -45,7 +53,15 @@ export function useWidgetContext({ params, taskName, widgetId }: WidgetContextPr
     }
 
     entityActions.getData({ taskName, widgetId, params, paramsBasedOnRoute });
-  }, [isContextReady, entityActions, JSON.stringify(paramsBasedOnRoute), status.version]);
+  }, [
+    isContextReady,
+    entityActions,
+    JSON.stringify(paramsBasedOnRoute),
+    status.version,
+    params.sorting?.length,
+    order,
+    orderBy,
+  ]);
 
   return widgetData || WidgetInitialState;
 }

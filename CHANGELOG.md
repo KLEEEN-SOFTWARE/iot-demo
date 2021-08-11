@@ -1,3 +1,10 @@
+## [2.2.3](https://github.com/KLEEEN-SOFTWARE/template/compare/2.2.2...2.2.3) (2021-08-10)
+
+
+### Bug Fixes
+
+* **main:** pretty labels on filters ([#1095](https://github.com/KLEEEN-SOFTWARE/template/issues/1095)) ([79478fb](https://github.com/KLEEEN-SOFTWARE/template/commit/79478fb0fbb959287bcebed239d6d5f2b07c1ba5))
+
 ## [2.2.2](https://github.com/KLEEEN-SOFTWARE/template/compare/2.2.1...2.2.2) (2021-08-05)
 
 

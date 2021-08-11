@@ -262,6 +262,7 @@ export class BaseApiService {
           filters: paramsBasedOnRoute,
           entity: params.baseModel,
           pagination: params.pagination,
+          sorting: params.sorting,
         },
       };
       query = getListingDataQuery(operationName);

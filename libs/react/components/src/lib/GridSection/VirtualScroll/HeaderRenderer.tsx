@@ -1,6 +1,6 @@
 import { Attribute } from '@kleeen/types';
 import { Icon } from '../../Icon';
-import { Order } from '../stableSort';
+import { Order } from '@kleeen/common/utils';
 import React from 'react';
 import TableCell from '@material-ui/core/TableCell';
 import { TableHeaderProps } from 'react-virtualized';

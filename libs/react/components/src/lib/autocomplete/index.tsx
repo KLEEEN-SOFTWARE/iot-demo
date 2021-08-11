@@ -15,6 +15,9 @@ export function KsAutocomplete({
   return (
     <Autocomplete
       renderInput={renderInput}
+      renderOption={(option: { displayName?: string; name: string }) => {
+        return <>{option.displayName || option.name}</>;
+      }}
       PaperComponent={({ children }) => <Paper className={`${themeClass}`}>{children}</Paper>}
       {...restProps}
     />

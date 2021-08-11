@@ -5,6 +5,7 @@ import { GenericEntityItem } from './types';
 import { KapiCrud } from './kapiCrud';
 import camelcase from 'lodash.camelcase';
 import { filterList } from './filtering';
+import { sortList } from './sorting';
 
 const addAttributes = (attributes, entityItem) =>
   attributes.reduce((acc, attr) => {
@@ -38,12 +39,13 @@ export const getListingData = (
 
   const rawData = KapiCrud.list(camelcase(input.entity), params) as GenericEntityItem[];
   const filteredData = filterList(rawData, camelcase(input.entity), input.filters);
+  const sortedData = sortList(filteredData, input.sorting);
   const entityName = toPropertyName(camelcase(input.entity));
   const displayValueCol = `displayValue::${entityName}`;
 
   const format = addAttributesFormat(entityName, input.attributes);
 
-  const data = filteredData.map((entityItem) => {
+  const data = sortedData.map((entityItem) => {
     const withAttributes = addAttributes(input.attributes, entityItem);
     const parsedEntityItem = {
       id: entityItem.id,

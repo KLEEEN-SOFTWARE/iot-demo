@@ -1,5 +1,5 @@
 import React from 'react';
-import { Order } from './stableSort';
+import { Order } from '@kleeen/common/utils';
 
 const getNextSortDirection = (order: Order): Order => {
   if (order === Order.none) return Order.asc;
@@ -7,7 +7,11 @@ const getNextSortDirection = (order: Order): Order => {
   return order === Order.asc ? Order.desc : Order.none;
 };
 
-const useSort = (): [{ order: Order; orderBy: string }, (name: string) => void] => {
+interface useSortProps {
+  setSorting?: (value: any) => void;
+}
+
+const useSort = (props: useSortProps): [{ order: Order; orderBy: string }, (name: string) => void] => {
   const [order, setSort] = React.useState<Order>(Order.asc);
   const [orderBy, setOrderBy] = React.useState('');
 
@@ -17,11 +21,17 @@ const useSort = (): [{ order: Order; orderBy: string }, (name: string) => void] 
     if (newSortDirection === Order.none) {
       setSort(Order.none);
       setOrderBy('');
+      if (props.setSorting) {
+        props.setSorting([]);
+      }
       return;
     }
 
     setSort(newSortDirection);
     setOrderBy(name);
+    if (props.setSorting) {
+      props.setSorting([{ columnName: name, sort: newSortDirection }]);
+    }
   };
 
   return [{ order, orderBy }, onSort];
