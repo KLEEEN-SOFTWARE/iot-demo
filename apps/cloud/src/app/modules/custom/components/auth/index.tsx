@@ -2,15 +2,15 @@ import '@aws-amplify/ui/dist/style.css';
 
 import { AuthChannel, AuthMessage, Integrations, KSAuth } from '@kleeen/auth';
 import { CustomForgotPassword, CustomLoading, CustomSignIn, CustomSignUp, KSLoading } from './components';
-import React, { ReactElement, useEffect, useState } from 'react';
+import { ReactElement, useEffect, useState } from 'react';
 
 import { Authenticator } from 'aws-amplify-react';
 import { Helpers } from '@kleeen/render-utils';
 import { Hub } from '@aws-amplify/core';
 import { ThemeProvider } from '@material-ui/styles';
-import { createMuiTheme } from '@material-ui/core';
-import { isNilOrEmpty } from '@kleeen/common/utils';
 import awsDefaultConfig from './aws-exports';
+import { createTheme } from '@material-ui/core/styles';
+import { isNilOrEmpty } from '@kleeen/common/utils';
 
 const useAuthStateOnRouteChange = (setAuthState) => {
   function onAuthStateChange(data): void {
@@ -28,6 +28,10 @@ const useAuthStateOnRouteChange = (setAuthState) => {
         loginWorkflow = event;
         break;
     }
+    if (!setAuthState) {
+      console.warn('setAuthState is undefined at components/auth');
+      return;
+    }
     setAuthState(loginWorkflow);
   }
 
@@ -39,18 +43,13 @@ const useAuthStateOnRouteChange = (setAuthState) => {
   }, []);
 };
 
-KSAuth.configure({
-  authenticationHandler: new Integrations.CognitoAuthenticationHandler(awsDefaultConfig),
-});
-
 const RETRY_LIMIT_TO_GET_THE_COMPUTED_STYLES = 10;
 
 // eslint-disable-next-line
 function KleeenAuthenticator({
+  afterLoginSuccess,
   children,
   isAuthorized,
-  authState,
-  setAuthState,
   isEnabled,
   ...props
 }): ReactElement {
@@ -62,8 +61,31 @@ function KleeenAuthenticator({
    */
   const [defaultMaterialTheme, setDefaultMaterialTheme] = useState({});
   const [continueTrying, setContinueTrying] = useState(0);
+  const [authState, setAuthState] = useState(KSAuth.getCurrentState());
+  const [isLoading, setIsLoading] = useState(false);
+  useEffect(() => {
+    KSAuth.configure({
+      authenticationHandler: new Integrations.CognitoAuthenticationHandler(awsDefaultConfig),
+    });
+  }, []);
 
   useAuthStateOnRouteChange(setAuthState);
+  useEffect(() => {
+    const onLoginSuccess = async () => {
+      if (afterLoginSuccess && authState === AuthMessage.SignedIn) {
+        try {
+          setIsLoading(true);
+          const currentAuthenticatedUser = await KSAuth.currentAuthenticatedUser();
+          afterLoginSuccess({ currentAuthenticatedUser }).then(() => {
+            setIsLoading(false);
+          });
+        } catch (error) {
+          console.error(error);
+        }
+      }
+    };
+    onLoginSuccess();
+  }, [authState]);
 
   useEffect(() => {
     const primaryColor = Helpers.DOM.getAppPrimaryColor();
@@ -85,10 +107,15 @@ function KleeenAuthenticator({
   }, [continueTrying, defaultMaterialTheme]);
 
   return (
-    <ThemeProvider theme={createMuiTheme(defaultMaterialTheme)}>
+    <ThemeProvider theme={createTheme(defaultMaterialTheme)}>
       {isEnabled ? (
         <CustomAuthenticator {...props} authState={authState} currentAuthState={authState}>
-          <ContentValidator {...props} currentAuthState={authState} isAuthorized={isAuthorized}>
+          <ContentValidator
+            {...props}
+            currentAuthState={authState}
+            isAuthorized={isAuthorized}
+            isLoading={isLoading}
+          >
             {children}
           </ContentValidator>
         </CustomAuthenticator>
@@ -115,13 +142,16 @@ function ContentValidator({
   children,
   currentAuthState,
   isAuthorized = true,
+  isLoading,
   onStateChange,
 }: {
   children: JSX.Element;
   currentAuthState: string;
+  isLoading: boolean;
   isAuthorized: boolean;
   onStateChange?: (state: string, data?: any) => void;
 }): ReactElement | null {
+  if (isLoading) return <KSLoading />;
   if ([currentAuthState].some((state: string): boolean => state !== AuthMessage.SignedIn)) {
     if (onStateChange) {
       onStateChange(currentAuthState);
@@ -135,7 +165,6 @@ function ContentValidator({
   if (isAuthorized) {
     return children;
   }
-  return <KSLoading />;
 }
 
 export default KleeenAuthenticator;
