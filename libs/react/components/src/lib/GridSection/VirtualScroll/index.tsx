@@ -7,9 +7,7 @@ import { Loader } from '../../Loader/Loader';
 import Paper from '@material-ui/core/Paper';
 import { VirtualizedTable } from './VirtualizedTable';
 import { allComponentEnum } from './CellRenderer/CellRenderer.model';
-import { stableSort } from '../stableSort';
 import useFilter from '../useFilter';
-import useSort from '../useSort';
 import { useStyles } from './VirtualizedTable.style';
 
 type HeaderColumns = Array<{
@@ -26,10 +24,13 @@ function ReactVirtualizedTableComponent({
   translate,
   widgetId,
   sortableColumns,
+  sorting,
+  order,
+  orderBy,
+  onSort,
   ...props
 }: GridSectionProps): JSX.Element {
   const [{ rows }, handleChange] = useFilter(props.entity.data);
-  const [{ order, orderBy }, onSort] = useSort();
   const [deleteContainer, setStatusDeleteContainer] = useState([]);
   const [editingCell, setEditingCell] = useState({});
   const [remainingRows] = useState([]);
@@ -109,7 +110,7 @@ function ReactVirtualizedTableComponent({
   }
 
   if (Array.isArray(rows) || Array.isArray(remainingRows)) {
-    const rowsStableSort = rows ? stableSort(rows, order, orderBy) : remainingRows;
+    const rowsStableSort = rows ? rows : remainingRows;
 
     return (
       <Paper className={`${props.className} ${tableStyles.virtualTable}`}>

@@ -1,5 +1,7 @@
 import { Cardinality, Transformation } from '../utils';
 
+import { Sorting } from '@kleeen/types';
+
 export interface DataAggregationArgsDataPoint {
   name: string;
   transformation?: Transformation;
@@ -34,7 +36,8 @@ export interface DataListingArgs {
     rawEntityName: string;
   }[];
   filters?: any;
-  pagination?: { startIndex: number, stopIndex: number }
+  pagination?: { startIndex: number; stopIndex: number };
+  sorting?: Sorting;
 }
 
 export interface CustomActionArgs {

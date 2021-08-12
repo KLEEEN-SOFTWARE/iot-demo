@@ -44,6 +44,7 @@ export interface FilterOption {
   operator?: FilterOperators;
   category?: string;
   value?: string;
+  displayName?: string;
 }
 
 export const addFilterText = 'Add Filter';

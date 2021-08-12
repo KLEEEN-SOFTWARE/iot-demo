@@ -3,7 +3,7 @@ import { Icon } from '../../Icon';
 import MuiTableCell from '@material-ui/core/TableCell';
 import MuiTableHead from '@material-ui/core/TableHead';
 import MuiTableRow from '@material-ui/core/TableRow';
-import { Order } from '../stableSort';
+import { Order } from '@kleeen/common/utils';
 import React from 'react';
 import { TableHeaderProps } from '../GridSection.model';
 import TextField from '@material-ui/core/TextField';

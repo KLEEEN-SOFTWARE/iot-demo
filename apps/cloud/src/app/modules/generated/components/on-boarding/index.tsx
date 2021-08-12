@@ -86,7 +86,7 @@ const OnBoardingView = ({ translate, ...props }: OnBoardingProps): ReactElement 
             setIsContinueBtnDisabled={setIsContinueBtnDisabled}
           />
         ) : (
-          <ReactMarkdown className={classes.preview} source={widgetContent} allowDangerousHtml={true} />
+          <ReactMarkdown className={classes.preview}>{widgetContent}</ReactMarkdown>
         )}
       </div>
       <SnackBarSection

@@ -1,24 +1,25 @@
 import './styles/FilterCreatorWithChips.scss';
 
+import { Chip, IconButton } from '@material-ui/core';
+import { FilterOperators, TimestampKey, Translate } from '@kleeen/types';
 import {
-  addFilterText,
   FilterOption,
-  FiltersAddedState,
   FilterSectionEnum,
+  FiltersAddedState,
+  addFilterText,
   materialAutocompleteClearSignal,
   optionsByStatisticalType,
 } from '../FilterSection.model';
 import React, { ReactElement, useEffect, useState } from 'react';
-import { FilterOperators, TimestampKey, Translate } from '@kleeen/types';
-import { Chip, IconButton } from '@material-ui/core';
 
 import { ChipsGroupByCategoryProps } from './FilterCreatorWithChips.model';
-import { useStyles } from './styles/FilterCreatorWithChips.style';
 import CloseIcon from '@material-ui/icons/Close';
 import FilterAutocomplete from '../../FilterAutocomplete/FilterAutocomplete';
-import moment from 'moment';
 import MuiTooltip from '@material-ui/core/Tooltip';
+import camelcase from 'lodash.camelcase';
 import classnames from 'classnames';
+import moment from 'moment';
+import { useStyles } from './styles/FilterCreatorWithChips.style';
 
 const bem = 'ks-filter-creator-with-chips';
 
@@ -27,82 +28,90 @@ const ChipsGroupByCategory = ({
   getTagProps,
   removeCategory,
   removeValue,
-}: ChipsGroupByCategoryProps): React.ReactElement => {
+  translate,
+}: ChipsGroupByCategoryProps & { translate: Translate }): React.ReactElement => {
   const classes = useStyles();
 
   return (
     <>
-      {Object.entries(filters).map(([key, values], i) => (
-        <div className={classnames(bem)} key={key}>
-          <div>
-            <div className={classnames(`${bem}__title`, classes.categoryTitle)}>{key}</div>
-            <div className={classnames(`${bem}__content`, classes.categoryContent)}>
-              {(values._in || []).map((option: string, index) => {
-                const auxKey = option.toString().split(TimestampKey.key);
-                const auxLabel =
-                  auxKey.length > 1 ? moment(Number(auxKey[1])).format(TimestampKey.format) : auxKey[0];
-                return (
-                  <MuiTooltip title={auxLabel} key={`${key}-${auxLabel}`}>
-                    <Chip
-                      {...getTagProps({ index })}
-                      size="small"
-                      label={auxLabel}
-                      onDelete={() => {
-                        removeValue(key, option, FilterOperators.in);
-                      }}
-                      deleteIcon={
-                        <IconButton>
-                          <CloseIcon />
-                        </IconButton>
-                      }
-                    />
-                  </MuiTooltip>
-                );
-              })}
-              {values.max && (
-                <Chip
-                  size="small"
-                  label={`Max is ${values.max}`}
-                  onDelete={() => {
-                    removeValue(key, values.max, FilterOperators.max);
-                  }}
-                  deleteIcon={
-                    <IconButton>
+      {Object.entries(filters).map(([key, values], i) => {
+        const keyFormatted = camelcase(key);
+        const translationOption = `entities.${keyFormatted}.${keyFormatted}`;
+        const optionTranslated = translate(translationOption);
+        return (
+          <div className={classnames(bem)} key={key}>
+            <div>
+              <div className={classnames(`${bem}__title`, classes.categoryTitle)}>
+                {optionTranslated !== translationOption ? optionTranslated : key}
+              </div>
+              <div className={classnames(`${bem}__content`, classes.categoryContent)}>
+                {(values._in || []).map((option: string, index) => {
+                  const auxKey = option.toString().split(TimestampKey.key);
+                  const auxLabel =
+                    auxKey.length > 1 ? moment(Number(auxKey[1])).format(TimestampKey.format) : auxKey[0];
+                  return (
+                    <MuiTooltip title={auxLabel} key={`${key}-${auxLabel}`}>
+                      <Chip
+                        {...getTagProps({ index })}
+                        size="small"
+                        label={auxLabel}
+                        onDelete={() => {
+                          removeValue(key, option, FilterOperators.in);
+                        }}
+                        deleteIcon={
+                          <IconButton>
+                            <CloseIcon />
+                          </IconButton>
+                        }
+                      />
+                    </MuiTooltip>
+                  );
+                })}
+                {values.max && (
+                  <Chip
+                    size="small"
+                    label={`Max is ${values.max}`}
+                    onDelete={() => {
+                      removeValue(key, values.max, FilterOperators.max);
+                    }}
+                    deleteIcon={
+                      <IconButton>
+                        <CloseIcon />
+                      </IconButton>
+                    }
+                  />
+                )}
+                {values.min && (
+                  <Chip
+                    size="small"
+                    label={`Min is ${values.min}`}
+                    onDelete={() => {
+                      removeValue(key, values.min, FilterOperators.min);
+                    }}
+                    deleteIcon={
+                      <IconButton>
+                        <CloseIcon />
+                      </IconButton>
+                    }
+                  />
+                )}
+                <MuiTooltip title="remove category">
+                  <span>
+                    <IconButton
+                      aria-label="delete"
+                      className={classnames(`${bem}__cta--delete`, classes.categorybutton)}
+                      disabled={false}
+                      onClick={() => removeCategory(key)}
+                    >
                       <CloseIcon />
                     </IconButton>
-                  }
-                />
-              )}
-              {values.min && (
-                <Chip
-                  size="small"
-                  label={`Min is ${values.min}`}
-                  onDelete={() => {
-                    removeValue(key, values.min, FilterOperators.min);
-                  }}
-                  deleteIcon={
-                    <IconButton>
-                      <CloseIcon />
-                    </IconButton>
-                  }
-                />
-              )}
-              <MuiTooltip title="remove category">
-                <span>
-                  <IconButton
-                    aria-label="delete"
-                    className={classnames(`${bem}__cta--delete`, classes.categorybutton)}
-                    disabled={false}
-                    onClick={() => removeCategory(key)}
-                  >
-                    <CloseIcon />
-                  </IconButton>
-                </span>
-              </MuiTooltip>
+                  </span>
+                </MuiTooltip>
+              </div>
             </div>
           </div>
-        </div>
-      ))}
+        );
+      })}
     </>
   );
 };
@@ -224,6 +233,7 @@ const FilterCreatorWithChips = ({
             getTagProps={getTagProps}
             removeValue={removeValue}
             removeCategory={removeCategory}
+            translate={translate}
           />
         );
       }}
@@ -236,21 +246,21 @@ const FilterCreatorWithChips = ({
         }
         setInputValue(changeValue);
       }}
-      onChange={(_, options: FilterOption[], reason) => {
+      onChange={(_, optionsChange: FilterOption[], reason) => {
         if (reason === 'remove-option') return;
         setInputValue('');
-        const isSelectingCategory = !currentCategory && options;
-        if (!options) return;
+        const isSelectingCategory = !currentCategory && optionsChange;
+        if (!optionsChange) return;
 
-        const latestAdded = options[options.length - 1];
+        const latestAdded = optionsChange[optionsChange.length - 1];
 
         if (isSelectingCategory) {
-          handleCategoryClick(options);
+          handleCategoryClick(optionsChange);
         } else {
-          options[options.length - 1] = { ...latestAdded, category: lastCategorySelected };
-          setValue(options);
+          optionsChange[optionsChange.length - 1] = { ...latestAdded, category: lastCategorySelected };
+          setValue(optionsChange);
 
-          handleValueClick(options);
+          handleValueClick(optionsChange);
         }
       }}
       options={getOptions(options)}

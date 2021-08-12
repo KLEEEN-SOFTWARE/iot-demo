@@ -26,6 +26,7 @@ export const widgetSchema = gql`
     attributes: JSON!
     filters: JSON
     pagination: JSON
+    sorting: [JSON!]
   }
 
   input MultiTransFormationArgs {

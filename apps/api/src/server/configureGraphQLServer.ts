@@ -1,4 +1,4 @@
-import { ApolloServer, AuthenticationError } from 'apollo-server-express';
+import { ApolloServer, AuthenticationError, ServerRegistration } from 'apollo-server-express';
 import {
   baseResolvers,
   baseSchema,
@@ -10,11 +10,11 @@ import {
   customDataSources,
 } from '../graphql';
 
-import { Express } from 'express';
+import express from 'express';
 import { getUser } from '../utils';
 import { plugins } from './plugins';
 
-export const configureGraphQLServer = async (app: Express): Promise<void> => {
+export const configureGraphQLServer = async (app: express.Application): Promise<void> => {
   const typeDefs = [baseSchema, ...generatedSchema, ...customSchema];
   const resolvers = [baseResolvers, ...generatedResolvers, ...customResolvers];
   const dataSources = () => ({
@@ -42,5 +42,5 @@ export const configureGraphQLServer = async (app: Express): Promise<void> => {
     plugins,
   });
 
-  apolloServer.applyMiddleware({ app, path: '/graphql' });
+  apolloServer.applyMiddleware({ app, path: '/graphql' } as ServerRegistration);
 };
