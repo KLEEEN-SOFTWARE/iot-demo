@@ -1,35 +1,28 @@
-import React, { useRef } from 'react';
+import { Attribute, Cell } from '@kleeen/types';
 import { useAttributeContextMenu, useOnClickOutside } from '@kleeen/react/hooks';
 
-import { Attribute } from '@kleeen/types';
 import { KsContextMenu } from '@kleeen/react/components';
-
-interface Cell {
-  id: number | string;
-  displayValue: string;
-}
+import { useRef } from 'react';
 
 interface ContextMenuProps {
   attr: Attribute;
   cell: Cell;
 }
 
-export const HookableContextMenu = (props: ContextMenuProps) => {
-  // new context menu
+export function HookableContextMenu(props: ContextMenuProps) {
   const { contextualToggle, context, setContextualToggle } = useAttributeContextMenu();
   const ref = useRef();
   useOnClickOutside(ref, () => setContextualToggle(false));
+
   const anchorEl = context.e && context.e.currentTarget;
 
-  const handleClose = () => {
+  function handleClose() {
     setContextualToggle(false);
-  };
+  }
 
-  return contextualToggle ? (
-    <KsContextMenu attr={context.attr} cell={context.cell} anchorEl={anchorEl} handleClose={handleClose} />
-  ) : (
-    ''
-  );
-};
+  if (!contextualToggle) return null;
+
+  return <KsContextMenu anchorEl={anchorEl} dataPoints={context.dataPoints} handleClose={handleClose} />;
+}
 
 export default HookableContextMenu;

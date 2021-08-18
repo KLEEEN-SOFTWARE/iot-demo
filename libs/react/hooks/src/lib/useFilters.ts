@@ -1,12 +1,4 @@
 import { IntervalDate, TimestampKey } from '@kleeen/types';
-import moment, { Moment } from 'moment';
-import { useEffect, useState } from 'react';
-
-import queryString from 'query-string';
-import { useHistory } from 'react-router';
-import useUrlQueryParams from './useUrlQueryParams';
-import { useLocalStorage, useUserInfo } from '@kleeen/react/hooks';
-import { isNilOrEmpty } from '@kleeen/common/utils';
 import {
   getFiltersInitialState,
   getFromValueOf,
@@ -15,6 +7,14 @@ import {
   manageOperations,
   mapWithStringify,
 } from '../helpers';
+import moment, { Moment } from 'moment';
+import { useEffect, useState } from 'react';
+import { useLocalStorage, useUserInfo } from '@kleeen/react/hooks';
+
+import { isNilOrEmpty } from '@kleeen/common/utils';
+import queryString from 'query-string';
+import { useHistory } from 'react-router';
+import useUrlQueryParams from './useUrlQueryParams';
 
 enum FilterOperators {
   max = 'max',
@@ -39,6 +39,7 @@ export const areFiltersInUse = () => {
 };
 
 export const useFilters = (hasDateFilter = false) => {
+  // TODO: @cafe refactor this logic into a single hook (reuse in useFilterSections and useFilterItems variants)
   const queryParams = useUrlQueryParams({ useNestedObjects: true });
   const _user = useUserInfo();
   const userName = _user?.userInfo?.username;

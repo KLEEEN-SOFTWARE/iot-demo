@@ -56,20 +56,19 @@ function SingleBarHighlightMaxBase({ translate, ...props }: HighchartsReact.Prop
   if (!has('key', xAxis)) {
     xAxis['key'] = widgetId;
   }
-  const { crossLinkingValuesForAxis, openMenuIfCrossLink } = useCrossLinkingMenuOnViz(
-    props as CrossLinkingProps,
-    { xAxis },
-  );
+  const { crossLinking, openMenuIfCrossLink } = useCrossLinkingMenuOnViz(props as CrossLinkingProps, {
+    xAxis,
+    yAxis,
+  });
 
   let firstSliceOfResults: Array<IDeltaResults> = [];
   const xAxisCategories = clone(xAxis.categories);
   let secondHalfOfResults: Array<IDeltaResults> = [];
 
-  if (deltaOfResults(results, vizColors, crossLinkingValuesForAxis, xAxis).length > sliceResultsBy * 2) {
-    secondHalfOfResults = deltaOfResults(results, vizColors, crossLinkingValuesForAxis, xAxis).slice(
-      sliceResultsBy,
-      results.length - 1,
-    );
+  const deltaResults = deltaOfResults({ crossLinkingMatrix: crossLinking, results, vizColors, xAxis, yAxis });
+
+  if (deltaResults.length > sliceResultsBy * 2) {
+    secondHalfOfResults = deltaResults.slice(sliceResultsBy, results.length - 1);
 
     const sum: number = secondHalfOfResults.reduce((a, b) => {
       return a + b.y;
@@ -77,17 +76,14 @@ function SingleBarHighlightMaxBase({ translate, ...props }: HighchartsReact.Prop
     const averageSecondHalfOfResults: number = Math.round(sum / secondHalfOfResults.length) || 0;
 
     xAxisCategories?.splice(sliceResultsBy, 0, localization(translate).restOfResultsLabel);
-    firstSliceOfResults = deltaOfResults(results, vizColors, crossLinkingValuesForAxis, xAxis).slice(
-      0,
-      sliceResultsBy,
-    );
+    firstSliceOfResults = deltaResults.slice(0, sliceResultsBy);
     firstSliceOfResults.push({
       name: localization(translate).restOfResultsLabel,
       y: averageSecondHalfOfResults,
       drilldown: localization(translate).restOfResultsLabel,
     });
   } else {
-    firstSliceOfResults = deltaOfResults(results, vizColors, crossLinkingValuesForAxis, xAxis);
+    firstSliceOfResults = deltaResults;
   }
 
   const options = singleBarOptions(

@@ -16,6 +16,14 @@ export interface Axis {
   valueLabels: { label: string; value: number }[];
 }
 
+export interface TrendFormatterProps {
+  highlightMinMax?: boolean;
+  highlightStart?: boolean;
+  highlightEnd?: boolean;
+  radiusSize?: number;
+  values?: number[];
+}
+
 export type SelectOptionsProps = { label: string; value: string };
 
 export type ValueResultProps = number | string;

@@ -31,12 +31,13 @@ export function SummaryStatistics({ attributes, data }: SummaryStatisticsProps) 
     format: mainBackendFormat,
     results: mainResults,
     transformation: mainTransformation,
+    crossLinking: mainCrosslinking,
   } = mainStatistic;
   const mainFormat = getFormat({ attributeFormat: mainAttributeFormat, backendFormat: mainBackendFormat });
   const { displayComponent: mainElement } = mainElements;
   const MainDisplayComponent = getDisplayElement(mainElement);
 
-  const mainFormatedResults = getFormatedResults(mainElement, mainResults);
+  const mainFormatedResults = getFormatedResults(mainElement, mainResults, mainCrosslinking);
 
   return (
     <div className={classes.content}>
@@ -62,14 +63,14 @@ export function SummaryStatistics({ attributes, data }: SummaryStatisticsProps) 
           {statistics.map((statistic: TransformationResponse, index: number) => {
             const attribute = restAttribute[index];
             const { elements, format: attributeFormat, formatType } = attribute;
-            const { format: backendFormat, results, transformation } = statistic;
+            const { format: backendFormat, results, transformation, crossLinking } = statistic;
 
             const format = getFormat({ attributeFormat, backendFormat });
 
             const { displayComponent } = elements;
             const DisplayComponent = getDisplayElement(displayComponent);
 
-            const formatedResults = getFormatedResults(displayComponent, results);
+            const formatedResults = getFormatedResults(displayComponent, results, crossLinking);
             return (
               <KeyValue
                 layoutProps={layoutProps}

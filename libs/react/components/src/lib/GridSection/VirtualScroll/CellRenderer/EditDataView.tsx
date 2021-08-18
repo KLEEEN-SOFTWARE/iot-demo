@@ -2,7 +2,6 @@ import { Attribute, StatisticalDataType } from '@kleeen/types';
 
 import ArrowDropDownIcon from '@material-ui/icons/ArrowDropDown';
 import CheckboxCellInput from '../../components/CheckboxCellInput';
-import { ContextCell } from '../../../contextCell';
 import CreateIcon from '@material-ui/icons/Create';
 import DeleteOutlineIcon from '@material-ui/icons/DeleteOutline';
 import DragIndicatorIcon from '@material-ui/icons/DragIndicator';
@@ -10,6 +9,7 @@ import DropdownCellInput from '../../components/DropdownCellInput';
 import { EditDataViewProps } from './CellRenderer.model';
 import FreeFormCellInput from '../../components/FreeFormCellInput';
 import { IconButton } from '@material-ui/core';
+import { KsContextCell } from '../../../context-cell';
 import { MultipleModalInput } from '../../components/MultipleModalInput';
 import React from 'react';
 import { SortableHandle } from 'react-sortable-hoc';
@@ -30,7 +30,7 @@ interface GetInputComponentProps {
 const getInputComponent = ({ attr, cellIsBeingEdited, hasMany, isInputEditable }: GetInputComponentProps) => {
   if (attr.statisticalType === StatisticalDataType.Binary && isInputEditable) return CheckboxCellInput;
 
-  if (!cellIsBeingEdited) return ContextCell;
+  if (!cellIsBeingEdited) return KsContextCell;
   if (hasMany) return MultipleModalInput;
 
   if (attr.canAddValues) return FreeFormCellInput;
@@ -41,9 +41,10 @@ function EditDataView({
   amendCellUpdate,
   attr,
   autocomplete,
-  editingCell,
   deleteProcess,
   displayColumnAttribute,
+  draggable,
+  editingCell,
   idx,
   isDeletable,
   onAutocompleteRequest,
@@ -51,7 +52,6 @@ function EditDataView({
   orderColumnName,
   row,
   rowData,
-  draggable,
   setEditingCell,
 }: EditDataViewProps): JSX.Element {
   const rowDisplayValue = getRowDisplayValue(rowData, displayColumnAttribute?.name);
@@ -92,13 +92,14 @@ function EditDataView({
           amendCellUpdate={amendCellUpdate}
           attr={attr}
           autocomplete={autocomplete}
-          editingCell={editingCell}
-          setEditingCell={setEditingCell}
           cell={row}
+          displayColumnAttribute={displayColumnAttribute}
+          editingCell={editingCell}
           format={attr.format}
           openShowMoreModal={openShowMoreModal}
-          rowDisplayValue={rowDisplayValue}
           row={rowData}
+          rowDisplayValue={rowDisplayValue}
+          setEditingCell={setEditingCell}
         />
         <div className={'actions-container'}>
           {showDeleteIcon && (
@@ -117,8 +118,8 @@ function EditDataView({
               onClick={() => {
                 onAutocompleteRequest(attr.name);
                 setEditingCell({
-                  rowId: rowData.id,
                   attributeName: attr.name,
+                  rowId: rowData.id,
                   temporaryValue: String(row?.displayValue),
                 });
               }}

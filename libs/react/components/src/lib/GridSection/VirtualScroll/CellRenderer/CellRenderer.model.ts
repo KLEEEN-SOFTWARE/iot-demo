@@ -1,6 +1,7 @@
-import { AmendCellUpdate, Attribute, AutocompleteState, Row } from '@kleeen/types';
+import { Action, AmendCellUpdate, Attribute, AutocompleteState, Row } from '@kleeen/types';
 
 import { EditingCell } from '../../GridSection.model';
+import { Key } from 'react';
 import { ListingModalSettings } from '../../../ListingModal/ListingModal';
 
 export enum allComponentEnum {
@@ -19,8 +20,8 @@ export interface CellData {
 }
 
 export interface CellRendererProps {
+  actions: Action[];
   amendCellUpdate: AmendCellUpdate;
-  actions: Array<any>;
   cellData: CellData;
   classes: any;
   columnIndex: number;
@@ -28,44 +29,44 @@ export interface CellRendererProps {
   deleteContainer: Array<any>;
   deleteProcess: (id: string) => void;
   displayColumnAttribute: Attribute;
+  draggable?: boolean;
   editingCell: EditingCell;
   hasActions: boolean;
   isDeletable: boolean;
   localization: any;
   openShowMoreModal: (listingModalSettings: ListingModalSettings) => void;
-  rowData: any;
-  toggleDelete: (id: string) => void;
-  triggerCustomAction: (action: any, id: string) => void;
-  typeOf: (row: any) => any;
-  draggable?: boolean;
   orderColumnName?: string;
+  rowData: any;
+  toggleDelete: (id: Key) => void;
+  triggerCustomAction: (action: Action, id: Key) => void;
+  typeOf: (row: any) => any;
 }
 
 export interface DataViewRowProps {
+  actions: Action[];
+  attr: Attribute;
+  deleteContainer: Array<any>;
+  deleteProcess: (id: Key) => void;
+  displayColumnAttribute: Attribute;
+  draggable?: boolean;
   hasActions: boolean;
   idx: number;
-  attr: Attribute;
-  row: any;
-  toggleDelete: (id: string) => void;
-  localization: any;
   isDeletable: boolean;
-  actions: Array<any>;
-  triggerCustomAction: (action: any, id: string) => void;
-  deleteContainer: Array<any>;
-  rowData: Row;
-  props: any;
-  deleteProcess: (id: string) => void;
-  displayColumnAttribute: Attribute;
+  localization: any;
   openShowMoreModal: (listingModalSettings: ListingModalSettings) => void;
-  draggable?: boolean;
   orderColumnName?: string;
+  props: any;
+  row: any;
+  rowData: Row;
+  toggleDelete: (id: Key) => void;
+  triggerCustomAction: (action: Action, id: Key) => void;
 }
 
 export interface EditDataViewProps {
   amendCellUpdate: AmendCellUpdate;
   attr: Attribute;
   autocomplete: AutocompleteState;
-  deleteProcess: (id: string) => void;
+  deleteProcess: (id: Key) => void;
   displayColumnAttribute: Attribute;
   editingCell: EditingCell;
   idx: number;

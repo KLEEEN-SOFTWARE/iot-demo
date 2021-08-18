@@ -10,6 +10,7 @@ import {
   WebSocketProvider,
   useLocalization,
 } from '@kleeen/react/hooks';
+import { DEFAULT_ROLE, app, roleAccessKey, roleAccessKeyCustom, stringsTranslate } from '@kleeen/settings';
 import {
   IconRegistryProvider,
   KUICombineProviders,
@@ -18,27 +19,27 @@ import {
 } from '@kleeen/core-react';
 import React, { ReactElement } from 'react';
 
-import { DEFAULT_ROLE } from './settings/default-user-role';
 import { KsNotifications } from '@kleeen/react/components';
 import Router from './routesLoader';
 import ThemeWrapper from './themeWrapper';
-import customPermissions from './settings/role-access-keys.custom.json';
+import classnames from 'classnames';
 import { environment } from '@kleeen/environment';
 import iconRegistry from '../assets/icon-registry';
-import localeData from './settings/strings-translations.json';
+import { isReactNativeInfusion } from '@kleeen/common/utils';
 import { merge } from 'lodash';
-import permissions from './settings/role-access-keys.json';
-import settings from './settings/app.json';
 import { useServiceWorker } from './useServiceWorker';
 
-merge(permissions, customPermissions);
+const applyInfusion = isReactNativeInfusion();
+const bem = 'app';
+
+merge(roleAccessKey, roleAccessKeyCustom);
 
 const AccessControlProvider = ({ children }) => (
   <KsAccessControlProvider
     accessControlSettings={{
       defaultRole: DEFAULT_ROLE,
       pathToRoleOnState: 'endUser.currentUser.role',
-      permissions,
+      permissions: roleAccessKey,
     }}
   >
     {children}
@@ -51,16 +52,16 @@ function App(): ReactElement {
   const TranslateProvider = TranslationProvider({
     defaultLocale: 'en',
     locale: language,
-    localeData,
+    localeData: stringsTranslate,
     onError: (err: string): void => {
       console.debug('TranslateProvider', err);
     },
   });
-  const crosslinkingInteractionValue = settings.crossLinkingInteraction;
+  const crosslinkingInteractionValue = app.crossLinkingInteraction;
 
   return (
     <React.StrictMode>
-      <div className="app">
+      <div className={classnames(bem, { infusion: applyInfusion })}>
         <TranslateProvider>
           <KUICombineProviders
             providers={[

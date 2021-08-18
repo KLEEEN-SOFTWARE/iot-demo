@@ -1,16 +1,11 @@
 import { Attribute, FormatProps, Result } from '@kleeen/types';
-
-interface ListingCell {
-  displayValue: string;
-}
-
 export interface ListingModalSettings {
-  isOpen: boolean;
+  attribute: Attribute;
   columnLabel: string;
-  rowDisplayValue?: string;
   data: Result[];
   format: FormatProps;
-  attribute: Attribute;
+  isOpen: boolean;
+  rowDisplayValue?: string;
 }
 
 export interface ListingModalProps extends ListingModalSettings {

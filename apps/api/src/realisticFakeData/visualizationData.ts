@@ -44,8 +44,8 @@ const noAggregationWithGroupByCategorical = (
 
     return {
       format: {
-        xAxis: { categories: groupBy.list, type: groupBy.type, ...groupByFormat },
-        yAxis: { categories: value.list, type: value.type, ...valueFormat },
+        xAxis: { categories: groupBy.list, key: groupBy.name, type: groupBy.type, ...groupByFormat },
+        yAxis: { categories: value.list, key: value.name, type: value.type, ...valueFormat },
       },
       results: groupByIndexByValueIndex,
       crossLinking: [groupBy.idList, value.idList],
@@ -57,8 +57,8 @@ const noAggregationWithGroupByCategorical = (
   const results = groupBy.list.map((_, i) => [i, getRandomNumber(max)]);
   return {
     format: {
-      xAxis: { categories: groupBy.list, type: groupBy.type, ...groupByFormat },
-      yAxis: { type: value.type, ...valueFormat },
+      xAxis: { categories: groupBy.list, key: groupBy.name, type: groupBy.type, ...groupByFormat },
+      yAxis: { key: value.name, type: value.type, ...valueFormat },
     },
     results,
     crossLinking: [groupBy.idList, value.idList],
@@ -108,7 +108,11 @@ const getWidgetDataNoGroupBy = (value: FakeDataDataPoint): GetWidgetDataResult |
   };
   const hasCrosslinking =
     value.transformation && transformationsWithCrossLinking.includes(value.transformation);
-  const crossLinking = hasCrosslinking ? value.idList?.[0] : [];
+  const crossLinking = hasCrosslinking
+    ? value.transformation === Transformation.SelfMulti
+      ? value.idList
+      : value.idList?.[0]
+    : [];
   const transformedValue = calculateTransformation(value.list || [], value.transformation);
   return {
     format,

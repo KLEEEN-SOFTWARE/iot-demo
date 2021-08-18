@@ -1,20 +1,22 @@
 import 'react-reflex/styles.css';
 
-import { AppModule, NavPosition, Translate, Widget } from '@kleeen/types';
+import { AppModule, NavPosition, Translate } from '@kleeen/types';
 import { PreviewCloseButton, useStyles } from './previewPanel.styles';
-import { PreviewPanelLayoutProvider, useKleeenRouting, usePreviewPanel } from '@kleeen/react/hooks';
 import { ReflexContainer, ReflexElement, ReflexHandle, ReflexSplitter } from 'react-reflex';
+import { useKleeenRouting, usePreviewPanel } from '@kleeen/react/hooks';
 
 import { CardSection } from '@kleeen/react/atomic-elements';
 import { KUIConnect } from '@kleeen/core-react';
 import { NavigationTask } from './modules/generated/components';
+import { Typography } from '@material-ui/core';
 import classnames from 'classnames';
+import { isReactNativeInfusion } from '@kleeen/common/utils';
 import settings from './settings/app.json';
-import { useState } from 'react';
 
 const bem = 'ks-layout';
 const isNavTop = settings.layout.position === NavPosition.top;
 const modifier = isNavTop ? 'top' : 'side container-nav-left';
+const applyInfusion = isReactNativeInfusion();
 
 type LayoutBaseProps = {
   modules: AppModule[];
@@ -22,57 +24,41 @@ type LayoutBaseProps = {
 };
 
 function LayoutBase({ modules, translate }: LayoutBaseProps) {
-  const [isPreviewOpen, setPreviewOpen] = useState(false);
-  const [previewWidgets, setPreviewWidgets] = useState<Widget[]>([]);
+  const { isPreviewOpen, previewWidgets, previewTitle } = usePreviewPanel();
   const styles = useStyles();
 
-  const fns = {
-    closePreviewPanel,
-    openPreviewPanel,
-    setPreviewWidgets,
-  };
-
-  function closePreviewPanel() {
-    setPreviewOpen(false);
-    setPreviewWidgets([]);
-  }
-
-  function openPreviewPanel() {
-    setPreviewOpen(true);
-  }
+  const mainNavSection = !applyInfusion ? (
+    <section className={classnames(`${bem}__navigation`)}>
+      <NavigationTask />
+    </section>
+  ) : null;
 
   return (
     <div className={classnames(bem, `${bem}--${modifier}`, 'content-layout')}>
-      <section className={classnames(`${bem}__navigation`)}>
-        <NavigationTask />
-      </section>
-      <PreviewPanelLayoutProvider fns={fns}>
-        <ReflexContainer
-          className={classnames(`${bem}__preview-container`, 'layout')}
-          orientation="horizontal"
-        >
-          <ReflexElement minSize={288}>{<Content modules={modules} />}</ReflexElement>
-          {isPreviewOpen && <ReflexSplitter className={styles.previewSplitter} />}
-          {isPreviewOpen && (
-            <ReflexElement minSize={42}>
-              <ReflexHandle>
-                <div className={classnames(`${bem}__handle-container`, styles.previewHeader)}>
-                  <CloseButton translate={translate} />
-                  <div className={styles.previewHandler}>::::::</div>
-                </div>
-              </ReflexHandle>
-              <div className={styles.previewContent}>
-                <CardSection
-                  justifyContent="center"
-                  key="preview-card-section"
-                  taskName="previewPanel"
-                  widgets={previewWidgets}
-                />
+      {mainNavSection}
+      <ReflexContainer className={classnames(`${bem}__preview-container`, 'layout')} orientation="horizontal">
+        <ReflexElement minSize={288}>{<Content modules={modules} />}</ReflexElement>
+        {isPreviewOpen && <ReflexSplitter className={styles.previewSplitter} />}
+        {isPreviewOpen && (
+          <ReflexElement minSize={42}>
+            <ReflexHandle>
+              <div className={classnames(`${bem}__handle-container`, styles.previewHeader)}>
+                <Typography className={styles.previewTitle}>{previewTitle}</Typography>
+                <CloseButton translate={translate} />
+                <div className={styles.previewHandler}>::::::</div>
               </div>
-            </ReflexElement>
-          )}
-        </ReflexContainer>
-      </PreviewPanelLayoutProvider>
+            </ReflexHandle>
+            <div className={styles.previewContent}>
+              <CardSection
+                justifyContent="center"
+                key="preview-card-section"
+                taskName="previewPanel"
+                widgets={previewWidgets}
+              />
+            </div>
+          </ReflexElement>
+        )}
+      </ReflexContainer>
     </div>
   );
 }

@@ -65,6 +65,5 @@ export type WidgetsByEntity = WidgetsByEntityMap<LibraryWidget>;
 
 export interface WidgetByEntityBaseParam {
   entityId: number | string;
-  filters?: Filters;
   scope: WidgetScope;
 }

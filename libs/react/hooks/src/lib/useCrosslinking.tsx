@@ -1,4 +1,4 @@
-import { Attribute, Cell } from '@kleeen/types';
+import { Attribute, DataPointValue } from '@kleeen/types';
 
 import camelcase from 'lodash.camelcase';
 import { useHistory } from 'react-router-dom';
@@ -9,10 +9,19 @@ export enum AttributeType {
   XOR = 'xor',
 }
 
-export function useCrosslinking() {
+// TODO: @cafe refactor all these params into a single object and create an interface for it
+export type CrossLink = (
+  slug: string,
+  entity: DataPointValue,
+  attribute: Attribute,
+  openNewTab?: boolean,
+) => void;
+
+export function useCrosslinking(): { crosslink: CrossLink } {
   const history = useHistory();
 
-  function crosslink(slug: string, entity: Cell, attribute: Attribute, openNewTab?: boolean) {
+  // FIXME: @cafe handle this function with a useState
+  function crosslink(slug: string, entity: DataPointValue, attribute: Attribute, openNewTab?: boolean) {
     const paramName =
       attribute.dataType === AttributeType.XOR ? entity?.$metadata?.entityType : attribute.name;
     const currentCrossLinking = attribute?.crossLinking?.find(({ slug: localSlug }) => localSlug === slug);

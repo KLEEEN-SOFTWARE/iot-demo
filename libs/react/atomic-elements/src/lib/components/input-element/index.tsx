@@ -77,6 +77,7 @@ export function InputElement({
   useEffect(() => {
     if (registerEvents) {
       registerEvents({
+        id: widgetId as string,
         onSave,
         onCancel,
       });

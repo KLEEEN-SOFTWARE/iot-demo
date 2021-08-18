@@ -1,5 +1,5 @@
-import { CrossLinking, FormatProps } from '@kleeen/types';
-import { getColor, getSeveritiesFn, vizColorsFormatted } from '@kleeen/frontend/utils';
+import { CrossLinkingMatrix, FormatProps } from '@kleeen/types';
+import { getColor, getContextInfo, getSeveritiesFn, vizColorsFormatted } from '@kleeen/frontend/utils';
 
 import _ from 'lodash';
 import { pathOr } from 'ramda';
@@ -10,11 +10,19 @@ interface IOptionsFormat {
   yAxis?: Highcharts.YAxisOptions | Array<Highcharts.YAxisOptions>;
 }
 
-const transformToObjectFormat = (
-  data: any[],
-  xAxis?: FormatProps,
-  crossLinking: CrossLinking[] = [],
-): Highcharts.PointOptionsObject[] => {
+interface TransformToObjectFormatProps {
+  crossLinkingMatrix: CrossLinkingMatrix;
+  data: any[];
+  xAxis?: FormatProps;
+  yAxis?: FormatProps;
+}
+
+const transformToObjectFormat = ({
+  crossLinkingMatrix = [],
+  data,
+  xAxis,
+  yAxis,
+}: TransformToObjectFormatProps): Highcharts.PointOptionsObject[] => {
   const isValueAnArray = Array.isArray(data[0]);
   const max = isValueAnArray ? Math.max(...data.map(([, y]) => y), 1) : Math.max(...data, 1);
   const min = isValueAnArray ? Math.min(...data.map(([, y]) => y), 1) : Math.min(...data, 1);
@@ -53,13 +61,20 @@ const transformToObjectFormat = (
 
     const [groupBy, val] = isValueAnArray ? dataPoint : [index, dataPoint];
     const displayValue = xAxis?.categories ? xAxis.categories[groupBy] : groupBy;
-    const crossLinkingMetadata = crossLinking[index] || {};
-    const contextInfo = {
-      [xAxis.key]: {
-        displayValue,
-        ...crossLinkingMetadata,
-      },
-    };
+    const contextInfo = getContextInfo({
+      axes: [
+        {
+          key: xAxis.key,
+          value: displayValue,
+        },
+        {
+          key: yAxis.key,
+          value,
+        },
+      ],
+      crossLinkingMatrix,
+      resultPosition: index,
+    });
     return { name, value, color, ...contextInfo };
   });
 };
@@ -94,7 +109,7 @@ export const getOptions = (
   baseOptions: Highcharts.Options,
   params,
   openMenuIfCrossLink: Function,
-  crossLinkingValuesForAxis,
+  crossLinkingMatrix: CrossLinkingMatrix,
 ): Highcharts.Options => {
   const type = pathOr('column', ['chart', 'type'], format);
   const title = pathOr(null, ['title', 'text'], format);
@@ -102,7 +117,7 @@ export const getOptions = (
   const xAxis = pathOr({}, ['xAxis'], format);
   const yAxis = pathOr({}, ['yAxis'], format);
   const [formatterGroupBy, formatterGroupByForTooltip, formatterValue] = useTextFormattersForViz(params);
-  const formattedResults = transformToObjectFormat(results, xAxis, crossLinkingValuesForAxis);
+  const formattedResults = transformToObjectFormat({ crossLinkingMatrix, data: results, xAxis, yAxis });
   const { bottomColor, topColor } = vizColorsFormatted();
 
   const defaultOptions: Highcharts.Options = {

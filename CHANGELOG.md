@@ -1,3 +1,34 @@
+## [2.3.1](https://github.com/KLEEEN-SOFTWARE/template/compare/2.3.0...2.3.1) (2021-08-17)
+
+
+### Bug Fixes
+
+* **kleeen-api:** update library to handle types with default configuration ([#1117](https://github.com/KLEEEN-SOFTWARE/template/issues/1117)) ([2261203](https://github.com/KLEEEN-SOFTWARE/template/commit/22612030a3b8929b9410f0d7a062197811f67551))
+
+# [2.3.0](https://github.com/KLEEEN-SOFTWARE/template/compare/2.2.3...2.3.0) (2021-08-17)
+
+
+### Bug Fixes
+
+* **api:** fix add new on config table ([#1091](https://github.com/KLEEEN-SOFTWARE/template/issues/1091)) ([bf1b271](https://github.com/KLEEEN-SOFTWARE/template/commit/bf1b271a63c8d379276ced7a58751b32e91ffd2e))
+* **atomic-elements:** update highcharts breaking changes no documented ([#1112](https://github.com/KLEEEN-SOFTWARE/template/issues/1112)) ([848adde](https://github.com/KLEEEN-SOFTWARE/template/commit/848adde4c8ee76b4d12b8aeca33c807d7cf7e3c5))
+* **base-api-service:** added missing param for sorting ([97fd059](https://github.com/KLEEEN-SOFTWARE/template/commit/97fd059a4c9a36010c1ddbab7c79bbe2548e9283))
+* **config-table:** fix bug when add multiple temp rows on config table ([#1107](https://github.com/KLEEEN-SOFTWARE/template/issues/1107)) ([46325ca](https://github.com/KLEEEN-SOFTWARE/template/commit/46325cab3750b04fef3f1c14489f22fc5d1402a4))
+* **input-color:** problem in the variable delivered in the input ([05eba4e](https://github.com/KLEEEN-SOFTWARE/template/commit/05eba4e696ce028c92b9420fa01f59814768c3aa))
+* **preview:** hover on tables without own entity column ([#1109](https://github.com/KLEEEN-SOFTWARE/template/issues/1109)) ([ff733a4](https://github.com/KLEEEN-SOFTWARE/template/commit/ff733a46fcf48a75d1395f24e16e3c3556841d39))
+* **sparklines:** trend sparklines on summary panel break during initial load ([#1105](https://github.com/KLEEEN-SOFTWARE/template/issues/1105)) ([aeba881](https://github.com/KLEEEN-SOFTWARE/template/commit/aeba88197fb5c309a7a457b0ea615adb24320b56))
+* **sub-header:** adding access control to both sub headers ([#1085](https://github.com/KLEEEN-SOFTWARE/template/issues/1085)) ([4e8ae26](https://github.com/KLEEEN-SOFTWARE/template/commit/4e8ae264473f288c2165bc1787a375e7d1fae8a1))
+* **utils:** remove infinity validation from sort views algorithm ([0797bcd](https://github.com/KLEEEN-SOFTWARE/template/commit/0797bcd0b74692a7adcef25590988f3141bc19bf))
+
+
+### Features
+
+* **css-variables:** update hardcoded numbers with speed variables ([#1090](https://github.com/KLEEEN-SOFTWARE/template/issues/1090)) ([bd017f5](https://github.com/KLEEEN-SOFTWARE/template/commit/bd017f5205517d60f03dd20978b283a68daf29d5))
+* **e2e:** Add basic e2e configuration ([#1075](https://github.com/KLEEEN-SOFTWARE/template/issues/1075)) ([b3f503f](https://github.com/KLEEEN-SOFTWARE/template/commit/b3f503f8c25e425c9e1a7e98f78e9842dfa6ddf7))
+* **preview:** add preview panel for visualizations ([#1083](https://github.com/KLEEEN-SOFTWARE/template/issues/1083)) ([3605351](https://github.com/KLEEEN-SOFTWARE/template/commit/36053517db418b97d3222f4233b2d8d097294898))
+* **preview:** preview panel integration [KSE3-3547] ([#1076](https://github.com/KLEEEN-SOFTWARE/template/issues/1076)) ([2b9ee38](https://github.com/KLEEEN-SOFTWARE/template/commit/2b9ee383b119cced1cbbf1ecc01b89cb7bbdd0e6))
+* **react-colorful:** remove react-colorful library ([#1101](https://github.com/KLEEEN-SOFTWARE/template/issues/1101)) ([3cf11d7](https://github.com/KLEEEN-SOFTWARE/template/commit/3cf11d746379a122e3f6fac515f488ec39128c4b))
+
 ## [2.2.3](https://github.com/KLEEEN-SOFTWARE/template/compare/2.2.2...2.2.3) (2021-08-10)
 
 

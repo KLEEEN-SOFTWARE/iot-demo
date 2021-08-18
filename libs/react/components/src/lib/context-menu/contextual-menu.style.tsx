@@ -5,7 +5,7 @@ export const Menu = styled(KsMenu)({
   '& .MuiMenu-paper': {
     border: 'var(--card-border)',
     borderRadius: 'var(--card-border-radius)',
-    maxHeight: 'var(--wh-6XL)',
+    maxHeight: 'var(--wh-8XL)',
     width: 'var(--wh-5XL)',
     '& > ul': {
       paddingTop: '0',

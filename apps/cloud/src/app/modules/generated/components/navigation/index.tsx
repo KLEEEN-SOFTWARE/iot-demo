@@ -3,7 +3,7 @@ import { NavLeft, NavTop } from '@kleeen/react/atomic-elements';
 import { KSAuth } from '@kleeen/auth';
 import { NavPosition } from '@kleeen/types';
 import { ReactElement } from 'react';
-import appSettings from '../../../../settings/app.json';
+import { app } from '@kleeen/settings';
 import { getSettings } from './navigation.settings';
 import { useHistory } from 'react-router-dom';
 import { useKleeenActions } from '@kleeen/react/hooks';
@@ -39,13 +39,13 @@ export function NavigationTask(): ReactElement {
 
   const navCommonProps = {
     accountMenuList: settings.accountMenuOptions,
-    accountName: appSettings.companyName,
+    accountName: app.companyName,
     helpUrl: settings.helpUrl,
     logo: settings.logo,
     menuList: settings.menuOptions,
-    productName: appSettings.productName,
+    productName: app.productName,
   };
-  const Nav = appSettings.layout.position === NavPosition.top ? NavTop : NavLeft;
+  const Nav = app.layout.position === NavPosition.top ? NavTop : NavLeft;
 
   return <Nav {...navCommonProps} />;
 }

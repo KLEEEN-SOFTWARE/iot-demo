@@ -1,21 +1,19 @@
 import React from 'react';
 
-function useAnchorElement(): {
+export function useAnchorElement(): {
+  anchorEl: null | HTMLElement;
   handleClick: (event: React.MouseEvent<HTMLButtonElement | HTMLDivElement>) => void;
   handleClose: () => void;
-  anchorEl: null | HTMLElement;
 } {
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
 
-  const handleClick = (event: React.MouseEvent<HTMLButtonElement>): void => {
+  function handleClick(event: React.MouseEvent<HTMLButtonElement>): void {
     setAnchorEl(event.currentTarget);
-  };
+  }
 
-  const handleClose = (): void => {
+  function handleClose() {
     setAnchorEl(null);
-  };
+  }
 
   return { anchorEl, handleClick, handleClose };
 }
-
-export { useAnchorElement };

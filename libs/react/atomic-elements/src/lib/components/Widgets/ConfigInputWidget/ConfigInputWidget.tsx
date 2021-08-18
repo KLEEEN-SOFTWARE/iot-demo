@@ -9,11 +9,9 @@ import {
   elementCase,
   transformationElements,
 } from './ConfigInputWidget.model';
-import { KsContextMenu, Loader } from '@kleeen/react/components';
 import React, { ReactElement, useEffect, useState } from 'react';
 import { isEmpty, isNil, pathOr } from 'ramda';
 import {
-  useAnchorElement,
   useKleeenActions,
   useKsAutoComplete,
   useMasonry,
@@ -21,6 +19,7 @@ import {
   useWidgetContext,
 } from '@kleeen/react/hooks';
 
+import { Loader } from '@kleeen/react/components';
 import { WidgetDataAttributes } from '@kleeen/types';
 import camelcase from 'lodash.camelcase';
 import classNames from 'classnames';
@@ -355,8 +354,6 @@ export function ConfigInputWidget({
     }
   };
 
-  const { anchorEl, handleClick, handleClose } = useAnchorElement();
-
   const showLoader = !widgetData || widgetData.isLoading;
   const classTypeInput =
     (canAddValues && !hasMany) || optionsValues === 1 || elementToUse.name === elementCase.FIELD_CAN_NOT_ADD;
@@ -371,9 +368,6 @@ export function ConfigInputWidget({
             [classes.clickableArea]: isClickable,
           },
         )}`}
-        onClick={(event: React.MouseEvent<HTMLDivElement>) => {
-          disabled && handleClick(event);
-        }}
       >
         {showLoader ? (
           <Loader />
@@ -430,9 +424,6 @@ export function ConfigInputWidget({
           </div>
         )}
       </div>
-      {Boolean(anchorEl) && (
-        <KsContextMenu attr={soloAttribute} cell={cell} handleClose={handleClose} anchorEl={anchorEl} />
-      )}
     </>
   );
 }

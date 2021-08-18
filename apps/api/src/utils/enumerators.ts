@@ -37,6 +37,7 @@ export enum Transformation {
 
 export const transformationsWithCrossLinking = [
   Transformation.SelfSingle,
+  Transformation.SelfMulti,
   Transformation.Max,
   Transformation.Min,
 ];
