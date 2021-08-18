@@ -5,6 +5,7 @@ import {
   AutocompleteState,
   FormatProps,
   GenericFunction,
+  Row,
   Translate,
   Sorting,
   Widget,
@@ -13,33 +14,36 @@ import {
 import { Order } from '@kleeen/common/utils';
 
 export interface EditingCell {
-  rowId?: string;
   attributeName?: string;
+  rowId?: string;
   temporaryValue?: any;
 }
 
 interface Localization {
+  actionsTableHeaderRow: string;
+  addButtonAriaLabel: string;
+  clearSearchAriaLabel: string;
+  confirmArialLabel: string;
+  confirmDeleteLabel: string;
+  deleteButtonAriaLabel: string;
+  editButtonAriaLabel: string;
+  rejectAriaLabel: string;
   searchPlaceholder: string;
   searchTooltip: string;
-  clearSearchAriaLabel: string;
-  addButtonAriaLabel: string;
-  actionsTableHeaderRow: string;
-  editButtonAriaLabel: string;
-  deleteButtonAriaLabel: string;
-  confirmArialLabel: string;
-  rejectAriaLabel: string;
-  confirmDeleteLabel: string;
 }
 
 interface GridSectionProps {
   actions?: Action[];
   attributes: Attribute[];
   autocomplete: AutocompleteState;
+  className?: string;
+  columnWidth?: number;
   enableEditMode?: boolean;
   entity: { isLoading: boolean; data: any[]; format?: FormatProps };
   entityActions?: { [key: string]: GenericFunction };
   entityId?: string;
   entityName: string;
+  getMoreRows?: any;
   hasToolBar?: boolean;
   onAutocompleteRequest: (attribute: string) => void;
   onCellUpdate?: AmendCellUpdate;
@@ -57,26 +61,19 @@ interface GridSectionProps {
   setSorting?: (value: string) => void;
   taskName?: string;
   translate?: Translate;
-  widgetId: string | number;
-  getMoreRows?: any;
-  className?: string;
-  columnWidth?: number;
   widget?: Widget;
-}
-
-interface Row {
-  [key: string]: string | number;
+  widgetId: string | number;
 }
 
 interface TableHeaderProps {
-  onSort: GenericFunction;
-  order: Order;
-  orderBy: string;
   attributes: Attribute[];
   handleChange: GenericFunction;
   hasActions: boolean;
   localization: Localization;
+  onSort: GenericFunction;
+  order: Order;
+  orderBy: string;
   widgetId: string | number;
 }
 
-export { TableHeaderProps, Row, GridSectionProps, Localization };
+export { TableHeaderProps, GridSectionProps, Localization };

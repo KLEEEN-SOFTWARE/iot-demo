@@ -6,6 +6,7 @@ import classNames from 'classnames';
 import { clone } from 'ramda';
 import { generalBaseOptions } from '../../../generalBaseOptions';
 import { getOptions } from '../../../../utils/highchart-options';
+import { isNilOrEmpty } from '@kleeen/common/utils';
 import merge from 'lodash.merge';
 import { useStyles } from '../../styles/base-trend.styles';
 
@@ -50,7 +51,7 @@ function Trend({
 
   const needsHighlight = highlightEnd || highlightStart;
 
-  if (needsHighlight) {
+  if (!isNilOrEmpty(dataRaw) && needsHighlight) {
     const dataLength = dataRaw.length;
 
     if (highlightStart) {

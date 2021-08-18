@@ -22,4 +22,7 @@ $positions: (
     openFilterSection: 2 * $wh-5XL,
     openDetailsSection: $wh-5XL - $pm-L,
   ),
+  'no-nav': (
+    browserArea: $wh-0,
+  ),
 );

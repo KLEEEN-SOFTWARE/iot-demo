@@ -1,7 +1,7 @@
 @import 'variables';
 
 @mixin calc-transform($key) {
-  width: calc(#{$key} * (var(--wh-8XL) + var(--pm-L) + var(--pm-L)) + #{$key - 1} * (var(--pm-1XL)));
+  width: calc(#{$key} * var(--card-width-M) + #{$key - 1} * (var(--pm-1XL)));
 
   > div:not(.container-header) .MuiTypography-root {
     display: if($key == 1, none, block);

@@ -1,4 +1,4 @@
-import { Action, Attribute, AttributeProps, GenericFunctions } from '@kleeen/types';
+import { Action, Attribute, GenericFunctions } from '@kleeen/types';
 
 import { AddDialogPayload } from '../dialog';
 import { AttributeInputEvents } from '@kleeen/react/hooks';

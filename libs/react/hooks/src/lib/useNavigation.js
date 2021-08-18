@@ -1,10 +1,30 @@
+import { globalVariable } from '@kleeen/common/utils';
 import { useHistory } from 'react-router';
 
-export default function useNavigation() {
-  const navigation = useHistory();
-  return (path, preserveQueryParams = false) => {
-    preserveQueryParams && navigation.location.search
-      ? navigation.push(path + navigation.location.search)
-      : navigation.push(path);
-  };
+export function useNavigation() {
+  const router = useHistory();
+  return navigationInit(router);
 }
+
+export function navigationInit(router) {
+  const navigationRouterData = navigationRouter(router);
+
+  globalVariable('router', router);
+  globalVariable('navigate', navigationRouterData);
+  return navigationRouterData;
+}
+
+//#region Private Members
+
+function navigationRouter(router) {
+  const navigation = (path, preserveQueryParams = false) => {
+    if (preserveQueryParams && router.location.search) {
+      return router.push(path + router.location.search);
+    }
+    return router.push(path);
+  };
+
+  return navigation;
+}
+
+//#endregion

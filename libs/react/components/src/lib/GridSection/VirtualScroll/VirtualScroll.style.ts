@@ -317,10 +317,6 @@ export const styles = () =>
               color: 'var(--on-secondary-color-variant)',
             },
           },
-          '& .context-menu-button, & .context-menu-only-text, & .confirm-delete-label': {
-            color: 'var(--on-secondary-color-variant)',
-            backgroundColor: 'inherit',
-          },
         },
         '& .draggable-container': {
           paddingLeft: 'calc(var(--pm-1XL) + var(--pm-7XS))',
@@ -403,10 +399,6 @@ export const styles = () =>
             '& .MuiButtonBase-root': {
               color: 'var(--on-secondary-color-variant)',
             },
-          },
-          '& .context-menu-button, & .context-menu-only-text, & .confirm-delete-label': {
-            color: 'var(--on-secondary-color-variant)',
-            backgroundColor: 'inherit',
           },
         },
         '& .draggable-container': {

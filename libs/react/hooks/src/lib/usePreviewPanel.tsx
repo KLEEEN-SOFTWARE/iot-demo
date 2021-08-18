@@ -1,42 +1,59 @@
-import { Dispatch, SetStateAction, createContext, useContext } from 'react';
+import { Dispatch, SetStateAction, createContext, useContext, useState } from 'react';
 import { ReactElement, Widget } from '@kleeen/types';
 
-export const PreviewPanelContext = createContext(null);
-
-type PreviewPanel = {
+export type PreviewPanel = {
+  previewTitle: ReactElement;
   closePreviewPanel: () => void;
-  openPreviewPanel: () => void;
+  isPreviewOpen: boolean;
+  openPreviewPanel: (title) => void;
+  previewWidgets: Widget[];
   setPreviewWidgets: Dispatch<SetStateAction<Widget[]>>;
 };
 
+export const PreviewPanelContext = createContext<PreviewPanel>({
+  previewTitle: null,
+  closePreviewPanel: () => {
+    console.warn('No preview panel context set');
+  },
+  isPreviewOpen: false,
+  openPreviewPanel: () => {
+    console.warn('No preview panel context set');
+  },
+  previewWidgets: [],
+  setPreviewWidgets: () => {
+    console.warn('No preview panel context set');
+  },
+});
+
 export function usePreviewPanel() {
-  const previewPanelContext = useContext<PreviewPanel>(PreviewPanelContext);
-
-  if (!previewPanelContext) {
-    return {
-      closePreviewPanel: () => {},
-      openPreviewPanel: () => {},
-      setPreviewWidgets: () => {},
-    };
-    // TODO @cafe this provider should be used higher in the chain, since the menu lives outside of the app
-    // throw new Error(`Preview function cannot be used outside Preview Layout`);
-  }
-
+  const previewPanelContext = useContext(PreviewPanelContext);
   return previewPanelContext;
 }
 
-export function PreviewPanelLayoutProvider({
-  children,
-  fns: { closePreviewPanel, openPreviewPanel, setPreviewWidgets },
-}: {
-  children: ReactElement;
-  fns: PreviewPanel;
-}) {
-  const previewPanelLayout = {
+export function PreviewPanelLayoutProvider({ children }: { children: ReactElement }) {
+  const [isPreviewOpen, setPreviewOpen] = useState(false);
+  const [previewTitle, setPreviewTitle] = useState(null);
+  const [previewWidgets, setPreviewWidgets] = useState<Widget[]>([]);
+
+  function closePreviewPanel() {
+    setPreviewOpen(false);
+    setPreviewWidgets([]);
+    setPreviewTitle(null);
+  }
+
+  function openPreviewPanel(title) {
+    setPreviewOpen(true);
+    setPreviewTitle(title);
+  }
+
+  const previewPanelProps = {
+    previewTitle,
     closePreviewPanel,
+    isPreviewOpen,
     openPreviewPanel,
+    previewWidgets,
     setPreviewWidgets,
   };
 
-  return <PreviewPanelContext.Provider value={previewPanelLayout}>{children}</PreviewPanelContext.Provider>;
+  return <PreviewPanelContext.Provider value={previewPanelProps}>{children}</PreviewPanelContext.Provider>;
 }

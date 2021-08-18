@@ -1,11 +1,13 @@
 import { getRowDisplayValue, overwriteFormat } from '@kleeen/common/utils';
 
+import { Action } from '@kleeen/types';
 import ActionsForm from '../../ActionsForm';
 import ConfirmForm from '../../ConfirmForm';
-import { ContextCell } from '../../../contextCell';
 import { DataViewRowProps } from './CellRenderer.model';
 import DragIndicatorIcon from '@material-ui/icons/DragIndicator';
+import { KsContextCell } from '../../../context-cell';
 import React from 'react';
+import { RowData } from '../../../config-table';
 import { SortableHandle } from 'react-sortable-hoc';
 import { TableCell } from '../../components/index';
 import { useStyles } from './CellRenderer.styles';
@@ -19,24 +21,23 @@ function DataViewRow({
   deleteContainer,
   deleteProcess,
   displayColumnAttribute,
+  draggable,
   hasActions,
   idx,
   isDeletable,
   localization,
   openShowMoreModal,
+  orderColumnName,
   props,
-  row = {},
+  row,
   rowData,
   toggleDelete,
   triggerCustomAction,
-  draggable,
-  orderColumnName,
 }: DataViewRowProps): JSX.Element {
-  function _draggableColumn(children) {
-    return <DragHandle>{children}</DragHandle>;
-  }
-  const isFirstColumn = idx === 0;
   const classes = useStyles();
+
+  const isFirstColumn = idx === 0;
+
   if (deleteContainer && deleteContainer.includes(rowData.id) && isFirstColumn) {
     const confirmMethod = () => {
       deleteProcess(rowData.id);
@@ -58,6 +59,7 @@ function DataViewRow({
       </TableCell>
     );
   }
+
   if (deleteContainer && deleteContainer.includes(rowData.id)) {
     return null;
   }
@@ -65,10 +67,37 @@ function DataViewRow({
   const rowKey = `${row.id}-${`${attr.isDisplayValue ? `displayValue::${attr.name}` : attr.name}`}`;
   const rowDisplayValue = getRowDisplayValue(rowData, displayColumnAttribute?.name);
 
+  function Cell() {
+    return (
+      <KsContextCell
+        attr={attr}
+        cell={row}
+        displayColumnAttribute={displayColumnAttribute}
+        format={overwriteFormat(props?.entity?.format[attr.name], attr.format)}
+        hasDisplayMedia={row.displayMedia ? true : false}
+        openShowMoreModal={openShowMoreModal}
+        row={rowData}
+        rowDisplayValue={rowDisplayValue}
+      />
+    );
+  }
+
+  function DraggableColumn() {
+    return (
+      <DragHandle>
+        <div className="draggable-container">
+          <div className="draggable-column data-view">
+            <DragIndicatorIcon />
+          </div>
+          <div className="draggable-column-number">{validateOrderColum(rowData, orderColumnName)}</div>
+        </div>
+      </DragHandle>
+    );
+  }
+
   if (isFirstColumn) {
     const hasBorderRight = hasActions ? 'no-border-right' : null;
-    const handleCustomAction = (action) => triggerCustomAction(action, rowData.id);
-
+    const handleCustomAction = (action: Action) => triggerCustomAction(action, rowData.id);
     const handleDelete = () => toggleDelete(rowData.id);
     const handleEdit = (): void => {
       return;
@@ -76,31 +105,14 @@ function DataViewRow({
 
     return (
       <React.Fragment key={`${row.id}-fragment`}>
-        {draggable &&
-          _draggableColumn(
-            <div className="draggable-container">
-              <div className="draggable-column data-view">
-                <DragIndicatorIcon />
-              </div>
-              <div className="draggable-column-number">{validateOrderColum(rowData, orderColumnName)}</div>
-            </div>,
-          )}
+        {draggable && <DraggableColumn />}
         <TableCell
-          key={rowKey}
           className={`${hasBorderRight} ${draggable ? 'firstColumn' : ''} ${
             row.displayMedia && classes.tableCellContainer
           }`}
+          key={rowKey}
         >
-          <ContextCell
-            attr={attr}
-            cell={row}
-            displayColumnAttribute={displayColumnAttribute}
-            format={overwriteFormat(props?.entity?.format[attr.name], attr.format)}
-            hasDisplayMedia={row.displayMedia ? true : false}
-            openShowMoreModal={openShowMoreModal}
-            row={rowData}
-            rowDisplayValue={rowDisplayValue}
-          />
+          <Cell />
         </TableCell>
         {hasActions && (
           <TableCell key={`${rowKey}-actions`} className="actions-form-cell">
@@ -111,7 +123,7 @@ function DataViewRow({
               handleEdit={handleEdit}
               isDeletable={isDeletable}
               localization={localization}
-              row={rowData}
+              row={rowData as RowData}
             />
           </TableCell>
         )}
@@ -119,17 +131,8 @@ function DataViewRow({
     );
   } else {
     return (
-      <TableCell key={rowKey} className={`${row.displayMedia && classes.tableCellContainer}`}>
-        <ContextCell
-          attr={attr}
-          cell={row}
-          displayColumnAttribute={displayColumnAttribute}
-          format={overwriteFormat(props?.entity?.format[attr.name], attr.format)}
-          row={rowData}
-          rowDisplayValue={rowDisplayValue}
-          openShowMoreModal={openShowMoreModal}
-          hasDisplayMedia={row.displayMedia ? true : false}
-        />
+      <TableCell className={`${row.displayMedia && classes.tableCellContainer}`} key={rowKey}>
+        <Cell />
       </TableCell>
     );
   }

@@ -1,6 +1,12 @@
 import { IsOnboardingEnable, OnBoardingTask } from './modules/generated/components';
 import React, { useState } from 'react';
-import { useKleeenActions, useKleeenContext, useSyncUserPreferences } from '@kleeen/react/hooks';
+import { globalVariable, isReactNativeInfusion } from '@kleeen/common/utils';
+import {
+  navigationInit,
+  useKleeenActions,
+  useKleeenContext,
+  useSyncUserPreferences,
+} from '@kleeen/react/hooks';
 
 import { Authenticator } from './modules/custom/components';
 import Highcharts from 'highcharts';
@@ -8,10 +14,11 @@ import { HookableContextMenu } from '@kleeen/react/atomic-elements';
 import { KUIConnect } from '@kleeen/core-react';
 import Layout from './layout';
 import { BrowserRouter as Router } from 'react-router-dom';
-import { fontFamily } from './settings/font-family';
+import { fontFamily } from '@kleeen/settings';
 import getModules from './modules';
 
 const IsAuthEnabled = true;
+const applyInfusion = isReactNativeInfusion();
 
 async function syncUser(setCurrentUser, currentUser, currentAuthenticatedUser) {
   try {
@@ -40,20 +47,25 @@ function PagesManager() {
   const [{ showOnboardingPage }] = useSyncUserPreferences();
   const { currentUser } = useKleeenContext('endUser');
   const { setCurrentUser } = useKleeenActions('endUser');
+  const afterLoginSuccess = async ({ currentAuthenticatedUser }) => {
+    const loadedModules = await getModules(modulesToLoad);
+    const routerLinks = loadedModules.map((e) => e.path);
+    syncUser(setCurrentUser, currentUser, currentAuthenticatedUser);
+    setModules(loadedModules);
+    globalVariable('routerLinks', routerLinks);
+  };
+
+  const routerHistory = (elem) => {
+    if (applyInfusion) {
+      navigationInit(elem?.history);
+    }
+  };
 
   initializeHighcharts();
 
   return (
-    <Router>
-      <Authenticator
-        afterLoginSuccess={async ({ currentAuthenticatedUser }) => {
-          const loadedModules = await getModules(modulesToLoad);
-          syncUser(setCurrentUser, currentUser, currentAuthenticatedUser);
-          setModules(loadedModules);
-        }}
-        hideDefault={true}
-        isEnabled={IsAuthEnabled}
-      >
+    <Router ref={routerHistory}>
+      <Authenticator afterLoginSuccess={afterLoginSuccess} hideDefault={true} isEnabled={IsAuthEnabled}>
         <RenderLayout modules={modules} showOnboardingPage={IsOnboardingEnable && showOnboardingPage} />
       </Authenticator>
     </Router>

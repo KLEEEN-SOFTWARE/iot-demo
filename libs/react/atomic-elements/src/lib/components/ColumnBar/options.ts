@@ -1,8 +1,9 @@
-import { CrossLinking } from '@kleeen/types';
+import { formatAxis, getContextInfo } from '@kleeen/frontend/utils';
+
+import { CrossLinkingMatrix } from '@kleeen/types';
 import { addDoubleBarOptions } from './subTypes/doubleBar/doubleBar';
 import { addMacroMicroOptions } from './subTypes/macroMicro/macroMicro';
 import { addSegmentedOptions } from './subTypes/segmented/segmented';
-import { formatAxis } from '@kleeen/frontend/utils';
 import { pathOr } from 'ramda';
 import { useTextFormattersForViz } from '@kleeen/react/hooks';
 
@@ -74,7 +75,7 @@ export const getOptions = (
   subType: ColumnBarSubType,
   params,
   vizColors,
-  crossLinking: CrossLinking[] = [],
+  crossLinking: CrossLinkingMatrix = [],
   openMenuIfCrossLink: Function,
   xAxis: XAxisOptions,
 ): Highcharts.Options => {
@@ -113,14 +114,21 @@ export const getOptions = (
   const formattedResults = results.map((result, index: number) => {
     const [x, y] = resultToArray(index, result);
     const currentColor = vizColors[index % vizColors.length];
-    const crossLinkingMetadata = crossLinking[index] || {};
     const displayValue = xAxis?.categories ? xAxis.categories[x] : x;
-    const contextInfo = {
-      [xAxis?.key]: {
-        displayValue,
-        ...crossLinkingMetadata,
-      },
-    };
+    const contextInfo = getContextInfo({
+      axes: [
+        {
+          key: xAxis.key,
+          value: displayValue,
+        },
+        {
+          key: yAxis.key,
+          value: y,
+        },
+      ],
+      crossLinkingMatrix: crossLinking,
+      resultPosition: index,
+    });
 
     return {
       x: xAxis?.type === 'datetime' ? x : undefined,

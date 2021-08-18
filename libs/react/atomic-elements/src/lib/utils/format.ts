@@ -19,15 +19,19 @@ export function getFormat({ attributeFormat, backendFormat }: GetFormat): Format
   return isNilOrEmpty(backendFormat) ? attributeFormat : backendFormat;
 }
 
-export const getFormatedResults = (component, results) => {
+export const getFormatedResults = (component, results, crosslinking) => {
   let formatedResults;
   if (component === ElementDisplayType.Chips && Array.isArray(results) && results.length) {
-    formatedResults = results.map((result) => ({
-      displayValue: result,
-    }));
+    formatedResults = results.map((result, index) => {
+      return {
+        displayValue: result.value || result,
+        id: crosslinking[index].id,
+      };
+    });
   } else {
     formatedResults = {
       displayValue: results,
+      id: crosslinking?.id,
     };
   }
   return formatedResults;

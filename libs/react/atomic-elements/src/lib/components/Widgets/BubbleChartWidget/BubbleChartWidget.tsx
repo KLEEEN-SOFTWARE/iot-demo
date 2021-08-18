@@ -1,5 +1,5 @@
-import { Loader, RankedListItem, SimpleList } from '@kleeen/react/components';
-import React, { ReactElement, useEffect } from 'react';
+import { KsRankedListItem, Loader, SimpleList } from '@kleeen/react/components';
+import { ReactElement, useEffect } from 'react';
 import { formatDataList, parseAttributes } from '@kleeen/frontend/utils';
 import {
   useGetNavigationStyle,
@@ -65,7 +65,7 @@ export function BubbleChartWidget({
             data={data}
             hideHeader={hideHeader}
             listOptions={{
-              ListItemComponent: RankedListItem,
+              ListItemComponent: KsRankedListItem,
               sortBy: metadata?.valueColumnName,
             }}
             metadata={metadata}

@@ -6,6 +6,11 @@
   overflow: hidden;
   width: var(--size-pageWidth);
 
+  &.infusion {
+    height: 100%;
+    width: 100%;
+  }
+
   .generated-new {
     @extend %fill-available-space;
     display: flex;
@@ -24,7 +29,11 @@
       .layout {
         height: calc(100% - var(--preview-handled-height));
       }
+    }
 
+    &.no-nav,
+    &.nav-left,
+    &.nav-top {
       .main-layout {
         height: 100%;
       }
@@ -37,10 +46,6 @@
         height: 100%;
         overflow: hidden;
         width: 100%;
-      }
-
-      .main-layout {
-        height: 100%;
       }
     }
 

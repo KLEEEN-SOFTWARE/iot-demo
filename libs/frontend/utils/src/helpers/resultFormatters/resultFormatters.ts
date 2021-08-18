@@ -2,17 +2,23 @@
 import {
   AggregationType,
   Attribute,
-  CrossLinking,
+  CrossLinkingMatrix,
   DataListItem,
   DataListResult,
   FormatProps,
   SameSDTAggregations,
   TrendFormat,
 } from '@kleeen/types';
-import { GetSeveritiesResultProps, ValueLabelsProps, ValueResultProps } from './ResultFormatters.model';
+import {
+  GetSeveritiesResultProps,
+  TrendFormatterProps,
+  ValueLabelsProps,
+  ValueResultProps,
+} from './ResultFormatters.model';
 
 import _ from 'lodash';
 import camelCase from 'lodash.camelcase';
+import { getContextInfo } from './context-info';
 import { isNil } from 'ramda';
 import { isNilOrEmpty } from '@kleeen/common/utils';
 import memoize from 'lodash.memoize';
@@ -152,7 +158,7 @@ export const formatRadialResults = (
   results: any[],
   xAxis?: FormatProps,
   hasZ?: boolean,
-  crossLinking: CrossLinking[] = [],
+  crossLinkingMatrix: CrossLinkingMatrix = [],
   yAxis: FormatProps = {},
 ): { name: string; y: number }[] => {
   const isResultsArray = Array.isArray(results[0]);
@@ -163,15 +169,20 @@ export const formatRadialResults = (
   const formattedResults = results.map((result, index) => {
     const [groupBy, value] = isResultsArray ? result : [index, result];
     const displayValue = xAxis?.categories ? xAxis.categories[groupBy] : groupBy;
-    const crossLinkingMetadata = crossLinking[index] || {};
-    const contextInfo = xAxis?.key
-      ? {
-          [xAxis.key]: {
-            displayValue,
-            ...crossLinkingMetadata,
-          },
-        }
-      : {};
+    const contextInfo = getContextInfo({
+      axes: [
+        {
+          key: xAxis.key,
+          value: displayValue,
+        },
+        {
+          key: yAxis.key,
+          value,
+        },
+      ],
+      crossLinkingMatrix,
+      resultPosition: index,
+    });
 
     const severities = yAxisSeverities.length ? yAxisSeverities : xAxisSeverities;
     const valueLabels = yAxisSeverities.length ? yAxis.valueLabels : xAxis?.valueLabels;
@@ -325,7 +336,9 @@ export function trendFormatter({
   highlightEnd = false,
   radiusSize = 2,
   values,
-}): TrendFormat[] {
+}: TrendFormatterProps): TrendFormat[] {
+  if (isNilOrEmpty(values)) return [];
+
   const min = Math.min(...values);
   const max = Math.max(...values);
   const highlightedPoint = { color: 'hsl(var(--viz1))', marker: { enabled: true, radius: radiusSize } };

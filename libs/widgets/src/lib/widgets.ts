@@ -13,11 +13,8 @@ export function entityHasWidgets({ entityId, scope }: WidgetByEntityBaseParam): 
   );
 }
 
-export function getWidgetsByEntity({ entityId, filters, scope }: WidgetByEntityBaseParam): LibraryWidget[] {
-  return decoratedWidgetsByEntity[entityId][scope].map((widget) => {
-    widget.params.filters = filters;
-    return widget;
-  });
+export function getWidgetsByEntity({ entityId, scope }: WidgetByEntityBaseParam): LibraryWidget[] {
+  return decoratedWidgetsByEntity[entityId][scope];
 }
 
 export function getWidgetsByView(): Widget[] {

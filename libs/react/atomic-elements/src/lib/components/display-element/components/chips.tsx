@@ -1,4 +1,4 @@
-import { ClickableChipsCell, ListingModal } from '@kleeen/react/components';
+import { KsClickableChipsCell, ListingModal } from '@kleeen/react/components';
 
 import { DisplayComponentProps } from '@kleeen/types';
 import { isNilOrEmpty } from '@kleeen/common/utils';
@@ -6,20 +6,21 @@ import { useState } from 'react';
 
 export function Chips({ attribute, format, value }: DisplayComponentProps) {
   const [isOpen, setIsOpen] = useState(false);
-
+  // TODO: @cafe add i18n key for this
+  // TODO: @cafe find a way to get the displayDataPoint  and pass it to KsClickableChipsCell
   if (isNilOrEmpty(value)) {
-    return <>{'No values'}</>; // TODO: @cafe add i18n key for this
+    return <>{'No values'}</>;
   }
 
   return (
     <>
-      <ClickableChipsCell
+      <KsClickableChipsCell
         attribute={attribute}
         cellItems={value}
         columnLabel={attribute.label}
         format={format}
-        openShowMoreModal={() => setIsOpen(true)}
         isIdTemporary={false}
+        openShowMoreModal={() => setIsOpen(true)}
       />
       {isOpen && (
         <ListingModal
