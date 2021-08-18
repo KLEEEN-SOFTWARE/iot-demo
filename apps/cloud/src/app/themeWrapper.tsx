@@ -1,10 +1,10 @@
-import { fontFamily } from './settings/font-family';
+import { app, fontFamily, theme } from '@kleeen/settings';
+import { useGetThemeStoredValue, useTheme } from '@kleeen/react/hooks';
+
+import classnames from 'classnames';
+import { isReactNativeInfusion } from '@kleeen/common/utils';
 import { makeStyles } from '@material-ui/core';
 import { useEffect } from 'react';
-import { useGetThemeStoredValue, useTheme } from '@kleeen/react/hooks';
-import classnames from 'classnames';
-import settings from './settings/app.json';
-import themeSettings from './settings/theme.json';
 
 // Add global font class
 const useStyles = makeStyles({
@@ -20,10 +20,11 @@ const useStyles = makeStyles({
 
 function ThemeWrapper({ children }) {
   const bem = 'ks';
-  const { position } = settings.layout;
+  const { position } = app.layout;
+  const navClass = isReactNativeInfusion() ? 'no-nav' : position;
   const classes = useStyles();
   const { setTheme, themeClass } = useTheme();
-  const { storedTheme } = useGetThemeStoredValue(themeSettings);
+  const { storedTheme } = useGetThemeStoredValue(theme);
 
   useEffect(() => {
     setTheme(storedTheme);
@@ -36,7 +37,7 @@ function ThemeWrapper({ children }) {
         'ks-global-font',
         bem,
         classes.appContainer,
-        position,
+        navClass,
         themeClass,
       )}
       data-testid="app-container"

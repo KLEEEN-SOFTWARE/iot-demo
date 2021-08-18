@@ -1,7 +1,7 @@
 import { AttributeInputEvents, useEntityDetailsEventHandler, useTheme } from '@kleeen/react/hooks';
 import { BaseAddDialogProps, KsButton } from '@kleeen/react/components';
 import { Dialog as KsDialog, useStyles } from './AddDialog.styles';
-import { MouseEvent, useEffect } from 'react';
+import { Key, MouseEvent, useEffect } from 'react';
 
 import DialogActions from '@material-ui/core/DialogActions';
 import DialogContent from '@material-ui/core/DialogContent';
@@ -14,7 +14,15 @@ import classnames from 'classnames';
 
 type BuildEntityProps = {
   attributeEventList: AttributeInputEvents[];
+  attributesIds: Key[];
 };
+
+type EntityAndParamsType = {
+  entity: string;
+  params: { [key: string]: string };
+};
+
+type EntityByParamsType = Record<string, { [key: string]: string }>;
 
 const layoutProps = {
   keyWidth: 125,
@@ -48,7 +56,7 @@ export function AddDialog({
   const onSave = (e: MouseEvent): void => {
     const baseAttribute = attributes.find(({ isDisplayValue }) => isDisplayValue);
     const entityKey = baseAttribute?.params?.baseModel || attributes[0]?.params?.baseModel;
-    const form = buildEntity({ attributeEventList });
+    const form = buildEntity({ attributeEventList, attributesIds: attributes.map(({ id }) => id) });
 
     const isFormValid = Object.keys(form).includes(entityKey);
     const payload = {
@@ -115,10 +123,16 @@ export function AddDialog({
 }
 //#region private methods
 
-function buildEntity({ attributeEventList }: BuildEntityProps) {
-  const widgetsData = attributeEventList.map((event) => event.onSave()).filter((data) => data?.entity);
+function buildEntity({ attributeEventList, attributesIds }: BuildEntityProps): EntityByParamsType {
+  const widgetsData: EntityAndParamsType[] = attributeEventList.reduce((acc, event) => {
+    const data = attributesIds.includes(event.id) ? event.onSave() : null;
 
-  const data = widgetsData.reduce((acc: any, current: any) => {
+    if (data?.entity) acc.push(data as EntityAndParamsType);
+
+    return acc;
+  }, []);
+
+  const data = widgetsData.reduce((acc: EntityByParamsType, current: EntityAndParamsType) => {
     return {
       ...acc,
       [current.entity]: current.params,

@@ -191,3 +191,8 @@ export enum WidgetDataAttributes {
   DisplayMedia = 'displayMedia',
   DisplayValue = 'displayValue',
 }
+
+export enum InfusionType {
+  React = 'react',
+  ReactNative = 'react-native',
+}

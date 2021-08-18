@@ -1,3 +1,5 @@
+import { CrossLinking, CrossLinkingMatrix } from '@kleeen/types';
+
 import { Transformation } from '../utils';
 
 export type ListItem = number | string | boolean | undefined;
@@ -18,20 +20,13 @@ export interface Axis {
   type?: string;
 }
 
-export type CrossLinking = {
-  id: string;
-  $metadata: {
-    entityType: string;
-  };
-};
-
 export interface GetWidgetDataResult {
   format: {
     xAxis?: Axis;
     yAxis?: Axis;
   };
   results: number[] | number[][];
-  crossLinking?: CrossLinking[][];
+  crossLinking?: CrossLinkingMatrix;
 }
 
 interface ListingItem {

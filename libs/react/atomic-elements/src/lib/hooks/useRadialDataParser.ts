@@ -48,12 +48,10 @@ export function useRadialDataParser({ translate, ...props }: HighchartsReact.Pro
   const aggregations = pathOr('', ['params', 'value', 'transformation'], props);
   const { results = [], format = {} } = data;
   const { xAxis = {}, yAxis = {} } = format || {};
-  const { crossLinkingValuesForAxis, openMenuIfCrossLink } = useCrossLinkingMenuOnViz(
-    props as CrossLinkingProps,
-    {
-      xAxis,
-    },
-  );
+  const { crossLinking, openMenuIfCrossLink } = useCrossLinkingMenuOnViz(props as CrossLinkingProps, {
+    xAxis,
+    yAxis,
+  });
   const backButtonRef = React.createRef<HTMLDivElement>();
   const localization = getLocalizationValues(translate);
 
@@ -62,7 +60,7 @@ export function useRadialDataParser({ translate, ...props }: HighchartsReact.Pro
     props.params,
   );
 
-  const formattedResults = formatRadialResults(results, xAxis, undefined, crossLinkingValuesForAxis, yAxis);
+  const formattedResults = formatRadialResults(results, xAxis, undefined, crossLinking, yAxis);
 
   let firstSliceOfResults = [],
     secondHalfOfResults = [];

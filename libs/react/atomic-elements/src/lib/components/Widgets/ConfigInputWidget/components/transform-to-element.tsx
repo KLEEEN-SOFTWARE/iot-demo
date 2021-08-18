@@ -20,7 +20,6 @@ import {
 } from '../ConfigInputWidget.model';
 
 import { InputProps } from '@material-ui/core';
-import { StatisticalType } from '@kleeen/render-utils';
 import { getColorForSeverityValues } from '@kleeen/frontend/utils';
 import { isNilOrEmpty } from '@kleeen/common/utils';
 

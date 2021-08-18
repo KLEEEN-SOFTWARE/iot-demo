@@ -1,4 +1,4 @@
-import { AggregationType, DateTimeFormatOptions, FormatProps } from '@kleeen/types';
+import { AggregationType, Attribute, DateTimeFormatOptions, FormatProps } from '@kleeen/types';
 import { IntlShape, createIntl, createIntlCache } from '@formatjs/intl';
 import { Language, useLocalization } from './useLocalization';
 
@@ -6,15 +6,15 @@ import { ReactNode } from 'react';
 import { isNilOrEmpty } from '@kleeen/common/utils';
 import { omit } from 'ramda';
 
-interface UseTextFormatterProps {
+interface AttributeFormatProps {
   format: FormatProps;
   formatType: string;
   transformation?: string;
 }
 
 enum FormatTypes {
-  number = 'formatNumber',
   date = 'formatDate',
+  number = 'formatNumber',
 }
 
 type FormatOptions = DateTimeFormatOptions | { style?: string; maximumFractionDigits?: number };
@@ -116,25 +116,42 @@ function getConfigurationByType(type: string, transformation: AggregationType): 
   return { format: format || defaultFormat, options, transformValue };
 }
 
-export const useTextFormatter = (
-  textFormatter: UseTextFormatterProps,
-  textFormatDefault?: string,
-): [(value: ReactNode) => ReactNode] => {
+export type Formatter = (value: ReactNode) => ReactNode;
+
+const defaultFormatter = (value: ReactNode) => value;
+
+export const useTextFormatter = (textFormatter: AttributeFormatProps): [Formatter] => {
+  // TODO: @cafe control language and textFormatter in an effect
+  const { language } = useLocalization();
+  const formatter = getTextFormatter({
+    attributeFormat: textFormatter,
+    language,
+  });
+
+  // TODO: @cafe check if we really need to return this as an array
+  return [formatter];
+};
+
+export function getTextFormatter({
+  attributeFormat,
+  language,
+}: {
+  attributeFormat: AttributeFormatProps;
+  language: Language;
+}): Formatter {
   const { format, options, transformValue } = getConfigurationByType(
-    textFormatter.formatType,
-    (textFormatter.transformation as AggregationType) || AggregationType.SelfSingle,
+    attributeFormat.formatType,
+    (attributeFormat.transformation as AggregationType) || AggregationType.SelfSingle,
   );
 
   if (isNilOrEmpty(format)) {
-    return [(value: ReactNode) => value];
+    return defaultFormatter;
   }
 
-  const { language } = useLocalization();
   const intl = getIntl(language);
-  const defaultFormat = textFormatDefault || options;
-  const typeFormatMap = formatMapByType[textFormatter.formatType];
-  const typeFormat = !isNilOrEmpty(typeFormatMap) && typeFormatMap(textFormatter.format || {});
-  const formatToUse = typeFormat || defaultFormat;
+  const typeFormatMap = formatMapByType[attributeFormat.formatType];
+  const typeFormat = !isNilOrEmpty(typeFormatMap) && typeFormatMap(attributeFormat.format || {});
+  const formatToUse = typeFormat || options;
 
   const formatter = (value: ReactNode): ReactNode => {
     const transformedValue = !isNilOrEmpty(transformValue) ? transformValue(value) : value;
@@ -142,5 +159,5 @@ export const useTextFormatter = (
     return intl[format](transformedValue, formatToUse);
   };
 
-  return [formatter];
-};
+  return formatter;
+}

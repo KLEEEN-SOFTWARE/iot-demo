@@ -38,9 +38,9 @@ export const PolarArea = (props: VizCommonProps): ReactElement => {
   const results = props.context.data?.results || [];
   const format = props.context.data?.format || {};
   const { xAxis = {}, yAxis = {} } = format || {};
-  const { crossLinkingValuesForAxis, openMenuIfCrossLink } = useCrossLinkingMenuOnViz(props, { xAxis });
+  const { crossLinking, openMenuIfCrossLink } = useCrossLinkingMenuOnViz(props, { xAxis, yAxis });
 
-  const formattedResults = formatRadialResults(results, xAxis, true, crossLinkingValuesForAxis, yAxis);
+  const formattedResults = formatRadialResults(results, xAxis, true, crossLinking, yAxis);
   // TODO: prefix and suffix
 
   const { groupBy } = props.params;

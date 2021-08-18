@@ -4,8 +4,8 @@ import { styled } from '@material-ui/core';
 
 export const PreviewCloseButton = styled(KsButton)({
   backgroundColor: 'transparent !important',
-  borderRadius: 'var(--pm-0)',
   borderColor: 'var(--on-secondary-color-variant)',
+  borderRadius: 'var(--pm-0)',
   color: 'var(--on-secondary-color-variant)',
   height: 'var(--wh-2XS)',
 });
@@ -30,17 +30,20 @@ export const useStyles = makeStyles({
       '& $previewCloseButtonContainer': {
         opacity: 1,
       },
+      '& $previewTitle': {
+        fontSize: 'var(--tx-M)',
+      },
     },
   },
   previewHandler: {
     color: 'var(--on-secondary-color-variant)',
     display: 'inline-block',
-    position: 'absolute',
-    fontWeight: 'bold',
     fontSize: 'var(--pm-L)',
-    letterSpacing: 'var(--pm-6XS)',
+    fontWeight: 'bold',
     left: '50%',
+    letterSpacing: 'var(--pm-6XS)',
     marginBottom: 'var(--pm-6XS)',
+    position: 'absolute',
     transform: 'translate(-50%,0%)',
     '&:hover ': {
       '& ~ $previewHeader': {
@@ -53,9 +56,9 @@ export const useStyles = makeStyles({
   },
   previewCloseButtonContainer: {
     marginRight: 'var(--pm-1XS)',
+    opacity: 0,
     position: 'absolute',
     right: 'var(--pm-0)',
-    opacity: 0,
     transition: 'opacity var(--speed-medium)',
   },
   previewSplitter: {
@@ -63,5 +66,16 @@ export const useStyles = makeStyles({
     borderBottom: 'var(--pm-0) !important',
     borderTop: 'var(--pm-0) !important',
     height: 'var(--pm-0) !important',
+  },
+  previewTitle: {
+    color: 'var(--on-secondary-color-variant)',
+    fontSize: 'var(--tx-S)',
+    marginLeft: 'var(--pm-L)',
+    overflow: 'hidden',
+    textOverflow: 'ellipsis',
+    textTransform: 'uppercase',
+    transition: 'font-size var(--speed-medium)',
+    whiteSpace: 'nowrap',
+    width: 'var(--wh-7XL)',
   },
 });

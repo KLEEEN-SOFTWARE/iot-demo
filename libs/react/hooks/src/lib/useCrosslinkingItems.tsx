@@ -1,15 +1,15 @@
-import { Attribute, Cell } from '@kleeen/types';
-import { useEffect, useState } from 'react';
+import { Attribute, Cell, DataPoint } from '@kleeen/types';
+import { CrossLink, useCrosslinking } from './useCrosslinking';
+import { ReactNode, useEffect, useState } from 'react';
 
 import { Translate } from '@kleeen/core-react';
 import { flatten } from 'ramda';
 import { isLinkFilterableByEntityType } from '../helpers';
 import { isNilOrEmpty } from '@kleeen/common/utils';
-import { useCrosslinking } from './useCrosslinking';
 
 type CrossLinkItem = {
   handleClick: (item: CrossLinkItem) => (e: React.MouseEvent<HTMLLIElement, MouseEvent>) => void;
-  label: string;
+  label: ReactNode;
   key: string;
   roleAccessKey: string;
   slug: string;
@@ -25,11 +25,37 @@ export function useCrossLinkingItems({
   cell: Cell;
 }): CrossLinkItem[] {
   const { crosslink } = useCrosslinking();
-  const cellEntityType = cell?.$metadata && cell.$metadata.entityType;
-
   const [crossLinkItems, setCrossLinkItems] = useState([]);
 
-  useEffect(generateCrossLinks, [cell?.id, attr?.name]);
+  useEffect(() => {
+    const tempCrossLinkItems = getCrossLinkingItems({
+      crosslink,
+      dataPoint: {
+        attribute: attr,
+        value: cell,
+      },
+      handleClose,
+    });
+    setCrossLinkItems(tempCrossLinkItems);
+  }, [cell?.id, attr?.name]);
+
+  return crossLinkItems;
+}
+
+export function getCrossLinkingItems({
+  crosslink,
+  dataPoint,
+  handleClose,
+}: {
+  crosslink: CrossLink;
+  dataPoint: DataPoint;
+  handleClose: () => void;
+}) {
+  const { attribute, value } = dataPoint;
+
+  if (isNilOrEmpty(attribute?.crossLinking) || isNilOrEmpty(value.id)) {
+    return [];
+  }
 
   const handleClick =
     ({ openNewTab }: { openNewTab: boolean }) =>
@@ -37,34 +63,28 @@ export function useCrossLinkingItems({
     (e: React.MouseEvent<HTMLLIElement, MouseEvent>) => {
       e.preventDefault();
       handleClose();
-      crosslink(slug, cell, attr, openNewTab);
+      crosslink(slug, value, attribute, openNewTab);
     };
 
-  function generateCrossLinks() {
-    if (isNilOrEmpty(attr?.crossLinking)) {
-      setCrossLinkItems([]);
-    } else {
-      const tempCrossLinkItems = attr?.crossLinking
-        .filter((link) => isLinkFilterableByEntityType(cellEntityType, link))
-        .map((link) => [
-          {
-            handleClick: handleClick({ openNewTab: true }),
-            label: <Translate id="app.contextMenu.goToNewTab" type="html" values={{ link: link.title }} />,
-            key: `${link?.slug}${link?.title}`,
-            roleAccessKey: `navigation.${link?.title}`,
-            slug: link.slug,
-          },
-          {
-            handleClick: handleClick({ openNewTab: false }),
-            label: <Translate id="app.contextMenu.goTo" type="html" values={{ link: link.title }} />,
-            key: `new.tab.${link?.slug}${link?.title}`,
-            roleAccessKey: `navigation.${link?.title}`,
-            slug: link.slug,
-          },
-        ]);
-      setCrossLinkItems(flatten(tempCrossLinkItems));
-    }
-  }
+  const cellEntityType = value?.$metadata?.entityType;
+  const tempCrossLinkItems = attribute?.crossLinking
+    .filter((link) => isLinkFilterableByEntityType(cellEntityType, link))
+    .map((link) => [
+      {
+        handleClick: handleClick({ openNewTab: false }),
+        label: <Translate id="app.contextMenu.goTo" type="html" values={{ link: link.title }} />,
+        key: `new.tab.${link?.slug}${link?.title}`,
+        roleAccessKey: `navigation.${link?.title}`,
+        slug: link.slug,
+      },
+      {
+        handleClick: handleClick({ openNewTab: true }),
+        label: <Translate id="app.contextMenu.goToNewTab" type="html" values={{ link: link.title }} />,
+        key: `${link?.slug}${link?.title}`,
+        roleAccessKey: `navigation.${link?.title}`,
+        slug: link.slug,
+      },
+    ]);
 
-  return crossLinkItems;
+  return flatten(tempCrossLinkItems);
 }

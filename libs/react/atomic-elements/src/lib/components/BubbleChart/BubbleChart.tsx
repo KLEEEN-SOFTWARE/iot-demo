@@ -1,13 +1,15 @@
 import { CrossLinkingProps, useCrossLinkingMenuOnViz } from '@kleeen/react/hooks';
 import { clone, has, pathOr } from 'ramda';
-import HighchartsColorAxis from 'highcharts/modules/coloraxis';
+
 import Highcharts from 'highcharts';
+import HighchartsColorAxis from 'highcharts/modules/coloraxis';
 import HighchartsReact from 'highcharts-react-official';
 import { Loader } from '@kleeen/react/components';
 import React from 'react';
 import { generalBaseOptions } from '../generalBaseOptions';
 import { getOptions } from './options';
 import more from 'highcharts/highcharts-more';
+
 more(Highcharts);
 HighchartsColorAxis(Highcharts);
 
@@ -16,17 +18,16 @@ export const BubbleChart = ({ translate, ...props }: HighchartsReact.Props): Rea
   const results = pathOr([], ['context', 'data', 'results'], props);
   const format = pathOr({}, ['context', 'data', 'format'], props);
   const xAxis = clone(pathOr({}, ['xAxis'], format));
+  const yAxis = clone(pathOr({}, ['yAxis'], format));
   const { isLoading } = pathOr(false, ['context'], props);
   if (!has('key', xAxis)) {
     xAxis['key'] = widgetId;
   }
 
-  const { crossLinkingValuesForAxis, openMenuIfCrossLink } = useCrossLinkingMenuOnViz(
-    props as CrossLinkingProps,
-    {
-      xAxis,
-    },
-  );
+  const { crossLinking, openMenuIfCrossLink } = useCrossLinkingMenuOnViz(props as CrossLinkingProps, {
+    xAxis,
+    yAxis,
+  });
 
   const options: Highcharts.Options = getOptions(
     results,
@@ -34,7 +35,7 @@ export const BubbleChart = ({ translate, ...props }: HighchartsReact.Props): Rea
     generalBaseOptions,
     props.params,
     openMenuIfCrossLink,
-    crossLinkingValuesForAxis,
+    crossLinking,
   );
 
   const containerPropsPlus = {

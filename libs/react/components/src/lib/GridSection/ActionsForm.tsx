@@ -1,7 +1,7 @@
 import './ActionsForm.scss';
 
 import { Action, ActionType } from '@kleeen/types';
-import React, { FC, MouseEvent, ReactElement, useState } from 'react';
+import { FC, MouseEvent, ReactElement, useState } from 'react';
 
 import ActionsMenu from '../ActionsMenu/ActionsMenu';
 import CreateIcon from '@material-ui/icons/Create';

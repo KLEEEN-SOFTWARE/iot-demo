@@ -27,6 +27,7 @@ export const ColumnBar = (props: HighchartsReact.Props): JSX.Element => {
   const results = pathOr([], ['context', 'data', 'results'], props);
   const format = pathOr({}, ['context', 'data', 'format'], props);
   const xAxis = clone(pathOr({}, ['xAxis'], format));
+  const yAxis = clone(pathOr({}, ['yAxis'], format));
   const widgetId = pathOr('', ['widgetId'], props);
   const containerProps = pathOr({}, ['containerProps'], props);
   const vizColors: Array<string> = generalBaseOptions.colors.slice(0, 10);
@@ -35,12 +36,10 @@ export const ColumnBar = (props: HighchartsReact.Props): JSX.Element => {
     xAxis['key'] = widgetId;
   }
 
-  const { crossLinkingValuesForAxis, openMenuIfCrossLink } = useCrossLinkingMenuOnViz(
-    props as CrossLinkingProps,
-    {
-      xAxis,
-    },
-  );
+  const { crossLinking, openMenuIfCrossLink } = useCrossLinkingMenuOnViz(props as CrossLinkingProps, {
+    xAxis,
+    yAxis,
+  });
 
   const options: Highcharts.Options = getOptions(
     results,
@@ -50,7 +49,7 @@ export const ColumnBar = (props: HighchartsReact.Props): JSX.Element => {
     subType,
     props.params,
     vizColors,
-    crossLinkingValuesForAxis,
+    crossLinking,
     openMenuIfCrossLink,
     xAxis,
   );

@@ -1,7 +1,7 @@
-import { Attribute, VizCommonParams, Widget, WidgetTypes } from '@kleeen/types';
 /* eslint-disable complexity */
-import { Loader, RankedListItem, SimpleList } from '@kleeen/react/components';
+import { KsRankedListItem, Loader, SimpleList } from '@kleeen/react/components';
 import { ReactElement, useState } from 'react';
+import { Widget, WidgetTypes } from '@kleeen/types';
 import { formatDataList, formatSeverity, parseAttributes } from '@kleeen/frontend/utils';
 
 import { AccessControl } from '@kleeen/core-react';
@@ -157,7 +157,7 @@ const renderChildren = (selectedChartType: string, widget: Widget, widgetData: a
           columns={parsedAttributes}
           metadata={metadata}
           listOptions={{
-            ListItemComponent: RankedListItem,
+            ListItemComponent: KsRankedListItem,
             sortBy: metadata?.valueColumnName,
           }}
         />

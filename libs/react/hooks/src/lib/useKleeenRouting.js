@@ -1,6 +1,7 @@
 import React, { Suspense, memo } from 'react';
 import { Redirect, Route, Switch } from 'react-router-dom';
 
+import { isReactNativeInfusion } from '@kleeen/common/utils';
 import { uuid } from '@kleeen/core-react';
 import { withDylo } from '../dylo/dylo-container';
 
@@ -33,13 +34,16 @@ const getModulesByIntersections = (modules) => {
 
 function injectRoutes(dyloApi, modulesToRoute, defaultHomePage) {
   const routes = [];
+  const applyInfusion = isReactNativeInfusion();
 
-  routes.push({
-    route: <Route exact path="/" render={() => <Redirect to={defaultHomePage} />} />,
-    props: {
-      kuiid: uuid(),
-    },
-  });
+  if (!applyInfusion) {
+    routes.push({
+      route: <Route exact path="/" render={() => <Redirect to={defaultHomePage} />} />,
+      props: {
+        kuiid: uuid(),
+      },
+    });
+  }
 
   modulesToRoute
     .filter(
@@ -59,9 +63,8 @@ function injectRoutes(dyloApi, modulesToRoute, defaultHomePage) {
 }
 
 async function manageRoutesBasedOnFolderStructure(modules) {
-  const { modulesWithIntersectionsByPriority, modulesWithoutIntersections } = getModulesByIntersections(
-    modules,
-  );
+  const { modulesWithIntersectionsByPriority, modulesWithoutIntersections } =
+    getModulesByIntersections(modules);
   const modulesToRoute = [...modulesWithoutIntersections, ...modulesWithIntersectionsByPriority];
   return modulesToRoute;
 }

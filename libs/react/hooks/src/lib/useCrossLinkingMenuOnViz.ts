@@ -1,48 +1,60 @@
-import { Attribute } from '@kleeen/types';
+import { Attribute, ContextMenuDataPoint, CrossLinkingMatrix } from '@kleeen/types';
+
+import { isNilOrEmpty } from '@kleeen/common/utils';
 import { path } from 'ramda';
 import useAttributeContextMenu from './useAttributeContextMenu';
 
 export interface CrossLinkingProps {
-  context?: { data: { crossLinking: any[] } };
+  context?: { data: { crossLinking: any[][] } };
   attributes?: any[];
 }
 
 interface CrossLinkingMenuOnViz {
-  crossLinkingValuesForAxis: any[];
+  crossLinking: CrossLinkingMatrix;
   openMenuIfCrossLink: (e: any) => void;
 }
 
 interface AxisProp {
-  xAxis?: { key: string };
+  xAxis: { key: string };
   yAxis?: { key: string };
 }
 
-// TODO type one axis or the other never both
 const useCrossLinkingMenuOnViz = (
   props: CrossLinkingProps,
   { xAxis, yAxis }: AxisProp,
 ): CrossLinkingMenuOnViz => {
   const { openMenu } = useAttributeContextMenu();
-  const axis = xAxis || yAxis;
   const crossLinking = props.context?.data?.crossLinking || [];
-  const attr: Attribute | undefined = path<Attribute>(['attributes', 0], props);
+  const attribute: Attribute | undefined = path<Attribute>(['attributes', 0], props);
 
   const openMenuIfCrossLink = (e) => {
-    const cellContentClicked = axis && path(['point', 'options', axis.key], e);
+    const value = xAxis && path(['point', 'options', xAxis.key], e);
 
-    if (!cellContentClicked) return;
+    if (isNilOrEmpty(value)) return;
+
+    const dataPoints: ContextMenuDataPoint[] = [
+      {
+        attribute,
+        value,
+      },
+    ];
+
+    if (props.attributes.length > 1 && yAxis) {
+      const yValue = path(['point', 'options', yAxis.key], e);
+      dataPoints.push({
+        attribute: props.attributes[1],
+        value: yValue,
+      });
+    }
 
     openMenu({
       e,
-      attr,
-      cell: cellContentClicked,
+      dataPoints,
     });
   };
-  const [xAxisValues = [], yAxisValues = []] = crossLinking;
-  const crossLinkingValuesForAxis = xAxis ? xAxisValues : yAxisValues;
 
   return {
-    crossLinkingValuesForAxis,
+    crossLinking,
     openMenuIfCrossLink,
   };
 };

@@ -59,46 +59,50 @@ export const PositiveNegativeArea = (props: HighchartsReact.Props) => {
       type: 'area',
       events: {
         render() {
-          const chart = this;
-          const yAxis = chart.yAxis[0];
+          // eslint-disable-next-line @typescript-eslint/no-this-alias
+          const self = this;
+          const [firstYAxis] = self.yAxis;
 
-          const posGrad = (yAxis.max - 0) / (yAxis.max - yAxis.min) || 1;
-          const negGrad = (0 - yAxis.min) / (yAxis.max - yAxis.min) || 1;
-
-          if (yAxis.max !== yAxis.oldMax || yAxis.min !== yAxis.oldMin) {
-            chart.series[0].update({
-              fillColor: {
-                linearGradient: {
-                  x1: 0,
-                  y1: 0,
-                  x2: 0,
-                  y2: 1,
-                },
-                stops: [
-                  [0, 'var(--good-on)'],
-                  [posGrad, 'var(--good-on-opacity-0)'],
-                ],
-              },
-              zones: [
-                {
-                  value: 0,
-                  color: 'var(--bad-off)',
-                  fillColor: {
-                    linearGradient: {
-                      x1: 0,
-                      y1: 1,
-                      x2: 0,
-                      y2: 0,
-                    },
-                    stops: [
-                      [0, 'var(--bad-off)'],
-                      [negGrad, 'var(--bad-off-opacity-0)'],
-                    ],
-                  },
-                },
-              ],
-            });
+          const shouldUpdate =
+            firstYAxis && (firstYAxis.max !== firstYAxis.old?.max || firstYAxis.min !== firstYAxis.old?.min);
+          if (!shouldUpdate) {
+            return;
           }
+
+          const posGrad = (firstYAxis.max - 0) / (firstYAxis.max - firstYAxis.min) || 1;
+          const negGrad = (0 - firstYAxis.min) / (firstYAxis.max - firstYAxis.min) || 1;
+          self.series[0].update({
+            fillColor: {
+              linearGradient: {
+                x1: 0,
+                y1: 0,
+                x2: 0,
+                y2: 1,
+              },
+              stops: [
+                [0, 'var(--good-on)'],
+                [posGrad, 'var(--good-on-opacity-0)'],
+              ],
+            },
+            zones: [
+              {
+                value: 0,
+                color: 'var(--bad-off)',
+                fillColor: {
+                  linearGradient: {
+                    x1: 0,
+                    y1: 1,
+                    x2: 0,
+                    y2: 0,
+                  },
+                  stops: [
+                    [0, 'var(--bad-off)'],
+                    [negGrad, 'var(--bad-off-opacity-0)'],
+                  ],
+                },
+              },
+            ],
+          });
         },
       },
     },

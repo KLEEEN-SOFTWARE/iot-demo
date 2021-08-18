@@ -5,7 +5,6 @@ import DialogTitle from '@material-ui/core/DialogTitle';
 import { listingModalStyles as KsDialog } from './ListingModal.style';
 import { Icon as KsIcon } from '../Icon';
 import { Loader } from '../Loader/Loader';
-import React from 'react';
 import { SimpleList } from '../simpleList/';
 import { iconStyles } from './ListingModal.style';
 import { parseAttributes } from '@kleeen/frontend/utils';
@@ -19,11 +18,11 @@ function ListingModal({
   isOpen,
   onClose,
   rowDisplayValue,
-}: ListingModalProps): JSX.Element {
+}: ListingModalProps) {
   const { themeClass } = useTheme();
   const iconClasses = iconStyles();
 
-  function CloseButton(): JSX.Element {
+  function CloseButton() {
     return (
       <div className={iconClasses.iconFilter} onClick={handleClose}>
         <div className={iconClasses.iconWrapper}>

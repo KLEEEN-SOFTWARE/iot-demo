@@ -1,10 +1,10 @@
 import { IDeltaResults, ILocalization } from './interfaces';
+import { formatAxis, getContextInfo } from '@kleeen/frontend/utils';
 
-import { CrossLinking } from '@kleeen/types';
+import { CrossLinkingMatrix } from '@kleeen/types';
 import Highcharts from 'highcharts';
 import { XAxisOptions } from './interfaces';
 import { clone } from 'ramda';
-import { formatAxis } from '@kleeen/frontend/utils';
 import merge from 'lodash.merge';
 
 const addPlotLinesAndLables = (ticks: number, highchartsObject: Highcharts.Options): void => {
@@ -65,23 +65,41 @@ const resultToArray = (results: any[], index: number, result: any[]): Array<any>
   return [index, result];
 };
 
-const deltaOfResults = (
-  results: [],
-  vizColors: string[],
-  crossLinking: CrossLinking[] = [],
-  xAxis: XAxisOptions,
-): Array<IDeltaResults> => {
+interface DeltaOfResultsProps {
+  crossLinkingMatrix: CrossLinkingMatrix;
+  results: any[];
+  vizColors: string[];
+  xAxis: XAxisOptions;
+  yAxis: {
+    key: string;
+  };
+}
+
+const deltaOfResults = ({
+  crossLinkingMatrix = [],
+  results,
+  vizColors,
+  xAxis,
+  yAxis,
+}: DeltaOfResultsProps): Array<IDeltaResults> => {
   return results.map((result, index) => {
     const [x, y] = resultToArray(results, index, result);
     const currentColor = vizColors[index % vizColors.length];
-    const crossLinkingMetadata = crossLinking[index] || {};
     const displayValue = xAxis?.categories ? xAxis.categories[x] : x;
-    const contextInfo = {
-      [xAxis?.key]: {
-        displayValue,
-        ...crossLinkingMetadata,
-      },
-    };
+    const contextInfo = getContextInfo({
+      axes: [
+        {
+          key: xAxis.key,
+          value: displayValue,
+        },
+        {
+          key: yAxis.key,
+          value: y,
+        },
+      ],
+      crossLinkingMatrix,
+      resultPosition: index,
+    });
     return {
       y,
       color: currentColor,
