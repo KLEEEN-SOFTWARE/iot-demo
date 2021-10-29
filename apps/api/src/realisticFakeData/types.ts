@@ -1,10 +1,8 @@
+import { CrossLinking, PrimitiveType } from '@kleeen/types';
 import { DataAggregationArgs, DataAggregationArgsDataPoint, ListItem } from '../types';
 
-import { CrossLinking } from '@kleeen/types';
 import { Sorting } from '@kleeen/types';
 import { Transformation } from '../utils/enumerators';
-
-export type PrimitiveType = boolean | number | string;
 
 export interface DataListingArgs {
   attributes: {

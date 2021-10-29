@@ -1,5 +1,3 @@
-import CustomView_6MxSUSiehmRP9kh7u543zo from '../../../../custom/profile/site-map-details/components/custom-view-6-mx-su-siehm-rp-9-kh-7-u-543-zo';
-
 export const widgets = [
   {
     actions: [
@@ -84,12 +82,15 @@ export const widgets = [
     chartType: `[WIDGET] FULL_TABLE`,
     component: undefined,
     entityId: 120425,
+    entityName: undefined,
     id: `1f20697a-3aa6-4ce4-a14a-8d50d486ce36`,
+    name: 'Sensors',
     params: {
       baseModel: 'Sensor',
       operationName: 'object_listing_1f20697a_3aa6_4ce4_a14a_8d50d486ce36',
       taskName: 'Site Map Details',
     },
+    scope: undefined,
     statisticalType: undefined,
     title: undefined,
     type: 'table',
@@ -101,15 +102,19 @@ export const widgets = [
     actions: [],
     attributes: [],
     chartType: `[WIDGET] CUSTOM`,
-    component: CustomView_6MxSUSiehmRP9kh7u543zo,
+    component: 'profile/site-map-details/components/custom-view-6-mx-su-siehm-rp-9-kh-7-u-543-zo',
     entityId: undefined,
+    entityName: undefined,
     id: `2ed9ceee-e3dd-4f0d-805b-87645661b690`,
+    name: 'Overview',
     params: {},
+    scope: undefined,
     statisticalType: undefined,
     title: `Overview`,
     type: 'custom',
     viableSolutions: [],
     viewId: 'ks-view-6MxSUSiehmRP9kh7u543zo',
+    viewOrder: 2,
   },
   {
     actions: [
@@ -205,12 +210,15 @@ export const widgets = [
     chartType: `[WIDGET] FULL_TABLE`,
     component: undefined,
     entityId: 120421,
+    entityName: undefined,
     id: `b6dcf2f6-6cc1-418f-b027-34d3e60bb8c4`,
+    name: 'Nodes',
     params: {
       baseModel: 'Node',
       operationName: 'object_listing_b6dcf2f6_6cc1_418f_b027_34d3e60bb8c4',
       taskName: 'Site Map Details',
     },
+    scope: undefined,
     statisticalType: undefined,
     title: undefined,
     type: 'table',

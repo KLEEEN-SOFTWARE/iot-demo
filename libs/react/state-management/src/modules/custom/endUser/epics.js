@@ -72,17 +72,3 @@ export function removeEndUser(action$) {
     ),
   );
 }
-
-/**
- * Epics/endUser
- * @desc getEndUserPreferences
- */
-export function getEndUserPreferences(action$) {
-  return action$.pipe(
-    ofType(actions.setCurrentUser.type),
-    switchMap((action) => {
-      const { payload } = action;
-      return [endUserPreferencesActions.getEndUserPreferences(payload)];
-    }),
-  );
-}

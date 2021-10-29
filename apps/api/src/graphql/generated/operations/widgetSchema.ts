@@ -3,9 +3,10 @@ import { gql } from 'apollo-server-express';
 
 export const widgetSchema = gql`
   type GraphResult {
+    crossLinking: JSON
     format: JSON
     results: JSON
-    crossLinking: JSON
+    series: JSON
   }
 
   type MultiTransFormationResults {
@@ -22,8 +23,8 @@ export const widgetSchema = gql`
   }
 
   input DataListingArgs {
-    entity: String!
     attributes: JSON!
+    entity: String!
     filters: JSON
     pagination: JSON
     sorting: [JSON!]
@@ -40,6 +41,16 @@ export const widgetSchema = gql`
     entity: String!
     functionName: String!
     filters: JSON
+  }
+
+  type Filters {
+    accessLevel: AccessLevel!
+    name: String!
+    statisticalType: String!
+  }
+
+  type WorkflowFiltersResult {
+    filters: [Filters!]!
   }
 
     extend type Query {

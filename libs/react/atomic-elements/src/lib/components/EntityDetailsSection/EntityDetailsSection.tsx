@@ -1,30 +1,24 @@
 import './EntityDetailsSection.scss';
 
-import {
-  AttributeInputEvents,
-  useEntityDetailsEventHandler,
-  useKleeenActions,
-  useKleeenContext,
-} from '@kleeen/react/hooks';
-import { DisplayMediaType, Translate } from '@kleeen/types';
+import { AttributeInputEvents, DisplayMediaType, Translate } from '@kleeen/types';
+import { Avatar, Collapse } from '@material-ui/core';
 import { KsButton, KsMenuContainer } from '@kleeen/react/components';
 import { ReactElement, useEffect, useState } from 'react';
-import { styled } from '@material-ui/core';
+import { useEntityDetailsEventHandler, useKleeenActions, useKleeenContext } from '@kleeen/react/hooks';
 
 import ArrowLeftIcon from '@material-ui/icons/ArrowLeft';
-import { Avatar, Collapse } from '@material-ui/core';
 import EditOutlinedIcon from '@material-ui/icons/EditOutlined';
 import { KUIConnect } from '@kleeen/core-react';
 import MuiButton from '@material-ui/core/Button';
 import MuiToolbar from '@material-ui/core/Toolbar';
 import MuiTooltip from '@material-ui/core/Tooltip';
-import { Slot } from '../DetailSummary/DetailSummary.model';
 import { SummaryPanel } from '../summary-panel';
-import { useStyles } from './entity-details-section.styles';
 import classnames from 'classnames';
 import { getUpdateRequestPayload } from '../../utils';
 import { isNilOrEmpty } from '@kleeen/common/utils';
 import { pathOr } from 'ramda';
+import { styled } from '@material-ui/core';
+import { useStyles } from './entity-details-section.styles';
 
 const bem = 'ks-entity-details-section';
 export interface EntityDetailsSectionProps {
@@ -33,7 +27,6 @@ export interface EntityDetailsSectionProps {
   isEditable: boolean;
   objectValue?: string;
   onChangeFilterVisible?: (isVisible: boolean) => void;
-  slots?: Slot[];
   taskName: string;
   translate?: Translate;
 }
@@ -103,11 +96,12 @@ export function EntityDetailsSectionBase({ translate, ...props }: EntityDetailsS
 
   function onSave(): void {
     const payload = getUpdateRequestPayload(attributeEventList);
-
-    updateRequest(payload);
-
-    // Clean-up previous updates
+    const hasChanges = !isNilOrEmpty(payload);
+    if (hasChanges) {
+      updateRequest(payload);
+    }
     clearEventList();
+    setEditing(false);
   }
 
   function registerEvents(event: AttributeInputEvents): void {

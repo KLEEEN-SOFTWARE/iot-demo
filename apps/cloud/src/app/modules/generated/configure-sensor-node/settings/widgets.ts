@@ -7,13 +7,17 @@ export const widgets = [
     chartType: undefined,
     component: undefined,
     entityId: undefined,
+    entityName: undefined,
     id: undefined,
+    name: 'Configuration',
     params: {},
+    scope: undefined,
     statisticalType: undefined,
     title: undefined,
     type: 'configure',
     viableSolutions: [],
     viewId: 'ks-view-iTK1TSzvSCNMyxp3xqv8mN',
+    viewOrder: 1,
     widgets: [
       {
         actions: [
@@ -21,6 +25,7 @@ export const widgets = [
             addModalAttributes: [
               {
                 id: 120425,
+                isDisplayValue: true,
                 name: 'sensor',
                 label: 'Sensor',
                 hasMany: false,
@@ -50,6 +55,7 @@ export const widgets = [
               },
               {
                 id: 135534,
+                isDisplayValue: false,
                 name: 'ppm',
                 label: 'Ppm',
                 hasMany: false,
@@ -69,6 +75,7 @@ export const widgets = [
               },
               {
                 id: 120421,
+                isDisplayValue: false,
                 name: 'node',
                 label: 'Node',
                 hasMany: false,
@@ -98,6 +105,7 @@ export const widgets = [
               },
               {
                 id: 120426,
+                isDisplayValue: false,
                 name: 'sensorOverallStatus',
                 label: 'Sensor Overall Status',
                 hasMany: false,
@@ -133,6 +141,7 @@ export const widgets = [
               },
               {
                 id: 120427,
+                isDisplayValue: false,
                 name: 'sensorStatus',
                 label: 'Sensor Status',
                 hasMany: false,
@@ -168,6 +177,7 @@ export const widgets = [
               },
               {
                 id: 120424,
+                isDisplayValue: false,
                 name: 'siteMap',
                 label: 'Site Map',
                 hasMany: false,
@@ -287,6 +297,7 @@ export const widgets = [
         chartType: `[WIDGET] CONFIG_TABLE`,
         component: undefined,
         entityId: undefined,
+        entityName: undefined,
         id: `5cb3e084-759a-484a-8bea-4db978e3c656`,
         params: {
           baseModel: 'Sensor',
@@ -299,6 +310,7 @@ export const widgets = [
             name: 'sensor',
           },
         },
+        scope: undefined,
         sortOrder: 0,
         statisticalType: undefined,
         title: `Sensors`,
@@ -310,6 +322,7 @@ export const widgets = [
             addModalAttributes: [
               {
                 id: 120421,
+                isDisplayValue: true,
                 name: 'node',
                 label: 'Node',
                 hasMany: false,
@@ -339,6 +352,7 @@ export const widgets = [
               },
               {
                 id: 120422,
+                isDisplayValue: false,
                 name: 'nodeOverallStatus',
                 label: 'Node Overall Status',
                 hasMany: false,
@@ -374,6 +388,7 @@ export const widgets = [
               },
               {
                 id: 120423,
+                isDisplayValue: false,
                 name: 'nodeStatus',
                 label: 'Node Status',
                 hasMany: false,
@@ -409,6 +424,7 @@ export const widgets = [
               },
               {
                 id: 120424,
+                isDisplayValue: false,
                 name: 'siteMap',
                 label: 'Site Map',
                 hasMany: false,
@@ -531,6 +547,7 @@ export const widgets = [
         chartType: `[WIDGET] CONFIG_TABLE`,
         component: undefined,
         entityId: undefined,
+        entityName: undefined,
         id: `1e31bd22-da1f-4caf-8f46-421982eacad6`,
         params: {
           baseModel: 'Node',
@@ -554,6 +571,7 @@ export const widgets = [
             name: 'node',
           },
         },
+        scope: undefined,
         sortOrder: 1,
         statisticalType: undefined,
         title: `Nodes`,
@@ -623,6 +641,7 @@ export const widgets = [
         chartType: `[WIDGET] CONFIG_TABLE`,
         component: undefined,
         entityId: undefined,
+        entityName: undefined,
         id: `90101dbc-cddd-446b-a5e7-cc8318d22a43`,
         params: {
           baseModel: 'SiteMap',
@@ -633,6 +652,7 @@ export const widgets = [
             name: 'siteMap',
           },
         },
+        scope: undefined,
         sortOrder: 2,
         statisticalType: undefined,
         title: `Sites`,

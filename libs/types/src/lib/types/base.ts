@@ -1,5 +1,6 @@
-import { InfusionType, NavPosition, crosslinkingInteractionType } from '../enums';
-import React, { Key, ReactElement, ReactNode } from 'react';
+import { ContextMenuDataPoint, FormatProps, ViewShapeType } from '@kleeen/types';
+import { ExportConfig, InfusionType, NavPosition, crosslinkingInteractionType } from '../enums';
+import { Key, ReactElement, ReactNode } from 'react';
 
 import { Action } from './actions';
 import { Attribute } from './attributes';
@@ -13,8 +14,31 @@ export interface AutocompleteState {
   isLoading: boolean;
 }
 
-export interface ContextMenuDataPoint extends DataPoint {
-  ignoreInContextMenu?: boolean;
+export interface ColumnData {
+  attr?: Attribute;
+  dataKey: string;
+  label: string;
+  numeric?: boolean;
+  props?: any;
+  width?: number;
+}
+
+export interface CellInteraction {
+  handleAnchorClick?: (
+    event: React.MouseEvent<HTMLButtonElement>,
+    dataPoints: ContextMenuDataPoint[],
+  ) => void;
+  hasCrossLink: boolean;
+  hasFilter: boolean;
+  hasPreview: boolean;
+  linkInteraction: crosslinkingInteractionType;
+  onCellClickFunction?: (dataPoints: ContextMenuDataPoint[], hasCrossLinking: boolean) => void;
+  onCellContextMenuFunction?: () => void;
+}
+
+export interface ColumnDataExtended extends ColumnData {
+  cellInteraction: CellInteraction;
+  format: FormatProps;
 }
 
 export interface CrossLinking {
@@ -111,8 +135,6 @@ export type Cell = DataPointValue & {
 
 export type DisplayValue = string | number | boolean;
 
-export type FormatMessage = (message: { id: string }, interpolation: { [key: string]: string }) => string;
-
 export type GenericFunction = (...params: any[]) => void;
 
 export type Maybe<T> = T | undefined;
@@ -127,7 +149,12 @@ export type Row = {
   [key: string]: Cell;
 };
 
-export type Translate = (key: string) => string;
+export type Translate = (key: string | { id: string }) => string;
+export type FormatMessage = (key: { id: string }, interpolation: { [key: string]: string }) => string;
+export interface TranslateProps {
+  formatMessage?: FormatMessage;
+  translate: Translate;
+}
 
 export type VizColor = 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9 | 10;
 
@@ -142,14 +169,16 @@ export type ViewOption = {
 };
 
 export type ViewOptionFormattedType = {
+  key: string;
   label: string;
-  viewOrder: number;
+  option: ViewShapeType;
   value: string;
-  option: ViewOption;
+  viewOrder: number;
 };
 
 export interface AppSettings {
   companyName: string;
+  exportConfig: ExportConfig;
   crossLinkingInteraction: crosslinkingInteractionType;
   defaultHomePage: string;
   infusionType: InfusionType;
@@ -157,4 +186,17 @@ export interface AppSettings {
     position: NavPosition;
   };
   productName: string;
+  rootVersion: string;
 }
+
+export interface AttributeInputEvents {
+  id?: Key;
+  onSave: () => any;
+  onCancel: () => void;
+}
+
+export type OnInputChangeEvent = (hasChanged: boolean) => void;
+
+export type PrimitiveType = boolean | number | string;
+
+export type RegisterEvents = (event: AttributeInputEvents) => void;

@@ -9,7 +9,7 @@ import { useStyles } from '../list-item.styles';
 
 const bem = 'ks-ranked-list-item';
 
-export function KsRankedListItem({ item: row, columns, metadata }: ListItemProps): ReactElement {
+export function KsRankedListItem({ item: row, columns, metadata, widgetId }: ListItemProps): ReactElement {
   const { displayColumnAttribute, displayColumnCell, rowWithId } = useListItem({ columns, item: row });
   const classes = useStyles();
 
@@ -71,6 +71,7 @@ export function KsRankedListItem({ item: row, columns, metadata }: ListItemProps
                 format={column.format}
                 row={rowWithId}
                 rowDisplayValue={displayColumnCell?.displayValue}
+                widgetId={widgetId}
               />
             </div>
           </div>

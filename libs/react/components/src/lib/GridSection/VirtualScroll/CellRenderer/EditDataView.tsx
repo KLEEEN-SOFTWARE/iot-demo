@@ -1,4 +1,7 @@
 import { Attribute, StatisticalDataType } from '@kleeen/types';
+import React, { useEffect } from 'react';
+import { Theme, withStyles } from '@material-ui/core/styles';
+import { useKleeenFormatChecker, useTheme } from '@kleeen/react/hooks';
 
 import ArrowDropDownIcon from '@material-ui/icons/ArrowDropDown';
 import CheckboxCellInput from '../../components/CheckboxCellInput';
@@ -10,13 +13,38 @@ import { EditDataViewProps } from './CellRenderer.model';
 import FreeFormCellInput from '../../components/FreeFormCellInput';
 import { IconButton } from '@material-ui/core';
 import { KsContextCell } from '../../../context-cell';
+import { Maybe } from '@kleeen/types';
 import { MultipleModalInput } from '../../components/MultipleModalInput';
-import React from 'react';
 import { SortableHandle } from 'react-sortable-hoc';
 import { TableCell } from '../../components';
+import Tooltip from '@material-ui/core/Tooltip';
 import classnames from 'classnames';
 import { getRowDisplayValue } from '@kleeen/common/utils';
+import { isNilOrEmpty } from '@kleeen/common/utils';
 import { validateOrderColum } from './utils';
+
+const StyledTooltip = withStyles((theme: Theme) => ({
+  tooltip: {
+    backgroundColor: 'var(--input-error-color)',
+    margin: 0,
+    boxShadow: '0px 0px 5px 0px rgba(0,0,0,0.5)',
+    '& ul': {
+      marginTop: 'var(--pm-5XS)',
+      '& li': {
+        overflow: 'hidden',
+        textOverflow: 'ellipsis',
+        whiteSpace: 'nowrap',
+      },
+    },
+  },
+  arrow: {
+    color: 'var(--input-error-color)',
+    transform: 'rotate(45deg)',
+    '&::before': {
+      transform: 'rotate(00deg)',
+    },
+  },
+}))(Tooltip);
 
 const DragHandle = SortableHandle(({ children }) => <div>{children}</div>);
 
@@ -53,6 +81,9 @@ function EditDataView({
   row,
   rowData,
   setEditingCell,
+  taskName,
+  widgetId,
+  props,
 }: EditDataViewProps): JSX.Element {
   const rowDisplayValue = getRowDisplayValue(rowData, displayColumnAttribute?.name);
   const isInputEditable = Boolean(attr?.settings?.isEditable);
@@ -66,75 +97,120 @@ function EditDataView({
 
   const CellInputComponent = getInputComponent({ attr, cellIsBeingEdited, hasMany, isInputEditable });
 
+  const [{ validateFormField, resetValidationResponse }, validationResponse] = useKleeenFormatChecker({
+    taskName,
+    widgetId,
+    formField: attr.name,
+  });
+
+  const { themeClass } = useTheme();
+
+  useEffect(() => {
+    if (cellIsBeingEdited) {
+      if (editingCell.temporaryValue) validateFormField(editingCell.temporaryValue);
+    }
+  }, [editingCell.temporaryValue]);
+
+  useEffect(() => {
+    if (!cellIsBeingEdited && !props.isTableBeingEdited && Boolean(validationResponse?.errors)) {
+      resetValidationResponse();
+    }
+  }, [cellIsBeingEdited, props.isTableBeingEdited]);
+
+  const getValidationResponseErrors = (
+    response: Maybe<{ isValid?: boolean; errors?: { message: string }[] }>,
+  ): JSX.Element | null => {
+    if (isNilOrEmpty(response?.errors) || response?.isValid) return null;
+    return (
+      <ul>
+        {response.errors.map((error, i) => {
+          return <li>{error.message}</li>;
+        })}
+      </ul>
+    );
+  };
+
   function _draggableColumn(children) {
     return <DragHandle>{children}</DragHandle>;
   }
 
   return (
     <React.Fragment key={rowKey}>
-      <TableCell
-        className={classnames(
-          'editable-cell',
-          { 'sortable-cell': draggable },
-          draggable ? 'firstColumn' : '',
-        )}
+      <StyledTooltip
+        arrow
+        enterDelay={500}
+        leaveDelay={200}
+        open={(cellIsBeingEdited || props.isTableBeingEdited) && Boolean(validationResponse?.errors)}
+        placement="top"
+        PopperProps={{
+          className: `${themeClass}`,
+        }}
+        title={getValidationResponseErrors(validationResponse)}
       >
-        {draggable &&
-          _draggableColumn(
-            <div className="draggable-container">
-              <div className="draggable-column data-view">
-                <DragIndicatorIcon />
-              </div>
-              <div className="draggable-column-number">{validateOrderColum(rowData, orderColumnName)}</div>
-            </div>,
+        <TableCell
+          className={classnames(
+            'editable-cell',
+            { 'sortable-cell': draggable },
+            draggable ? 'firstColumn' : '',
           )}
-        <CellInputComponent
-          amendCellUpdate={amendCellUpdate}
-          attr={attr}
-          autocomplete={autocomplete}
-          cell={row}
-          displayColumnAttribute={displayColumnAttribute}
-          editingCell={editingCell}
-          format={attr.format}
-          openShowMoreModal={openShowMoreModal}
-          row={rowData}
-          rowDisplayValue={rowDisplayValue}
-          setEditingCell={setEditingCell}
-        />
-        <div className={'actions-container'}>
-          {showDeleteIcon && (
-            <IconButton
-              onClick={() => {
-                deleteProcess(rowData.id);
-              }}
-              aria-label="delete"
-              size="small"
-            >
-              <DeleteOutlineIcon className="icon" style={{ fontSize: 'var(--tx-L)' }} />
-            </IconButton>
-          )}
-          {showEditIcon && (
-            <IconButton
-              onClick={() => {
-                onAutocompleteRequest(attr.name);
-                setEditingCell({
-                  attributeName: attr.name,
-                  rowId: rowData.id,
-                  temporaryValue: String(row?.displayValue),
-                });
-              }}
-              aria-label="edit"
-              size="small"
-            >
-              {isPencilIcon ? (
-                <CreateIcon className="icon" style={{ fontSize: 'var(--tx-L)' }} />
-              ) : (
-                <ArrowDropDownIcon className="icon" />
-              )}
-            </IconButton>
-          )}
-        </div>
-      </TableCell>
+        >
+          {draggable &&
+            _draggableColumn(
+              <div className="draggable-container">
+                <div className="draggable-column data-view">
+                  <DragIndicatorIcon />
+                </div>
+                <div className="draggable-column-number">{validateOrderColum(rowData, orderColumnName)}</div>
+              </div>,
+            )}
+          <CellInputComponent
+            amendCellUpdate={amendCellUpdate}
+            attr={attr}
+            autocomplete={autocomplete}
+            cell={row}
+            displayColumnAttribute={displayColumnAttribute}
+            editingCell={editingCell}
+            format={attr.format}
+            openShowMoreModal={openShowMoreModal}
+            row={rowData}
+            rowDisplayValue={rowDisplayValue}
+            setEditingCell={setEditingCell}
+          />
+          <div className={'actions-container'}>
+            {showDeleteIcon && (
+              <IconButton
+                onClick={() => {
+                  deleteProcess(rowData.id);
+                }}
+                aria-label="delete"
+                size="small"
+              >
+                <DeleteOutlineIcon className="icon" style={{ fontSize: 'var(--tx-L)' }} />
+              </IconButton>
+            )}
+            {showEditIcon && (
+              <IconButton
+                onClick={() => {
+                  onAutocompleteRequest(attr.name);
+                  setEditingCell({
+                    attributeName: attr.name,
+                    rowId: rowData.id,
+                    temporaryValue: String(row?.displayValue),
+                  });
+                }}
+                aria-label="edit"
+                size="small"
+              >
+                {isPencilIcon ? (
+                  <CreateIcon className="icon" style={{ fontSize: 'var(--tx-L)' }} />
+                ) : (
+                  <ArrowDropDownIcon className="icon" />
+                )}
+              </IconButton>
+            )}
+          </div>
+        </TableCell>
+      </StyledTooltip>
     </React.Fragment>
   );
 }

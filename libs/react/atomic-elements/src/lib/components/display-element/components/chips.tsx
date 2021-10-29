@@ -4,7 +4,7 @@ import { DisplayComponentProps } from '@kleeen/types';
 import { isNilOrEmpty } from '@kleeen/common/utils';
 import { useState } from 'react';
 
-export function Chips({ attribute, format, value }: DisplayComponentProps) {
+export function Chips({ attribute, format, value, widgetId }: DisplayComponentProps) {
   const [isOpen, setIsOpen] = useState(false);
   // TODO: @cafe add i18n key for this
   // TODO: @cafe find a way to get the displayDataPoint  and pass it to KsClickableChipsCell
@@ -21,6 +21,7 @@ export function Chips({ attribute, format, value }: DisplayComponentProps) {
         format={format}
         isIdTemporary={false}
         openShowMoreModal={() => setIsOpen(true)}
+        widgetId={widgetId}
       />
       {isOpen && (
         <ListingModal
@@ -30,6 +31,7 @@ export function Chips({ attribute, format, value }: DisplayComponentProps) {
           format={format}
           isOpen={isOpen}
           onClose={() => setIsOpen(false)}
+          widgetId={widgetId}
         />
       )}
     </>

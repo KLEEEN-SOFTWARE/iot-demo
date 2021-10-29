@@ -1,7 +1,9 @@
 {
   "extends": "../../tsconfig.base.json",
   "compilerOptions": {
-    "types": ["cypress", "node"]
+    "noImplicitAny": true,
+    "strict": true,
+    "types": ["cypress"]
   },
   "include": [],
   "files": [],

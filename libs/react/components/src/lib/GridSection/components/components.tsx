@@ -1,11 +1,11 @@
 import { Attribute } from '@kleeen/types';
+import { GridSectionHeaderProps } from '../GridSection.model';
 import { Icon } from '../../Icon';
 import MuiTableCell from '@material-ui/core/TableCell';
 import MuiTableHead from '@material-ui/core/TableHead';
 import MuiTableRow from '@material-ui/core/TableRow';
 import { Order } from '@kleeen/common/utils';
 import React from 'react';
-import { TableHeaderProps } from '../GridSection.model';
 import TextField from '@material-ui/core/TextField';
 import { styled } from '@material-ui/core/styles';
 
@@ -114,7 +114,7 @@ const iconBySortDirection: { [key in Order]: string } = {
   [Order.none]: 'ks-sort-asc',
 };
 
-const TableHeader: React.FC<TableHeaderProps> = (props: TableHeaderProps): JSX.Element => {
+const TableHeader: React.FC<GridSectionHeaderProps> = (props: GridSectionHeaderProps): JSX.Element => {
   const { order, orderBy, onSort, attributes, handleChange, hasActions, widgetId } = props;
 
   const getColumnLabel = (attr: Attribute): string => attr.label || attr.name;

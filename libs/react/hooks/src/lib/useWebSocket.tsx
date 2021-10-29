@@ -35,11 +35,12 @@ export const WebSocketProvider = ({ children }) => {
           key: uuidv4(),
           notification: {
             message: {
-              message: msg?.customMessage,
-              variant: msg?.success ? 'success' : 'error',
+              'data-testid': msg?.success ? 'success-notification' : 'error-notification',
               actions: msg?.actions,
-              title: msg?.customTitle,
+              message: msg?.customMessage,
               taskName: msg?.taskName,
+              title: msg?.customTitle,
+              variant: msg?.success ? 'success' : 'error',
             },
             options: {
               key: uuidv4(),

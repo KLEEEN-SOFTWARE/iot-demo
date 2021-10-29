@@ -1,9 +1,10 @@
 {
   "extends": "./tsconfig.json",
   "compilerOptions": {
+    "declaration": true,
     "module": "commonjs",
     "outDir": "../../../dist/out-tsc",
-    "declaration": true,
+    "strict": true,
     "types": ["node"]
   },
   "exclude": ["**/*.spec.ts"],

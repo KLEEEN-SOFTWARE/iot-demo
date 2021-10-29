@@ -1,8 +1,6 @@
-import { Attribute } from '@kleeen/types';
 import { Loader } from '@kleeen/react/components';
 import PolarArea from '../../PolarArea/PolarArea';
-import React from 'react';
-import { VizCommonParams } from '@kleeen/types';
+import { WidgetProps } from '@kleeen/types';
 import { makeStyles } from '@material-ui/core';
 import { useWidgetContext } from '@kleeen/react/hooks';
 
@@ -11,18 +9,8 @@ const useStyles = makeStyles({
     height: 'calc(var(--wh-5XL) - var(--wh-1XS) - var(--wh-6XS) - var(--wh-6XS))',
   },
 });
-export interface PolarAreaWidgetProps extends VizCommonParams {
-  taskName: string;
-  widgetId: string | number;
-  attributes: Attribute[];
-}
 
-export const PolarAreaWidget = ({
-  params,
-  taskName,
-  widgetId,
-  attributes,
-}: PolarAreaWidgetProps): JSX.Element => {
+export function PolarAreaWidget({ params, taskName, widgetId, attributes }: WidgetProps): JSX.Element {
   const widgetData = useWidgetContext({ taskName, widgetId, params });
   const classes = useStyles();
 
@@ -32,9 +20,9 @@ export const PolarAreaWidget = ({
 
   return (
     <div className={classes.widgetContent}>
-      <PolarArea context={widgetData} params={params} attributes={attributes} />
+      <PolarArea context={widgetData} params={params} attributes={attributes} widgetId={widgetId} />
     </div>
   );
-};
+}
 
 export default PolarAreaWidget;

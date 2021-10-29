@@ -1,11 +1,17 @@
+import { Attribute, WidgetScope } from '@kleeen/types';
+import { useAvailableFiltersByWorkflow, useIsInvestigation } from '@kleeen/react/hooks';
 import { useEffect, useState } from 'react';
 
-import { AggregationType } from '@kleeen/types';
 import { ClickableChipsCellProps } from '../components/clickable-chips/clickable-chips-cell.model';
-import { isLinkFilterableByEntityType } from '@kleeen/react/hooks';
+import { entityHasWidgets } from '@kleeen/widgets';
 import { isNilOrEmpty } from '@kleeen/common/utils';
-import { isSingleCardinalityTransformation } from '@kleeen/frontend/utils';
-import { path } from 'ramda';
+import { isFilterableAttribute, isLinkableByEntityType } from '@kleeen/frontend/utils';
+
+interface InteractionValidations {
+  hasCrossLinking: boolean;
+  hasFilters: boolean;
+  hasPreview: boolean;
+}
 
 type UseIsAttributeClickable = Pick<
   ClickableChipsCellProps,
@@ -14,38 +20,44 @@ type UseIsAttributeClickable = Pick<
   transformationKeyToUse?: string;
 };
 
-const DEFAULT_TRANSFORMATION_KEY_TO_USE = 'aggregation';
+const defaultInteractionValidationsState = {
+  hasCrossLinking: false,
+  hasFilters: false,
+  hasPreview: false,
+};
 
-export function useIsAttributeClickable(props: UseIsAttributeClickable): boolean {
-  const [isClickable, setIsClickable] = useState<boolean>(false);
-
-  const { attribute, transformationKeyToUse = DEFAULT_TRANSFORMATION_KEY_TO_USE } = props;
+export function useAttributeInteractions(props: UseIsAttributeClickable): InteractionValidations {
+  const { attribute } = props;
+  const [interactionValidations, setInteractionValidations] = useState<InteractionValidations>(
+    defaultInteractionValidationsState,
+  );
+  const { availableFilters, hasFilters } = useAvailableFiltersByWorkflow<Attribute>([attribute]);
+  const isInvestigationPage = useIsInvestigation();
 
   useEffect(() => {
-    const attributeTransformation = path<AggregationType>([transformationKeyToUse], attribute);
+    const shouldNotSetInteractionValidations = isNilOrEmpty(attribute);
 
-    const hasCrosslinking = checkIfAttributeHasCrosslinking(props);
-    const isASingleCardinalityTransformation = isSingleCardinalityTransformation(attributeTransformation);
+    if (shouldNotSetInteractionValidations) return;
 
-    setIsClickable(hasCrosslinking && isASingleCardinalityTransformation);
-  }, [attribute]);
+    const { hasFilter, isSingleCardinality } = isFilterableAttribute({
+      hasFilters,
+      filterableAttributes: availableFilters,
+      attribute,
+    });
+    const scope = isSingleCardinality ? WidgetScope.Single : WidgetScope.Collection;
+    const hasPreview = entityHasWidgets({
+      entityId: attribute?.id,
+      scope,
+    });
+    const linkableByEntityType = isLinkableByEntityType({
+      attribute,
+      isInvestigation: isInvestigationPage,
+      entityType: props.cellEntityType,
+    });
+    const hasCrossLinking = !props.isIdTemporary && linkableByEntityType;
 
-  return isClickable;
+    setInteractionValidations({ hasCrossLinking, hasFilters: hasFilter, hasPreview });
+  }, [attribute, isInvestigationPage, availableFilters.length]);
+
+  return interactionValidations;
 }
-
-//#region Private members
-function checkIfAttributeHasCrosslinking({
-  attribute,
-  cellEntityType,
-  isIdTemporary,
-}: UseIsAttributeClickable): boolean {
-  const { crossLinking } = attribute;
-
-  // *We need this for CrossLinking support
-  const filteredCrossLinks = crossLinking.filter((link) =>
-    isLinkFilterableByEntityType(cellEntityType, link),
-  );
-
-  return !isIdTemporary && !isNilOrEmpty(crossLinking) && !isNilOrEmpty(filteredCrossLinks);
-}
-//#endregion

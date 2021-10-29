@@ -3,14 +3,14 @@ import { useMasonry, useWidgetContext } from '@kleeen/react/hooks';
 
 import { Loader } from '@kleeen/react/components';
 import { SummaryStatistics } from '../../summary-statistics';
-import { SummaryStatisticsWidgetProps } from './summary-statistic-widget.model';
+import { WidgetProps } from '@kleeen/types';
 
 export function SummaryStatisticsWidget({
   attributes,
   params,
   taskName,
   widgetId,
-}: SummaryStatisticsWidgetProps): ReactElement {
+}: WidgetProps): ReactElement {
   const widgetData = useWidgetContext({ taskName, widgetId, params });
   const { updateLayout } = useMasonry();
 
@@ -25,7 +25,7 @@ export function SummaryStatisticsWidget({
     return <Loader />;
   }
 
-  return <SummaryStatistics attributes={attributes} data={data} />;
+  return <SummaryStatistics attributes={attributes} data={data} params={params} widgetId={widgetId} />;
 }
 
 export default SummaryStatisticsWidget;

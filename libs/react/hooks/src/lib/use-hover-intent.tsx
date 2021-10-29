@@ -1,9 +1,13 @@
 import { useEffect, useImperativeHandle, useRef, useState } from 'react';
 
-interface UseHoverIntentProps {
+interface UseHoverIntentProps<GenericParam> {
   delayOnEnter?: number;
   delayOnLeave?: number;
-  onMouseEnterFn?: (event: MouseEvent | React.MouseEvent<HTMLButtonElement | HTMLDivElement>) => void;
+  onMouseEnterFn?: (
+    event: MouseEvent | React.MouseEvent<HTMLButtonElement | HTMLDivElement>,
+    contextParams?: GenericParam,
+  ) => void;
+  onMouseEnterFnParams?: GenericParam;
   onMouseLeaveFn?: (event: MouseEvent | React.MouseEvent<HTMLButtonElement | HTMLDivElement>) => void;
   outerRef?: React.Ref<HTMLElement | null>;
 }
@@ -13,7 +17,9 @@ interface HoverIntentObject<T> {
   isHovering: boolean;
 }
 
-export function useHoverIntent<T = HTMLElement>(props?: UseHoverIntentProps): HoverIntentObject<T> {
+export function useHoverIntent<T = HTMLElement, GenericParam = null>(
+  props?: UseHoverIntentProps<GenericParam>,
+): HoverIntentObject<T> {
   const { delayOnEnter = 300, delayOnLeave = 600, onMouseEnterFn, onMouseLeaveFn, outerRef } = props || {};
   const ref = useRef<HTMLElement & T>(null);
   const [isHovering, setIsHovering] = useState(false);
@@ -28,7 +34,7 @@ export function useHoverIntent<T = HTMLElement>(props?: UseHoverIntentProps): Ho
     timerOnEnter = setTimeout(() => {
       setIsHovering(true);
       if (onMouseEnterFn) {
-        onMouseEnterFn({ ...event, currentTarget: ref.current });
+        onMouseEnterFn({ ...event, currentTarget: ref.current }, props?.onMouseEnterFnParams);
       }
     }, delayOnEnter);
   };

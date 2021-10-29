@@ -1,13 +1,12 @@
-import React, { ReactElement } from 'react';
-
 import { ActionType } from '@kleeen/types';
 import { ActionsSectionProps } from './ActionSection.model';
 import AddCircleIcon from '@material-ui/icons/AddCircle';
 import { Grid } from '@material-ui/core';
+import { KUIConnect } from '@kleeen/core-react';
 import { KsButton } from '../button';
 import { KsButtonText } from './ActionSection.styles';
+import { ReactElement } from 'react';
 import { isNilOrEmpty } from '@kleeen/common/utils';
-import { KUIConnect } from '@kleeen/core-react';
 
 function ActionsSection({
   actions,
@@ -15,15 +14,13 @@ function ActionsSection({
   handleAddClick,
   skinny = false,
   translate,
-}: ActionsSectionProps): ReactElement | null {
-  if (isNilOrEmpty(actions)) {
-    return null;
-  }
+}: ActionsSectionProps & { translate: (input: string) => string }): ReactElement | null {
+  if (isNilOrEmpty(actions)) return null;
 
   const { component: Button, size, variant } = getComponentAndProps(skinny);
 
   return (
-    <Grid container item spacing={1} justify="flex-start" alignItems="center">
+    <Grid alignItems="center" container item justifyContent="flex-start" spacing={1}>
       {actions.map((action) => {
         const { displayName, name, type } = action;
         const actionType = type.toLowerCase();
@@ -34,6 +31,7 @@ function ActionsSection({
               <Grid item key={name}>
                 <Button
                   color="primary"
+                  data-testid="add"
                   onClick={() => handleAddClick(action)}
                   size={size}
                   startIcon={skinny && <AddCircleIcon fontSize="small" />}
@@ -46,7 +44,7 @@ function ActionsSection({
           case ActionType.Delete:
             return (
               <Grid item key={name}>
-                <Button color="primary" size={size} variant={variant}>
+                <Button color="primary" size={size} variant={variant} data-testid="delete">
                   {translate('app.actions.delete')} {entity}
                 </Button>
               </Grid>

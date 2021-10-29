@@ -1,8 +1,7 @@
-import { GroupByProps, ValueProp, ValuesProps, VizCommonParams } from '@kleeen/types';
-import React, { ReactElement } from 'react';
-
 import { Loader } from '@kleeen/react/components';
+import { ReactElement } from 'react';
 import Scatter from '../../Scatter/Scatter';
+import { WidgetProps } from '@kleeen/types';
 import { makeStyles } from '@material-ui/core';
 import { useWidgetContext } from '@kleeen/react/hooks';
 
@@ -11,21 +10,8 @@ const useStyles = makeStyles({
     height: 'calc(var(--wh-5XL) - var(--wh-1XS) - var(--wh-6XS) - var(--wh-6XS))',
   },
 });
-interface ScatterWidgetProps extends VizCommonParams {
-  params: {
-    baseModel: string;
-    aggregatedByType?: string;
-    aggregatedBy?: string;
-    aggregation_attribute?: string;
-    aggregation?: string;
-    groupBy?: GroupByProps;
-    value?: ValueProp | ValuesProps;
-  };
-  taskName: string;
-  widgetId: string | number;
-}
 
-export function ScatterWidget({ params, taskName, widgetId }: ScatterWidgetProps): ReactElement {
+export function ScatterWidget({ attributes, params, taskName, widgetId }: WidgetProps): ReactElement {
   const widgetData = useWidgetContext({ taskName, widgetId, params });
   const classes = useStyles();
 
@@ -35,7 +21,7 @@ export function ScatterWidget({ params, taskName, widgetId }: ScatterWidgetProps
 
   return (
     <div className={classes.widgetContent}>
-      <Scatter context={widgetData} params={params} />
+      <Scatter attributes={attributes} context={widgetData} params={params} widgetId={widgetId} />
     </div>
   );
 }

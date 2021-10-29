@@ -1,17 +1,19 @@
+import './ToolBarForm.scss';
+
+import React, { useState } from 'react';
+
+import ClearIcon from '@material-ui/icons/Clear';
 import IconButton from '@material-ui/core/IconButton';
 import InputAdornment from '@material-ui/core/InputAdornment';
+import { Localization } from './GridSection.model';
+import SearchIcon from '@material-ui/icons/Search';
 import TextField from '@material-ui/core/TextField';
 import Toolbar from '@material-ui/core/Toolbar';
 import Tooltip from '@material-ui/core/Tooltip';
-import ClearIcon from '@material-ui/icons/Clear';
-import SearchIcon from '@material-ui/icons/Search';
-import React, { useState } from 'react';
-import { Localization } from './GridSection.model';
-import './ToolBarForm.scss';
 interface ToolBarFormProps {
   localization: Localization;
   handleChange: Function;
-  widgetId: string | number;
+  widgetId: string;
 }
 
 const SearchContainer = (props: ToolBarFormProps) => {

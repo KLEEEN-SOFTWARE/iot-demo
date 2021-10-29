@@ -13,6 +13,7 @@ import React, { ReactElement, useEffect, useState } from 'react';
 import { isEmpty, isNil, pathOr } from 'ramda';
 import {
   useKleeenActions,
+  useKleeenFormatChecker,
   useKsAutoComplete,
   useMasonry,
   useUrlQueryParams,
@@ -24,6 +25,7 @@ import { WidgetDataAttributes } from '@kleeen/types';
 import camelcase from 'lodash.camelcase';
 import classNames from 'classnames';
 import elementsData from './../../../assets/elements.json';
+import { getValidationResponseErrors } from '../../../utils/validationResponseErrors';
 import { useConfigInputStyles } from './ConfigInputWidget.style';
 
 export function ConfigInputWidget({
@@ -66,6 +68,13 @@ export function ConfigInputWidget({
     widgetId,
     entity: attrName,
   });
+
+  const [{ validateFormField }, validationResponse] = useKleeenFormatChecker({
+    taskName,
+    widgetId,
+    formField: attrName,
+  });
+
   const { updateRequest } = useKleeenActions(taskName);
   const { updateLayout } = useMasonry();
   const { paramsBasedOnRoute } = useUrlQueryParams();
@@ -181,12 +190,13 @@ export function ConfigInputWidget({
 
   useEffect(() => {
     updateLayout(optionsValues * inputHeight);
-  }, [optionsValues]);
+  }, [optionsValues, validationResponse?.errors]);
 
   useEffect(() => {
     inputValueRef.current = inputValue;
     attrNameRef.current = attrName;
     attrValueRef.current = attrValue;
+    if (inputValue) validateFormField(inputValue);
   }, [inputValue]);
 
   useEffect(() => {
@@ -386,13 +396,13 @@ export function ConfigInputWidget({
                 elementToUse={elementToUse}
                 format={format}
                 formatType={formatType}
+                hideTitle={hideTitle}
+                inSummaryDetails={inSummaryDetails}
                 inputValue={inputValue}
                 setInputValue={onSetInputValue}
                 setSelectedOption={setSelectedOption}
                 statisticalType={statisticalType}
                 transformation={transformation}
-                hideTitle={hideTitle}
-                inSummaryDetails={inSummaryDetails}
               />
             </div>
             {!hideSaveAndClose && (
@@ -424,6 +434,7 @@ export function ConfigInputWidget({
           </div>
         )}
       </div>
+      {getValidationResponseErrors(validationResponse, classes.inputLuError)}
     </>
   );
 }

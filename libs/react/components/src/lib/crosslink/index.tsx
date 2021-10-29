@@ -2,19 +2,24 @@ import { ReactElement, useState } from 'react';
 import {
   useAnchorElement,
   useCrosslinking,
+  useCrosslinkingInteraction,
   useHoverIntent,
   validateCrosslinkingInteraction,
 } from '@kleeen/react/hooks';
 
 import { CrosslinkProps } from './crosslink.model';
 import { KsContextMenu } from '@kleeen/react/components';
-import classNames from 'classnames';
-import { useIsAttributeClickable } from '../context-cell/hooks';
-import { useStyles } from './crosslink.styles';
+import { KsLink } from '../link';
+import { getLinkStyle } from '@kleeen/frontend/utils';
+import { useAttributeInteractions } from '../context-cell/hooks';
 
-const bem = 'ks-crosslink';
-
-export function KsCrosslink({ children, dataPoints, transformationKeyToUse }: CrosslinkProps): ReactElement {
+export function KsCrosslink({
+  children,
+  dataPoints,
+  params,
+  transformationKeyToUse,
+  widgetId,
+}: CrosslinkProps): ReactElement {
   const [dataPoint] = dataPoints;
   const { anchorEl, handleClick, handleClose } = useAnchorElement();
   const { crosslink } = useCrosslinking();
@@ -22,14 +27,13 @@ export function KsCrosslink({ children, dataPoints, transformationKeyToUse }: Cr
     delayOnEnter: 800,
     onMouseEnterFn: handleClick,
   });
-  const isContentClickable = useIsAttributeClickable({
+  const { hasCrossLinking, hasFilters, hasPreview } = useAttributeInteractions({
     attribute: dataPoint?.attribute,
     cellEntityType: dataPoint?.value?.$metadata?.entityType,
     isIdTemporary: false,
     transformationKeyToUse,
   });
   const [openModal, setOpenModal] = useState(false);
-  const classes = useStyles();
 
   function handleCloseHelper() {
     setOpenModal(false);
@@ -39,35 +43,46 @@ export function KsCrosslink({ children, dataPoints, transformationKeyToUse }: Cr
   function onCellClick() {
     const { attribute, value } = dataPoint;
 
-    if (isContentClickable) {
+    if (hasCrossLinking) {
       const [firstValidCrossLink] = attribute?.crossLinking;
       crosslink(firstValidCrossLink.slug, value, attribute);
     }
   }
 
   const { onClickFunction, onContextMenuFunction, validation } = validateCrosslinkingInteraction(
-    anchorEl,
     onCellClick,
     openModal,
     setOpenModal,
+    anchorEl,
   );
+
+  const { crosslinkingInteraction } = useCrosslinkingInteraction();
+  const { highlight, underline } = getLinkStyle({
+    hasPreview,
+    hasCrossLink: hasCrossLinking,
+    hasFilter: hasFilters,
+    linkInteraction: crosslinkingInteraction,
+  });
 
   return (
     <>
-      <div
-        className={classNames(bem, classes.content, { [classes.isContentClickable]: isContentClickable })}
+      <KsLink
+        anchorEl={ref}
+        highlight={highlight}
         onClick={onClickFunction}
         onContextMenu={onContextMenuFunction}
-        ref={ref}
+        underline={underline}
       >
         {children}
-      </div>
+      </KsLink>
       {validation && (
         <KsContextMenu
           anchorEl={anchorEl}
           autoClose
           dataPoints={dataPoints}
-          handleClose={handleCloseHelper}
+          onClose={handleCloseHelper}
+          widgetContextParams={params}
+          widgetId={widgetId}
         />
       )}
     </>

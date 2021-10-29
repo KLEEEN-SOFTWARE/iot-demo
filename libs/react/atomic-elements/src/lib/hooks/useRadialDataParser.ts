@@ -2,6 +2,7 @@ import { CrossLinkingProps, useCrossLinkingMenuOnViz, useTextFormattersForViz } 
 
 import HighchartsReact from 'highcharts-react-official';
 import React from 'react';
+import { VisualizationWidgetProps } from '@kleeen/types';
 import { formatRadialResults } from '@kleeen/frontend/utils';
 import { getLocalizationValues } from '../utils';
 import { otherColors } from '../components/generalBaseOptions';
@@ -37,15 +38,19 @@ export interface RadialDataParserResult {
   };
 }
 
-export function useRadialDataParser({ translate, ...props }: HighchartsReact.Props): RadialDataParserResult {
+export function useRadialDataParser({
+  translate,
+  ...props
+}: VisualizationWidgetProps & HighchartsReact.Props): RadialDataParserResult {
+  const { context, params } = props;
   const [highChartUpdate, setHighChartUpdate] = useState({
     drillUp: null,
     drillUpButton: {},
     plotSizeX: 0,
   });
-  const data = pathOr({}, ['context', 'data'], props);
+  const { data = {} } = context;
   const sliceResultsBy = pathOr(SLICE_RESULTS_BY, ['sliceResultsBy'], props); //split results based on sliceResultsBy integer
-  const aggregations = pathOr('', ['params', 'value', 'transformation'], props);
+  const aggregations = pathOr('', ['transformation'], params.value);
   const { results = [], format = {} } = data;
   const { xAxis = {}, yAxis = {} } = format || {};
   const { crossLinking, openMenuIfCrossLink } = useCrossLinkingMenuOnViz(props as CrossLinkingProps, {

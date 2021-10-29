@@ -9,9 +9,10 @@ export const getFilterQuery = (operationName: string): string => `
 export const getChartDataQuery = (operationName: string): string => `
   query getWidget($input: DataAggregationArgs) {
     ${operationName}(input: $input) {
+      crossLinking
       format
       results
-      crossLinking
+      series
     }
   }
 `;
@@ -19,10 +20,10 @@ export const getChartDataQuery = (operationName: string): string => `
 export const getMultiAggWidgetQuery = (operationName: string): string => `
   query getMultiAggWidget($input: MultiTransFormationArgs){
     ${operationName}(input: $input) {
+      crossLinking
       format
       results
       transformation
-      crossLinking
     }
   }
 `;
@@ -38,8 +39,8 @@ export const dispatchCustomActionQuery = (operationName: string): string => `
 export const getListingDataQuery = (operationName: string): string => `
   query getListing($input: DataListingArgs) {
     ${operationName}(input: $input) {
-      format
       data
+      format
       pagination
     }
   }
@@ -77,7 +78,7 @@ export const createEntityQuery = (entity: string): string => `
   }
 `;
 
-export const listEntityQuery = (entity) => `
+export const listEntityQuery = (entity: string): string => `
   query listEntity ($input: ListEntityInput) {
     list${entity}(input: $input) {
       data
@@ -85,14 +86,54 @@ export const listEntityQuery = (entity) => `
   }
 `;
 
-export const autoCompleteQuery = (entity) => `
+export const autoCompleteQuery = (entity: string): string => `
 query autoComplete($input: AutoCompleteByEntityInput) {
   autoComplete${entity}(input: $input) {
     data {
       displayValue
-      value
       id
+      value
     }
     errorMessage
   }
 }`;
+
+export const formatCheckQuery = (): string => `
+  query formatCheck ($input: FormatCheckArgs) {
+    formatCheck(input: $input) {
+      errors {
+        message
+      }
+      isValid
+    }
+  }
+`;
+
+export const getWorkflowFiltersQuery = (operationName: string): string => `
+  query getWorkflowFilters {
+    ${operationName} {
+      filters {
+        accessLevel
+        name
+        statisticalType
+      }
+    }
+  }
+`;
+
+export const getOnboardingPreferencesQuery = `
+  query getOnboardingPreferences {
+    getOnboardingPreferences {
+      config
+      showOnBoarding
+    }
+  }
+`;
+
+export const setOnboardingPreferencesQuery = `
+  query setOnboardingPreferences($input: PreferencesInput) {
+    setOnboardingPreferences(input: $input) {
+      success
+    }
+  }
+`;

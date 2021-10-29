@@ -5,6 +5,7 @@ import { FormatProps, ListItem } from '../types';
 import { AggregationType } from '../enums';
 import { Attribute } from './attributes';
 import { ElementComponentRules } from './element-components';
+import { WidgetStateParams } from '@kleeen/types';
 
 //#region BaseComponentProps
 interface BaseComponentProps {
@@ -13,6 +14,7 @@ interface BaseComponentProps {
   highlighted?: boolean;
   transformation?: AggregationType;
   value?: any; // eslint-disable-line @typescript-eslint/no-explicit-any
+  widgetId?: string;
 }
 
 export type BaseDisplayComponentsProps = BaseComponentProps;
@@ -28,6 +30,7 @@ export interface DisplayComponentProps extends BaseDisplayComponentsProps {
   attribute: Attribute;
   element?: ElementDisplayType;
   highlighted?: boolean;
+  params: WidgetStateParams;
 }
 
 export type DisplayElement = (props: DisplayComponentProps) => JSX.Element;

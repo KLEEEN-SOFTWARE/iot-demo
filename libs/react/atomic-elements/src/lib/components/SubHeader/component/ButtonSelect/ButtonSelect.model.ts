@@ -1,10 +1,8 @@
-import { TranslateProps } from '../../../../../types';
-import { ViewOption } from '@kleeen/types';
+import { SetCurrentViewType, ViewShapeType } from '@kleeen/types';
 
-export interface ButtonSelectProps extends TranslateProps {
-  viewOptions: ViewOption[];
-  handleChangeTab: (e) => void;
-  onTabIndexChanged?: (index: number, option: ViewOption) => void;
-  value: string;
+export interface ButtonSelectProps {
+  viewOptions: ViewShapeType[];
   taskName?: string;
+  currentView: ViewShapeType;
+  setCurrentView: SetCurrentViewType;
 }

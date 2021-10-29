@@ -10,18 +10,15 @@ import {
 
 import { KsVirtualTable } from '@kleeen/react/components';
 import { ReactElement } from 'react';
-import { Row } from '../DataViewDisplaySection/DataViewDisplaySection.model';
 import { Widget } from '@kleeen/types';
 import useSort from './useSort';
 import { Order } from '@kleeen/common/utils';
 
 export interface GridAreaSectionProps {
   entityName: string;
-  selectedRows: Row[];
-  setSelectedRows: () => void;
   taskName: string;
   widget: Widget;
-  entityId?: string;
+  entityId?: string | number;
   sortableColumns?: boolean;
   columnWidth?: number;
   className?: string;

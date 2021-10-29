@@ -1,13 +1,13 @@
 import { getSocketIOServer } from '../init';
 
 export class RefreshApi {
-  static refreshWorkflowsAllClients(message: string | string[]) {
+  static refreshWorkflowsAllClients(workflows: string | string[]) {
     const io = getSocketIOServer();
 
-    io.emit('event://auto-refresh', message);
+    io.emit('event://auto-refresh', workflows);
   }
 
-  static refreshWorkflowsAllClientsExcept(userId: string, message: string | string[]) {
+  static refreshWorkflowsAllClientsExcept(userId: string, workflows: string | string[]) {
     const io = getSocketIOServer();
 
     if (io) {
@@ -17,7 +17,7 @@ export class RefreshApi {
       const userSocket = io.sockets.sockets.get(userSocketId);
 
       if (userSocket) {
-        userSocket?.broadcast.emit('event://auto-refresh', message);
+        userSocket?.broadcast.emit('event://auto-refresh', workflows);
       }
     }
   }

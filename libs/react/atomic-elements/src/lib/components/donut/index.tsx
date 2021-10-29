@@ -1,25 +1,27 @@
 import './donut.scss';
 
+import { KsButton, Loader } from '@kleeen/react/components';
 import { addDonutSubTitle, addDonutTitle, drillUp, getRadialSharedOptions } from '../../utils';
 import { clone, pathOr } from 'ramda';
+
+import Highcharts from 'highcharts';
+import HighchartsReact from 'highcharts-react-official';
+import { KUIConnect } from '@kleeen/core-react';
+import React from 'react';
+import { VisualizationWidgetProps } from '@kleeen/types';
+import classnames from 'classnames';
+import drilldown from 'highcharts/modules/drilldown';
 import { getAggregationLabel } from '../../../types';
 import { isEmpty } from 'ramda';
 import { isValidArray } from '@kleeen/common/utils';
-import { KsButton, Loader } from '@kleeen/react/components';
-import { KUIConnect } from '@kleeen/core-react';
-import { useRadialDataParser } from '../../hooks/useRadialDataParser';
-import classnames from 'classnames';
-import drilldown from 'highcharts/modules/drilldown';
-import Highcharts from 'highcharts';
-import HighchartsReact from 'highcharts-react-official';
 import merge from 'lodash.merge';
-import React from 'react';
+import { useRadialDataParser } from '../../hooks/useRadialDataParser';
 
 const bem = 'ks-donut';
 
 drilldown(Highcharts);
 
-function DonutBase(props: HighchartsReact.Props): React.ReactElement {
+function DonutBase(props: VisualizationWidgetProps & HighchartsReact.Props): React.ReactElement {
   const parsedRadialData = useRadialDataParser(props);
 
   const isLoading = pathOr(true, ['context', 'isLoading']);

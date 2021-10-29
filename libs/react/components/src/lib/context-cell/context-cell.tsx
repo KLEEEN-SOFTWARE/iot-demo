@@ -6,48 +6,52 @@ import {
   Cell,
   ContextMenuDataPoint,
   DisplayMediaType,
+  DisplayValue,
   LabelResultsReturnProps,
+  Results,
+  Row,
 } from '@kleeen/types';
-import { BootstrapTooltip, KsClickableChipsCell } from './components';
-import { ContextMenuProps, LabelResultsProps } from './context-cell.model';
-import { NEW_ROW_ID_PREFIX, isNilOrEmpty } from '@kleeen/common/utils';
-import React, { ReactElement } from 'react';
-import { isEmpty, isNil, pathOr } from 'ramda';
 
 import { ArrowPoint } from '../arrowPoint/ArrowPoint';
-import { KsCrosslink } from '../crosslink';
-import KsDisplayMedia from '../KsDisplayMedia/KsDisplayMedia';
-import { TextFormatter } from '../textFormatter/TextFormatter';
-import classNames from 'classnames';
+import { BootstrapTooltip, KsClickableChipsCell } from './components';
+import { CellFormatResultsType } from '../GridSection/VirtualScroll/CellRenderer/CellRenderer.model';
+import { ClassNameMap } from '@material-ui/core/styles/withStyles';
+import { ContextMenuProps, LabelResultsProps } from './context-cell.model';
 import { isAttributeNumericType } from '@kleeen/frontend/utils';
+import { isEmpty, isNil, pathOr } from 'ramda';
+import { KsCrosslink } from '../crosslink';
+import { NEW_ROW_ID_PREFIX, isNilOrEmpty } from '@kleeen/common/utils';
+import { TextFormatter } from '../textFormatter/TextFormatter';
 import { useStyles } from './context-cell.style';
+import classNames from 'classnames';
+import KsDisplayMedia from '../KsDisplayMedia/KsDisplayMedia';
+import React, { ReactElement } from 'react';
 
 const MAX_TEXT_LENGTH = 15;
 
-export function KsContextCell(props: ContextMenuProps): ReactElement {
+/**
+ * @deprecated in favor to KsSimpleContextCell used on config table, simple and ranked list
+ */
+export function KsContextCell(props: ContextMenuProps): ReactElement | null {
   const classes = useStyles();
-
   const cell = props.cell as Cell;
 
-  if (isNil(cell)) {
-    return null;
-  }
+  if (isNil(cell)) return null;
 
-  const isMultipleValuesColumn = props.attr?.aggregation === AggregationType.SelfMulti;
-  const shouldDisplayClickableChipsCell = isMultipleValuesColumn && Array.isArray(props.cell);
-
-  const beFormat = props.format;
-  const ksFormat = pathOr({}, ['attr', 'format'], props);
-  const format = isNil(beFormat) || isEmpty(beFormat) ? ksFormat : beFormat;
-  const { displayValue, $metadata: metadata } = cell;
-  const cellEntityType = metadata?.entityType;
-  const isIdTemporary = props?.row?.id?.toString().includes(NEW_ROW_ID_PREFIX);
+  const shouldDisplayClickableChipsCell = getIfShouldDisplayClickableChipsCell(
+    props.attr?.aggregation as AggregationType,
+    props.cell,
+  );
+  const format = getFormat(props);
+  const { $metadata: metadata } = cell;
 
   if (shouldDisplayClickableChipsCell) {
+    const isIdTemporary = props?.row?.id?.toString().includes(NEW_ROW_ID_PREFIX);
+
     return (
       <KsClickableChipsCell
         attribute={props.attr}
-        cellEntityType={cellEntityType}
+        cellEntityType={metadata?.entityType}
         cellItems={props.cell as Cell[]}
         columnLabel={props.attr?.label}
         displayColumnAttribute={props.displayColumnAttribute}
@@ -56,62 +60,32 @@ export function KsContextCell(props: ContextMenuProps): ReactElement {
         openShowMoreModal={props.openShowMoreModal}
         row={props.row}
         rowDisplayValue={props.rowDisplayValue}
+        widgetId={props.widgetId}
       />
     );
   }
 
-  const showAppliedFormat = applyFormat(displayValue, props.attr) ?? '';
-  const showAppliedTruncated = shouldTruncateText(showAppliedFormat);
-  const { results, resultsElement } = labelResults({
+  const { dataPoints, tooltipTitle, isNumericType, showAppliedTruncated, resultsElement } = getCellInfo({
+    attr: props.attr,
     cell,
-    changeDirections: props.attr?.aggregationMetadata?.changeDirections,
-    format,
-    formatType: props.attr?.formatType,
     hasDisplayMedia: props.hasDisplayMedia,
-    results: showAppliedFormat,
-    transformation: props.attr?.aggregation,
+    format,
+    displayColumnAttribute: props.displayColumnAttribute,
+    rowDisplayValue: props.rowDisplayValue,
+    row: props.row,
   });
-  const isNumericType = isAttributeNumericType(props.attr);
-  const textClasses = {
-    'text-align-left': !isNumericType,
-    'text-align-right': isNumericType,
-    'truncate-text': showAppliedTruncated,
-  };
-  const tooltipTitle = showAppliedTruncated ? results : '';
-
-  const dataPoints: ContextMenuDataPoint[] = [
-    {
-      attribute: props.attr,
-      value: cell,
-    },
-  ];
-
-  if (!isNilOrEmpty(props.displayColumnAttribute)) {
-    dataPoints.push({
-      attribute: props.displayColumnAttribute,
-      ignoreInContextMenu: true,
-      value: {
-        displayValue: props.rowDisplayValue,
-        id: props.row.id,
-      },
-    });
-  }
 
   return (
-    <KsCrosslink dataPoints={dataPoints}>
-      <span className={classes.mediaValueContainer}>
-        {props.hasDisplayMedia && cell.displayMedia.type !== DisplayMediaType.Svg && (
-          <KsDisplayMedia
-            className={classes.displayMedia}
-            size={21}
-            type={cell.displayMedia.type}
-            value={cell.displayMedia.value}
-          />
-        )}
-        <BootstrapTooltip placement="top" title={tooltipTitle}>
-          <span className={classNames(textClasses)}>{resultsElement}</span>
-        </BootstrapTooltip>
-      </span>
+    <KsCrosslink dataPoints={dataPoints} widgetId={props.widgetId}>
+      <CellBody
+        cell={cell}
+        classes={classes}
+        hasDisplayMedia={props.hasDisplayMedia}
+        isNumericType={isNumericType}
+        resultsElement={resultsElement}
+        showAppliedTruncated={showAppliedTruncated}
+        tooltipTitle={tooltipTitle}
+      />
     </KsCrosslink>
   );
 }
@@ -126,7 +100,7 @@ function applyFormat(value: any, attr: Attribute): any {
   return value;
 }
 
-function labelResults({
+export function labelResults({
   cell,
   changeDirections,
   format,
@@ -169,4 +143,143 @@ function labelResults({
 function shouldTruncateText(text: string): boolean {
   return text ? text.toString().trim().length >= MAX_TEXT_LENGTH : false;
 }
+
+export function getIfShouldDisplayClickableChipsCell(aggregation: AggregationType, cell: Cell | Cell[]) {
+  const isMultipleValuesColumn = aggregation === AggregationType.SelfMulti;
+  const shouldDisplayClickableChipsCell = isMultipleValuesColumn && Array.isArray(cell);
+
+  return shouldDisplayClickableChipsCell;
+}
+
+type CellInfoProps = {
+  attr: Attribute;
+  cell: Cell;
+  hasDisplayMedia: boolean;
+  format: unknown;
+  displayColumnAttribute: Attribute;
+  rowDisplayValue: DisplayValue;
+  row: Row;
+  cellFormatResults?: CellFormatResultsType;
+};
+
+export const getFormatText = ({
+  attr,
+  cell,
+  format,
+  hasDisplayMedia,
+}: Partial<CellInfoProps>): CellFormatResultsType => {
+  const showAppliedFormat = applyFormat(cell.displayValue, attr) ?? '';
+  const showAppliedTruncated = shouldTruncateText(showAppliedFormat);
+  const { results, resultsElement } = labelResults({
+    cell,
+    changeDirections: attr?.aggregationMetadata?.changeDirections,
+    format,
+    formatType: attr?.formatType,
+    hasDisplayMedia,
+    results: showAppliedFormat,
+    transformation: attr?.aggregation,
+  });
+  const tooltipTitle = showAppliedTruncated ? results : '';
+
+  return { tooltipTitle, resultsElement, showAppliedTruncated, results };
+};
+
+export function getCellInfo({
+  attr,
+  cell,
+  cellFormatResults,
+  displayColumnAttribute,
+  format,
+  hasDisplayMedia,
+  row,
+  rowDisplayValue,
+}: CellInfoProps) {
+  const { tooltipTitle, resultsElement, showAppliedTruncated } =
+    cellFormatResults || getFormatText({ cell, attr, format, hasDisplayMedia });
+  const isNumericType = isAttributeNumericType(attr);
+
+  const dataPoints: ContextMenuDataPoint[] = [
+    {
+      attribute: attr,
+      value: cell,
+    },
+  ];
+
+  if (!isNilOrEmpty(displayColumnAttribute)) {
+    dataPoints.push({
+      attribute: displayColumnAttribute,
+      ignoreInContextMenu: true,
+      value: {
+        displayValue: rowDisplayValue,
+        id: row.id,
+      },
+    });
+  }
+
+  return { dataPoints, tooltipTitle, isNumericType, showAppliedTruncated, resultsElement };
+}
+
+export function getFormat(props: ContextMenuProps) {
+  const beFormat = props.format;
+  const ksFormat = pathOr({}, ['attr', 'format'], props);
+  const finalFormal = isNil(beFormat) || isEmpty(beFormat) ? ksFormat : beFormat;
+
+  return finalFormal;
+}
+
+const MemoizeToolTip = React.memo(
+  ({ children, title }: { children: ReactElement; title: Results }) => {
+    return (
+      <BootstrapTooltip placement="top" title={title}>
+        {children}
+      </BootstrapTooltip>
+    );
+  },
+  (prevProps, nextProps) => prevProps.title === nextProps.title,
+);
+
+export function CellBody({
+  hasDisplayMedia,
+  classes,
+  cell,
+  tooltipTitle,
+  isNumericType,
+  resultsElement,
+  showAppliedTruncated,
+}: {
+  hasDisplayMedia: boolean;
+  classes: ClassNameMap;
+  cell: Cell;
+  tooltipTitle: Results;
+  isNumericType: boolean;
+  resultsElement: string | ReactElement;
+  showAppliedTruncated: boolean;
+}) {
+  return (
+    <>
+      <span className={classes.mediaValueContainer}>
+        {hasDisplayMedia && cell.displayMedia.type !== DisplayMediaType.Svg && (
+          <KsDisplayMedia
+            className={classes.displayMedia}
+            size={21}
+            type={cell.displayMedia.type}
+            value={cell.displayMedia.value}
+          />
+        )}
+        <MemoizeToolTip title={tooltipTitle}>
+          <span
+            className={classNames({
+              'text-align-left': !isNumericType,
+              'text-align-right': isNumericType,
+              'truncate-text': showAppliedTruncated,
+            })}
+          >
+            {resultsElement}
+          </span>
+        </MemoizeToolTip>
+      </span>
+    </>
+  );
+}
+
 //#endregion

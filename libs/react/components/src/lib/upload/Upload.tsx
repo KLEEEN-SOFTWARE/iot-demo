@@ -2,11 +2,13 @@ import { ButtonUpload } from './components';
 import { KUIConnect } from '@kleeen/core-react';
 import React from 'react';
 import { UploadProps } from './Upload.model';
-import { path } from 'ramda';
 
-const UploadComponent: React.FC<UploadProps> = ({ translate, ...props }: UploadProps): JSX.Element => {
+const UploadComponent = ({
+  translate,
+  onChange,
+  ...rest
+}: UploadProps & { translate: (i: string) => string }): JSX.Element => {
   // if valid the result will be an object {filteredFiles: Array<FILE>, filteredFilesRead: Array<String>} contains the native array of File objects as well an array of files ready binary
-  const onChange = path(['onChange'], props);
 
   const localization = {
     uploadLabel: translate('app.upload.label') || '',
@@ -15,7 +17,7 @@ const UploadComponent: React.FC<UploadProps> = ({ translate, ...props }: UploadP
 
   return (
     <div className="upload-container">
-      <ButtonUpload onChange={onChange} localization={localization} {...props} />
+      <ButtonUpload onChange={onChange} localization={localization} {...rest} />
     </div>
   );
 };

@@ -1,10 +1,11 @@
 import { CustomActionArgs, DispatchCustomActionResults } from '../types';
 
+import { cryptoRandom } from '@kleeen/backend/utils';
 import { wait } from './utils';
 
 const pickRandomProperty = (obj) => {
   const keys = Object.keys(obj);
-  return obj[keys[(keys.length * Math.random()) << 0]]; // or parseInt(keys.length * Math.random(), 0)
+  return obj[keys[(keys.length * cryptoRandom()) << 0]]; // or parseInt(keys.length * cryptoRandom(), 0)
 };
 
 // TODO select more stables links for download
@@ -22,7 +23,11 @@ const possibleDownloads = {
 };
 
 const possibleLinks = {
-  link: { title: 'Kleeen Software', link: { url: 'https://www.kleeen.software/', target: '_self' }, type: 'navigation' },
+  link: {
+    title: 'Kleeen Software',
+    link: { url: 'https://www.kleeen.software/', target: '_self' },
+    type: 'navigation',
+  },
   linkCr: { title: 'Kleeen Software CR', link: 'https://www.kleeen.cr/', type: 'navigation' },
 };
 

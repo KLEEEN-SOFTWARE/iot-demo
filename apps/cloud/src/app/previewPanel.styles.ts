@@ -1,16 +1,16 @@
-import { KsButton } from '@kleeen/react/components';
 import { makeStyles } from '@material-ui/core';
-import { styled } from '@material-ui/core';
-
-export const PreviewCloseButton = styled(KsButton)({
-  backgroundColor: 'transparent !important',
-  borderColor: 'var(--on-secondary-color-variant)',
-  borderRadius: 'var(--pm-0)',
-  color: 'var(--on-secondary-color-variant)',
-  height: 'var(--wh-2XS)',
-});
 
 export const useStyles = makeStyles({
+  previewCloseButton: {
+    height: 'var(--wh-2XS)',
+  },
+  previewCloseButtonContainer: {
+    marginRight: 'var(--pm-1XS)',
+    opacity: 0,
+    position: 'absolute',
+    right: 'var(--pm-0)',
+    transition: 'opacity var(--speed-medium)',
+  },
   previewContent: {
     paddingTop: 'var(--pm-3XL)',
   },
@@ -20,11 +20,9 @@ export const useStyles = makeStyles({
     borderRadius: 'var(--pm-3XS)',
     display: 'flex',
     height: 'var(--wh-3XS)',
-    left: 0,
-    position: 'fixed',
-    right: 0,
     transition: 'height var(--speed-medium)',
-    zIndex: 1,
+    width: '100%',
+    zIndex: 100,
     '&:hover': {
       height: 'var(--wh-S)',
       '& $previewCloseButtonContainer': {
@@ -34,6 +32,11 @@ export const useStyles = makeStyles({
         fontSize: 'var(--tx-M)',
       },
     },
+  },
+  previewHandle: {
+    position: 'sticky',
+    top: 0,
+    zIndex: 2,
   },
   previewHandler: {
     color: 'var(--on-secondary-color-variant)',
@@ -53,13 +56,6 @@ export const useStyles = makeStyles({
         },
       },
     },
-  },
-  previewCloseButtonContainer: {
-    marginRight: 'var(--pm-1XS)',
-    opacity: 0,
-    position: 'absolute',
-    right: 'var(--pm-0)',
-    transition: 'opacity var(--speed-medium)',
   },
   previewSplitter: {
     backgroundColor: 'transparent',

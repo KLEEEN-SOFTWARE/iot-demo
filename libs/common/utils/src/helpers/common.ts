@@ -1,7 +1,14 @@
-import { FormatProps, InfusionType, Row, ViewOption, ViewOptionFormattedType } from '@kleeen/types';
+import {
+  ColumnData,
+  FormatProps,
+  Row,
+  ViewOptionFormattedType,
+  ViewShapeType,
+  WidgetIcons,
+  WidgetTypes,
+} from '@kleeen/types';
 import { isNil, pipe } from 'ramda';
 
-import { app } from '@kleeen/settings';
 import camelCase from 'lodash.camelcase';
 import { isNilOrEmpty } from '../validators';
 import mergeWith from 'lodash.mergewith';
@@ -56,6 +63,18 @@ export function overwriteFormat(backendFormat: unknown, attributeFormat: unknown
   return {};
 }
 
+// FIXME: Add defensive validation if `JSON.parse` fails; if not, the app will crash.
+/**
+ * @deprecated Use jsonParse instead.
+ */
+export const parseStringifyToJson = ({
+  value = null,
+  defaultValue,
+}: {
+  value?: any;
+  defaultValue: ColumnData[];
+}): JSON => JSON.parse(value || JSON.stringify(defaultValue));
+
 export function roleAccessKeyTag(stringToValidate: string): string {
   return stringToValidate
     .split('.')
@@ -69,43 +88,24 @@ export const upperCamelCase = (value = ''): string =>
 export const NEW_ROW_ID_PREFIX = 'temporary';
 export const SHOW_DROPDOWN_THRESHOLD = 4;
 
-export function formatViewOptions(viewOptions: ViewOption[]): ViewOptionFormattedType[] {
+export function formatViewOptions(viewOptions: ViewShapeType[]): ViewOptionFormattedType[] {
   return viewOptions.map((option, index) => {
-    const { name, viewOrder } = option;
+    const { name = '', viewOrder, viewId = '' } = option;
     return {
-      label: name,
-      viewOrder: isNilOrEmpty(viewOrder) ? index : viewOrder,
-      value: name,
+      icon: viewId,
+      key: viewId,
+      label: name as string,
       option,
+      value: name as string,
+      viewOrder: isNilOrEmpty(viewOrder) ? index : viewOrder,
     };
   });
 }
-
-export function globalVariable(name: string, object: unknown): void {
-  const globalName = 'KS';
-  const applyInfusion = isReactNativeInfusion();
-
-  if (!applyInfusion) return;
-
-  if (!window[globalName]) {
-    window[globalName] = {};
-  }
-
-  window[globalName] = {
-    ...window[globalName],
-    [name]: object,
-  };
-}
-
-export function isReactNativeInfusion(): boolean {
-  const { infusionType } = app;
-
-  return infusionType === InfusionType.ReactNative;
-}
-
 //#region Private Members
 
-// Lodash mergeByCustomizer, returns undefined to use the regular mergeBy function
+/** Lodash mergeByCustomizer, returns undefined to use the regular mergeBy function
+ * @deprecated use the regular mergeBy function
+ */
 function mergeByCustomizer(objValue, srcValue) {
   if (Array.isArray(objValue)) {
     return [...srcValue];
@@ -149,4 +149,21 @@ export function sortByKeys<T>(
   return [...sortedViewsByOrder, ...sortedViewsById];
 }
 
+export const getIconByWidgetType = (widgetType: string) => {
+  switch (widgetType) {
+    case WidgetTypes.CONFIG_INPUT_FIELD_USER_DEFINED:
+      return WidgetIcons.Config;
+    case WidgetTypes.CUSTOM_ACTION:
+      return WidgetIcons.Action;
+    case WidgetTypes.CUSTOM:
+      return WidgetIcons.Custom;
+    case WidgetTypes.SUMMARY:
+      return WidgetIcons.Summary;
+    case WidgetTypes.TABLE:
+    case WidgetTypes.CONFIG_TABLE:
+      return WidgetIcons.Table;
+    default:
+      return WidgetIcons.Visualization;
+  }
+};
 //#endregion

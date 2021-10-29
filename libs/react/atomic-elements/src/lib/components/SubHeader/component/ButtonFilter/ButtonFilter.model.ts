@@ -1,5 +1,5 @@
-import { TranslateProps } from '../../../../../types';
 import { OutContainerProps } from '../ContainerHeader/ContainerHeader.model';
+import { TranslateProps } from '@kleeen/types';
 
 export interface ButtonFilterProps extends OutContainerProps, TranslateProps {
   filters?: FilterProps[];

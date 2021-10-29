@@ -7,7 +7,7 @@ import { useStyles } from '../list-item.styles';
 
 const bem = 'ks-list-item';
 
-export function KsListItem({ columns, item: row }: ListItemProps): ReactElement {
+export function KsListItem({ columns, item: row, widgetId }: ListItemProps): ReactElement {
   const { displayColumnAttribute, displayColumnCell, rowWithId } = useListItem({ columns, item: row });
   const classes = useStyles();
 
@@ -23,6 +23,7 @@ export function KsListItem({ columns, item: row }: ListItemProps): ReactElement 
               format={column.format}
               row={rowWithId}
               rowDisplayValue={displayColumnCell?.displayValue}
+              widgetId={widgetId}
             />
           </div>
         );

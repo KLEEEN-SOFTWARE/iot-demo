@@ -1,17 +1,23 @@
-import React, { ReactElement } from 'react';
+import { OnInputChangeEvent, RegisterEvents, WidgetProps } from '@kleeen/types';
 import { useKleeenActions, useWidgetContext } from '@kleeen/react/hooks';
 
 import { KsConfigTable } from '@kleeen/react/components';
+import { ReactElement } from 'react';
+
+interface ConfigTableWidgetProps extends WidgetProps {
+  onInputChange: OnInputChangeEvent;
+  registerEvents: RegisterEvents;
+}
 
 export function ConfigTableWidget({
   actions,
   attributes,
-  registerEvents,
   params,
+  registerEvents,
   taskName,
   widgetId,
   ...props
-}): ReactElement {
+}: ConfigTableWidgetProps): ReactElement {
   const entityActions = useKleeenActions(taskName);
   const widgetData = useWidgetContext({
     taskName,

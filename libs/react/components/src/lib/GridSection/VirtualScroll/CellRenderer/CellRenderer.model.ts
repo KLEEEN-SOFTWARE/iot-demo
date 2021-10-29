@@ -1,8 +1,18 @@
-import { Action, AmendCellUpdate, Attribute, AutocompleteState, Row } from '@kleeen/types';
+import {
+  Action,
+  AmendCellUpdate,
+  Attribute,
+  AutocompleteState,
+  CellInteraction,
+  ColumnDataExtended,
+  LabelResultsReturnProps,
+  Results,
+  Row,
+} from '@kleeen/types';
 
 import { EditingCell } from '../../GridSection.model';
 import { Key } from 'react';
-import { ListingModalSettings } from '../../../ListingModal/ListingModal';
+import { ListingModalSettings } from '../../../ListingModal';
 
 export enum allComponentEnum {
   DataViewRow = 'DataViewRow',
@@ -19,13 +29,19 @@ export interface CellData {
   displayValue: number | string | Date;
 }
 
+export type CellFormatResultsType = LabelResultsReturnProps & {
+  showAppliedTruncated: boolean;
+  tooltipTitle: Results;
+};
 export interface CellRendererProps {
   actions: Action[];
   amendCellUpdate: AmendCellUpdate;
   cellData: CellData;
+  cellFormatResults?: CellFormatResultsType;
+  cellInteraction: CellInteraction;
   classes: any;
   columnIndex: number;
-  columns: Array<any>;
+  columns: ColumnDataExtended[];
   deleteContainer: Array<any>;
   deleteProcess: (id: string) => void;
   displayColumnAttribute: Attribute;
@@ -37,14 +53,18 @@ export interface CellRendererProps {
   openShowMoreModal: (listingModalSettings: ListingModalSettings) => void;
   orderColumnName?: string;
   rowData: any;
+  taskName?: string;
   toggleDelete: (id: Key) => void;
   triggerCustomAction: (action: Action, id: Key) => void;
   typeOf: (row: any) => any;
+  widgetId: string;
 }
 
 export interface DataViewRowProps {
   actions: Action[];
   attr: Attribute;
+  cellFormatResults?: CellFormatResultsType;
+  cellInteraction: CellInteraction;
   deleteContainer: Array<any>;
   deleteProcess: (id: Key) => void;
   displayColumnAttribute: Attribute;
@@ -77,6 +97,8 @@ export interface EditDataViewProps {
   props: any;
   row: any;
   rowData: Row;
-  setEditingCell: React.Dispatch<React.SetStateAction<{}>>;
+  setEditingCell: React.Dispatch<React.SetStateAction<Record<string, Key>>>;
   draggable?: boolean;
+  taskName?: string;
+  widgetId?: string | number;
 }

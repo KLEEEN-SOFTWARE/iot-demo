@@ -7,6 +7,7 @@ import HighchartsHighstock from 'highcharts/highstock';
 import HighchartsReact from 'highcharts-react-official';
 import { Loader } from '@kleeen/react/components';
 import React from 'react';
+import { VisualizationWidgetProps } from '@kleeen/types';
 import { generalBaseOptions } from '../generalBaseOptions';
 import { getOptions } from './options';
 import merge from 'lodash.merge';
@@ -21,16 +22,16 @@ const baseOptions: Highcharts.Options = merge(
   {} as Highcharts.Options,
 );
 
-function AreaMacroMicroBase(props: HighchartsReact.Props) {
-  const results = pathOr([], ['context', 'data', 'results'], props);
-  const format = pathOr({}, ['context', 'data', 'format'], props);
+function AreaMacroMicroBase({ context, params, ...props }: VisualizationWidgetProps & HighchartsReact.Props) {
+  const results = pathOr([], ['results'], context.data);
+  const format = pathOr({}, ['format'], context.data);
   const containerProps = pathOr({}, ['containerProps'], props);
 
   const containerSettings = { ...containerProps, style: { height: '100%', width: '100%' } };
 
-  const options = getOptions(format, baseOptions, props.params, results);
+  const options = getOptions(format, baseOptions, params, results);
 
-  if (props.context.isLoading) {
+  if (context.isLoading) {
     return <Loader />;
   }
 

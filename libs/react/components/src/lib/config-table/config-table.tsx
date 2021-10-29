@@ -274,13 +274,15 @@ export function KsConfigTable({
         entity={entityData}
         entityActions={null}
         entityId={entityId}
+        isTableBeingEdited={!isNilOrEmpty(deletedRows) || !isNilOrEmpty(editedRows)}
         onAutocompleteRequest={handleAutocomplete}
         onCellUpdate={handleCellUpdate}
         onDeleteRow={handleRowDelete}
-        widgetId={widgetId}
-        sortable={isSortable}
         onSortRow={isSortable ? handleOnSortRow : null}
         orderColumnName={orderColumnName}
+        sortable={isSortable}
+        taskName={taskName}
+        widgetId={widgetId}
       />
       <ConfigTableActions
         actions={actions?.filter(

@@ -5,6 +5,9 @@ export const KsTextField = styled(MuiTextField)({
   '& Label': {
     color: 'var(--outlined-input)',
   },
+  '& Label.Mui-error': {
+    color: 'var(--notification-error-color)',
+  },
   '& .Mui-focused': {
     color: 'var(--outlined-input-focus)',
   },
@@ -27,6 +30,9 @@ export const KsTextField = styled(MuiTextField)({
   },
   '& .MuiInput-underline:after': {
     borderBottom: 'var(--pm-6XS) solid var(--outlined-input-focus)',
+  },
+  '& .MuiInput-underline.Mui-error:after': {
+    borderBottom: 'var(--pm-6XS) solid var(--notification-error-color)',
   },
   '& .MuiOutlinedInput-notchedOutline': {
     borderColor: 'var(--outlined-input)',

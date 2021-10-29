@@ -1,23 +1,11 @@
 import {
-  Attribute,
   ContextMenuDataPoint,
+  ContextMenuItem,
   DataPointWithFormattedValue,
   Filters,
   ReactElement,
+  WidgetStateParams,
 } from '@kleeen/types';
-
-import { MouseEventHandler } from 'react';
-
-export interface ContextMenuViz {
-  attributes: Attribute[];
-}
-
-export interface ContextMenuProps {
-  anchorEl: null | HTMLElement;
-  autoClose?: boolean;
-  dataPoints: ContextMenuDataPoint[];
-  handleClose: () => void;
-}
 
 export type FormattedContextDataPoint = DataPointWithFormattedValue & ContextMenuDataPoint;
 
@@ -25,20 +13,38 @@ export interface DataPointWithFilters extends DataPointWithFormattedValue {
   filters?: Filters;
 }
 
-export enum MenuItemType {
-  Section = 'section',
-  Empty = 'empty',
-}
+//#region Context Menu
+export type HandleContextMenuClose = () => void;
 
-export interface ContextMenuItem {
-  handleClick: (item: ContextMenuItem) => MouseEventHandler;
-  key: string;
-  label: ReactElement;
-  roleAccessKey: string;
+export interface ContextMenuProps {
+  anchorEl: null | HTMLElement;
+  autoClose?: boolean;
+  dataPoints: ContextMenuDataPoint[];
+  onClose: HandleContextMenuClose;
+  widgetContextParams?: WidgetStateParams;
+  widgetId?: string;
 }
+//#endregion
 
+//#region Context Menu Section
 export interface ContextMenuSectionItem {
   key: string;
   label: ReactElement;
   menuItems: ContextMenuItem[];
 }
+
+export interface ContextMenuSectionProps {
+  dataPoints: DataPointWithFormattedValue[];
+  dataPointsToShow: DataPointWithFormattedValue[];
+  handleClose: HandleContextMenuClose;
+  widgetContextParams?: WidgetStateParams;
+  widgetId?: string;
+}
+//#endregion
+
+//#region Context Menu Section Item
+export interface ContextMenuClickHandler<T> {
+  handleClose: HandleContextMenuClose;
+  item: T;
+}
+//#endregion

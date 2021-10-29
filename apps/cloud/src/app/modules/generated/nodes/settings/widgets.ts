@@ -7,6 +7,7 @@ export const widgets = [
         addModalAttributes: [
           {
             id: 120421,
+            isDisplayValue: true,
             name: 'node',
             label: 'Node',
             hasMany: false,
@@ -36,6 +37,7 @@ export const widgets = [
           },
           {
             id: 120422,
+            isDisplayValue: false,
             name: 'nodeOverallStatus',
             label: 'Node Overall Status',
             hasMany: false,
@@ -68,6 +70,7 @@ export const widgets = [
           },
           {
             id: 120423,
+            isDisplayValue: false,
             name: 'nodeStatus',
             label: 'Node Status',
             hasMany: false,
@@ -100,6 +103,7 @@ export const widgets = [
           },
           {
             id: 120424,
+            isDisplayValue: false,
             name: 'siteMap',
             label: 'Site Map',
             hasMany: false,
@@ -206,12 +210,15 @@ export const widgets = [
     chartType: `[WIDGET] FULL_TABLE`,
     component: undefined,
     entityId: 120421,
+    entityName: undefined,
     id: `3d3baa6b-4237-4e39-bc34-7f22976f16e7`,
+    name: 'Table of Node',
     params: {
       baseModel: 'Node',
       operationName: 'object_listing_3d3baa6b_4237_4e39_bc34_7f22976f16e7',
       taskName: 'Nodes',
     },
+    scope: undefined,
     statisticalType: undefined,
     title: undefined,
     type: 'table',

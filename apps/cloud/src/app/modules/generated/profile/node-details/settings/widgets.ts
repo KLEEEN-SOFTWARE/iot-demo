@@ -1,5 +1,3 @@
-import Widget_hkerWJWdKvQKCk8cKSRUfD from '../../../../custom/profile/node-details/components/widget-hker-wj-wd-kv-qk-ck-8-c-ksr-uf-d';
-
 export const widgets = [
   {
     actions: [],
@@ -7,13 +5,17 @@ export const widgets = [
     chartType: undefined,
     component: undefined,
     entityId: undefined,
+    entityName: undefined,
     id: undefined,
+    name: 'Dashboard',
     params: {},
+    scope: undefined,
     statisticalType: undefined,
     title: undefined,
     type: 'dashboard',
     viableSolutions: [],
     viewId: 'ks-view-836ktgrgcWMRiBYeeCEB8G',
+    viewOrder: 1,
     widgets: [
       {
         actions: [
@@ -30,6 +32,7 @@ export const widgets = [
         chartType: `[WIDGET] CUSTOM_ACTION`,
         component: undefined,
         entityId: 120421,
+        entityName: undefined,
         id: `ca30dd1c-541f-447c-9a35-1335699f33f9`,
         params: {
           baseModel: 'Node',
@@ -54,6 +57,7 @@ export const widgets = [
             name: 'node',
           },
         },
+        scope: undefined,
         sortOrder: 0,
         statisticalType: undefined,
         title: `Reboot Node`,
@@ -87,6 +91,7 @@ export const widgets = [
         chartType: `[WIDGET] GAUGE_SEVERITY_LEVEL`,
         component: undefined,
         entityId: undefined,
+        entityName: undefined,
         id: `e95096b2-8851-4330-a0ed-276c81ebe69e`,
         params: {
           operationName: 'widget_statisticse95096b2_8851_4330_a0ed_276c81ebe69e',
@@ -105,6 +110,7 @@ export const widgets = [
             formatType: 'severity_level',
           },
         },
+        scope: undefined,
         sortOrder: 1,
         statisticalType: undefined,
         title: `Status`,
@@ -159,6 +165,7 @@ export const widgets = [
         chartType: `[WIDGET] SIMPLE_LIST_RANKED`,
         component: undefined,
         entityId: undefined,
+        entityName: undefined,
         id: `d3df6c8c-ee91-45e1-af8e-3b1ef9343fbe`,
         params: {
           cardinality: 'SINGLE',
@@ -166,6 +173,7 @@ export const widgets = [
           operationName: 'widget_d3df6c8c_ee91_45e1_af8e_3b1ef9343fbe',
           value: { name: 'sensor', transformation: 'countTotal', formatType: 'prime' },
         },
+        scope: undefined,
         sortOrder: 2,
         statisticalType: undefined,
         title: `Sensors`,
@@ -211,6 +219,7 @@ export const widgets = [
         chartType: `[WIDGET] POSITIVE_NEGATIVE_AREA`,
         component: undefined,
         entityId: undefined,
+        entityName: undefined,
         id: `00153afa-2f0f-4546-96df-d414cb711227`,
         params: {
           cardinality: 'SINGLE',
@@ -218,6 +227,7 @@ export const widgets = [
           operationName: 'widget_00153afa_2f0f_4546_96df_d414cb711227',
           value: { name: 'siteStatus', transformation: 'changePercent', formatType: 'severity_level' },
         },
+        scope: undefined,
         sortOrder: 3,
         statisticalType: undefined,
         title: `Site Status`,
@@ -228,10 +238,13 @@ export const widgets = [
         actions: [],
         attributes: [],
         chartType: `[WIDGET] CUSTOM`,
-        component: Widget_hkerWJWdKvQKCk8cKSRUfD,
+        component: 'profile/node-details/components/widget-hker-wj-wd-kv-qk-ck-8-c-ksr-uf-d',
         entityId: undefined,
+        entityName: undefined,
         id: `8441a32b-cd6c-4187-9b57-b36d6dfe8489`,
+        name: 'Total Sensors',
         params: {},
+        scope: undefined,
         sortOrder: 4,
         statisticalType: undefined,
         title: `Total Sensors`,

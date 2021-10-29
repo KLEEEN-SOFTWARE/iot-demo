@@ -1,45 +1,47 @@
 import './CardSection.scss';
 
-import { CardTitle } from './components/CardTitle';
+import { useEffect, useRef, useState } from 'react';
+
 import { CardWidgetProps } from './CardWidget.model';
 import { MasonryProvider } from '@kleeen/react/hooks';
-import { useEffect, useRef, useState } from 'react';
 import classnames from 'classnames';
 
 const bem = 'ks-card-widget';
+const cardStyle = {
+  gridAutoRows: 10,
+  height: 42,
+  imgOffset: 24,
+  marginBottom: 16,
+};
 
-export const CardWidget = ({
+export function CardWidget({
   children,
   disabled,
   disableHeightCalculation,
+  Header,
   hideTitle,
   icon,
   selectedViz,
   title,
   widgetSelector = null,
-}: CardWidgetProps): JSX.Element => {
+  ...rest
+}: CardWidgetProps): JSX.Element {
   const contentRef = useRef<HTMLDivElement>(null);
   const [spans, setSpans] = useState(0);
-
-  // Styles
-  const cardStyle = {
-    gridAutoRows: 10,
-    height: 42,
-    imgOffset: 24,
-    marginBottom: 16,
-  };
-
   const cardSpan = {
     gridRowEnd: `span ${spans}`,
   };
 
-  // Logic
-  const updateLayout = (contentHeight: number): void => {
+  function updateLayout(contentHeight: number): void {
     const newSpansVal = Math.ceil(
       (contentHeight + cardStyle.height + cardStyle.marginBottom) / cardStyle.gridAutoRows,
     );
     setSpans(() => newSpansVal);
-  };
+  }
+
+  function handleImageLoad(event): void {
+    updateLayout(event.target.clientHeight + cardStyle.imgOffset);
+  }
 
   useEffect(() => {
     if (!disableHeightCalculation) {
@@ -49,22 +51,24 @@ export const CardWidget = ({
     }
   }, [disableHeightCalculation, selectedViz, spans, children]);
 
-  const handleImageLoad = (event): void => {
-    updateLayout(event.target.clientHeight + cardStyle.imgOffset);
-  };
-
   return (
     <div
+      {...rest}
       className={classnames(bem, 'card-widget', { disabled })}
       style={!disableHeightCalculation ? cardSpan : {}}
     >
-      {!hideTitle && <CardTitle title={title} icon={icon} />}
-      <div className={classnames(`${bem}__content`, 'content')} ref={contentRef} onLoad={handleImageLoad}>
+      {!hideTitle && Header}
+      <div
+        className={classnames(`${bem}__content`, 'content')}
+        ref={contentRef}
+        onLoad={handleImageLoad}
+        onLoadedData={handleImageLoad}
+      >
         <MasonryProvider updateLayout={updateLayout}>{children}</MasonryProvider>
         {widgetSelector}
       </div>
     </div>
   );
-};
+}
 
 export default CardWidget;

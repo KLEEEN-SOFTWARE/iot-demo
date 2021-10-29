@@ -1,8 +1,6 @@
-import { GroupByProps, ValueProp, ValuesProps, VizCommonParams } from '@kleeen/types';
-
 import { Loader } from '@kleeen/react/components';
 import PositiveNegativeArea from '../../PositiveNegativeArea/PositiveNegativeArea';
-import React from 'react';
+import { WidgetProps } from '@kleeen/types';
 import { makeStyles } from '@material-ui/core';
 import { useWidgetContext } from '@kleeen/react/hooks';
 
@@ -11,25 +9,13 @@ const useStyles = makeStyles({
     height: 'calc(var(--wh-5XL) - var(--wh-1XS) - var(--wh-6XS) - var(--wh-6XS))',
   },
 });
-export interface PositiveNegativeAreaWidgetProps extends VizCommonParams {
-  taskName: string;
-  widgetId: string | number;
-  params: {
-    baseModel: string;
-    aggregatedByType?: string;
-    aggregatedBy?: string;
-    aggregation_attribute?: string;
-    aggregation?: string;
-    groupBy?: GroupByProps;
-    value?: ValueProp | ValuesProps;
-  };
-}
 
-export const PositiveNegativeAreaWidget = ({
+export function PositiveNegativeAreaWidget({
+  attributes,
   taskName,
   widgetId,
   params,
-}: PositiveNegativeAreaWidgetProps): JSX.Element => {
+}: WidgetProps): JSX.Element {
   const widgetData = useWidgetContext({
     taskName,
     widgetId,
@@ -43,9 +29,14 @@ export const PositiveNegativeAreaWidget = ({
 
   return (
     <div className={classes.widgetContent}>
-      <PositiveNegativeArea context={widgetData} params={params} />
+      <PositiveNegativeArea
+        attributes={attributes}
+        context={widgetData}
+        params={params}
+        widgetId={widgetId}
+      />
     </div>
   );
-};
+}
 
 export default PositiveNegativeAreaWidget;

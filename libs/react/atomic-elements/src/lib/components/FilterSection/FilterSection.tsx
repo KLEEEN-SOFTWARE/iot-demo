@@ -2,8 +2,10 @@ import './FilterSection.scss';
 
 import { KsButton as Button, KsIcon, KsIconButton } from '@kleeen/react/components';
 import { Filter, FilterOption, FilterSectionEnum, FilterSectionProps, Params } from './FilterSection.model';
+import { FilterOperators, Translate } from '@kleeen/types';
 import { Paper, useStyles } from './FilterSection.styles';
-import React, { ReactElement } from 'react';
+import { cleanUnavailableFilters, isSomeFilterUnavailable } from '@kleeen/frontend/utils';
+import { getAvailableFilters, isNilOrEmpty } from '@kleeen/common/utils';
 import { useFilterContext, useFilters } from '@kleeen/react/hooks';
 
 import ArrowLeftIcon from '@material-ui/icons/ArrowLeft';
@@ -15,23 +17,15 @@ import Grid from '@material-ui/core/Grid';
 import { KUIConnect } from '@kleeen/core-react';
 import { Loader } from '@kleeen/react/components';
 import MuiTypography from '@material-ui/core/Typography';
-import { FilterOperators } from '@kleeen/types';
-import { isSomeFilterUnavailable, cleanUnavailableFilters } from '@kleeen/frontend/utils';
-import { isNilOrEmpty } from '@kleeen/common/utils';
+import React from 'react';
 
-const parseToFilterOptions = (options: string[], translate): FilterOption[] =>
-  options.map((option) => ({
-    name: option,
-    section: translate ? translate('app.subHeader.filterSection.values') : FilterSectionEnum.Values,
-    operator: FilterOperators.in,
-  }));
-
-const FilterSectionComponent = ({ translate, ...props }: FilterSectionProps): ReactElement => {
+function FilterSectionComponent({ translate, ...props }: FilterSectionProps) {
   const classes = useStyles();
   const [open, setOpen] = React.useState(false);
-  const availableAttributesToFilter = props.filters ?? [];
+  const availableAttributesToFilter = props.filters ? getAvailableFilters(props.filters) : [];
   const categoryFilterOptions: FilterOption[] = availableAttributesToFilter.map(
-    ({ name, statisticalType }) => ({
+    ({ name, statisticalType, accessLevel }) => ({
+      accessLevel,
       name,
       section: translate ? translate('app.subHeader.filterSection.filterBy') : FilterSectionEnum.FilterBy,
       statisticalType,
@@ -52,26 +46,31 @@ const FilterSectionComponent = ({ translate, ...props }: FilterSectionProps): Re
       )
     : {};
 
-  const handleDrawerOpen = (): void => {
+  function handleDrawerOpen() {
     setOpen(true);
-    props.onChangeFilterVisible && props.onChangeFilterVisible(true);
-  };
 
-  const handleDrawerClose = (): void => {
+    if (typeof props.onChangeFilterVisible == 'function') {
+      props.onChangeFilterVisible(true);
+    }
+  }
+
+  function handleDrawerClose() {
     setOpen(false);
-    props.onChangeFilterVisible && props.onChangeFilterVisible(false);
-  };
+
+    if (typeof props.onChangeFilterVisible == 'function') {
+      props.onChangeFilterVisible(false);
+    }
+  }
 
   const {
-    handleFilter,
-    removeValue,
     addFilter,
-    removeCategory,
-    queryParams,
-    isApplyDisabled,
-    filtersAdded,
-    setIsApplyDisabled,
     datePickerState,
+    filtersAdded,
+    handleFilter,
+    isApplyDisabled,
+    removeCategory,
+    removeValue,
+    setIsApplyDisabled,
   } = useFilters(props.hasDateFilter);
 
   const shouldClearUnavailableFilters =
@@ -95,11 +94,11 @@ const FilterSectionComponent = ({ translate, ...props }: FilterSectionProps): Re
               </Grid>
               <Grid item xs={6}>
                 <Button
-                  variant="contained"
-                  color="primary"
                   className="button-widget"
-                  onClick={handleFilter}
+                  color="primary"
                   disabled={isApplyDisabled}
+                  onClick={handleFilter}
+                  variant="contained"
                 >
                   {translate('app.filterSection.apply')}
                 </Button>
@@ -117,16 +116,16 @@ const FilterSectionComponent = ({ translate, ...props }: FilterSectionProps): Re
             ) : (
               <>
                 <FilterCreator
+                  addFilter={addFilter}
                   categoryFilterOptions={categoryFilterOptions}
                   filterOptionsByCategory={filterOptionsByCategory}
-                  addFilter={addFilter}
                   filtersAdded={filtersAvailable}
                   setIsApplyDisabled={setIsApplyDisabled}
                 />
                 <FiltersComp
                   filters={filtersAvailable}
-                  removeValue={removeValue}
                   removeCategory={removeCategory}
+                  removeValue={removeValue}
                 />
               </>
             )}
@@ -146,8 +145,18 @@ const FilterSectionComponent = ({ translate, ...props }: FilterSectionProps): Re
       )}
     </>
   );
-};
+}
 
 export const FilterSection = KUIConnect(({ translate }) => ({ translate }))(FilterSectionComponent);
 
 export default KUIConnect(({ translate }) => ({ translate }))(FilterSectionComponent);
+
+//#region Private members
+function parseToFilterOptions(options: string[], translate: Translate): FilterOption[] {
+  return options.map((option) => ({
+    name: option,
+    section: translate ? translate('app.subHeader.filterSection.values') : FilterSectionEnum.Values,
+    operator: FilterOperators.in,
+  }));
+}
+//#endregion

@@ -1,11 +1,12 @@
+import { ElementDisplayType, TransformationResponse } from '@kleeen/types';
+import { getFormat, getFormatedResults } from '../../utils';
+
 import { KeyValue } from '../key-value';
 import { Loader } from '@kleeen/react/components';
 import MuiTooltip from '@material-ui/core/Tooltip';
 import { SummaryLayout } from '../summary-layout';
 import { SummaryStatisticsProps } from './summary-statistics.model';
-import { ElementDisplayType, TransformationResponse } from '@kleeen/types';
 import { getDisplayElement } from '../display-element/display-element-catalog';
-import { getFormat, getFormatedResults } from '../../utils';
 import { isNilOrEmpty } from '@kleeen/common/utils';
 import { useStyles } from './summary-statistics.styles';
 
@@ -17,7 +18,8 @@ const layoutProps = {
   valueWidth: 110,
 };
 
-export function SummaryStatistics({ attributes, data }: SummaryStatisticsProps) {
+// TODO: @cafe Make this viz props match the VisualizationWidgetProps interface
+export function SummaryStatistics({ attributes, data, params, widgetId }: SummaryStatisticsProps) {
   const classes = useStyles();
   const [mainStatistic, ...statistics] = isNilOrEmpty(data) ? [] : data;
   const [mainAttribute, ...restAttribute] = attributes;
@@ -51,9 +53,11 @@ export function SummaryStatistics({ attributes, data }: SummaryStatisticsProps) 
             element={mainElement}
             format={mainFormat}
             formatType={mainFormatType}
-            transformation={mainTransformation}
             highlighted
+            params={params}
+            transformation={mainTransformation}
             value={mainFormatedResults}
+            widgetId={widgetId}
           />
         </div>
       </div>
@@ -82,8 +86,10 @@ export function SummaryStatistics({ attributes, data }: SummaryStatisticsProps) 
                     element={displayComponent}
                     format={format}
                     formatType={formatType}
+                    params={params}
                     transformation={transformation}
                     value={formatedResults}
+                    widgetId={widgetId}
                   />
                 }
               />

@@ -1,5 +1,6 @@
-import { PrimitiveType } from './types';
+import { PrimitiveType } from '@kleeen/types';
 import { Transformation } from '../utils';
+import { cryptoRandom } from '@kleeen/backend/utils';
 
 const transformationResolvers: {
   [key in Transformation]?: (list: PrimitiveType[]) => PrimitiveType | PrimitiveType[];
@@ -40,26 +41,26 @@ function averageElement(list: PrimitiveType[]): PrimitiveType {
 }
 
 function changeCountElement(list: PrimitiveType[]): PrimitiveType {
-  const randomPositiveTotal = Math.random() * 100;
-  const randomTotal = Math.random() > 0.5 ? randomPositiveTotal : randomPositiveTotal * -1;
+  const randomPositiveTotal = cryptoRandom() * 100;
+  const randomTotal = cryptoRandom() > 0.5 ? randomPositiveTotal : randomPositiveTotal * -1;
   const roundedTotal = Math.round(randomTotal);
 
   return roundedTotal;
 }
 
 function changePercentElement(list: PrimitiveType[]): PrimitiveType {
-  const randomPositivePercentage = Math.random() * 100;
-  const randomPercentage = Math.random() > 0.5 ? randomPositivePercentage : randomPositivePercentage * -1;
+  const randomPositivePercentage = cryptoRandom() * 100;
+  const randomPercentage = cryptoRandom() > 0.5 ? randomPositivePercentage : randomPositivePercentage * -1;
   const roundedPercentage = Math.round(randomPercentage);
   return roundedPercentage;
 }
 
 function countElements(list: PrimitiveType[]): PrimitiveType {
-  return Math.floor(Math.random() * (201 - 20)) + 20;
+  return Math.floor(cryptoRandom() * (201 - 20)) + 20;
 }
 
 function countUniqueElements(list: PrimitiveType[]): PrimitiveType {
-  return Math.floor(Math.random() * (201 - 20)) + 20;
+  return Math.floor(cryptoRandom() * (201 - 20)) + 20;
 }
 
 function firstElement(list: PrimitiveType[]): PrimitiveType {
@@ -96,7 +97,7 @@ function minElement(list: PrimitiveType[]): PrimitiveType {
 }
 
 function randomElement(list: PrimitiveType[]): PrimitiveType {
-  return Math.floor(Math.random() * list.length);
+  return Math.floor(cryptoRandom() * list.length);
 }
 
 function sumElement(list: PrimitiveType[]): number {
@@ -111,7 +112,7 @@ function selfMulti(list: PrimitiveType[]): PrimitiveType[] {
 }
 
 function trendCountElement(list: PrimitiveType[]): number[] {
-  return list.slice(0, 10).map(() => Math.floor(Math.random() * 100));
+  return list.slice(0, 10).map(() => Math.floor(cryptoRandom() * 100));
 }
 
 function trendElement(list: PrimitiveType[]): PrimitiveType[] {

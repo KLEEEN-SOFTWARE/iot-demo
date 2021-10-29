@@ -2,6 +2,7 @@ import {
   AggregationType,
   Attribute,
   Cell,
+  ContextMenuItem,
   DataPointWithFormattedValue,
   DisplayValue,
   FilterOperators,
@@ -31,7 +32,6 @@ export function useFilterItems({
   attr: Attribute;
   cell: Cell & { formattedValue: ReactNode | number };
 }) {
-  // TODO: @cafe refactor this logic into a single hook (reuse in useFilterSections and useFilters variants)
   const history = useHistory();
   const { paramsBasedOnRoute } = useUrlQueryParams({ useNestedObjects: true });
   const _user = useUserInfo();
@@ -61,6 +61,10 @@ export function useFilterItems({
   return menuItems;
 }
 
+export interface ContextMenuFilterItems extends ContextMenuItem {
+  filterType: FilterTypes;
+}
+
 export function getFilterItems({
   dataPoint,
   filtersInUse,
@@ -75,7 +79,7 @@ export function getFilterItems({
   history: any;
   paramsBasedOnRoute: Filters;
   setLocalStorageValue: (value: any) => void;
-}) {
+}): ContextMenuFilterItems[] {
   const filtersAdded = getFiltersInitialState(paramsBasedOnRoute);
 
   const { attribute, formattedValue, value } = dataPoint;
@@ -143,7 +147,7 @@ export function getFilterItems({
     handleClose();
   };
 
-  const items = [];
+  const items: ContextMenuFilterItems[] = [];
   const transformation = attribute?.aggregation as AggregationType;
 
   if (filtersInUse && isSingleCardinalityTransformation(transformation)) {

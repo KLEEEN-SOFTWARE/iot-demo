@@ -6,6 +6,7 @@ import { styled } from '@material-ui/core/styles';
 export const KsMenuItem = styled(MuiMenuItem)({
   fontSize: 'var(--tx-M)',
   height: 'var(--wh-1XS)',
+  width: '100%',
   '&:hover': {
     background: 'var(--secondary-color-variant)',
     color: 'var(--on-secondary-color-variant)',

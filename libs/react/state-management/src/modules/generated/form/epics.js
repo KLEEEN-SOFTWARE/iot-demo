@@ -132,8 +132,8 @@ export function dispatchCustomAction(action$) {
   return action$.pipe(
     ofType(actions.dispatchCustomAction.type),
     mergeMap((action) => {
-      const { params, paramsBasedOnRoute, taskName } = action.payload;
-      return BaseApiService.genericDispatchCustomAction(params, paramsBasedOnRoute).pipe(
+      const { params, taskName } = action.payload;
+      return BaseApiService.genericDispatchCustomAction(params).pipe(
         map((request) => request.response),
         map((response) => response.data[params.operationName]),
         mergeMap((response) => [
@@ -218,8 +218,8 @@ export function getWidgetData(action$) {
     ofType(actions.getData.type),
     mergeMap((action) => {
       if (action.payload.params && action.payload.params.operationName) {
-        const { params, paramsBasedOnRoute } = action.payload;
-        return BaseApiService.graphqlChartWidgetQuery(params, paramsBasedOnRoute).pipe(
+        const { params } = action.payload;
+        return BaseApiService.graphqlChartWidgetQuery(params).pipe(
           map((request) => request.response),
           map((response) => response.data[params.operationName]),
           mergeMap((response) => [
@@ -233,7 +233,7 @@ export function getWidgetData(action$) {
         );
       }
       return BaseApiService.genericChartWidgetQuery({
-        payload: action.payload || { paramsBasedOnRoute: {} },
+        payload: action.payload,
         ...action.payload.params,
       }).pipe(
         map((request) => request.response),

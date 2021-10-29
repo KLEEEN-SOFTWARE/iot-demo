@@ -1,8 +1,9 @@
 import { app, fontFamily, theme } from '@kleeen/settings';
 import { useGetThemeStoredValue, useTheme } from '@kleeen/react/hooks';
 
+import { KsManagedModulePaths } from '@kleeen/types';
 import classnames from 'classnames';
-import { isReactNativeInfusion } from '@kleeen/common/utils';
+import { isReactNativeInfusion } from '@kleeen/frontend/utils';
 import { makeStyles } from '@material-ui/core';
 import { useEffect } from 'react';
 
@@ -18,17 +19,22 @@ const useStyles = makeStyles({
   },
 });
 
+const bem = 'ks';
+
 function ThemeWrapper({ children }) {
-  const bem = 'ks';
-  const { position } = app.layout;
-  const navClass = isReactNativeInfusion() ? 'no-nav' : position;
+  const { storedTheme } = useGetThemeStoredValue(theme);
   const classes = useStyles();
   const { setTheme, themeClass } = useTheme();
-  const { storedTheme } = useGetThemeStoredValue(theme);
+  const isInfusionApplication = isReactNativeInfusion();
+  // TODO @cafe this is a hacky way of asking for the location.
+  // We should use the location hook which cannot be used here.
+  const isInvestigationPage = window.location?.pathname?.startsWith(KsManagedModulePaths.Investigate);
+  const hideNavigation = isInvestigationPage || isInfusionApplication;
+  const navClass = hideNavigation ? 'no-nav' : app.layout.position;
 
   useEffect(() => {
     setTheme(storedTheme);
-  }, [storedTheme.kit]);
+  }, [storedTheme?.kit]); // eslint-disable-line react-hooks/exhaustive-deps
 
   return (
     <div

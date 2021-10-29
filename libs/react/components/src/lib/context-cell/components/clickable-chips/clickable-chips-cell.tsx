@@ -11,7 +11,7 @@ import { KsCrosslink } from '../../../crosslink';
 import TextFormatter from '../../../textFormatter/TextFormatter';
 import { isNil } from 'ramda';
 import { isNilOrEmpty } from '@kleeen/common/utils';
-import { useIsAttributeClickable } from '../../hooks';
+import { useAttributeInteractions } from '../../hooks';
 
 const TRANSFORMATION_KEY_TO_USE = 'transformation';
 
@@ -32,13 +32,16 @@ function ClickableChipsCellBase({
   row,
   rowDisplayValue,
   translate,
+  widgetId,
 }: ClickableChipsCellProps) {
-  const isClickable = useIsAttributeClickable({
+  const { hasCrossLinking, hasFilters, hasPreview } = useAttributeInteractions({
     attribute,
     cellEntityType,
     isIdTemporary,
     transformationKeyToUse: TRANSFORMATION_KEY_TO_USE,
   });
+
+  const isClickable = hasCrossLinking || hasFilters || hasPreview;
   const [chips, setChips] = useState<Cell[]>([]);
 
   const cellItemsArray = cellItems as Cell[];
@@ -71,6 +74,7 @@ function ClickableChipsCellBase({
       format,
       isOpen: true,
       rowDisplayValue,
+      widgetId,
     });
   }
 
@@ -85,6 +89,7 @@ function ClickableChipsCellBase({
         row={row}
         rowDisplayValue={rowDisplayValue}
         translate={translate}
+        widgetId={widgetId}
       />
       <div className="show-more-label" onClick={onClick}>
         <div className="numbers-label-container">{cellItemsArray.length}</div>
@@ -123,6 +128,7 @@ function PreviewChips({
   row,
   rowDisplayValue,
   translate,
+  widgetId,
 }: PreviewChipsProps) {
   const [displayDataPoint, setDisplayDataPoint] = useState<ContextMenuDataPoint | null>(null);
 
@@ -164,7 +170,11 @@ function PreviewChips({
           }
 
           return (
-            <KsCrosslink dataPoints={dataPoints} transformationKeyToUse={TRANSFORMATION_KEY_TO_USE}>
+            <KsCrosslink
+              dataPoints={dataPoints}
+              transformationKeyToUse={TRANSFORMATION_KEY_TO_USE}
+              widgetId={widgetId}
+            >
               <BootstrapTooltip key={i} placement="top" title={FormattedElements}>
                 <KsChip className={isClickable ? 'clickable' : ''} label={FormattedElements} />
               </BootstrapTooltip>

@@ -40,6 +40,10 @@
     overflow-x: auto;
   }
 
+  .error-version {
+    font-size: var(--tx-S);
+  }
+
   @keyframes float {
     100% {
       transform: translateY(20px);

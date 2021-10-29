@@ -2,7 +2,6 @@ import { AggregationType, StatisticalDataType } from '../enums';
 
 import { ElementComponents } from './element-components';
 import { FormatProps } from './format';
-import { Key } from 'react';
 import { Link } from './link';
 
 // TODO: @Guaria decide where is the best place to keep shared prop types
@@ -13,7 +12,7 @@ export interface AttributeProps {
 }
 
 export interface ChangeDirectionsProps {
-  changeDirections: string;
+  changeDirections?: string;
 }
 
 export interface Attribute {
@@ -30,7 +29,7 @@ export interface Attribute {
   format?: FormatProps;
   formatType?: string;
   hasMany?: boolean;
-  id?: Key;
+  id?: number;
   isDisplayValue?: boolean;
   isFilterable?: { in: boolean; out: boolean };
   isNullable?: boolean;

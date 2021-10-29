@@ -1,4 +1,3 @@
-/* eslint-disable complexity */
 import {
   AreaWidget,
   BubbleChartWidget,
@@ -6,7 +5,7 @@ import {
   ConfigInputWidget,
   ConfigTableWidget,
   CustomActionWidget,
-  CustomWidget,
+  CustomWidgetContainer,
   DonutVariantWidget,
   DonutWidget,
   GaugeWidget,
@@ -22,16 +21,29 @@ import {
   SummaryStatisticsWidget,
   TableWidget,
 } from '../../Widgets';
+import { CardWidgetProps, RenderWidgetProps, WidgetHeaderType } from '../CardWidget.model';
+import { OnInputChangeEvent, RegisterEvents, Widget, WidgetProps, WidgetTypes } from '@kleeen/types';
 import { ReactElement, useState } from 'react';
-import { Widget, WidgetTypes } from '@kleeen/types';
+import { getWidgetContextName, useKleeenActions } from '@kleeen/react/hooks';
 
-import { AttributeInputEvents } from '@kleeen/react/hooks';
 import CardWidget from '../CardWidget';
+import { ErrorBoundaryComponent } from '@kleeen/react/components';
 import GridAreaSection from '../../GridAreaSection/GridAreaSection';
-import { RenderWidgetProps } from '../CardWidget.model';
+import { WidgetHeader as StandardWidgetHeader } from './widget-header';
 import { VisualizationSelector } from '../../VisualizationSelector/VisualizationSelector';
 import WaterfallWidget from '../../Widgets/WaterfallWidget/WaterfallWidget';
 import { isNilOrEmpty } from '@kleeen/common/utils';
+
+interface TransformToWidgetComponentProps {
+  CardWidgetElement?: (props: CardWidgetProps) => JSX.Element;
+  disableHeightCalculation?: boolean;
+  hideSaveAndClose?: boolean;
+  onInputChange?: OnInputChangeEvent;
+  registerEvents?: RegisterEvents;
+  taskName: string;
+  widget: Widget;
+  WidgetHeader?: WidgetHeaderType;
+}
 
 export function TransformToWidgetComponent({
   CardWidgetElement = CardWidget,
@@ -41,18 +53,13 @@ export function TransformToWidgetComponent({
   registerEvents,
   taskName,
   widget,
-}: {
-  CardWidgetElement?: any;
-  disableHeightCalculation?: boolean;
-  hideSaveAndClose?: boolean;
-  onInputChange?: (hasChanged: boolean) => void;
-  registerEvents?: (event: AttributeInputEvents) => void;
-  taskName: string;
-  widget: Widget;
-}): ReactElement {
+  WidgetHeader = StandardWidgetHeader,
+}: TransformToWidgetComponentProps): ReactElement | null {
   const { viableSolutions } = widget;
   const hasViableSolutions = !isNilOrEmpty(viableSolutions);
   const [preferredWidgetIndex, setPreferredWidgetIndex] = useState(0);
+  const widgetContext = getWidgetContextName({ taskName, widgetId: widget.id });
+  const actions = useKleeenActions(widgetContext);
 
   function getChartTypeToRender(): WidgetTypes {
     if (
@@ -65,19 +72,23 @@ export function TransformToWidgetComponent({
     return widget.chartType;
   }
 
-  return widget.chartType === WidgetTypes.CUSTOM ? (
-    renderWidget({
+  if (widget.chartType === WidgetTypes.CUSTOM) {
+    return renderWidget({
       disableHeightCalculation,
       onInputChange,
       preferredWidget: getChartTypeToRender(),
       registerEvents,
       taskName,
       widget,
-    })
-  ) : (
+      WidgetHeader,
+    });
+  }
+
+  return (
     <CardWidgetElement
       disableHeightCalculation={disableHeightCalculation}
       icon={false}
+      Header={<WidgetHeader actions={actions} title={widget.title} widget={widget} />}
       selectedViz={preferredWidgetIndex}
       title={widget.title}
       widgetSelector={
@@ -90,15 +101,17 @@ export function TransformToWidgetComponent({
         ) : null
       }
     >
-      {renderWidget({
-        hideSaveAndClose,
-        onInputChange,
-        preferredWidget: getChartTypeToRender(),
-        registerEvents,
-        taskName,
-        widget,
-        disableHeightCalculation,
-      })}
+      <ErrorBoundaryComponent>
+        {renderWidget({
+          disableHeightCalculation,
+          hideSaveAndClose,
+          onInputChange,
+          preferredWidget: getChartTypeToRender(),
+          registerEvents,
+          taskName,
+          widget,
+        })}
+      </ErrorBoundaryComponent>
     </CardWidgetElement>
   );
 }
@@ -112,198 +125,113 @@ function renderWidget({
   registerEvents,
   taskName,
   widget,
-}: RenderWidgetProps): ReactElement {
-  const { statisticalType } = widget;
+  WidgetHeader,
+}: RenderWidgetProps): ReactElement | null {
+  const { actions, attributes, id: widgetId, params, statisticalType } = widget;
+  const widgetProps: WidgetProps = {
+    actions,
+    attributes,
+    chartType: preferredWidget,
+    params,
+    taskName,
+    widgetId,
+  };
 
   switch (preferredWidget) {
     case WidgetTypes.AREA_GRADIENT:
     case WidgetTypes.AREA_MACRO_MICRO:
     case WidgetTypes.AREA_MASTER_DETAIL:
+    case WidgetTypes.AREA_TREND:
     case WidgetTypes.AREA:
-      return (
-        <AreaWidget
-          chartType={preferredWidget}
-          params={widget.params}
-          taskName={taskName}
-          widgetId={widget.id}
-        />
-      );
+      return <AreaWidget {...widgetProps} />;
 
     case WidgetTypes.BUBBLE_CHART:
-      return (
-        <BubbleChartWidget
-          attributes={widget.attributes}
-          disableHeightCalculation={disableHeightCalculation}
-          params={widget.params}
-          taskName={taskName}
-          widgetId={widget.id}
-        />
-      );
+      return <BubbleChartWidget {...widgetProps} disableHeightCalculation={disableHeightCalculation} />;
 
     case WidgetTypes.COLUMN_BAR_DOUBLE_BAR:
     case WidgetTypes.COLUMN_BAR_MACRO_MICRO:
     case WidgetTypes.COLUMN_BAR_SEGMENTED:
     case WidgetTypes.COLUMN_BAR:
-      return (
-        <ColumnBarWidget
-          attributes={widget.attributes}
-          chartType={preferredWidget}
-          params={widget.params}
-          taskName={taskName}
-          widgetId={widget.id}
-        />
-      );
+      return <ColumnBarWidget {...widgetProps} />;
 
     case WidgetTypes.CONFIG_INPUT_FIELD_USER_DEFINED:
       return (
         <ConfigInputWidget
-          attributes={widget.attributes}
+          {...widgetProps}
           hideSaveAndClose={hideSaveAndClose}
           icon={false}
           onInputChange={onInputChange}
-          params={widget.params}
           registerEvents={registerEvents}
           statisticalType={statisticalType}
-          taskName={taskName}
           title={widget.title}
-          widgetId={widget.id}
         />
       );
     case WidgetTypes.CONFIG_TABLE:
       return (
-        <ConfigTableWidget
-          actions={widget.actions}
-          attributes={widget.attributes}
-          onInputChange={onInputChange}
-          params={widget.params}
-          registerEvents={registerEvents}
-          taskName={taskName}
-          widgetId={widget.id}
-        />
+        <ConfigTableWidget {...widgetProps} onInputChange={onInputChange} registerEvents={registerEvents} />
       );
 
     case WidgetTypes.CUSTOM: {
       return (
-        <CustomWidget
+        <CustomWidgetContainer
           disableHeightCalculation={disableHeightCalculation}
-          widget={widget}
+          Header={<WidgetHeader title={widget.title} widget={widget} />}
           onInputChange={onInputChange}
           registerEvents={registerEvents}
+          taskName={taskName}
+          widget={widget}
         />
       );
     }
 
     case WidgetTypes.CUSTOM_ACTION:
-      return (
-        <CustomActionWidget
-          actions={widget.actions}
-          params={widget.params}
-          taskName={taskName}
-          widgetId={widget.id}
-        />
-      );
+      return <CustomActionWidget {...widgetProps} />;
 
     case WidgetTypes.DONUT:
-      return (
-        <DonutWidget
-          attributes={widget.attributes}
-          params={widget.params}
-          taskName={taskName}
-          widgetId={widget.id}
-        />
-      );
+      return <DonutWidget {...widgetProps} />;
 
     case WidgetTypes.DONUT_VARIANT:
-      return (
-        <DonutVariantWidget
-          attributes={widget.attributes}
-          params={widget.params}
-          taskName={taskName}
-          widgetId={widget.id}
-        />
-      );
+      return <DonutVariantWidget {...widgetProps} />;
 
     case WidgetTypes.GAUGE_SEVERITY_LEVEL:
     case WidgetTypes.GAUGE_SEVERITY_SCORE:
     case WidgetTypes.GAUGE:
-      return <GaugeWidget params={widget.params} taskName={taskName} widgetId={widget.id} />;
+      return <GaugeWidget {...widgetProps} />;
 
     case WidgetTypes.LINE:
-      return <LineWidget params={widget.params} taskName={taskName} widgetId={widget.id} />;
+      return <LineWidget {...widgetProps} />;
 
     case WidgetTypes.PIE:
-      return (
-        <PieWidget
-          attributes={widget.attributes}
-          params={widget.params}
-          taskName={taskName}
-          widgetId={widget.id}
-        />
-      );
+      return <PieWidget {...widgetProps} />;
 
     case WidgetTypes.POLAR_AREA:
-      return (
-        <PolarAreaWidget
-          attributes={widget.attributes}
-          params={widget.params}
-          taskName={taskName}
-          widgetId={widget.id}
-        />
-      );
+      return <PolarAreaWidget {...widgetProps} />;
 
     case WidgetTypes.POSITIVE_NEGATIVE_AREA:
-      return <PositiveNegativeAreaWidget params={widget.params} taskName={taskName} widgetId={widget.id} />;
+      return <PositiveNegativeAreaWidget {...widgetProps} />;
 
     case WidgetTypes.READ_ONLY_TEXT:
-      return <ReadOnlyTextWidget params={widget.params} taskName={taskName} widgetId={widget.id} />;
+      return <ReadOnlyTextWidget {...widgetProps} />;
 
     case WidgetTypes.SCATTER:
-      return <ScatterWidget params={widget.params} taskName={taskName} widgetId={widget.id} />;
+      return <ScatterWidget {...widgetProps} />;
 
     case WidgetTypes.SIMPLE_LIST_RANKED:
-      return (
-        <RankedListWidget
-          attributes={widget.attributes}
-          params={widget.params}
-          taskName={taskName}
-          widgetId={widget.id}
-        />
-      );
+      return <RankedListWidget {...widgetProps} />;
 
     /** TODO: Add subtype as in COLUMN_BAR */
     case WidgetTypes.SINGLE_BAR_HIGHLIGHT_MAX:
-      return (
-        <SingleBarHighlightMaxWidget
-          attributes={widget.attributes}
-          chartType={WidgetTypes.SINGLE_BAR_HIGHLIGHT_MAX}
-          params={widget.params}
-          taskName={taskName}
-          widgetId={widget.id}
-        />
-      );
+      return <SingleBarHighlightMaxWidget {...widgetProps} />;
 
     case WidgetTypes.STEP_LINE:
-      return <StepLineWidget params={widget.params} taskName={taskName} widgetId={widget.id} />;
+      return <StepLineWidget {...widgetProps} />;
 
+    case WidgetTypes.SUMMARY:
     case WidgetTypes.SUMMARY_STATISTICS:
-      return (
-        <SummaryStatisticsWidget
-          attributes={widget.attributes}
-          params={widget.params}
-          taskName={taskName}
-          widgetId={widget.id}
-        />
-      );
+      return <SummaryStatisticsWidget {...widgetProps} />;
 
     case WidgetTypes.SIMPLE_LIST:
-      return (
-        <TableWidget
-          attributes={widget.attributes}
-          params={widget.params}
-          taskName={taskName}
-          widgetId={widget.id}
-        />
-      );
+      return <TableWidget {...widgetProps} />;
 
     case WidgetTypes.TABLE:
       return (
@@ -311,11 +239,9 @@ function renderWidget({
           <GridAreaSection
             className="report-table-height"
             columnWidth={100}
-            entityId={widget.attributes[0].id as string}
+            entityId={widget.attributes[0].id.toString()}
             entityName={widget.params.baseModel}
             key={`data-view-display-section-grid-area-section-${widget.id}`}
-            selectedRows={[]}
-            setSelectedRows={() => ({})}
             sortableColumns={true}
             taskName={taskName}
             widget={widget}
@@ -324,7 +250,10 @@ function renderWidget({
       );
 
     case WidgetTypes.WATERFALL:
-      return <WaterfallWidget params={widget.params} taskName={taskName} widgetId={widget.id} />;
+      return <WaterfallWidget {...widgetProps} />;
+
+    default:
+      return null;
   }
 }
 //#endregion

@@ -1,51 +1,34 @@
 const endUserPreferences = {
   initialState: {
-    currentUserPreferences: null,
+    onBoardingPreferences: null,
     isLoading: false,
-    data: [],
     error: null,
   },
   reducers: {
-    // CUSTOM
-    setLocale: (state, action) => {
-      state.locale = action.payload;
-    },
-    setTheme: (state, action) => {
-      state.theme = action.payload;
-    },
-
-    createEndUserPreferences: (state, action) => {
+    getOnBoardingPreferences: (state, action) => {
       state.isLoading = true;
     },
-
-    saveEndUserPreferences: (state, action) => {
-      state.isLoading = true;
-    },
-    saveEndUserPreferencesSuccess: (state, action) => {
+    getOnBoardingPreferencesSuccess: (state, action) => {
       state.isLoading = false;
       const { payload } = action;
-      state.currentUserPreferences = payload;
+      state.onBoardingPreferences = payload;
     },
-    saveEndUserPreferencesFailure: (state, action) => {
+    getOnBoardingPreferencesFailure: (state, action) => {
       state.isLoading = false;
       state.error = action.payload;
     },
-
-    getEndUserPreferences: (state, action) => {
+    setOnBoardingPreference: (state, action) => {
+      state.onBoardingPreferences = action.payload || { showOnBoarding: false };
       state.isLoading = true;
     },
-    getEndUserPreferencesSuccess: (state, action) => {
+    setOnBoardingPreferencesSuccess: (state, action) => {
       state.isLoading = false;
-      const { payload } = action;
-      state.currentUserPreferences = payload;
+      const { payload = {} } = action;
+      state.onBoardingPreferences = { ...state.onBoardingPreferences, ...payload };
     },
-    getEndUserPreferencesFailure: (state, action) => {
+    setOnBoardingPreferencesFailure: (state, action) => {
       state.isLoading = false;
       state.error = action.payload;
-    },
-
-    getRequest: (state, action) => {
-      state.isLoading = true;
     },
   },
 };

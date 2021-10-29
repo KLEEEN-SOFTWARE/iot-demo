@@ -17,7 +17,7 @@ export const exportColorToAlpha = (color: string): number => {
 
 export const darkenColor = (color: string, amount: number): string => {
   const tColor = tinycolor(color);
-  return tColor.darken(amount);
+  return tColor.darken(amount).toHexString();
 };
 
 const colorValue = (color) => {

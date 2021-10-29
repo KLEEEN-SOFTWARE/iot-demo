@@ -1,10 +1,12 @@
 import './error-fallback-style.scss';
 
 import { CardWidget } from '@kleeen/react/atomic-elements';
-import { environment } from '@kleeen/environment';
 import { KsButton } from '@kleeen/react/components';
-import { useTheme } from '@kleeen/react/hooks';
 import classnames from 'classnames';
+import { environment } from '@kleeen/environment';
+import { useTheme } from '@kleeen/react/hooks';
+import { isNilOrEmpty } from '@kleeen/common/utils';
+import { app } from '@kleeen/settings';
 
 export function ErrorFallback({ error, info }): JSX.Element {
   const { themeClass } = useTheme();
@@ -17,13 +19,13 @@ export function ErrorFallback({ error, info }): JSX.Element {
   return (
     <div className={classnames(bem, themeClass, 'error-page')}>
       <svg
-        xmlns="http://www.w3.org/2000/svg"
-        version="1.1"
+        enableBackground="new 0 0 600 800"
         id="robot"
-        x="0"
-        y="0"
+        version="1.1"
         viewBox="0 0 600 800"
-        enable-background="new 0 0 600 800"
+        x="0"
+        xmlns="http://www.w3.org/2000/svg"
+        y="0"
       >
         <ellipse id="shadow" opacity="0.4" fill="#2C3332" cx="300" cy="703.4" rx="89" ry="30.6" />
         <g id="left_arm">
@@ -164,8 +166,13 @@ export function ErrorFallback({ error, info }): JSX.Element {
           </g>
         </g>
       </svg>
-      <CardWidget title={`${environment.deployment.version} - Oops, something went wrong!`} icon={false}>
+      <CardWidget title="Oops, something went wrong!" icon={false}>
         <div>
+          <div className={classnames(`${bem}__version`, 'error-version')}>
+            <span>Product Version: {environment.deployment.version}</span>
+            <br />
+            {!isNilOrEmpty(app.rootVersion) && <span>Root Version: {app.rootVersion}</span>}
+          </div>
           <p>{error?.message}</p>
           <div
             className={classnames(`${bem}__log`, 'error-log')}

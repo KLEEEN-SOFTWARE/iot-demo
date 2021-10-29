@@ -1,33 +1,15 @@
-import { Action, GroupByProps, ValueProp, ValuesProps } from '@kleeen/types';
+import { Action, WidgetProps } from '@kleeen/types';
 import { ActionDialogs, Loader } from '@kleeen/react/components';
 import { Button, CircularProgress, useStyles } from './CustomActionWidget.styles';
-import React, { ReactElement, useEffect, useState } from 'react';
+import { ReactElement, useEffect, useState } from 'react';
 import { useKleeenActions, useKleeenContext, useUrlQueryParams } from '@kleeen/react/hooks';
 
 import capitalize from 'lodash.capitalize';
 
-interface CustomActionWidgetProps {
-  actions?: Action[];
-  params: {
-    baseModel: string;
-    displayName?: string;
-    operationName?: string;
-    groupBy?: GroupByProps;
-    value?: ValueProp | ValuesProps;
-  };
-  taskName: string;
-  widgetId: string | number;
-}
-
-export const CustomActionWidget = ({
-  actions,
-  params,
-  taskName,
-  widgetId,
-}: CustomActionWidgetProps): ReactElement => {
+export const CustomActionWidget = ({ actions, params, taskName, widgetId }: WidgetProps): ReactElement => {
   const { dispatchCustomAction, addWidget } = useKleeenActions(taskName);
   const { widgets } = useKleeenContext(taskName);
-  const paramsBasedOnRoute = useUrlQueryParams({ useNestedObjects: true });
+  const { paramsBasedOnRoute } = useUrlQueryParams({ useNestedObjects: true });
   const [currentAction, setCurrentAction] = useState('');
   const [isConfirmationOpen, setIsConfirmationOpen] = useState(false);
   const [isCustomOpen, setIsCustomOpen] = useState(false);
@@ -48,8 +30,7 @@ export const CustomActionWidget = ({
       setIsConfirmationOpen(true);
     } else {
       dispatchCustomAction({
-        params,
-        paramsBasedOnRoute,
+        params: { ...params, filters: paramsBasedOnRoute },
         taskName,
         widgetId,
       });

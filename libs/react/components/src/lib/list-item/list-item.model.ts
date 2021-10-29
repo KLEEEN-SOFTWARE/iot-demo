@@ -4,4 +4,5 @@ export interface ListItemProps {
   columns: Attribute[];
   item?: Row;
   metadata?: DataListMetaData;
+  widgetId?: string;
 }

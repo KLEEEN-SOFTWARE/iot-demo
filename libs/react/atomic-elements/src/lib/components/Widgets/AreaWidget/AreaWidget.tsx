@@ -1,11 +1,11 @@
-import { GroupByProps, ValueProp, ValuesProps, VizCommonParams, WidgetTypes } from '@kleeen/types';
+import { VisualizationWidgetProps, WidgetProps, WidgetTypes } from '@kleeen/types';
 
 import Area from '../../Area/Area';
 import AreaGradient from '../../AreaGradient/AreaGradient';
 import AreaMacroMicro from '../../AreaMacroMicro/AreaMacroMicro';
 import AreaMasterDetail from '../../AreaMasterDetail/AreaMasterDetail';
+import AreaTrend from '../../AreaTrend/AreaTrend';
 import { Loader } from '@kleeen/react/components';
-import React from 'react';
 import { makeStyles } from '@material-ui/core';
 import { useWidgetContext } from '@kleeen/react/hooks';
 
@@ -18,36 +18,42 @@ const useStyles = makeStyles({
   },
 });
 
-const AreaWidgetSubtype = ({ chartType, widgetData, params }): JSX.Element => {
+function AreaWidgetSubtype({ attributes, chartType, context, params, widgetId }): JSX.Element {
+  const props: VisualizationWidgetProps = {
+    attributes,
+    context,
+    chartType,
+    params,
+    widgetId,
+  };
+  // TODO: @cafe Turn this into a map
   switch (chartType) {
     case WidgetTypes.AREA_GRADIENT:
-      return <AreaGradient context={widgetData} base={params.baseModel} params={params} />;
+      return <AreaGradient {...props} />;
     case WidgetTypes.AREA_MASTER_DETAIL:
-      return <AreaMasterDetail context={widgetData} base={params.baseModel} />;
+      return <AreaMasterDetail {...props} />;
     case WidgetTypes.AREA_MACRO_MICRO:
-      return <AreaMacroMicro context={widgetData} base={params.baseModel} params={params} />;
+      return <AreaMacroMicro {...props} />;
+    case WidgetTypes.AREA_TREND:
+      return (
+        <AreaTrend
+          {...props}
+          legend={{
+            enabled: true,
+            layout: 'horizontal',
+            align: 'center',
+            verticalAlign: 'bottom',
+          }}
+        />
+      );
     default:
     case WidgetTypes.AREA:
-      return <Area context={widgetData} base={params.baseModel} params={params} />;
+      return <Area {...props} />;
   }
-};
-
-interface AreaWidgetProps extends VizCommonParams {
-  taskName: string;
-  widgetId: string | number;
-  chartType: string;
-  params: {
-    baseModel: string;
-    aggregatedByType?: string;
-    aggregatedBy?: string;
-    aggregation_attribute?: string;
-    aggregation?: string;
-    groupBy?: GroupByProps;
-    value?: ValueProp | ValuesProps;
-  };
 }
-export const AreaWidget = ({ chartType, params, taskName, widgetId }: AreaWidgetProps): JSX.Element => {
-  const widgetData = useWidgetContext({ taskName, widgetId, params });
+
+export function AreaWidget({ attributes, chartType, params, taskName, widgetId }: WidgetProps): JSX.Element {
+  const widgetData = useWidgetContext({ params, taskName, widgetId });
   const classes = useStyles();
 
   if (!widgetData) {
@@ -60,9 +66,15 @@ export const AreaWidget = ({ chartType, params, taskName, widgetId }: AreaWidget
         chartType === WidgetTypes.AREA_MACRO_MICRO ? classes.widgetMacroMicroContent : classes.widgetContent
       }
     >
-      <AreaWidgetSubtype chartType={chartType} widgetData={widgetData} params={params} />
+      <AreaWidgetSubtype
+        attributes={attributes}
+        chartType={chartType}
+        context={widgetData}
+        params={params}
+        widgetId={widgetId}
+      />
     </div>
   );
-};
+}
 
 export default AreaWidget;

@@ -1,8 +1,8 @@
 import { DbItem, KapiDb } from '@kleeen/kleeen-api';
+import { Maybe, PrimitiveType } from '@kleeen/types';
 import { findEntityByName, generateDisplayMediaByType, toEntityName, toPropertyName } from './utils';
 
 import { Attribute } from '../types';
-import { PrimitiveType } from './types';
 import { Transformation } from '../utils';
 import { calculateTransformation } from './transformation';
 import { omit } from 'ramda';
@@ -21,19 +21,19 @@ const DISPLAY_VALUE = 'displayValue';
 const METADATA = '$metadata';
 const SELF_TRANSFORMATION = [Transformation.SelfSingle, Transformation.SelfMulti];
 
-function getDisplayValueId(id: string, entity: Attribute, metadata: Metadata): string {
+function getDisplayValueId(id: string, entity: Attribute, metadata: Metadata): Maybe<string> {
   if (!metadata) return id;
 
   if (entity?.isXor) {
     const xor = KapiDb.findRandomOne(toEntityName(metadata?.entityType));
 
-    return xor.id;
+    return xor?.id;
   }
 
   return id;
 }
 
-function formatToDisplayValue(entityName: string, item: ListItem | any, attributes: Attribute[]) {
+function formatToDisplayValue(entityName: string, item: ListItem | any, attributes?: Attribute[]) {
   const displayValue = item.displayValue?.displayValue ?? item.displayValue;
   const attribute: Attribute = findEntityByName(entityName, attributes);
   const id = getDisplayValueId(item.id, attribute, displayValue && displayValue[METADATA]);
@@ -84,12 +84,12 @@ function formatSelfMultiTransformation(entityName: string, values: ListItem) {
 
   return {
     [entityName]: Array.isArray(values)
-      ? values.map((value) => ({ ...value, id: randomEntity.id }))
+      ? values.map((value) => ({ ...value, id: randomEntity?.id }))
       : [values],
   };
 }
 
-function formatAttributesToDisplayValue(row: { [key: string]: ListItem }, attributes: Attribute[]) {
+function formatAttributesToDisplayValue(row: Record<string, ListItem>, attributes?: Attribute[]) {
   const item = omit(['$loki', 'meta', 'id', DISPLAY_VALUE], row);
   return Object.entries(item).reduce((acc, [entityName, values]: [string, any]) => {
     const attribute: Attribute = findEntityByName(entityName, attributes);
@@ -129,8 +129,23 @@ const toDisplayValue = (
 };
 
 export class KapiCrud {
-  static add(entityName: string, entityObject: object) {
-    return KapiDb.insert(toEntityName(entityName), entityObject as DbItem);
+  static add(entityName: string, entityObject: Record<string, unknown>) {
+    const randomEntity = KapiDb.findRandomOne(toEntityName(entityName));
+
+    if (!randomEntity) return entityObject;
+
+    const parsedEntity: DbItem | { id?: string; meta?: any } = { ...randomEntity };
+
+    delete parsedEntity.id;
+    delete parsedEntity.meta;
+    delete parsedEntity['$loki'];
+
+    const newEntityObject = {
+      ...parsedEntity,
+      ...entityObject,
+    };
+
+    return KapiDb.insert(toEntityName(entityName), newEntityObject as DbItem);
   }
 
   static delete(entityName: string, id: string) {
@@ -148,7 +163,7 @@ export class KapiCrud {
     return withDisplayValue;
   }
 
-  static rawList(entityName: string, params?: { attributes: Attribute[] }) {
+  static rawList(entityName: string) {
     return KapiDb.listByName<ListItem>(toEntityName(entityName));
   }
 

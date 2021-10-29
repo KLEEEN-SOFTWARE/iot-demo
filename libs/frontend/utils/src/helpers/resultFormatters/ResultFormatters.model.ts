@@ -24,8 +24,4 @@ export interface TrendFormatterProps {
   values?: number[];
 }
 
-export type SelectOptionsProps = { label: string; value: string };
-
 export type ValueResultProps = number | string;
-
-export type ValueLabelsProps = { [key: string]: string } | SelectOptionsProps[];

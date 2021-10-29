@@ -8,6 +8,7 @@ export const widgets = [
         addModalAttributes: [
           {
             id: 120425,
+            isDisplayValue: true,
             name: 'sensor',
             label: 'Sensor',
             hasMany: false,
@@ -37,6 +38,7 @@ export const widgets = [
           },
           {
             id: 135534,
+            isDisplayValue: false,
             name: 'ppm',
             label: 'Ppm',
             hasMany: false,
@@ -53,6 +55,7 @@ export const widgets = [
           },
           {
             id: 120421,
+            isDisplayValue: false,
             name: 'node',
             label: 'Node',
             hasMany: false,
@@ -82,6 +85,7 @@ export const widgets = [
           },
           {
             id: 120426,
+            isDisplayValue: false,
             name: 'sensorOverallStatus',
             label: 'Sensor Overall Status',
             hasMany: false,
@@ -114,6 +118,7 @@ export const widgets = [
           },
           {
             id: 120427,
+            isDisplayValue: false,
             name: 'sensorStatus',
             label: 'Sensor Status',
             hasMany: false,
@@ -146,6 +151,7 @@ export const widgets = [
           },
           {
             id: 120424,
+            isDisplayValue: false,
             name: 'siteMap',
             label: 'Site Map',
             hasMany: false,
@@ -281,12 +287,15 @@ export const widgets = [
     chartType: `[WIDGET] FULL_TABLE`,
     component: undefined,
     entityId: 120425,
+    entityName: undefined,
     id: `7c86260d-a5b0-407c-8546-2e0be73aada3`,
+    name: 'Table of Sensor',
     params: {
       baseModel: 'Sensor',
       operationName: 'object_listing_7c86260d_a5b0_407c_8546_2e0be73aada3',
       taskName: 'Sensors',
     },
+    scope: undefined,
     statisticalType: undefined,
     title: undefined,
     type: 'table',

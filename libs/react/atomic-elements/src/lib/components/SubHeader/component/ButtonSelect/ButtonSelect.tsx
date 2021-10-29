@@ -1,62 +1,77 @@
 import './ButtonSelect.scss';
 
-import React, { useState } from 'react';
+import { ItemType, KsDropDown } from '@kleeen/react/components';
+import React, { Ref, forwardRef } from 'react';
+import { Translate, ViewShapeType } from '@kleeen/types';
 
 import { ButtonSelectProps } from './ButtonSelect.model';
 import { ButtonSubHeader } from '../ButtonHeader/ButtonSubHeader';
-import { SelectList } from '../../../SelectList/SelectList';
-import { useViewsFilteredByAccess } from '@kleeen/react/hooks';
-import { ViewOptionFormattedType } from '@kleeen/types';
 import classNames from 'classnames';
+import { formatViewOptions } from '@kleeen/common/utils';
 
 const defaultIconKey = 'Apps';
+const InputElement = forwardRef(
+  (
+    props: {
+      currentItem: ItemType<ViewShapeType>;
+      translate: Translate;
+      setOpen: (newOpen: boolean) => void;
+      options: ItemType<ViewShapeType>[];
+    },
+    ref: Ref<HTMLButtonElement>,
+  ) => {
+    const currentView = props.currentItem.option;
+    const selectListValue = currentView?.name || currentView?.title || '';
+    const hasViewSwitch = props.options?.length > 1;
+    const viewSwitchText = hasViewSwitch ? 'View switch' : undefined;
+
+    if (!selectListValue) return null;
+
+    return (
+      <ButtonSubHeader
+        className={classNames('element-button-select', { 'has-view-switch': hasViewSwitch })}
+        icon={currentView?.viewId || defaultIconKey}
+        isDisabled={!hasViewSwitch}
+        name={selectListValue}
+        onClick={() => props.setOpen(true)}
+        ref={ref}
+        subName={viewSwitchText}
+        translate={props.translate}
+      >
+        {hasViewSwitch && (
+          <div className="icon-outlined">
+            <svg className="MuiSvgIcon-root element-select-arrow">
+              <path d="M7 10l5 5 5-5z"></path>
+            </svg>
+          </div>
+        )}
+      </ButtonSubHeader>
+    );
+  },
+);
+
 export const ButtonSelect = ({
   viewOptions,
-  handleChangeTab,
-  onTabIndexChanged,
-  value,
-  translate,
-  taskName,
+  currentView,
+  setCurrentView,
 }: ButtonSelectProps): React.ReactElement | null => {
-  const [iconView, setIconView] = useState(viewOptions[value]?.viewId || defaultIconKey);
-  const options = useViewsFilteredByAccess(viewOptions, taskName) as ViewOptionFormattedType[];
-  const navigation = viewOptions[value]?.name;
-  const hasViewSwitch = options?.length > 1;
-  const viewSwitchText = hasViewSwitch ? 'View switch' : undefined;
+  const options = formatViewOptions(viewOptions);
 
-  if (!navigation) return null;
-
-  const handleOnChange = (optionValue, rawOption) => {
-    if (viewOptions[optionValue]?.viewId) {
-      setIconView(viewOptions[optionValue]?.viewId || defaultIconKey);
-    }
-    if (handleChangeTab) {
-      handleChangeTab(optionValue);
-    }
-    if (onTabIndexChanged) {
-      onTabIndexChanged(optionValue as number, rawOption);
-    }
+  const handleOnChange = (_, rawOption) => {
+    setCurrentView(rawOption.option);
   };
 
   if (viewOptions.length < 2) return null;
 
   return (
-    <ButtonSubHeader
-      icon={iconView}
-      className={classNames('element-button-select', { 'has-view-switch': hasViewSwitch })}
-      name={navigation}
-      subName={viewSwitchText}
-      translate={translate}
-      isDisabled={!hasViewSwitch}
-    >
-      <SelectList onChange={handleOnChange} options={options} value={value} taskName={taskName} />
-      {hasViewSwitch && (
-        <div className="icon-outlined">
-          <svg className="MuiSvgIcon-root element-select-arrow">
-            <path d="M7 10l5 5 5-5z"></path>
-          </svg>
-        </div>
-      )}
-    </ButtonSubHeader>
+    <KsDropDown
+      accessKey={'views'}
+      handleOnClick={handleOnChange}
+      InputElement={InputElement}
+      options={options}
+      selectedItem={{ key: currentView.viewId, label: currentView.name, ...currentView }}
+      shouldHighlightSelected
+      syncWidth
+    />
   );
 };

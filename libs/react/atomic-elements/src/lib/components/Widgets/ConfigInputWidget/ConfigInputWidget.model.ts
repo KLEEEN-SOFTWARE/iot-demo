@@ -1,6 +1,10 @@
-import { Attribute, FormatProps, StatisticalDataType } from '@kleeen/types';
-
-import { AttributeInputEvents } from '@kleeen/react/hooks';
+import {
+  AttributeInputEvents,
+  FormatProps,
+  OnInputChangeEvent,
+  StatisticalDataType,
+  WidgetProps,
+} from '@kleeen/types';
 
 export enum elementCase {
   FIELD_NOT_ADD_HAVE_MANY = 'Field Can Not Add Values and Have Many',
@@ -26,22 +30,16 @@ export const KS_GLOBAL_APP = '[KS] GlobalApp';
 export const INITIAL_ATTRIBUTE_VALUE_HAS_MANY = [];
 export const INITIAL_ATTRIBUTE_VALUE_SINGLE = '';
 
-export interface ConfigInputWidgetProps {
-  attributes?: Attribute[];
+export interface ConfigInputWidgetProps extends WidgetProps {
   disabled?: boolean;
   hideSaveAndClose?: boolean;
   hideTitle?: boolean;
-  inSummaryDetails?: boolean;
   icon: boolean;
-  onInputChange?: (hasChanged: boolean) => void;
-  params?: {
-    baseModel: string;
-  };
+  inSummaryDetails?: boolean;
+  onInputChange?: OnInputChangeEvent;
   registerEvents?: (events: AttributeInputEvents) => void;
-  taskName: string;
-  title: string;
-  widgetId: string | number;
   statisticalType: StatisticalDataType;
+  title: string;
 }
 
 export interface TransformToElementProps {
@@ -49,17 +47,17 @@ export interface TransformToElementProps {
   autoCompleteValues?: any;
   canAddValues: boolean;
   disabled: boolean;
-  hideTitle: boolean;
   elementToUse: any;
+  errors?: any;
   format?: FormatProps;
   formatType?: string;
+  helpText?: string;
+  hideTitle: boolean;
   inputValue: any;
   inSummaryDetails: boolean;
+  refValue?: any;
   setInputValue: any;
   setSelectedOption: any;
   statisticalType: StatisticalDataType;
   transformation?: string;
-  refValue?: any;
-  errors?: any;
-  helpText?: string;
 }

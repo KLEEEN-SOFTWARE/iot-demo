@@ -45,13 +45,14 @@ export interface FilterOption {
   category?: string;
   value?: string;
   displayName?: string;
+  accessLevel?: string;
 }
 
 export const addFilterText = 'Add Filter';
 export const materialAutocompleteClearSignal = 'clear';
 
 export interface FilterSectionProps {
-  filters: { name: string; statisticalType: string }[];
+  filters: { name: string; statisticalType: string; accessLevel: string }[];
   taskName: string;
   onChangeFilterVisible?: (e: boolean) => void;
   hasDateFilter?: boolean;

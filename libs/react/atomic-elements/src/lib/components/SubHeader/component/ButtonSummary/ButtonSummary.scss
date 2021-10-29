@@ -1,30 +1,45 @@
 .button-container-summary-actions {
+  position: relative;
+
   .container-header {
     width: calc(100% - var(--wh-S));
     display: inline-block;
   }
 
   .button-container-actions-header {
-    float: right;
     height: 100%;
+    float: right;
+    .switcher-container {
+      display: block;
 
-    button {
-      border-top-right-radius: calc(var(--card-border-radius) - var(--pm-6XS));
-      border-bottom-right-radius: 0px;
+      &.edit-on::after {
+        content: ' ';
+        min-height: calc(2 * calc(var(--wh-S) + var(--pm-1XS)));
+        display: block;
+      }
 
-      .icon-actions {
-        margin-top: -7px;
+      button {
+        border-top-right-radius: calc(var(--card-border-radius) - var(--pm-6XS));
+        border-bottom-right-radius: 0px;
+        padding: 0;
         position: absolute;
-      }
+        height: 100%;
+        top: 0;
+        right: 0;
 
-      .name-actions {
-        padding-top: var(--wh-2XS);
-      }
+        &:last-child {
+          border-left: 1px solid var(--secondary-color);
+          border-top-right-radius: 0px;
+          border-bottom-right-radius: calc(var(--card-border-radius) - var(--pm-6XS));
+        }
 
-      &:last-child {
-        border-left: 1px solid var(--secondary-color);
-        border-top-right-radius: 0px;
-        border-bottom-right-radius: calc(var(--card-border-radius) - var(--pm-6XS));
+        &:first-of-type:nth-last-of-type(2),
+        &:first-of-type:nth-last-of-type(2) ~ button {
+          height: 50%;
+        }
+        &:first-of-type:nth-last-of-type(2) ~ button {
+          top: 50%;
+        }
       }
     }
   }

@@ -1,6 +1,13 @@
 import { StorageHelper } from '@aws-amplify/core';
 
-export const useLocalStorage = (key: string, defaultValue: any) => {
+export const useLocalStorage = <T = any>(
+  key: string | null,
+  defaultValue: any,
+): {
+  localStorageValue: T;
+  setLocalStorageValue: (T) => void;
+  removeLocalStorageValue: () => void;
+} => {
   const _storage = new StorageHelper().getStorage();
   let localStorageValue;
   try {

@@ -1,8 +1,14 @@
+export enum WidgetScope {
+  Collection = 'collection',
+  Single = 'single',
+}
+
 export enum WidgetTypes {
   AREA = '[WIDGET] AREA',
   AREA_GRADIENT = '[WIDGET] AREA_GRADIENT',
   AREA_MACRO_MICRO = '[WIDGET] AREA_MACRO_MICRO',
   AREA_MASTER_DETAIL = '[WIDGET] AREA_MASTER_DETAIL',
+  AREA_TREND = '[WIDGET] AREA_TREND',
   BUBBLE_CHART = '[WIDGET] BUBBLE_CHART',
   COLUMN_BAR = '[WIDGET] COLUMN_BAR',
   COLUMN_BAR_DOUBLE_BAR = '[WIDGET] COLUMN_BAR_DOUBLE_BAR',
@@ -28,8 +34,18 @@ export enum WidgetTypes {
   SIMPLE_LIST_RANKED = '[WIDGET] SIMPLE_LIST_RANKED',
   SINGLE_BAR_HIGHLIGHT_MAX = '[WIDGET] SINGLE_BAR_HIGHLIGHT_MAX',
   STEP_LINE = '[WIDGET] STEP_LINE',
+  SUMMARY = '[WIDGET] SUMMARY',
   SUMMARY_SLOT = '[WIDGET] SLOT',
   SUMMARY_STATISTICS = '[WIDGET] SUMMARY_STATISTICS',
   TABLE = '[WIDGET] TABLE',
   WATERFALL = '[WIDGET] WATERFALL',
+}
+
+export enum WidgetIcons {
+  Config = 'ks-config',
+  Action = 'ks-action',
+  Custom = 'ks-custom',
+  Summary = 'ks-summary-details',
+  Table = 'ks-table',
+  Visualization = 'ks-visualization',
 }

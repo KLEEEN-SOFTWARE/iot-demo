@@ -1,94 +1,72 @@
 import { KUIConnect, AccessControl } from '@kleeen/core-react';
 import { roleAccessKeyTag } from '@kleeen/common/utils';
-import { useState } from 'react';
+import { WorkflowProvider, useKleeenActions } from '@kleeen/react/hooks';
 import {
   SimpleLayoutStyle,
   EntityDetailsSection,
   DataViewControlSection,
-  DataViewDisplaySectionAtomic,
+  ViewsManager,
 } from '@kleeen/react/atomic-elements';
+import { useState } from 'react';
 import { entityDetailsSectionEntityDetails } from './settings/entity-details-section-entity-details';
-import { useKleeenActions } from '@kleeen/react/hooks';
-import { viewOptions } from './settings/view-options';
-import { workflowAction } from './settings/workflow-action';
-import { attributesOnCreate } from './settings/attributes-on-create';
 import { widgets } from './settings/widgets';
+import { workflowAction } from './settings/workflow-action';
 
 function Workflow({ translate, ...props }) {
   const taskName = `siteMapDetails`;
+  const workflowData = {
+    hasFilters: false,
+    taskName: 'siteMapDetails',
+    workflowId: '09522661-c6e8-4161-a1cf-8c1e2e499824',
+    entity: 'SiteMap',
+  };
   const entity = `SiteMap`;
-  const [selectedViewOption, setSelectedViewOption] = useState(widgets[0]);
-  const [cardsNumber, setCardsNumber] = useState(0);
-  const [selectedRows, setSelectedRows] = useState([]);
   const classes = SimpleLayoutStyle();
   const [isSummarizeOpen, setIsSummarizeOpen] = useState(true);
   const workflowName = `Site Map Details`;
   const objectFocus = `siteMap`;
-  function handleOnTabIndexChanged(newTabIndex, option) {
-    setSelectedViewOption(option);
-  }
   const siteMapActions = useKleeenActions(taskName);
 
   return (
     <AccessControl id={roleAccessKeyTag(`navigation.${taskName}`)}>
-      <div className={`${classes.entityBrowserTask} subhead-dynamic`}>
-        <div className={classes.entityBrowserDetailsSection}>
-          <EntityDetailsSection
+      <WorkflowProvider value={workflowData}>
+        <div className={`${classes.entityBrowserTask} subhead-dynamic`}>
+          <div className={classes.entityBrowserDetailsSection}>
+            <EntityDetailsSection
+              entityName={entity}
+              isEditable
+              objectValue={objectFocus}
+              entityDetails={entityDetailsSectionEntityDetails}
+              taskName={taskName}
+              displayTaskName={workflowName}
+              onChangeFilterVisible={setIsSummarizeOpen}
+            />
+          </div>
+          <ViewsManager
+            views={widgets}
+            SubHeader={DataViewControlSection}
+            subHeaderProps={{
+              actions: workflowAction,
+              entity,
+              entityActions: siteMapActions,
+              hideRefreshControl: true,
+              isEntityDetails: true,
+              objectValue: objectFocus,
+              taskName,
+              title: workflowName,
+            }}
+            containerClasses={
+              isSummarizeOpen
+                ? `${classes.entityBrowserAreaWithDetailsSection} openDetailsSection `
+                : `${classes.entityBrowserArea} browserArea `
+            }
+            pageIntroClasses={`${classes.gridPageIntro}`}
+            contentClasses={`${classes.dataViewDisplaySection}`}
             entityName={entity}
-            isEditable
-            objectValue={objectFocus}
-            entityDetails={entityDetailsSectionEntityDetails}
             taskName={taskName}
-            displayTaskName={workflowName}
-            onChangeFilterVisible={setIsSummarizeOpen}
           />
         </div>
-        <div
-          className={
-            isSummarizeOpen
-              ? `${classes.entityBrowserAreaWithDetailsSection} openDetailsSection `
-              : `${classes.entityBrowserArea} browserArea `
-          }
-        >
-          <div
-            className={`${classes.gridPageIntro} ${cardsNumber > 0 ? `max-card-${cardsNumber}` : ''}`}
-            data-testid="page-intro"
-          >
-            <DataViewControlSection
-              actions={workflowAction}
-              attributes={attributesOnCreate}
-              entity={entity}
-              entityActions={siteMapActions}
-              hideRefreshControl
-              isEntityDetails
-              objectValue={objectFocus}
-              onTabIndexChanged={handleOnTabIndexChanged}
-              selectedOption={selectedViewOption}
-              setSelectedOption={setSelectedViewOption}
-              taskName={taskName}
-              title={workflowName}
-              viewOptions={viewOptions}
-            />
-          </div>
-          <div
-            className={`${classes.dataViewDisplaySection} ${
-              selectedRows.length > 0 && selectedViewOption.sortOrder === 0 ? classes.snackbar : ''
-            }`}
-            data-testid="content-section"
-          >
-            <DataViewDisplaySectionAtomic
-              widgets={widgets}
-              entityName={entity}
-              selectedOption={selectedViewOption}
-              selectedRows={selectedRows}
-              setCardsNumber={setCardsNumber}
-              setSelectedRows={setSelectedRows}
-              taskName={taskName}
-              value={selectedViewOption}
-            />
-          </div>
-        </div>
-      </div>
+      </WorkflowProvider>
     </AccessControl>
   );
 }

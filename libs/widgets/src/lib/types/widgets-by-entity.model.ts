@@ -1,39 +1,22 @@
 import {
   Attribute,
   ElementComponents,
-  Filters,
   FormatProps,
   TransformationProps,
   ValueProp,
   ValuesProps,
   VizParams,
   Widget,
+  WidgetScope,
+  WidgetsByEntityMap,
 } from '@kleeen/types';
-
-export type WidgetDefinition = string;
-
-export enum WidgetScope {
-  Collection = 'collection',
-  Single = 'single',
-}
-
-export type WidgetsByEntityByType<T> = {
-  [key in WidgetScope]?: T[];
-};
-
-export interface WidgetsByEntityMap<T> {
-  [key: string]: WidgetsByEntityByType<T>;
-}
 
 export interface WidgetByIdMap {
   [key: string]: LibraryWidget;
 }
 
 // TODO: @cafe update this typing when generated Widget code is a much better fit
-export type LibraryWidget = Omit<
-  Widget,
-  'attributes' | 'chartType' | 'params' | 'statisticalType' | 'viableSolutions'
-> & {
+export type LibraryWidget = Omit<Widget, 'attributes' | 'chartType' | 'params' | 'viableSolutions'> & {
   attributes: (Omit<Attribute, 'elements' | 'format' | 'statisticalType' | 'transformation'> & {
     elements?: Omit<ElementComponents, 'displayComponent' | 'inputComponent'> & {
       displayComponent?: string;
@@ -56,11 +39,9 @@ export type LibraryWidget = Omit<
           })[];
         });
   };
-  statisticalType?: string;
   viableSolutions: string[];
 };
 
-export type WidgetIdsByEntity = WidgetsByEntityMap<WidgetDefinition>;
 export type WidgetsByEntity = WidgetsByEntityMap<LibraryWidget>;
 
 export interface WidgetByEntityBaseParam {

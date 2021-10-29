@@ -62,6 +62,7 @@ const RefreshControl = ({ onRefresh, translate, taskName }: RefreshControlProps)
   }, []);
 
   useEffect(() => {
+    // FIXME: JSON.parse throws when fail, add a validation.
     const localStorageInterval = JSON.parse(_storage.getItem(keyOfLocalStorage));
     if (localStorageInterval) {
       currentInterval.current = Number(localStorageInterval);

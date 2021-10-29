@@ -1,4 +1,5 @@
 import { CrossLinkingProps, useCrossLinkingMenuOnViz } from '@kleeen/react/hooks';
+import { TranslateProps, VisualizationWidgetProps } from '@kleeen/types';
 import { clone, has, pathOr } from 'ramda';
 
 import Highcharts from 'highcharts';
@@ -13,13 +14,16 @@ import more from 'highcharts/highcharts-more';
 more(Highcharts);
 HighchartsColorAxis(Highcharts);
 
-export const BubbleChart = ({ translate, ...props }: HighchartsReact.Props): React.ReactElement => {
-  const widgetId = pathOr('', ['widgetId'], props);
-  const results = pathOr([], ['context', 'data', 'results'], props);
-  const format = pathOr({}, ['context', 'data', 'format'], props);
+export function BubbleChart({
+  translate,
+  ...props
+}: VisualizationWidgetProps & TranslateProps & HighchartsReact.Props): React.ReactElement {
+  const { context, widgetId = '' } = props;
+  const results = pathOr([], ['results'], context.data);
+  const format = pathOr({}, ['format'], context.data);
   const xAxis = clone(pathOr({}, ['xAxis'], format));
   const yAxis = clone(pathOr({}, ['yAxis'], format));
-  const { isLoading } = pathOr(false, ['context'], props);
+  const { isLoading } = context;
   if (!has('key', xAxis)) {
     xAxis['key'] = widgetId;
   }
@@ -58,6 +62,6 @@ export const BubbleChart = ({ translate, ...props }: HighchartsReact.Props): Rea
       )}
     </>
   );
-};
+}
 
-export default React.memo(BubbleChart);
+export default React.memo<VisualizationWidgetProps & HighchartsReact.Props>(BubbleChart);

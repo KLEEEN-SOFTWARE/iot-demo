@@ -1,7 +1,7 @@
-import { Attribute, GroupByProps, ValueProp, ValuesProps, VizCommonParams } from '@kleeen/types';
 import { KsRankedListItem, SimpleList } from '@kleeen/react/components';
 import { formatDataList, formatSeverity, parseAttributes } from '@kleeen/frontend/utils';
 
+import { WidgetProps } from '@kleeen/types';
 import { makeStyles } from '@material-ui/core';
 import { useWidgetContext } from '@kleeen/react/hooks';
 
@@ -12,27 +12,8 @@ const useStyles = makeStyles({
     margin: '0 calc(-1 * var(--pm-L))',
   },
 });
-export interface RankedListWidgetProps extends VizCommonParams {
-  attributes?: Attribute[];
-  params: {
-    aggregatedBy?: string;
-    aggregatedByType?: string;
-    aggregation_attribute?: string;
-    aggregation?: string;
-    baseModel: string;
-    groupBy?: GroupByProps;
-    value?: ValueProp | ValuesProps;
-  };
-  taskName: string;
-  widgetId: string | number;
-}
 
-export const RankedListWidget = ({
-  attributes,
-  params,
-  taskName,
-  widgetId,
-}: RankedListWidgetProps): JSX.Element => {
+export function RankedListWidget({ attributes, params, taskName, widgetId }: WidgetProps): JSX.Element {
   const widgetData = useWidgetContext({ taskName, widgetId, params }) || { data: {} };
   const { format, crossLinking, results } = widgetData.data || {};
   const listColumns = parseAttributes(attributes, format);
@@ -52,6 +33,9 @@ export const RankedListWidget = ({
         columns={listColumns}
         data={newWidgetData.data}
         hideHeader={hideHeader}
+        listItemOptions={{
+          widgetId,
+        }}
         listOptions={{
           ListItemComponent: KsRankedListItem,
           sortBy: metadata?.valueColumnName,
@@ -60,6 +44,6 @@ export const RankedListWidget = ({
       />
     </div>
   );
-};
+}
 
 export default RankedListWidget;

@@ -24,6 +24,7 @@ import { AuthError } from './errors';
 import { isNilOrEmpty } from '@kleeen/common/utils';
 
 const logger = new Logger('AuthClass');
+const ksAuthInfusion: any = document.createElement('ks-login');
 
 const KLEEEN_AUTHORING_SYMBOL = (
   typeof Symbol !== 'undefined' && typeof Symbol.for === 'function'
@@ -54,8 +55,8 @@ export class AuthClass {
   constructor(config?: AuthOptions) {
     this.#currentState = AuthMessage.Loading;
     this.configure(config);
+
     Hub.listen(AuthChannel, ({ payload }) => {
-      console.log(`Listening for all messages on channel ${AuthChannel}: `, payload);
       const { event } = payload;
       switch (event) {
         case AuthMessage.SignedIn:
@@ -158,7 +159,7 @@ export class AuthClass {
    * Get current user's session
    * @return - A promise resolves to session object if success
    */
-  async currentSession(): Promise<IUserSession> {
+  async currentSession(): Promise<IUserSession | undefined> {
     logger.debug('Getting current session');
     if (!this.#authenticationHandler?.currentSession) {
       return this.rejectAuthError(AuthErrorTypes.MissingAuthConfig);
@@ -478,4 +479,11 @@ export class AuthClass {
   //#endregion
 }
 
-export const KSAuth = new AuthClass();
+function instantiateKSAuth(): AuthClass {
+  if (ksAuthInfusion?.KSAuth) {
+    return ksAuthInfusion.KSAuth;
+  }
+  return new AuthClass();
+}
+
+export const KSAuth = instantiateKSAuth();

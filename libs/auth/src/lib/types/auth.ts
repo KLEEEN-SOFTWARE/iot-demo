@@ -247,7 +247,7 @@ export interface IAuthenticationHandler {
    * Get current user's session
    * @return - A promise resolves to session object if success
    */
-  currentSession(): Promise<IUserSession>;
+  currentSession(): Promise<IUserSession | undefined>;
 
   /**
    * A function that takes either a new context object

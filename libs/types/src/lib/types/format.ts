@@ -1,4 +1,10 @@
 // Interfaces
+
+export interface FormatValueLabel {
+  label: string;
+  value: number;
+}
+
 // TODO: @cafe update this props with real types
 export interface FormatProps {
   categories?: string[];
@@ -15,7 +21,7 @@ export interface FormatProps {
   severityLevels?: number;
   suffix?: string;
   type?: string;
-  valueLabels?: { [key: number]: string };
+  valueLabels?: FormatValueLabel[];
 }
 
 export interface TrendMark {

@@ -7,39 +7,32 @@ import { BaseApiService } from '@kleeen/frontend/utils';
 import { WidgetActions } from '../../types';
 import { isNilOrEmpty } from '@kleeen/common/utils';
 import { map } from 'rxjs/operators';
-import { parseData } from './widgetDataParser';
 
 export function getData(input: WidgetActions.GetDataInput): any {
   if (isNilOrEmpty(input)) {
     throw SyntaxError('Input has an invalid value');
   }
 
-  const { params, paramsBasedOnRoute } = input;
+  const { params } = input;
   const { operationName = 'getData' } = params;
 
-  return BaseApiService.graphqlChartWidgetQuery(params, paramsBasedOnRoute).pipe(
+  return BaseApiService.graphqlChartWidgetQuery(params).pipe(
     map((request) => request.response),
     map((response) => response.data[operationName]),
-    // TODO: @carreta find a better place/way to parse this data.
-    map((data) => parseData(data)),
   );
 }
 
-export function generateEpics(
-  actions: WidgetActions.Actions,
-): { [key: string]: (action$: ActionsObservable<Action>) => Epic } {
+export function generateEpics(actions: WidgetActions.Actions): {
+  [key: string]: (action$: ActionsObservable<Action>) => Epic;
+} {
   return {
-    /**
-     * Epics/getWidgetData
-     * @desc generic getWidgetData
-     */
     getWidgetData(action$: ActionsObservable<Action>): Epic {
-      const prepareRequest = (action: WidgetActions.GetData): any => {
+      const prepareRequest = (action: WidgetActions.GetData) => {
         const { payload } = action;
         return getData(payload);
       };
 
-      const onRequestSuccess = (response: any, action: WidgetActions.GetData): Action[] => {
+      const onRequestSuccess = (response: any): Action[] => {
         return [actions.getDataSuccess({ response })];
       };
 
@@ -56,12 +49,12 @@ export function generateEpics(
       );
     },
     getMoreRowsData(action$: ActionsObservable<Action>): Epic {
-      const prepareRequest = (action: WidgetActions.GetData): any => {
+      const prepareRequest = (action: WidgetActions.GetData) => {
         const { payload } = action;
         return getData(payload);
       };
 
-      const onRequestSuccess = (response: any, action: WidgetActions.GetData): Action[] => {
+      const onRequestSuccess = (response: any): Action[] => {
         return [actions.getMoreDataSuccess({ response })];
       };
 

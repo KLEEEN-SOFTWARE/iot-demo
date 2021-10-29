@@ -1,17 +1,19 @@
 import './CardSection.scss';
 
-import { CardSectionLayout, CardSectionProps, RenderChildrenProps } from './CardWidget.model';
+import { CardSectionLayout, Widget } from '@kleeen/types';
+import { CardSectionProps, RenderChildrenProps } from './CardWidget.model';
 import { ReactElement, ReactNode } from 'react';
 import { isNilOrEmpty, roleAccessKeyTag } from '@kleeen/common/utils';
 
 import { AccessControl } from '@kleeen/core-react';
+import { KsAnimations } from '../animations/animations';
 import { TransformToWidgetComponent } from './components';
-import { Widget } from '@kleeen/types';
 import classNames from 'classnames';
 
 const bem = 'ks-card-section';
 
 export function CardSection({
+  animation,
   cardSectionLayout = CardSectionLayout.Masonry,
   children,
   hideSaveAndClose,
@@ -20,14 +22,16 @@ export function CardSection({
   registerEvents,
   taskName,
   widgets,
+  WidgetHeader,
 }: CardSectionProps): ReactElement {
   return (
     <div
       className={classNames(bem, 'card-section', cardSectionLayout)}
-      style={{ justifyContent }}
       key={`card-section-${taskName}`}
+      style={{ justifyContent }}
     >
       {renderChildren({
+        animation,
         cardSectionLayout,
         children,
         hideSaveAndClose,
@@ -35,6 +39,7 @@ export function CardSection({
         registerEvents,
         taskName,
         widgets,
+        WidgetHeader,
       })}
     </div>
   );
@@ -44,7 +49,7 @@ export default CardSection;
 
 //#region Private members
 function addCurrentWidgetTypeToViableSolutions(widget: Widget): Widget {
-  const resultWidget = { ...widget };
+  const resultWidget = JSON.parse(JSON.stringify(widget)); // FIXME: Avoid cloning ab object using this hack.
 
   // TODO: @jcvalerio this method have to be refactored in a single place duplicated with libs/react/atomic-elements/src/lib/components/CardSection/CardSection.tsx
   if (isNilOrEmpty(resultWidget.viableSolutions)) {
@@ -59,6 +64,7 @@ function addCurrentWidgetTypeToViableSolutions(widget: Widget): Widget {
 }
 
 function renderChildren({
+  animation,
   cardSectionLayout,
   children,
   hideSaveAndClose,
@@ -66,30 +72,35 @@ function renderChildren({
   registerEvents,
   taskName,
   widgets,
+  WidgetHeader,
 }: RenderChildrenProps): JSX.Element | ReactNode {
-  if (widgets) {
-    return widgets.map((widget: Widget) => {
-      const widgetCompleted = addCurrentWidgetTypeToViableSolutions(widget);
+  if (isNilOrEmpty(widgets)) return children;
 
-      return (
-        <AccessControl
-          id={roleAccessKeyTag(`${taskName}.widgets.${widget.id}`)}
-          key={`card-section-widget-${widget.id}`}
-        >
+  const disableHeightCalculation = cardSectionLayout === CardSectionLayout.SingleWideColumn;
+
+  return widgets.map((widget: Widget, index) => {
+    const widgetCompleted = addCurrentWidgetTypeToViableSolutions(widget);
+    const id = roleAccessKeyTag(`${taskName}.widgets.${widget.id}`);
+    // *the key cannot be base on the index because the item is inserted first
+    const widgetIndex = widgets.length - index;
+    const key = `card-section-widget-${widget.id}-${widgetIndex}`;
+    const noAnimationIf = !widget.isNewWidget || index != 0;
+
+    return (
+      <AccessControl id={id} key={key}>
+        <KsAnimations.AnimationGrow animation={animation} disabled={noAnimationIf}>
           <TransformToWidgetComponent
-            disableHeightCalculation={cardSectionLayout === CardSectionLayout.SingleWideColumn}
+            disableHeightCalculation={disableHeightCalculation}
             hideSaveAndClose={hideSaveAndClose}
-            key={`card-section-widget-${widget.id}`}
+            key={key}
             onInputChange={onInputChange}
             registerEvents={registerEvents}
             taskName={taskName}
             widget={widgetCompleted}
+            WidgetHeader={WidgetHeader}
           />
-        </AccessControl>
-      );
-    });
-  } else {
-    return children;
-  }
+        </KsAnimations.AnimationGrow>
+      </AccessControl>
+    );
+  });
 }
-//#endregion

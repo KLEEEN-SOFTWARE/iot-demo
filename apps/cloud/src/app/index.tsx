@@ -4,47 +4,60 @@ import { MessageShape, ToastNotification } from '@kleeen/react/atomic-elements';
 
 import AppContainer from './app';
 import { ErrorBoundary } from 'react-error-boundary';
-import { KUICombineProviders } from '@kleeen/core-react';
-import { SnackbarProvider } from 'notistack';
+import { KsCombineRightProviders } from '@kleeen/react/components';
+import { SnackbarProvider as NotistackSnackbarProvider } from 'notistack';
 import { useState } from 'react';
 
-export function App(): JSX.Element {
+export function App() {
   const [errorInfo, setErrorInfo] = useState<{ componentStack: string }>(null);
 
-  function onErrorHandler(error: Error, info: { componentStack: string }): void {
-    console.error(error);
-    console.info(info);
-    // TODO: @Guaria set configuration to plug Sentry
-    setErrorInfo(info);
-  }
-
-  function fallbackComponent({ error }): JSX.Element {
+  function FallbackComponent({ error }) {
     return <ErrorFallback error={error} info={errorInfo} />;
   }
 
+  function handleError(error: Error, info: { componentStack: string }) {
+    console.error(error);
+    setErrorInfo(info);
+  }
+
   return (
-    <ErrorBoundary FallbackComponent={fallbackComponent} onError={onErrorHandler}>
-      <StylesProvider>
-        <LocalizationContextProvider>
-          <KUICombineProviders providers={[ReduxProvider]}>
-            <SnackbarProvider
-              classes={{
-                containerRoot: 'custom-noti-stack-container',
-              }}
-              anchorOrigin={{
-                horizontal: 'right',
-                vertical: 'top',
-              }}
-              content={(key, message) => <ToastNotification id={key} message={message as MessageShape} />}
-              maxSnack={10}
-            >
-              <PreviewPanelLayoutProvider>
-                <AppContainer />
-              </PreviewPanelLayoutProvider>
-            </SnackbarProvider>
-          </KUICombineProviders>
-        </LocalizationContextProvider>
-      </StylesProvider>
+    <ErrorBoundary FallbackComponent={FallbackComponent} onError={handleError}>
+      <KsCombineRightProviders
+        providers={[
+          // *Primary Global Providers.
+          StylesProvider,
+          ReduxProvider,
+          LocalizationContextProvider,
+          SnackbarProvider,
+          PreviewPanelLayoutProvider,
+        ]}
+      >
+        <AppContainer />
+      </KsCombineRightProviders>
     </ErrorBoundary>
   );
 }
+
+//#region Private members
+interface SimpleProviderProps {
+  children: JSX.Element;
+}
+
+function SnackbarProvider({ children }: SimpleProviderProps) {
+  return (
+    <NotistackSnackbarProvider
+      anchorOrigin={{
+        horizontal: 'right',
+        vertical: 'top',
+      }}
+      classes={{
+        containerRoot: 'custom-noti-stack-container',
+      }}
+      content={(key, message) => <ToastNotification id={key} message={message as MessageShape} />}
+      maxSnack={10}
+    >
+      {children}
+    </NotistackSnackbarProvider>
+  );
+}
+//#endregion

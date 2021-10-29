@@ -9,7 +9,18 @@ export const baseSchema = gql`
     data: JSON
   }
 
+  type OnboardingPreferences {
+    config: JSON
+    showOnBoarding: Boolean
+    success: Boolean
+  }
+
+  input PreferencesInput {
+    params: JSON
+  }
+
   input DataAggregationArgsDataPoint {
+    bucket: JSON
     name: String!
     transformation: String!
   }

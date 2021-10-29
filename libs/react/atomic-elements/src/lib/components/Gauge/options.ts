@@ -170,7 +170,7 @@ function getSeverityLevelOptions(params: GetGaugeOptions): Highcharts.Options {
     },
     yAxis: {
       plotBands: getSeverityLevelPlotBands({ ...params, format: { max, min } }, severities),
-      categories: Object.values(format.valueLabels || {}),
+      categories: format.valueLabels?.map(({ label }) => label),
       tickAmount: 0,
       tickWidth: 0,
       min,
@@ -201,11 +201,11 @@ interface GetResultParams {
 }
 
 function severityLevelResult({ results, format }: GetResultParams): number {
-  const foundKey = Object.entries(format.valueLabels || {}).find(([_, value]) => results === value);
+  const foundKey = format.valueLabels?.find(({ label }) => results === label);
   if (!foundKey) {
     return -1;
   }
-  return parseInt(foundKey[0]) - format.min;
+  return foundKey.value - format.min;
 }
 
 const resultResolverByFormatType: { [key: string]: (params: GetResultParams) => number } = {

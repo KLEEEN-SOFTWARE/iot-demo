@@ -3,21 +3,30 @@ import * as R from 'ramda';
 import { Cardinality, Transformation, transformationsWithCrossLinking } from '../utils';
 import { DataAggregationArgs, DataAggregationArgsDataPoint, GetWidgetDataResult } from '../types';
 import { FakeDataDataPoint, GetWidgetData, PrimitiveTypes } from './types';
-import { buildArrayOfNumbers, getDataList, getEntityFormat, getRandomNumber, getType } from './utils';
+import {
+  buildArrayOfNumbers,
+  getDataList,
+  getEntityFormat,
+  getRandomNumber,
+  getType,
+  transformGroupBy,
+} from './utils';
 import { isNilOrEmpty, isNotNilOrEmpty } from '@kleeen/common/utils';
 
+import { CrossLinking } from '@kleeen/types';
 import { calculateTransformation } from './transformation';
+import { cryptoRandom } from '@kleeen/backend/utils';
 
 const transformToFakeDataPoint = (
   dataPoint: DataAggregationArgsDataPoint,
   filters,
   uniqueByDisplayValue?: boolean,
 ): FakeDataDataPoint => {
-  const { valueList: list, valueIdList: idList }: any = getDataList(
-    dataPoint.name,
+  const { valueList: list, valueIdList: idList }: any = getDataList({
+    entityName: dataPoint.name,
     filters,
     uniqueByDisplayValue,
-  ); //TODO this "any" should be changed for the correct type
+  });
   const type = getType(list, dataPoint.name);
   const isCategorical = type === PrimitiveTypes.String || type === PrimitiveTypes.Boolean;
   const isSelf =
@@ -33,12 +42,21 @@ const transformToFakeDataPoint = (
   };
 };
 
-const noAggregationWithGroupByCategorical = (
-  value: FakeDataDataPoint,
-  groupBy: FakeDataDataPoint,
-): GetWidgetDataResult => {
-  const groupByFormat = getEntityFormat(groupBy.name);
-  const valueFormat = getEntityFormat(value.name);
+interface NoAggregationWithGroupByCategoricalProps {
+  groupBy: FakeDataDataPoint;
+  groupByCrossLinking: CrossLinking[];
+  groupByFormat: any;
+  value: FakeDataDataPoint;
+  valueFormat: any;
+}
+
+function noAggregationWithGroupByCategorical({
+  groupBy,
+  groupByCrossLinking,
+  groupByFormat,
+  value,
+  valueFormat,
+}: NoAggregationWithGroupByCategoricalProps): GetWidgetDataResult {
   if (groupBy.isCategorical && value.isCategorical) {
     const groupByIndexByValueIndex = groupBy.list.map((_, i) => [i, getRandomNumber(value.list.length)]);
 
@@ -48,7 +66,7 @@ const noAggregationWithGroupByCategorical = (
         yAxis: { categories: value.list, key: value.name, type: value.type, ...valueFormat },
       },
       results: groupByIndexByValueIndex,
-      crossLinking: [groupBy.idList, value.idList],
+      crossLinking: [groupByCrossLinking, value.idList],
     };
   }
 
@@ -61,9 +79,9 @@ const noAggregationWithGroupByCategorical = (
       yAxis: { key: value.name, type: value.type, ...valueFormat },
     },
     results,
-    crossLinking: [groupBy.idList, value.idList],
+    crossLinking: [groupByCrossLinking, value.idList],
   };
-};
+}
 
 /**
  * Each groupBy has multiple values.
@@ -83,6 +101,14 @@ const toMultipleResults = (groupByList, valueList): number[][] => {
   return R.unnest(indexValueList);
 };
 
+interface ToNumericalResultsProps {
+  groupBy: FakeDataDataPoint;
+  max?: number;
+  min?: number;
+  valueList: number[];
+  variance?: number;
+}
+
 /**
  * Each groupBy has an transformed value (count, max, min, sum, etc).
  * returns [[20, 1000], [40, 1500], [23, 1100], [10, 2000], [120, 1750]]
@@ -90,14 +116,36 @@ const toMultipleResults = (groupByList, valueList): number[][] => {
  * toNumericalResults([20, 40, 23, 10, 120], [1000, 1500, 1100, 2000, 1750]);
  *
  */
-const toNumericalResults = (groupByList: number[], valueList: number[]): number[][] => {
-  const groupByListSorted = [...groupByList].sort((a, b) => a - b);
-  const numericalResults = groupByListSorted
-    .map((groupByValue, index) => [groupByValue as number, valueList[index] as number])
-    .filter((data) => data.every(isNotNilOrEmpty));
+function toNumericalResults({
+  groupBy,
+  max = 200,
+  min = 0,
+  valueList,
+  variance = 0,
+}: ToNumericalResultsProps): number[][] {
+  const groupByListSorted = [...(groupBy.list as number[])].sort((a, b) => a - b);
+  const shouldUseBuckets =
+    groupBy.type === PrimitiveTypes.Date && groupBy.transformation === Transformation.TemporalBucket;
 
-  return numericalResults;
-};
+  const transformedGroupByList = shouldUseBuckets
+    ? transformGroupBy({ groupBy, list: groupByListSorted })
+    : groupByListSorted;
+
+  const getNewValue = (index, list) => {
+    if (index >= list.length) return ((max - min) / transformedGroupByList.length) * index + min;
+
+    return list[index];
+  };
+
+  return transformedGroupByList
+    .map((groupByValue, index) => {
+      return [
+        groupByValue,
+        getNewValue(index, valueList) + cryptoRandom() * variance * (Math.round(cryptoRandom()) ? 1 : -1),
+      ];
+    })
+    .filter((data) => data.every(isNotNilOrEmpty));
+}
 
 const getWidgetDataNoGroupBy = (value: FakeDataDataPoint): GetWidgetDataResult | any => {
   const valueFormat = getEntityFormat(value.name);
@@ -128,10 +176,18 @@ const getWidgetDataOneGroupBy = (
 ): GetWidgetDataResult | any => {
   const groupByFormat = getEntityFormat(groupBy.name);
   const valueFormat = getEntityFormat(value.name);
+  const groupByCrossLinking = groupBy.isSelf ? groupBy.idList : [];
+
   if (value.isSelf) {
     if (cardinality === Cardinality.Single) {
       if (groupBy.isCategorical) {
-        return noAggregationWithGroupByCategorical(value, groupBy);
+        return noAggregationWithGroupByCategorical({
+          groupBy,
+          groupByCrossLinking,
+          groupByFormat,
+          value,
+          valueFormat,
+        });
       }
 
       if (!groupBy.isCategorical && value.isCategorical) {
@@ -141,19 +197,35 @@ const getWidgetDataOneGroupBy = (
             yAxis: { categories: value.list, type: value.type, key: value.name, ...valueFormat },
           },
           results: groupBy.list,
-          crossLinking: [groupBy.idList, value.idList], // check if we can skip this completely (we should)
+          crossLinking: [groupByCrossLinking, value.idList], // check if we can skip this completely (we should)
         };
       }
 
       if (!groupBy.isCategorical && !value.isCategorical) {
-        const numericalResults = toNumericalResults(groupBy.list as number[], value.list as number[]);
+        const numericalResults = toNumericalResults({
+          groupBy,
+          valueList: value.list as number[],
+        });
+        const variedNumericalResults = toNumericalResults({
+          groupBy,
+          valueList: value.list as number[],
+          variance: 1,
+        });
         return {
           format: {
             xAxis: { type: groupBy.type, key: groupBy.name, ...groupByFormat },
             yAxis: { type: value.type, key: value.name, ...valueFormat },
           },
           results: numericalResults,
-          crossLinking: [groupBy.idList, value.idList],
+          crossLinking: [groupByCrossLinking, value.idList],
+          series: [
+            {
+              data: numericalResults,
+            },
+            {
+              data: variedNumericalResults,
+            },
+          ],
         };
       }
     }
@@ -168,7 +240,7 @@ const getWidgetDataOneGroupBy = (
           xAxis: { categories: groupBy.list, type: groupBy.type, ...groupByFormat },
         },
         results,
-        crossLinking: [groupBy.idList, []], // check if we can skip this completely (we should)
+        crossLinking: [groupByCrossLinking, []], // check if we can skip this completely (we should)
       };
     }
   }
@@ -187,37 +259,42 @@ const getWidgetDataOneGroupBy = (
           yAxis: { type: value.type, key: value.name, ...valueFormat },
         },
         results: buildArrayOfNumbers(groupBy.list.length, valueFormat.min, valueFormat.max),
-        crossLinking: [groupBy.idList, []], // check if we can skip this completely (we should)
+        crossLinking: [groupByCrossLinking, []], // check if we can skip this completely (we should)
       };
     }
 
     if (!groupBy.isCategorical) {
-      const results = toNumericalResults(
-        groupBy.list as number[],
-        buildArrayOfNumbers(value.list.length, valueFormat.min, valueFormat.max),
-      );
+      const results = toNumericalResults({
+        groupBy,
+        min: valueFormat.min,
+        max: valueFormat.max,
+        valueList: buildArrayOfNumbers(value.list.length, valueFormat.min, valueFormat.max),
+      });
+      const variedNumericalResults = toNumericalResults({
+        groupBy,
+        min: valueFormat.min,
+        max: valueFormat.max,
+        valueList: buildArrayOfNumbers(value.list.length, valueFormat.min, valueFormat.max),
+        variance: 1,
+      });
       return {
+        crossLinking: [groupByCrossLinking, []], // check if we can skip this completely (we should)
         format: {
           xAxis: { type: groupBy.type, key: groupBy.name, ...groupByFormat },
           yAxis: { type: value.type, key: value.name, ...valueFormat },
         },
         results,
-        crossLinking: [groupBy.idList, []], // check if we can skip this completely (we should)
+        series: [
+          {
+            data: results,
+          },
+          {
+            data: variedNumericalResults,
+          },
+        ],
       };
     }
   }
-};
-
-const getDataPointObject = (dataPoint: FakeDataDataPoint, list = [], idList = []): FakeDataDataPoint => {
-  let newDataPoint;
-  Object.keys(dataPoint).forEach(() => {
-    newDataPoint = {
-      ...dataPoint,
-      list,
-      idList,
-    };
-  });
-  return newDataPoint;
 };
 
 export const getWidgetData: GetWidgetData = (input: DataAggregationArgs): GetWidgetDataResult | any => {

@@ -1,32 +1,33 @@
-import IconButton from '@material-ui/core/IconButton';
-import Toolbar from '@material-ui/core/Toolbar';
-import Tooltip from '@material-ui/core/Tooltip';
+import './ConfirmForm.scss';
+
 import CheckIcon from '@material-ui/icons/Check';
 import ClearIcon from '@material-ui/icons/Clear';
-import React from 'react';
-import './ConfirmForm.scss';
+import IconButton from '@material-ui/core/IconButton';
 import { Localization } from './GridSection.model';
+import Toolbar from '@material-ui/core/Toolbar';
+import Tooltip from '@material-ui/core/Tooltip';
+
 interface ConfirmFormProps {
   localization: Localization;
-  confirmMethod: Function;
-  rejectMethod: Function;
+  onConfirm: () => void;
+  onReject: () => void;
 }
 
-const ConfirmForm: React.FC<ConfirmFormProps> = (props: ConfirmFormProps) => {
+const ConfirmForm = (props: ConfirmFormProps) => {
   const {
     localization: { confirmArialLabel, rejectAriaLabel },
-    confirmMethod,
-    rejectMethod,
+    onConfirm,
+    onReject,
   } = props;
   return (
     <Toolbar className="confirm-form-container">
       <Tooltip title={confirmArialLabel}>
-        <IconButton aria-label={confirmArialLabel} onClick={() => confirmMethod()}>
+        <IconButton aria-label={confirmArialLabel} onClick={onConfirm} data-testid="confirm-delete-row">
           <CheckIcon fontSize="small" />
         </IconButton>
       </Tooltip>
       <Tooltip title={rejectAriaLabel}>
-        <IconButton aria-label={rejectAriaLabel} onClick={() => rejectMethod()}>
+        <IconButton aria-label={rejectAriaLabel} onClick={onReject} data-testid="reject-delete-row">
           <ClearIcon fontSize="small" />
         </IconButton>
       </Tooltip>

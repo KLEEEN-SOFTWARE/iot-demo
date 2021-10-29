@@ -1,22 +1,10 @@
-import { IUser, KSAuth } from '@kleeen/auth';
-import { useEffect, useState } from 'react';
+import { IUser } from '@kleeen/auth';
+import { useKleeenContext } from '.';
 
+/** @deprecated in favor of useKleeenContext('endUser') */
 const useUserInfo = (): { userInfo: IUser } => {
-  const [userInfo, setUser] = useState<IUser>();
-
-  useEffect(() => {
-    const getUser = async (): Promise<void> => {
-      try {
-        const userAux = await KSAuth.currentAuthenticatedUser();
-        setUser(userAux);
-      } catch (err) {
-        setUser(undefined);
-      }
-    };
-    getUser();
-  }, []);
-
-  return { userInfo };
+  const { currentUser } = useKleeenContext('endUser');
+  return { userInfo: currentUser };
 };
 
 export default useUserInfo;

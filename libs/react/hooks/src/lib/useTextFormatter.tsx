@@ -1,10 +1,11 @@
-import { AggregationType, Attribute, DateTimeFormatOptions, FormatProps } from '@kleeen/types';
+import { AggregationType, DateTimeFormatOptions, FormatProps, Transformation } from '@kleeen/types';
 import { IntlShape, createIntl, createIntlCache } from '@formatjs/intl';
 import { Language, useLocalization } from './useLocalization';
 
 import { ReactNode } from 'react';
 import { isNilOrEmpty } from '@kleeen/common/utils';
 import { omit } from 'ramda';
+import { isCountTransformations } from '@kleeen/frontend/utils';
 
 interface AttributeFormatProps {
   format: FormatProps;
@@ -22,6 +23,7 @@ type FormatOptions = DateTimeFormatOptions | { style?: string; maximumFractionDi
 interface FormatConfiguration {
   format: string;
   options: FormatOptions;
+  timestampOptions?: (transformation: Transformation) => any;
   transformValue?: (value: ReactNode) => ReactNode;
 }
 
@@ -87,11 +89,14 @@ export const formatByType = {
   },
   timestamp: {
     defaultFormat: FormatTypes.date,
-    options: {
-      year: 'numeric',
-      month: 'numeric',
-      day: 'numeric',
-    },
+    timestampOptions: (transformation: Transformation) =>
+      !isCountTransformations(transformation)
+        ? {
+            day: 'numeric',
+            month: 'numeric',
+            year: 'numeric',
+          }
+        : '',
   },
 };
 
@@ -110,10 +115,16 @@ const formatMapByType = {
 };
 
 function getConfigurationByType(type: string, transformation: AggregationType): FormatConfiguration {
-  const { transformations, options, defaultFormat, transformValue } = formatByType[type] || {};
+  const { transformations, options, defaultFormat, transformValue, timestampOptions } =
+    formatByType[type] || {};
+
+  const transformedOptions = !isNilOrEmpty(timestampOptions)
+    ? timestampOptions(transformation as Transformation)
+    : options;
+
   const format = !isNilOrEmpty(transformations) && transformations[transformation];
 
-  return { format: format || defaultFormat, options, transformValue };
+  return { format: format || defaultFormat, options: transformedOptions, transformValue };
 }
 
 export type Formatter = (value: ReactNode) => ReactNode;

@@ -7,8 +7,9 @@ export const useTextFormattersForViz = ({
   groupBy,
   value,
 }: {
-  groupBy: TODO;
-  value: TODO;
+  // TODO: @cafe Potentially GroupByProps, ValuesProps & ValueProps from @kleeen/types, but those are missing .format
+  groupBy?: TODO;
+  value?: TODO;
 }): [(value: ReactNode) => ReactNode, (value: ReactNode) => ReactNode, (value: ReactNode) => ReactNode] => {
   const [formatterGroupBy] = useTextFormatter({
     format: groupBy?.format,

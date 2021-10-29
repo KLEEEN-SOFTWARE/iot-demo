@@ -8,7 +8,7 @@ module.exports = {
   transform: {
     '^.+\\.[tj]sx?$': 'ts-jest',
   },
-  moduleFileExtensions: ['ts', 'tsx', 'js', 'jsx'],
+  moduleFileExtensions: ['js'],
   coverageDirectory: '../../coverage/libs/types',
   displayName: 'types',
 };

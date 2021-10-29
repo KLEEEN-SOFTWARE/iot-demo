@@ -4,7 +4,7 @@ export enum ActionType {
   Delete = 'delete',
 }
 
-export enum AggregationType {
+export enum Transformation {
   AlphabeticalBucket = 'alphabeticalBucket',
   AlphaTier = 'alphaTier',
   Average = 'average',
@@ -29,6 +29,7 @@ export enum AggregationType {
   SelfMulti = 'selfMulti',
   SelfSingle = 'selfSingle',
   Sum = 'sum',
+  TemporalBucket = 'temporalBucket',
   Tier = 'tier',
   TrendCountHighLowSparkline = 'trendCountHighLowSparkline',
   TrendCountSparkline = 'trendCountSparkline',
@@ -40,6 +41,8 @@ export enum AggregationType {
   TrendVsStartSparkline = 'trendVsStartSparkline',
   Unique = 'unique',
 }
+
+export { Transformation as AggregationType };
 
 export enum crosslinkingInteractionType {
   contextMenu = 'Context menu',
@@ -71,15 +74,6 @@ export enum EntityAttributeNames {
   DisplayValue = 'displayValue',
 }
 
-export enum FilterOperators {
-  from = 'from',
-  in = '_in',
-  max = 'max',
-  min = 'min',
-  relativeDate = 'relativeDate',
-  to = 'to',
-}
-
 export enum FilterTypes {
   in = 'filter-in',
   out = 'filter-out',
@@ -95,14 +89,14 @@ export const FilterForNumerics = [
 ];
 
 export enum IntervalDate {
+  allTime = '*',
   minute = '1,m',
   oneHours = '1,h',
-  sixHours = '6,h',
-  twentyFourHours = '24,h',
-  oneWeek = '1,w',
   oneMonth = '1,M',
+  oneWeek = '1,w',
+  sixHours = '6,h',
   threeMonth = '3,M',
-  allTime = '*',
+  twentyFourHours = '24,h',
 }
 
 export enum NavPosition {
@@ -116,15 +110,15 @@ export enum NavType {
 }
 
 export const SameSDTAggregations = [
-  AggregationType.Average,
-  AggregationType.Latest,
-  AggregationType.Max,
-  AggregationType.MedianMiddl,
-  AggregationType.Min,
-  AggregationType.NoAggregation,
-  AggregationType.Oldest,
-  AggregationType.SelfMulti,
-  AggregationType.SelfSingle,
+  Transformation.Average,
+  Transformation.Latest,
+  Transformation.Max,
+  Transformation.MedianMiddl,
+  Transformation.Min,
+  Transformation.NoAggregation,
+  Transformation.Oldest,
+  Transformation.SelfMulti,
+  Transformation.SelfSingle,
 ];
 
 export enum StatisticalDataType {
@@ -183,7 +177,6 @@ export enum ViewType {
   custom = 'custom',
   dashboard = 'dashboard',
   report = 'report',
-  single = 'single',
   table = 'table',
 }
 
@@ -195,4 +188,26 @@ export enum WidgetDataAttributes {
 export enum InfusionType {
   React = 'react',
   ReactNative = 'react-native',
+}
+
+export enum ExportConfig {
+  KleeenInfusion = 'KleeenInfusion',
+  StandardExport = 'StandardExport',
+}
+
+export enum CardSectionLayout {
+  Masonry = 'masonry', // Dashboard grid (default)
+  SingleColumn = 'single-column', // Config (not used yet)
+  SingleWideColumn = 'single-wide-column', // Report
+}
+
+export enum TemporalInterval {
+  Second = 'second',
+  Minute = 'minute',
+  Hour = 'hour',
+  Day = 'day',
+  Week = 'week',
+  Month = 'month',
+  Quarter = 'quarter',
+  Year = 'year',
 }

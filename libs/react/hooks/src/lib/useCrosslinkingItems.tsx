@@ -4,8 +4,8 @@ import { ReactNode, useEffect, useState } from 'react';
 
 import { Translate } from '@kleeen/core-react';
 import { flatten } from 'ramda';
-import { isLinkFilterableByEntityType } from '../helpers';
 import { isNilOrEmpty } from '@kleeen/common/utils';
+import { isLinkFilterableByEntityType } from '@kleeen/frontend/utils';
 
 type CrossLinkItem = {
   handleClick: (item: CrossLinkItem) => (e: React.MouseEvent<HTMLLIElement, MouseEvent>) => void;

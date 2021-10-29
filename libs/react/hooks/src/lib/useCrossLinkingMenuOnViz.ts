@@ -1,12 +1,21 @@
-import { Attribute, ContextMenuDataPoint, CrossLinkingMatrix } from '@kleeen/types';
+import {
+  Attribute,
+  ContextMenuDataPoint,
+  CrossLinkingMatrix,
+  WidgetContextParams,
+  WidgetState,
+} from '@kleeen/types';
 
 import { isNilOrEmpty } from '@kleeen/common/utils';
 import { path } from 'ramda';
 import useAttributeContextMenu from './useAttributeContextMenu';
+import { useWorkflowContext } from './useWorkflowProvider';
 
 export interface CrossLinkingProps {
-  context?: { data: { crossLinking: any[][] } };
   attributes?: any[];
+  context?: WidgetState;
+  params: WidgetContextParams;
+  widgetId?: string;
 }
 
 interface CrossLinkingMenuOnViz {
@@ -26,6 +35,7 @@ const useCrossLinkingMenuOnViz = (
   const { openMenu } = useAttributeContextMenu();
   const crossLinking = props.context?.data?.crossLinking || [];
   const attribute: Attribute | undefined = path<Attribute>(['attributes', 0], props);
+  const workflowData = useWorkflowContext();
 
   const openMenuIfCrossLink = (e) => {
     const value = xAxis && path(['point', 'options', xAxis.key], e);
@@ -48,8 +58,11 @@ const useCrossLinkingMenuOnViz = (
     }
 
     openMenu({
-      e,
       dataPoints,
+      e,
+      params: props.params,
+      widgetId: props.widgetId,
+      workflowData,
     });
   };
 

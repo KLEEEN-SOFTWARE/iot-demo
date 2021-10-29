@@ -10,7 +10,3 @@ export interface DataProps extends ResultsProps {
   crossLinking: CrossLinking[] | CrossLinking;
   format: FormatProps;
 }
-
-export interface TranslateProps {
-  translate: (key: string) => string;
-}

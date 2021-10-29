@@ -14,6 +14,7 @@ export interface ClickableChipsCellProps {
   row?: Row;
   rowDisplayValue?: string;
   translate: Translate;
+  widgetId?: string;
 }
 
 export interface PreviewChipsProps {
@@ -25,4 +26,5 @@ export interface PreviewChipsProps {
   row?: Row;
   rowDisplayValue?: DisplayValue;
   translate: Translate;
+  widgetId?: string;
 }

@@ -57,7 +57,15 @@ export const Typography = styled(MuiTypography)({
 }) as typeof MuiTypography;
 
 export const useStyles = makeStyles({
-  IconContainer: {
+  iconContainer: {
     display: 'flex',
+  },
+  dropdown: {
+    width: 'var(--wh-5XL)',
+    borderRadius: 'var(--pm-1XS)',
+    border: 'var(--pm-7XS) solid var(--outlined-input)',
+    '& .MuiButton-label': {
+      justifyContent: 'space-around',
+    },
   },
 });

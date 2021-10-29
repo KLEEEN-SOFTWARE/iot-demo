@@ -1,5 +1,3 @@
-import Widget_1MRtKroSqrEGDDNEs9CJDv from '../../../custom/system/components/widget-1-m-rt-kro-sqr-egddn-es-9-cj-dv';
-
 export const widgets = [
   {
     actions: [],
@@ -7,13 +5,17 @@ export const widgets = [
     chartType: undefined,
     component: undefined,
     entityId: undefined,
+    entityName: undefined,
     id: undefined,
+    name: 'Dashboard',
     params: {},
+    scope: undefined,
     statisticalType: undefined,
     title: undefined,
     type: 'dashboard',
     viableSolutions: [],
     viewId: 'ks-view-6M9TLFSHnbMdsMp9tJGEeA',
+    viewOrder: 1,
     widgets: [
       {
         actions: [],
@@ -48,6 +50,7 @@ export const widgets = [
         chartType: `[WIDGET] BUBBLE_CHART`,
         component: undefined,
         entityId: undefined,
+        entityName: undefined,
         id: `8b263bdb-cbd4-4d6c-ba39-1e8568529e85`,
         params: {
           cardinality: 'SINGLE',
@@ -55,6 +58,7 @@ export const widgets = [
           operationName: 'widget_8b263bdb_cbd4_4d6c_ba39_1e8568529e85',
           value: { name: 'eventLength', transformation: 'selfSingle', formatType: 'integer' },
         },
+        scope: undefined,
         sortOrder: 0,
         statisticalType: undefined,
         title: `Event Length`,
@@ -93,6 +97,7 @@ export const widgets = [
         chartType: `[WIDGET] STEP_LINE`,
         component: undefined,
         entityId: undefined,
+        entityName: undefined,
         id: `16dee097-f374-4987-922e-53015c7934d9`,
         params: {
           cardinality: 'SINGLE',
@@ -100,6 +105,7 @@ export const widgets = [
           operationName: 'widget_16dee097_f374_4987_922e_53015c7934d9',
           value: { name: 'event', transformation: 'countTotal', formatType: 'uuid' },
         },
+        scope: undefined,
         sortOrder: 1,
         statisticalType: undefined,
         title: `Historical Events`,
@@ -281,6 +287,7 @@ export const widgets = [
         chartType: `[WIDGET] SUMMARY_STATISTICS`,
         component: undefined,
         entityId: undefined,
+        entityName: undefined,
         id: `3a3b0785-d65d-4156-8025-0691da0cf99c`,
         params: {
           operationName: 'widget_statistics3a3b0785_d65d_4156_8025_0691da0cf99c',
@@ -332,6 +339,7 @@ export const widgets = [
             formatType: 'severity_level',
           },
         },
+        scope: undefined,
         sortOrder: 2,
         statisticalType: undefined,
         title: `Sensors`,
@@ -513,6 +521,7 @@ export const widgets = [
         chartType: `[WIDGET] SUMMARY_STATISTICS`,
         component: undefined,
         entityId: undefined,
+        entityName: undefined,
         id: `423ff13b-de6b-451c-95c3-23288e4edced`,
         params: {
           operationName: 'widget_statistics423ff13b_de6b_451c_95c3_23288e4edced',
@@ -564,6 +573,7 @@ export const widgets = [
             formatType: 'severity_level',
           },
         },
+        scope: undefined,
         sortOrder: 3,
         statisticalType: undefined,
         title: `Nodes`,
@@ -610,6 +620,7 @@ export const widgets = [
         chartType: `[WIDGET] SINGLE_BAR_HIGHLIGHT_MAX`,
         component: undefined,
         entityId: undefined,
+        entityName: undefined,
         id: `ec00ac75-6320-4963-abcd-4c1aea91727b`,
         params: {
           cardinality: 'SINGLE',
@@ -617,6 +628,7 @@ export const widgets = [
           operationName: 'widget_ec00ac75_6320_4963_abcd_4c1aea91727b',
           value: { name: 'siteStatus', transformation: 'selfSingle', formatType: 'severity_level' },
         },
+        scope: undefined,
         sortOrder: 4,
         statisticalType: undefined,
         title: `Site Map`,
@@ -668,6 +680,7 @@ export const widgets = [
         chartType: `[WIDGET] AREA_GRADIENT`,
         component: undefined,
         entityId: undefined,
+        entityName: undefined,
         id: `5d346104-9524-4ba4-a30a-bb9c509fc439`,
         params: {
           cardinality: 'SINGLE',
@@ -675,6 +688,7 @@ export const widgets = [
           operationName: 'widget_5d346104_9524_4ba4_a30a_bb9c509fc439',
           value: { name: 'node', transformation: 'countTotal', formatType: 'prime' },
         },
+        scope: undefined,
         sortOrder: 5,
         statisticalType: undefined,
         title: `Node Status`,
@@ -720,6 +734,7 @@ export const widgets = [
         chartType: `[WIDGET] AREA_GRADIENT`,
         component: undefined,
         entityId: undefined,
+        entityName: undefined,
         id: `ec36d0ef-f9c6-4345-bc1d-552b19ceeccd`,
         params: {
           cardinality: 'SINGLE',
@@ -727,6 +742,7 @@ export const widgets = [
           operationName: 'widget_ec36d0ef_f9c6_4345_bc1d_552b19ceeccd',
           value: { name: 'sensor', transformation: 'countTotal', formatType: 'prime' },
         },
+        scope: undefined,
         sortOrder: 6,
         statisticalType: undefined,
         title: `Sensor Status`,
@@ -808,6 +824,7 @@ export const widgets = [
         chartType: `[WIDGET] SUMMARY_STATISTICS`,
         component: undefined,
         entityId: undefined,
+        entityName: undefined,
         id: `15d23aa3-6f00-4505-9199-85c2e2662aaa`,
         params: {
           operationName: 'widget_statistics15d23aa3_6f00_4505_9199_85c2e2662aaa',
@@ -830,6 +847,7 @@ export const widgets = [
             formatType: 'severity_level',
           },
         },
+        scope: undefined,
         sortOrder: 7,
         statisticalType: undefined,
         title: `Sensor Overall Status`,
@@ -906,6 +924,7 @@ export const widgets = [
         chartType: `[WIDGET] SUMMARY_STATISTICS`,
         component: undefined,
         entityId: undefined,
+        entityName: undefined,
         id: `cd7fa114-5174-423f-9fdd-b14fc75dd1f1`,
         params: {
           operationName: 'widget_statisticscd7fa114_5174_423f_9fdd_b14fc75dd1f1',
@@ -928,6 +947,7 @@ export const widgets = [
             formatType: 'severity_level',
           },
         },
+        scope: undefined,
         sortOrder: 8,
         statisticalType: undefined,
         title: `Node Overall Status`,
@@ -962,6 +982,7 @@ export const widgets = [
         chartType: `[WIDGET] GAUGE_SEVERITY_LEVEL`,
         component: undefined,
         entityId: undefined,
+        entityName: undefined,
         id: `324888f3-eb8c-4097-ba9f-21aa8cf6be4f`,
         params: {
           operationName: 'widget_statistics324888f3_eb8c_4097_ba9f_21aa8cf6be4f',
@@ -980,6 +1001,7 @@ export const widgets = [
             formatType: 'severity_level',
           },
         },
+        scope: undefined,
         sortOrder: 9,
         statisticalType: undefined,
         title: `System Health`,
@@ -990,10 +1012,13 @@ export const widgets = [
         actions: [],
         attributes: [],
         chartType: `[WIDGET] CUSTOM`,
-        component: Widget_1MRtKroSqrEGDDNEs9CJDv,
+        component: 'system/components/widget-1-m-rt-kro-sqr-egddn-es-9-cj-dv',
         entityId: undefined,
+        entityName: undefined,
         id: `0666f639-8ec2-4aa6-8dae-59b9e6611047`,
+        name: 'Utilization Saturation and Errors (USE)',
         params: {},
+        scope: undefined,
         sortOrder: 10,
         statisticalType: undefined,
         title: `Utilization Saturation and Errors (USE)`,

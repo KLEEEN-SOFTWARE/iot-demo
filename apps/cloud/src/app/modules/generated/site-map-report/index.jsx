@@ -1,54 +1,40 @@
 import { KUIConnect, AccessControl } from '@kleeen/core-react';
 import { roleAccessKeyTag } from '@kleeen/common/utils';
+import { WorkflowProvider } from '@kleeen/react/hooks';
 import { useState } from 'react';
-import {
-  ReportLayoutStyle,
-  DataViewControlSection,
-  DataViewDisplaySectionAtomic,
-} from '@kleeen/react/atomic-elements';
-import { viewOptions } from './settings/view-options';
+import { ReportLayoutStyle, DataViewControlSection, ViewsManager } from '@kleeen/react/atomic-elements';
 import { widgets } from './settings/widgets';
 
 function Workflow({ translate, ...props }) {
   const taskName = `siteMapReport`;
-  const [selectedViewOption, setSelectedViewOption] = useState(widgets[0]);
-  const [cardsNumber, setCardsNumber] = useState(0);
-  const [selectedRows, setSelectedRows] = useState([]);
+  const workflowData = {
+    hasFilters: true,
+    taskName: 'siteMapReport',
+    workflowId: 'b6b6dfff-c184-4301-a024-a0fdf85b777a',
+  };
   const [isFilterOpen, setIsFilterOpen] = useState(false);
   const classes = ReportLayoutStyle();
   const workflowName = `Site Map Report`;
-  function handleOnTabIndexChanged(newTabIndex, option) {
-    setSelectedViewOption(option);
-  }
 
   return (
     <AccessControl id={roleAccessKeyTag(`navigation.${taskName}`)}>
-      <div className={`${classes.dashboardTask} subhead-dynamic`}>
-        <div className={`${classes.dashboardArea} browserArea`}>
-          <div className={classes.gridPageIntro} data-testid="page-intro">
-            <DataViewControlSection
-              hideRefreshControl
-              onTabIndexChanged={handleOnTabIndexChanged}
-              selectedOption={selectedViewOption}
-              setSelectedOption={setSelectedViewOption}
-              taskName={taskName}
-              title={workflowName}
-              viewOptions={viewOptions}
-            />
-          </div>
-          <div className={classes.dataViewDisplaySection} data-testid="content-section">
-            <DataViewDisplaySectionAtomic
-              widgets={widgets}
-              selectedOption={selectedViewOption}
-              selectedRows={selectedRows}
-              setCardsNumber={setCardsNumber}
-              setSelectedRows={setSelectedRows}
-              taskName={taskName}
-              value={selectedViewOption}
-            />
-          </div>
+      <WorkflowProvider value={workflowData}>
+        <div className={`${classes.dashboardTask} subhead-dynamic`}>
+          <ViewsManager
+            views={widgets}
+            SubHeader={DataViewControlSection}
+            subHeaderProps={{
+              hideRefreshControl: true,
+              taskName,
+              title: workflowName,
+            }}
+            containerClasses={`${classes.dashboardArea} browserArea`}
+            pageIntroClasses={`${classes.gridPageIntro}`}
+            contentClasses={`${classes.dataViewDisplaySection}`}
+            taskName={taskName}
+          />
         </div>
-      </div>
+      </WorkflowProvider>
     </AccessControl>
   );
 }

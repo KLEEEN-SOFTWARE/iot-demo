@@ -1,21 +1,19 @@
-import { AttributeInputEvents } from '@kleeen/react/hooks';
+import { CardSectionLayout, OnInputChangeEvent, RegisterEvents, Widget } from '@kleeen/types';
+
+import { AnimationProps } from '../animations/animations.model';
 import { ReactNode } from 'react';
-import { Widget } from '@kleeen/types';
+import { WidgetHeaderProps } from './components/widget-header/widget-header.model';
 
 interface CardWidgetProps {
   children: ReactNode;
   disabled?: boolean;
   disableHeightCalculation?: boolean;
+  Header?: JSX.Element;
   hideTitle?: boolean;
   icon: boolean;
   selectedViz?: number;
   title: string | JSX.Element;
   widgetSelector?: null | JSX.Element;
-}
-
-interface CardTitleProps {
-  icon: boolean;
-  title: string | JSX.Element | null | undefined;
 }
 
 type GridJustification =
@@ -26,13 +24,8 @@ type GridJustification =
   | 'space-between'
   | 'space-evenly';
 
-enum CardSectionLayout {
-  Masonry = 'masonry', // Dashboard grid (default)
-  SingleColumn = 'single-column', // Config (not used yet)
-  SingleWideColumn = 'single-wide-column', // Report
-}
-
 interface CardSectionProps {
+  animation?: AnimationProps;
   cardSectionLayout?: CardSectionLayout;
   children?: ReactNode;
   containerId?: string;
@@ -40,39 +33,45 @@ interface CardSectionProps {
   hideSaveAndClose?: boolean;
   hideTOC?: boolean;
   justifyContent?: GridJustification;
-  onInputChange?: (hasChanged: boolean) => void;
-  registerEvents?: (event: AttributeInputEvents) => void;
+  onInputChange?: OnInputChangeEvent;
+  registerEvents?: RegisterEvents;
   skipAccessControlCheck?: boolean;
   taskName?: string;
   widgets?: Widget[];
+  WidgetHeader?: WidgetHeaderType;
 }
 
 interface RenderChildrenProps {
+  animation?: AnimationProps;
   cardSectionLayout?: CardSectionLayout;
   children?: ReactNode;
   hideSaveAndClose?: boolean;
-  onInputChange?: (hasChanged: boolean) => void;
-  registerEvents?: (event: AttributeInputEvents) => void;
+  onInputChange?: OnInputChangeEvent;
+  registerEvents?: RegisterEvents;
   taskName: string;
   widgets?: Widget[];
   widgetsRefs?: any;
+  WidgetHeader?: WidgetHeaderType;
 }
 
 interface RenderWidgetProps {
   disableHeightCalculation?: boolean;
   hideSaveAndClose?: boolean;
-  onInputChange?: (hasChanged: boolean) => void;
+  onInputChange?: OnInputChangeEvent;
   preferredWidget: string;
-  registerEvents?: (event: AttributeInputEvents) => void;
+  registerEvents?: RegisterEvents;
   taskName: string;
   widget: Widget;
+  WidgetHeader?: WidgetHeaderType;
 }
+
+type WidgetHeaderType = (props: WidgetHeaderProps) => JSX.Element;
 
 export {
   CardSectionLayout,
   CardSectionProps,
-  CardTitleProps,
   CardWidgetProps,
   RenderChildrenProps,
   RenderWidgetProps,
+  WidgetHeaderType,
 };

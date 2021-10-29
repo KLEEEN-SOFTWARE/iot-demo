@@ -37,6 +37,7 @@ export function KsHeader(props: {
           `${props.withoutSubHeader && classes.withoutSubHeader} dataview`,
         )}
       >
+        {/**TODO KSE3-4140 implement ks title here**/}
         <div className={classnames(`${bem}__container`, classes.infoContainer)}>
           <h5 className={classnames(`${bem}__title--up`, classes.withoutMargin)}>{props.upText}</h5>
           <h3 className={classnames(`${bem}__title`, classes.mainTitle)}>{props.title}</h3>

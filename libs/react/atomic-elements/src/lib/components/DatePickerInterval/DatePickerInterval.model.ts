@@ -22,13 +22,3 @@ export interface DatePickerIntervalProps {
   className?: string;
   handleFilter?: () => void;
 }
-
-export enum IntervalDate {
-  minute = '1,m',
-  oneHours = '1,h',
-  sixHours = '6,h',
-  twentyFourHours = '24,h',
-  oneWeek = '1,w',
-  oneMonth = '1,M',
-  threeMonth = '3,M',
-}
