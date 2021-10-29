@@ -12,9 +12,10 @@ import MoreHorizIcon from '@material-ui/icons/MoreHoriz';
 import { RowData } from '../config-table';
 import Toolbar from '@material-ui/core/Toolbar';
 import Tooltip from '@material-ui/core/Tooltip';
+import classNames from 'classnames';
 import { isNilOrEmpty } from '@kleeen/common/utils';
 
-interface ActionsFormProps {
+export interface ActionsFormProps {
   actions: Action[];
   handleCustomAction: (action: Action) => void;
   handleDelete: () => void;
@@ -27,7 +28,6 @@ interface ActionsFormProps {
 
 const ActionsForm: FC<ActionsFormProps> = (props: ActionsFormProps): ReactElement => {
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
-
   const {
     actions,
     handleCustomAction,
@@ -37,14 +37,7 @@ const ActionsForm: FC<ActionsFormProps> = (props: ActionsFormProps): ReactElemen
     row,
   } = props;
 
-  const isEnable = (isActionEnable: boolean): boolean => isActionEnable;
-  const numberOfActionsEnabled = [isDeletable, isEditable, !isNilOrEmpty(actions)].filter(isEnable).length;
-
-  const getActionsContainerClass = (quantityOfActions: number): string =>
-    quantityOfActions === 1 ? 'has-single-element' : '';
-  const actionsContainerClass = getActionsContainerClass(numberOfActionsEnabled);
-
-  const actionsFormContainerClass = `actions-form-container ${actionsContainerClass}`;
+  const numberOfActionsEnabled = [isDeletable, isEditable, !isNilOrEmpty(actions)].filter(Boolean).length;
 
   function handleClick(e: MouseEvent<HTMLButtonElement>): void {
     setAnchorEl(e.currentTarget);
@@ -58,17 +51,23 @@ const ActionsForm: FC<ActionsFormProps> = (props: ActionsFormProps): ReactElemen
   const customActions = actions?.filter(({ type }) => type === ActionType.Custom) || [];
 
   return (
-    <Toolbar className={actionsFormContainerClass}>
+    <Toolbar
+      className={classNames('actions-form-container', { 'has-single-element': numberOfActionsEnabled === 1 })}
+    >
       {isEditable && (
         <Tooltip title={editButtonAriaLabel}>
-          <IconButton aria-label={editButtonAriaLabel} onClick={props.handleEdit}>
+          <IconButton aria-label={editButtonAriaLabel} data-testid="edit-row" onClick={props.handleEdit}>
             <CreateIcon fontSize="small" />
           </IconButton>
         </Tooltip>
       )}
       {isDeletable && (
         <Tooltip title={deleteButtonAriaLabel}>
-          <IconButton aria-label={deleteButtonAriaLabel} onClick={props.handleDelete}>
+          <IconButton
+            aria-label={deleteButtonAriaLabel}
+            data-testid="delete-row"
+            onClick={props.handleDelete}
+          >
             <DeleteOutlineIcon fontSize="small" />
           </IconButton>
         </Tooltip>

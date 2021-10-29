@@ -1,12 +1,13 @@
 import { Attribute } from '@kleeen/types';
+import { GridSectionHeaderProps } from '../GridSection.model';
 import { Icon } from '../../Icon';
 import { Order } from '@kleeen/common/utils';
 import React from 'react';
 import TableCell from '@material-ui/core/TableCell';
-import { TableHeaderProps } from 'react-virtualized';
 import { TextField } from '@material-ui/core';
 import Tooltip from '@material-ui/core/Tooltip';
 import _ from 'lodash';
+import { setVirtualizedTableInputValue } from './virtual-table/virtualized-table-props.model';
 
 const iconBySortDirection: { [key in Order]: string } = {
   [Order.asc]: 'ks-sort-asc',
@@ -14,18 +15,25 @@ const iconBySortDirection: { [key in Order]: string } = {
   [Order.none]: 'ks-sort-asc',
 };
 
+export type HeaderRendererProps = GridSectionHeaderProps & {
+  columnIndex: number;
+  newAttributes?: Attribute[];
+  setInputValue?: setVirtualizedTableInputValue;
+  inputValues?: string | number | Record<string, never>;
+};
+
 export const headerRenderer = ({
+  attributes,
   columnIndex,
   handleChange,
-  newAttributes,
-  onSort,
-  attributes,
-  order,
-  orderBy,
   hasActions,
   inputValues,
+  newAttributes,
+  onSort,
+  order,
+  orderBy,
   setInputValue,
-}: TableHeaderProps & { columnIndex: number }): JSX.Element => {
+}: HeaderRendererProps): JSX.Element | null => {
   const colSpan = columnIndex === 0 && hasActions ? 2 : 0;
   const getColumnLabel = (attr: Attribute): string => attr.label || attr.name;
   const baseAttributes = newAttributes ? newAttributes : attributes;

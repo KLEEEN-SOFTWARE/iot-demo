@@ -11,6 +11,7 @@ import Highcharts from 'highcharts';
 import HighchartsReact from 'highcharts-react-official';
 import { IDeltaResults } from './interfaces';
 import { KUIConnect } from '@kleeen/core-react';
+import { VisualizationWidgetProps } from '@kleeen/types';
 import classnames from 'classnames';
 import drilldown from 'highcharts/modules/drilldown';
 import merge from 'lodash.merge';
@@ -28,7 +29,12 @@ const baseOptions: Highcharts.Options = merge({}, generalBaseOptions, {
   },
 } as Highcharts.Options);
 
-function SingleBarHighlightMaxBase({ translate, ...props }: HighchartsReact.Props): React.ReactElement {
+function SingleBarHighlightMaxBase({
+  containerProps,
+  translate,
+  ...props
+}: VisualizationWidgetProps & HighchartsReact.Props): React.ReactElement {
+  const { context, params, widgetId = '' } = props;
   const [highChartUpdate, sethighChartUpdate] = useState({
     drillUp: null,
     drillUpButton: {},
@@ -37,13 +43,9 @@ function SingleBarHighlightMaxBase({ translate, ...props }: HighchartsReact.Prop
     xAxis: [],
   });
 
-  const [formatterGroupBy, formatterGroupByForTooltip, formatterValue] = useTextFormattersForViz(
-    props.params,
-  );
-  const widgetId = pathOr('', ['widgetId'], props);
-  const results = pathOr([], ['context', 'data', 'results'], props);
-  const format = pathOr({}, ['context', 'data', 'format'], props);
-  const containerProps = pathOr({}, ['containerProps'], props);
+  const [formatterGroupBy, formatterGroupByForTooltip, formatterValue] = useTextFormattersForViz(params);
+  const results = pathOr([], ['results'], context.data);
+  const format = pathOr({}, ['format'], context.data);
   const sliceResultsBy = pathOr(SLICE_RESULTS_BY, ['sliceResultsBy'], props); //split results based on sliceResultsBy integer
   const labels = pathOr({}, ['xAxis', 'labels'], format);
   const xAxis = clone(pathOr({}, ['xAxis'], format));
@@ -105,7 +107,7 @@ function SingleBarHighlightMaxBase({ translate, ...props }: HighchartsReact.Prop
     openMenuIfCrossLink,
   );
 
-  if (props.context.isLoading) {
+  if (context.isLoading) {
     return <Loader />;
   }
 

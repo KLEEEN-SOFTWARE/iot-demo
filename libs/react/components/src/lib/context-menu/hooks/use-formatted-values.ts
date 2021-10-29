@@ -1,4 +1,4 @@
-import { ContextMenuDataPoint, DataPoint, DataPointWithFormattedValue } from '@kleeen/types';
+import { ContextMenuDataPoint, DataPointWithFormattedValue } from '@kleeen/types';
 import { getTextFormatter, useLocalization } from '@kleeen/react/hooks';
 import { useEffect, useState } from 'react';
 
@@ -28,15 +28,15 @@ export function useDataPointsWithFormattedValue({
       const { attribute, value } = dataPoint;
       const formatter = getTextFormatter({
         attributeFormat: {
-          format: attribute.format,
-          formatType: attribute.formatType,
-          transformation: attribute.aggregation,
+          format: attribute?.format,
+          formatType: attribute?.formatType,
+          transformation: attribute?.aggregation,
         },
         language,
       });
       return {
         ...dataPoint,
-        formattedValue: formatter(value.displayValue),
+        formattedValue: formatter(value?.displayValue),
       };
     });
 

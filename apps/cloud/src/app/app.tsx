@@ -8,83 +8,111 @@ import {
   MenuContextProvider,
   ThemeContextProvider,
   WebSocketProvider,
+  useKleeenContext,
   useLocalization,
+  useServiceWorker,
 } from '@kleeen/react/hooks';
-import { DEFAULT_ROLE, app, roleAccessKey, roleAccessKeyCustom, stringsTranslate } from '@kleeen/settings';
+import { DEFAULT_ROLE, app, roleAccessKey, roleAccessKeyCustom } from '@kleeen/settings';
 import {
   IconRegistryProvider,
-  KUICombineProviders,
   AccessControlProvider as KsAccessControlProvider,
   TranslationProvider,
 } from '@kleeen/core-react';
-import React, { ReactElement } from 'react';
+import { KsCombineRightProviders, KsNotifications } from '@kleeen/react/components';
 
-import { KsNotifications } from '@kleeen/react/components';
+import { CustomProviders } from './modules/custom/providers';
+import React from 'react';
 import Router from './routesLoader';
 import ThemeWrapper from './themeWrapper';
 import classnames from 'classnames';
 import { environment } from '@kleeen/environment';
 import iconRegistry from '../assets/icon-registry';
-import { isReactNativeInfusion } from '@kleeen/common/utils';
+import { isReactNativeInfusion } from '@kleeen/frontend/utils';
 import { merge } from 'lodash';
-import { useServiceWorker } from './useServiceWorker';
+import { stringsTranslate } from '@kleeen/settings';
 
 const applyInfusion = isReactNativeInfusion();
 const bem = 'app';
 
 merge(roleAccessKey, roleAccessKeyCustom);
 
-const AccessControlProvider = ({ children }) => (
-  <KsAccessControlProvider
-    accessControlSettings={{
-      defaultRole: DEFAULT_ROLE,
-      pathToRoleOnState: 'endUser.currentUser.role',
-      permissions: roleAccessKey,
-    }}
-  >
-    {children}
-  </KsAccessControlProvider>
-);
-
-function App(): ReactElement {
-  useServiceWorker();
+function App() {
   const { language } = useLocalization();
-  const TranslateProvider = TranslationProvider({
-    defaultLocale: 'en',
-    locale: language,
-    localeData: stringsTranslate,
-    onError: (err: string): void => {
-      console.debug('TranslateProvider', err);
-    },
-  });
-  const crosslinkingInteractionValue = app.crossLinkingInteraction;
+  useServiceWorker();
 
   return (
     <React.StrictMode>
       <div className={classnames(bem, { infusion: applyInfusion })}>
-        <TranslateProvider>
-          <KUICombineProviders
-            providers={[
-              AccessControlProvider,
-              AttributeContextMenuProvider,
-              IconRegistryProvider({ iconRegistry }),
-              MenuContextProvider,
-              ThemeContextProvider,
-              WebSocketProvider,
-            ]}
-          >
-            <CrosslinkingInteractionProvider crosslinkingInteraction={crosslinkingInteractionValue}>
-              <KsNotifications />
-              <ThemeWrapper>
-                <Router />
-                <footer data-testid="app-version">{environment.deployment.version}</footer>
-              </ThemeWrapper>
-            </CrosslinkingInteractionProvider>
-          </KUICombineProviders>
-        </TranslateProvider>
+        <KsCombineRightProviders
+          providers={[
+            // *Secondary Global Providers which depend on Primary Global Providers.
+            TranslateProvider({ locale: language }),
+            WebSocketProvider,
+            ThemeContextProvider,
+            MenuContextProvider,
+            IconRegistryProvider({ iconRegistry }),
+            AttributeContextMenuProvider,
+            AccessControlProvider,
+            CrosslinkingProvider,
+            ...CustomProviders,
+          ]}
+        >
+          <>
+            <KsNotifications />
+            <ThemeWrapper>
+              <Router />
+              <footer data-testid="app-version">{environment.deployment.version}</footer>
+            </ThemeWrapper>
+          </>
+        </KsCombineRightProviders>
       </div>
     </React.StrictMode>
   );
 }
 
 export default App;
+
+//#region Private members
+interface SimpleProviderProps {
+  children: JSX.Element;
+}
+
+function AccessControlProvider({ children }: SimpleProviderProps) {
+  return (
+    <KsAccessControlProvider
+      accessControlSettings={{
+        defaultRole: DEFAULT_ROLE,
+        pathToRoleOnState: 'endUser.currentUser.role',
+        permissions: roleAccessKey,
+      }}
+    >
+      {children}
+    </KsAccessControlProvider>
+  );
+}
+
+function CrosslinkingProvider({ children }: SimpleProviderProps) {
+  const { crossLinkingInteraction } = app;
+
+  return (
+    <CrosslinkingInteractionProvider crosslinkingInteraction={crossLinkingInteraction}>
+      {children}
+    </CrosslinkingInteractionProvider>
+  );
+}
+
+interface TranslateProviderProps {
+  locale: string;
+}
+
+function TranslateProvider({ locale }: TranslateProviderProps) {
+  return TranslationProvider({
+    defaultLocale: 'en',
+    locale,
+    localeData: stringsTranslate,
+    onError: (err: string): void => {
+      console.error('TranslateProvider', err);
+    },
+  });
+}
+//#endregion

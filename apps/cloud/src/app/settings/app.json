@@ -1,9 +1,11 @@
 {
   "companyName": "Kleeen IoT",
   "defaultHomePage": "/events",
+  "exportConfig": "StandardExport",
   "layout": {
     "position": "nav-top"
   },
   "productName": "Internet of Things",
-  "crossLinkingInteraction": "Hover intent"
+  "crossLinkingInteraction": "On click",
+  "rootVersion": "3.3.0.1559.d79c65fe3"
 }

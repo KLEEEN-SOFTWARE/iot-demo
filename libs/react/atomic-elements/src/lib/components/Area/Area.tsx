@@ -4,6 +4,7 @@ import { clone, pathOr } from 'ramda';
 import Highcharts from 'highcharts';
 import HighchartsReact from 'highcharts-react-official';
 import { Loader } from '@kleeen/react/components';
+import { VisualizationWidgetProps } from '@kleeen/types';
 import { generalBaseOptions } from '../generalBaseOptions';
 import { getOptions } from './options';
 import { isValidArray } from '@kleeen/common/utils';
@@ -17,14 +18,14 @@ const baseOptions: Highcharts.Options = merge({}, generalBaseOptions, {
   },
 } as Highcharts.Options);
 
-export const Area = (props: HighchartsReact.Props) => {
-  const results = pathOr([], ['context', 'data', 'results'], props);
-  const format = pathOr({}, ['context', 'data', 'format'], props);
+export function Area({ context, params, ...props }: VisualizationWidgetProps & HighchartsReact.Props) {
+  const results = pathOr([], ['results'], context.data);
+  const format = pathOr({}, ['format'], context.data);
 
   const yAxis = pathOr({}, ['yAxis'], format);
   const containerProps = pathOr({}, ['containerProps'], props);
 
-  const options = getOptions(results, format, baseOptions, props.params);
+  const options = getOptions(results, format, baseOptions, params);
 
   const containerSettings = { ...containerProps, style: { height: '100%', width: '100%' } };
   const [chartOptions, setChartOptions] = useState(null);
@@ -44,7 +45,7 @@ export const Area = (props: HighchartsReact.Props) => {
     }
   }, [results]);
 
-  if (props.context.isLoading) {
+  if (context.isLoading) {
     return <Loader />;
   }
 
@@ -56,6 +57,6 @@ export const Area = (props: HighchartsReact.Props) => {
       containerProps={containerSettings}
     />
   ) : null;
-};
+}
 
 export default React.memo(Area);

@@ -165,13 +165,19 @@ export const ToastNotification = React.forwardRef((props: ToastNotificationProps
   };
 
   return (
-    <Card className={`${themeClass} ${classes.card}`} ref={ref}>
+    <Card className={`${themeClass} ${classes.card}`} ref={ref} data-testid="toast-notification">
       {variant == 'error' ? (
-        <Grid className={`${classes.iconContent} ${classes.variantError}`}>
+        <Grid
+          className={`${classes.iconContent} ${classes.variantError}`}
+          data-testid="toast-notification-error"
+        >
           <ErrorIcon className={classes.icon} />
         </Grid>
       ) : (
-        <Grid className={`${classes.iconContent} ${classes.variantSuccess}`}>
+        <Grid
+          className={`${classes.iconContent} ${classes.variantSuccess}`}
+          data-testid="toast-notification-success"
+        >
           <CheckIcon className={classes.icon} />
         </Grid>
       )}
@@ -185,7 +191,11 @@ export const ToastNotification = React.forwardRef((props: ToastNotificationProps
               <ActionMenu action={action} actions={actions} taskName={taskName} />
             </div>
             <div className={classes.dismiss}>
-              <IconButton className={classes.expand} onClick={handleDismiss}>
+              <IconButton
+                className={classes.expand}
+                data-testid="toast-notification-close"
+                onClick={handleDismiss}
+              >
                 <CloseIcon className={classes.iconAction} />
               </IconButton>
             </div>

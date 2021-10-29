@@ -42,8 +42,10 @@ export function DisplayElement({ attributes, elements, params, taskName, widgetI
       element={displayComponent}
       format={format}
       formatType={attributeFormatType}
+      params={params}
       transformation={attributeTransformation}
       value={attributeValue}
+      widgetId={widgetId}
     />
   );
 }

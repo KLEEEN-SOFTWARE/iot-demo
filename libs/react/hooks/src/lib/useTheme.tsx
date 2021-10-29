@@ -32,10 +32,17 @@ export const DefaultTheme: Theme = {
   kit: ThemeKit.Dark,
 };
 
-const defaultThemeClass = `${DefaultTheme.flavor}-${DefaultTheme.kit}`;
-
 function getThemePreferencesStoreKey(userName: string): string | null {
   return userName ? `user-preferences-theme-${userName}` : null;
+}
+
+/**
+ * Builds a css class with the theme to be applied in the app.
+ * The `default-theme` contains the default css styles and it is extended by each `theme.flavor`.
+ * @returns the class name of the theme.
+ */
+function buildThemeClass(theme: Theme = DefaultTheme) {
+  return `default-theme ${theme.flavor}-${theme.kit}`;
 }
 
 export function useGetThemeStoredValue(theme = DefaultTheme) {
@@ -52,7 +59,7 @@ export function useGetThemeStoredValue(theme = DefaultTheme) {
 }
 
 export const ThemeContext = React.createContext<ThemeContextProps>({
-  themeClass: defaultThemeClass,
+  themeClass: buildThemeClass(),
   theme: DefaultTheme,
   setTheme: (theme: Theme): Theme => {
     return theme;
@@ -66,7 +73,7 @@ export function useTheme(): ThemeContextProps {
 
 export const ThemeContextProvider = ({ children }: { children: React.ReactNode }): React.ReactElement => {
   const [theme, setTheme] = useState<Theme>(DefaultTheme);
-  const [themeClass, setThemeClass] = useState<string>(defaultThemeClass);
+  const [themeClass, setThemeClass] = useState<string>(buildThemeClass());
   const { localStoreTheme } = useGetThemeStoredValue();
   const onSetTheme = (newTheme: Theme) => {
     setTheme(newTheme);
@@ -74,7 +81,7 @@ export const ThemeContextProvider = ({ children }: { children: React.ReactNode }
   };
 
   useEffect(() => {
-    setThemeClass(`${theme.flavor}-${theme.kit}`);
+    setThemeClass(buildThemeClass(theme));
   }, [theme]);
 
   return (

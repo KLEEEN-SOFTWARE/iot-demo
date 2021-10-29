@@ -1,26 +1,28 @@
 import './Pie.scss';
 
+import { KsButton, Loader } from '@kleeen/react/components';
 import { clone, pathOr } from 'ramda';
 import { drillUp, getRadialSharedOptions } from '../../utils';
-import { KsButton, Loader } from '@kleeen/react/components';
-import { KUIConnect } from '@kleeen/core-react';
-import { useRadialDataParser } from '../../hooks/useRadialDataParser';
-import classnames from 'classnames';
-import drilldown from 'highcharts/modules/drilldown';
+
 import Highcharts from 'highcharts';
 import HighchartsReact from 'highcharts-react-official';
-import merge from 'lodash.merge';
+import { KUIConnect } from '@kleeen/core-react';
 import React from 'react';
+import { VisualizationWidgetProps } from '@kleeen/types';
+import classnames from 'classnames';
+import drilldown from 'highcharts/modules/drilldown';
+import merge from 'lodash.merge';
+import { useRadialDataParser } from '../../hooks/useRadialDataParser';
 
 const bem = 'ks-pie-chart';
 
 drilldown(Highcharts);
 
-function PieBase(props: HighchartsReact.Props): React.ReactElement {
+function PieBase(props: VisualizationWidgetProps & HighchartsReact.Props): React.ReactElement {
+  const { context } = props;
   const parsedRadialData = useRadialDataParser(props);
 
-  const isLoading = pathOr(true, ['context', 'isLoading']);
-  if (isLoading(props)) {
+  if (context.isLoading) {
     return <Loader />;
   }
 

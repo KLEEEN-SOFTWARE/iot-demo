@@ -6,15 +6,11 @@ import {
   DataListItem,
   DataListResult,
   FormatProps,
+  FormatValueLabel,
   SameSDTAggregations,
   TrendFormat,
 } from '@kleeen/types';
-import {
-  GetSeveritiesResultProps,
-  TrendFormatterProps,
-  ValueLabelsProps,
-  ValueResultProps,
-} from './ResultFormatters.model';
+import { GetSeveritiesResultProps, TrendFormatterProps, ValueResultProps } from './ResultFormatters.model';
 
 import _ from 'lodash';
 import camelCase from 'lodash.camelcase';
@@ -24,27 +20,23 @@ import { isNilOrEmpty } from '@kleeen/common/utils';
 import memoize from 'lodash.memoize';
 import { parsedHSL } from '../color';
 
-export const formatAxis = (axis) => {
+export function formatAxis(axis) {
   return axis.categories ? { ..._.omit(axis, ['min', 'max']) } : { ...axis };
-};
+}
 
-export const getColor = (
+export function getColor(
   valueResult: ValueResultProps,
   severities,
-  valueLabels?: ValueLabelsProps,
-): string => {
+  valueLabels?: FormatValueLabel[],
+): string {
   if (isNilOrEmpty(valueResult)) return '';
 
-  const valueLabel =
-    valueLabels &&
-    Object.keys(valueLabels).find(
-      (key) => (Array.isArray(valueLabels) ? valueLabels[key].label : valueLabels[key]) === valueResult,
-    );
-  const valueKey = valueLabel || valueResult;
+  const valueLabel = valueLabels?.find(({ label }) => label === valueResult);
+  const valueKey = valueLabel?.label || valueResult;
 
   if (isNilOrEmpty(valueKey)) return '';
 
-  const valueCompare: ValueResultProps = Array.isArray(valueLabels) ? valueLabels[valueKey].value : valueKey;
+  const valueCompare: ValueResultProps = valueLabel?.value || valueKey;
 
   let color = '';
   severities.forEach((severity) => {
@@ -57,12 +49,15 @@ export const getColor = (
     }
   });
   return color;
-};
+}
 
-const getVizColor = (key) =>
-  getComputedStyle(document.getElementsByClassName('generated-new')[0]).getPropertyValue(key).split(',');
+function getVizColor(key) {
+  return getComputedStyle(document.getElementsByClassName('generated-new')[0])
+    .getPropertyValue(key)
+    .split(',');
+}
 
-export const vizColorsFormatted = () => {
+export function vizColorsFormatted() {
   const parsedColor = (value) => value.replace(' ', '').replace('%', '');
 
   const topColor = getVizColor('--viz4');
@@ -76,14 +71,14 @@ export const vizColorsFormatted = () => {
     ),
     topColor: parsedHSL(parsedColor(topColor[0]), parsedColor(topColor[1]), parsedColor(topColor[2])),
   };
-};
+}
 
-const categoryColorsParsed = (colorsLevels, severityLevels): [string] => {
+function categoryColorsParsed(colorsLevels, severityLevels): [string] {
   const { topColor, bottomColor } = vizColorsFormatted();
   return colorsLevels(bottomColor, topColor, severityLevels);
-};
+}
 
-export const getSeveritiesFn = (yAxis: FormatProps, colorsLevels?: any): GetSeveritiesResultProps[] => {
+export function getSeveritiesFn(yAxis: FormatProps, colorsLevels?: any): GetSeveritiesResultProps[] {
   if (isNil(yAxis)) return [];
 
   const { severityLevels, severityGood, severityBad } = yAxis;
@@ -133,18 +128,18 @@ export const getSeveritiesFn = (yAxis: FormatProps, colorsLevels?: any): GetSeve
   }
 
   return severities;
-};
+}
 
 export const getSeverities = memoize(
   getSeveritiesFn,
   ({ severityLevels, severityGood, severityBad }) => `${severityLevels}_${severityGood}_${severityBad}`,
 );
 
-export const getColorForSeverityValues = (
+export function getColorForSeverityValues(
   value: number | string,
   format: FormatProps,
   transformation: string,
-): string => {
+): string {
   if (SameSDTAggregations.includes(transformation as AggregationType)) {
     const severities = getSeverities(format);
     const color = getColor(value, severities, format?.valueLabels);
@@ -152,15 +147,15 @@ export const getColorForSeverityValues = (
   } else {
     return 'inherit';
   }
-};
+}
 
-export const formatRadialResults = (
+export function formatRadialResults(
   results: any[],
   xAxis?: FormatProps,
   hasZ?: boolean,
   crossLinkingMatrix: CrossLinkingMatrix = [],
   yAxis: FormatProps = {},
-): { name: string; y: number }[] => {
+): { name: string; y: number }[] {
   const isResultsArray = Array.isArray(results[0]);
   const yAxisSeverities = getSeverities(yAxis);
   const xAxisSeverities = getSeverities(xAxis);
@@ -208,16 +203,16 @@ export const formatRadialResults = (
   });
 
   return formattedResults;
-};
+}
 
 // Table formatters
-const addDeepDataTypeToAttribute = (type: string, attribute: Attribute): Attribute => {
+function addDeepDataTypeToAttribute(type: string, attribute: Attribute): Attribute {
   // Highcharts format is datetime, which is used in all other charts
   if (type === 'datetime') return { ...attribute, deepDataType: 'timestamp' };
   return { ...attribute, deepDataType: type };
-};
+}
 
-const getResultsByAxis = (results, { xAxis, yAxis }): { xValues: unknown[]; yValues: unknown[] } => {
+function getResultsByAxis(results, { xAxis, yAxis }): { xValues: unknown[]; yValues: unknown[] } {
   if (!xAxis?.categories && !yAxis?.categories) {
     const xValues = results.map(([xValue]) => xValue);
     const yValues = results.map(([_, yValue]) => yValue);
@@ -242,15 +237,15 @@ const getResultsByAxis = (results, { xAxis, yAxis }): { xValues: unknown[]; yVal
       ? yAxis.categories
       : results.map((yValue) => (Array.isArray(yValue) ? yValue[1] : yValue)),
   };
-};
+}
 
-export const formatDataList = ({
+export function formatDataList({
   crossLinking,
   results,
   format,
   params,
   includeMinMax = false,
-}): DataListResult => {
+}): DataListResult {
   if (!results || !format) return { data: [] };
 
   const { xValues, yValues } = getResultsByAxis(results, format);
@@ -292,9 +287,9 @@ export const formatDataList = ({
       valueColumnName: valueName,
     },
   };
-};
+}
 
-export const formatSeverity = (format, params) => {
+export function formatSeverity(format, params) {
   if (!format) return [];
 
   const dataParamList = [params.groupBy?.name, params.value?.name];
@@ -311,9 +306,9 @@ export const formatSeverity = (format, params) => {
   });
 
   return dataFormatList;
-};
+}
 
-export const parseAttributes = (attributes: Attribute[], format: any): Attribute[] => {
+export function parseAttributes(attributes: Attribute[], format: any): Attribute[] {
   if (!format) return attributes;
   const { xAxis, yAxis } = format;
   const parsedAttributes = [...attributes];
@@ -328,7 +323,7 @@ export const parseAttributes = (attributes: Attribute[], format: any): Attribute
   }
 
   return parsedAttributes;
-};
+}
 
 export function trendFormatter({
   highlightMinMax = false,
@@ -357,10 +352,10 @@ export function trendFormatter({
   });
 }
 
-export const isAttributeNumericType = (attribute: Attribute): boolean => {
+export function isAttributeNumericType(attribute: Attribute): boolean {
   const selfAggregations = [AggregationType.SelfMulti, AggregationType.SelfSingle];
   const isNotSelfAggregation =
     Boolean(attribute.aggregation) && !selfAggregations.includes(attribute.aggregation as AggregationType);
 
   return attribute.format?.isNumericType || isNotSelfAggregation;
-};
+}

@@ -23,6 +23,7 @@ export enum Transformation {
   SelfMulti = 'selfMulti',
   SelfSingle = 'selfSingle',
   Sum = 'sum',
+  TemporalBucket = 'temporalBucket',
   Tier = 'tier',
   TrendCountHighLowSparkline = 'trendCountHighLowSparkline',
   TrendCountSparkline = 'trendCountSparkline',

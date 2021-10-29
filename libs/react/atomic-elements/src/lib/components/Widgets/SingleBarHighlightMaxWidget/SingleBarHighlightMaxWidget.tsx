@@ -1,35 +1,20 @@
-import { Attribute } from '@kleeen/types';
 import { Loader } from '@kleeen/react/components';
-import React from 'react';
 import SingleBarHighlightMax from '../../SingleBarHighlightMax/SingleBarHighlightMax';
+import { WidgetProps } from '@kleeen/types';
 import { makeStyles } from '@material-ui/core';
 import { useWidgetContext } from '@kleeen/react/hooks';
-
-interface SingleBarHighlightMaxWidgetProps {
-  taskName: string;
-  widgetId: string | number;
-  chartType: string;
-  attributes?: Attribute[];
-  params: {
-    baseModel: string;
-    aggregatedByType?: string;
-    aggregatedBy?: string;
-    aggregation_attribute?: string;
-    aggregation?: string;
-  };
-}
 
 const useStyles = makeStyles({
   widgetContent: {
     height: 'var(--card-viz-height-L)',
   },
 });
-export const SingleBarHighlightMaxWidget = ({
+export function SingleBarHighlightMaxWidget({
   attributes,
   params,
   taskName,
   widgetId,
-}: SingleBarHighlightMaxWidgetProps): JSX.Element => {
+}: WidgetProps): JSX.Element {
   const widgetData = useWidgetContext({
     params,
     taskName,
@@ -44,14 +29,14 @@ export const SingleBarHighlightMaxWidget = ({
   return (
     <div className={classes.widgetContent}>
       <SingleBarHighlightMax
-        context={widgetData}
+        attributes={attributes}
         base={params.baseModel}
+        context={widgetData}
         params={params}
         widgetId={widgetId}
-        attributes={attributes}
       />
     </div>
   );
-};
+}
 
 export default SingleBarHighlightMaxWidget;

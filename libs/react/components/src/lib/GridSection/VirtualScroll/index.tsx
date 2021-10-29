@@ -1,14 +1,17 @@
-import { Action, ActionType, AmendCellUpdate, Attribute } from '@kleeen/types';
-import React, { useState } from 'react';
+import { Action, ActionType, AmendCellUpdate, Attribute, ContextMenuDataPoint } from '@kleeen/types';
+import React, { useState, useCallback } from 'react';
 
 import { GridSectionProps } from '../GridSection.model';
 import { KUIConnect } from '@kleeen/core-react';
 import { Loader } from '../../Loader/Loader';
 import Paper from '@material-ui/core/Paper';
-import { VirtualizedTable } from './VirtualizedTable';
+import { VirtualizedTable } from './virtual-table/VirtualizedTable';
 import { allComponentEnum } from './CellRenderer/CellRenderer.model';
 import useFilter from '../useFilter';
 import { useStyles } from './VirtualizedTable.style';
+import classnames from 'classnames';
+import { useAnchorElement, useCrosslinking, validateCrosslinkingInteraction } from '@kleeen/react/hooks';
+import { KsContextMenu } from '@kleeen/react/components';
 
 type HeaderColumns = Array<{
   attr: Attribute;
@@ -17,19 +20,64 @@ type HeaderColumns = Array<{
   props;
 }>;
 
+const bem = 'ks-virtual-scroll';
+
+const useContextMenuInteractions = () => {
+  const { anchorEl, handleClick, handleClose } = useAnchorElement();
+  const [openModal, setOpenModal] = useState(false);
+  const [dataPoints, setDataPoints] = useState(null);
+
+  function handleCloseHelper() {
+    setOpenModal(false);
+    handleClose();
+  }
+
+  const { crosslink } = useCrosslinking();
+
+  function onCellClick(dataPointsParam: ContextMenuDataPoint[], hasCrossLinking: boolean) {
+    const [dataPoint] = dataPointsParam;
+    const { attribute, value } = dataPoint;
+
+    if (hasCrossLinking) {
+      const [firstValidCrossLink] = attribute?.crossLinking;
+      crosslink(firstValidCrossLink.slug, value, attribute);
+    }
+
+    setDataPoints(dataPointsParam);
+  }
+
+  const { onClickFunction, onContextMenuFunction, validation } = validateCrosslinkingInteraction(
+    onCellClick,
+    openModal,
+    setOpenModal,
+    anchorEl,
+  );
+
+  return {
+    onClickFunction,
+    onContextMenuFunction,
+    validation,
+    handleCloseHelper,
+    dataPoints,
+    handleClick,
+    anchorEl,
+    setDataPoints,
+  };
+};
+
 function ReactVirtualizedTableComponent({
   onSortRow,
-  sortable,
   orderColumnName,
+  sortable,
+  sortableColumns,
   translate,
   widgetId,
-  sortableColumns,
   sorting,
   order,
   orderBy,
   onSort,
   ...props
-}: GridSectionProps): JSX.Element {
+}: GridSectionProps): JSX.Element | null {
   const [{ rows }, handleChange] = useFilter(props.entity.data);
   const [deleteContainer, setStatusDeleteContainer] = useState([]);
   const [editingCell, setEditingCell] = useState({});
@@ -52,9 +100,26 @@ function ReactVirtualizedTableComponent({
     searchTooltip: translate('app.gridSection.searchTooltip'),
   };
 
-  if (props.entity.isLoading) {
-    return <Loader />;
-  }
+  const {
+    onClickFunction,
+    onContextMenuFunction,
+    validation,
+    handleCloseHelper,
+    dataPoints,
+    handleClick,
+    setDataPoints,
+    anchorEl,
+  } = useContextMenuInteractions();
+
+  const handleAnchorClick = useCallback(
+    (eventProps: React.MouseEvent<HTMLButtonElement>, cellDataPoints: ContextMenuDataPoint[]) => {
+      setDataPoints(cellDataPoints);
+      handleClick(eventProps);
+    },
+    [setDataPoints, handleClick],
+  );
+
+  if (props.entity.isLoading) return <Loader />;
 
   const amendCellUpdate: AmendCellUpdate = (params): void => {
     if (props.onCellUpdate) {
@@ -85,10 +150,8 @@ function ReactVirtualizedTableComponent({
       params: {
         baseModel: props.entityName,
         displayName: action.displayName,
+        filters: { [props.entityName]: id },
         operationName: `${action.name}${entityId}`,
-      },
-      paramsBasedOnRoute: {
-        paramsBasedOnRoute: { [props.entityName]: id },
       },
       taskName: props.taskName,
       widgetId: '',
@@ -101,70 +164,81 @@ function ReactVirtualizedTableComponent({
     if (rows) {
       if (props.enableEditMode) {
         return allComponentEnum.EditDataView;
-      } else {
-        return allComponentEnum.DataViewRow;
       }
-    } else {
-      return allComponentEnum.RemainingRow;
+      return allComponentEnum.DataViewRow;
     }
+    return allComponentEnum.RemainingRow;
   }
 
-  if (Array.isArray(rows) || Array.isArray(remainingRows)) {
-    const rowsStableSort = rows ? rows : remainingRows;
+  if (!Array.isArray(rows) && !Array.isArray(remainingRows)) return null;
 
-    return (
-      <Paper className={`${props.className} ${tableStyles.virtualTable}`}>
-        <VirtualizedTable
+  const rowsStableSort = rows ? rows : remainingRows;
+
+  return (
+    <Paper className={classnames(`${props.className} ${tableStyles.virtualTable} ${bem}--container`)}>
+      <VirtualizedTable
+        actions={actions}
+        amendCellUpdate={amendCellUpdate}
+        attributes={props.attributes}
+        autocomplete={props.autocomplete}
+        columns={mapColumns(props.attributes, props)}
+        columnWidth={props.columnWidth}
+        deleteContainer={deleteContainer}
+        deleteProcess={props.onDeleteRow || deleteProcess}
+        editingCell={editingCell}
+        getMoreRows={props.getMoreRows}
+        handleAnchorClick={handleAnchorClick}
+        handleChange={handleChange}
+        hasActions={hasActions}
+        isDeletable={isDeletable}
+        localization={localization}
+        onAutocompleteRequest={props.onAutocompleteRequest}
+        onCellClickFunction={onClickFunction}
+        onCellContextMenuFunction={onContextMenuFunction}
+        onSort={onSort}
+        onSortRow={onSortRow}
+        order={order}
+        orderBy={orderBy}
+        orderColumnName={orderColumnName}
+        rowCount={rowsStableSort.length}
+        rowGetter={getRowGetter(rowsStableSort)}
+        setEditingCell={setEditingCell}
+        sortable={sortable}
+        sortableColumns={sortableColumns}
+        taskName={props.taskName}
+        toggleDelete={toggleDelete}
+        triggerCustomAction={triggerCustomAction}
+        typeOf={typeOf}
+        widgetId={widgetId}
+      />
+      {validation && (
+        <KsContextMenu
+          anchorEl={anchorEl}
+          autoClose
+          dataPoints={dataPoints}
+          onClose={handleCloseHelper}
           widgetId={widgetId}
-          actions={actions}
-          amendCellUpdate={amendCellUpdate}
-          attributes={props.attributes}
-          autocomplete={props.autocomplete}
-          columns={headerColumns(props.attributes, props)}
-          deleteContainer={deleteContainer}
-          deleteProcess={props.onDeleteRow || deleteProcess}
-          editingCell={editingCell}
-          getMoreRows={props.getMoreRows}
-          handleChange={handleChange}
-          hasActions={hasActions}
-          isDeletable={isDeletable}
-          localization={localization}
-          onAutocompleteRequest={props.onAutocompleteRequest}
-          onSort={onSort}
-          onSortRow={onSortRow}
-          order={order}
-          orderBy={orderBy}
-          rowCount={rowsStableSort.length}
-          rowGetter={({ index }) => (rowsStableSort.length > 0 ? rowsStableSort[index] : {})}
-          setEditingCell={setEditingCell}
-          sortable={sortable}
-          sortableColumns={sortableColumns}
-          toggleDelete={toggleDelete}
-          triggerCustomAction={triggerCustomAction}
-          typeOf={typeOf}
-          orderColumnName={orderColumnName}
-          columnWidth={props.columnWidth}
         />
-      </Paper>
-    );
-  } else return null;
+      )}
+    </Paper>
+  );
 }
 
 //#region Private Members
 
-function headerColumns(attrs: Attribute[], props): HeaderColumns {
-  const columns: HeaderColumns = [];
+function getRowGetter(rowsStableSort) {
+  return ({ index }) => (rowsStableSort.length > 0 ? rowsStableSort[index] : {});
+}
 
-  attrs.forEach((attr) => {
-    columns.push({
-      attr,
-      dataKey: attr.name,
-      label: attr.label || attr.name,
+function mapColumns(attributes: Attribute[], props: Partial<GridSectionProps>): HeaderColumns {
+  return attributes.map((attribute) => {
+    return {
+      attr: attribute,
+      dataKey: attribute.name,
+      label: attribute.label || attribute.name,
       props,
-    });
+    };
   });
-
-  return columns;
 }
 
 //#endregion

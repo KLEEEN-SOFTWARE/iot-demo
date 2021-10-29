@@ -14,12 +14,16 @@ import { ApiEventLength } from '../../custom/entityResolvers/api135535';
 import { DataSource } from 'apollo-datasource';
 import { FiltersApi } from '../../custom/filtersResolver/filtersApi';
 import { FiltersFakeApi } from './filtersFakeApi';
+import { FormatCheckApi } from '../../custom/formatCheckResolver/formatCheckApi';
+import { FormatCheckFakeApi } from './formatCheckFakeApi';
 import { WidgetApi } from './widgetApi';
 import { WidgetFakeApi } from './widgetFakeApi';
 
 export const dataSources = (): Record<string, DataSource> => ({
   filtersFakeApi: new FiltersFakeApi(),
   filtersApi: new FiltersApi(),
+  formatCheckFakeApi: new FormatCheckFakeApi(),
+  formatCheckApi: new FormatCheckApi(),
   widgetApi: new WidgetApi(),
   widgetFakeApi: new WidgetFakeApi(),
   api96096: new ApiTimestamp(),

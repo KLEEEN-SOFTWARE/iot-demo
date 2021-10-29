@@ -1,3 +1,5 @@
+import './InputElement.scss';
+
 import { Cell, ListItem, WidgetDataAttributes } from '@kleeen/types';
 import { Loader, UpdatePayload } from '@kleeen/react/components';
 import {
@@ -8,12 +10,21 @@ import {
   getFormat,
 } from '../../utils/format';
 import { useEffect, useRef, useState } from 'react';
-import { useKsAutoComplete, useUrlQueryParams, useWidgetContext } from '@kleeen/react/hooks';
+import {
+  useKleeenFormatChecker,
+  useKsAutoComplete,
+  useUrlQueryParams,
+  useWidgetContext,
+} from '@kleeen/react/hooks';
 
 import { InputElementProps } from './input-element.model';
 import camelCase from 'lodash.camelcase';
+import classnames from 'classnames';
 import { getInputElement } from './input-element-catalog';
+import { getValidationResponseErrors } from '../../utils/validationResponseErrors';
 import { useAttributeValue } from '../../hooks';
+
+const bem = 'ks-input-element-section';
 
 export function InputElement({
   attributes,
@@ -40,6 +51,19 @@ export function InputElement({
     isLoading: isLoadingWidget,
     params,
   });
+
+  const [{ validateFormField }, validationResponse] = useKleeenFormatChecker({
+    taskName,
+    widgetId,
+    formField: firstAttribute.name,
+  });
+
+  const hasErrorsRef = useRef(false);
+
+  useEffect(() => {
+    hasErrorsRef.current = validationResponse?.errors?.length > 0;
+  }, [validationResponse?.errors?.length]);
+
   const { paramsBasedOnRoute } = useUrlQueryParams();
 
   // Local state and refs
@@ -72,12 +96,13 @@ export function InputElement({
 
   useEffect(() => {
     valueRef.current = value;
+    if (value) validateFormField(value);
   }, [value]);
 
   useEffect(() => {
     if (registerEvents) {
       registerEvents({
-        id: widgetId as string,
+        id: firstAttribute.id,
         onSave,
         onCancel,
       });
@@ -86,7 +111,7 @@ export function InputElement({
 
   function getInputPayload(): UpdatePayload {
     const baseModel = camelCase(params?.baseModel);
-    const id = paramsBasedOnRoute[baseModel];
+    const id = paramsBasedOnRoute[baseModel] || selectedOptionRef?.current?.id;
     const isDisplayValue = attributeName === baseModel;
     const paramKey = isDisplayValue ? WidgetDataAttributes.DisplayValue : attributeName;
     const paramValue = getPayloadParamValue({
@@ -102,6 +127,7 @@ export function InputElement({
         id,
         [paramKey]: paramValue,
       },
+      hasErrors: hasErrorsRef.current,
     };
   }
 
@@ -128,19 +154,22 @@ export function InputElement({
   const InputComponent = getInputElement(inputComponent);
 
   return (
-    <InputComponent
-      attribute={firstAttribute}
-      autoCompleteValues={autoCompleteValues}
-      element={inputComponent}
-      format={format}
-      formatType={attributeFormatType}
-      getInputElement={getInputElement}
-      rules={rules}
-      setSelectedOption={setSelectedOption}
-      setValue={setValue}
-      transformation={attributeTransformation}
-      value={value}
-    />
+    <div className={classnames(bem, 'input-element-section')}>
+      <InputComponent
+        attribute={firstAttribute}
+        autoCompleteValues={autoCompleteValues}
+        element={inputComponent}
+        format={format}
+        formatType={attributeFormatType}
+        getInputElement={getInputElement}
+        rules={rules}
+        setSelectedOption={setSelectedOption}
+        setValue={setValue}
+        transformation={attributeTransformation}
+        value={value}
+      />
+      {getValidationResponseErrors(validationResponse, classnames(`${bem}__list`, 'input-lu-error'))}
+    </div>
   );
 }
 

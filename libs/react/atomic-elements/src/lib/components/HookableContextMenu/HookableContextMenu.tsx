@@ -22,7 +22,15 @@ export function HookableContextMenu(props: ContextMenuProps) {
 
   if (!contextualToggle) return null;
 
-  return <KsContextMenu anchorEl={anchorEl} dataPoints={context.dataPoints} handleClose={handleClose} />;
+  return (
+    <KsContextMenu
+      anchorEl={anchorEl}
+      dataPoints={context.dataPoints}
+      onClose={handleClose}
+      widgetContextParams={context.params}
+      widgetId={context.widgetId}
+    />
+  );
 }
 
 export default HookableContextMenu;

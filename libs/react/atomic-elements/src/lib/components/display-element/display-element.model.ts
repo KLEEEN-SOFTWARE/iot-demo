@@ -7,5 +7,5 @@ export interface DisplayElementProps {
   elements: ElementComponents;
   params: any; // TODO: @cafe add types here
   taskName: string;
-  widgetId: Key;
+  widgetId: string;
 }

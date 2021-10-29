@@ -1,14 +1,12 @@
-import { FilterOperators, Link, crosslinkingInteractionType } from '@kleeen/types';
+import { FilterOperators, crosslinkingInteractionType } from '@kleeen/types';
 import moment, { Moment } from 'moment';
 
 import { useCrosslinkingInteraction } from '@kleeen/react/hooks';
+import { useCallback } from 'react';
 
 export function getWidgetContextName({ taskName, widgetId }: { taskName: string; widgetId: string }): string {
   return `${taskName}_${widgetId}`;
 }
-
-export const isLinkFilterableByEntityType = (entityType: string, link: Link): boolean =>
-  !link.entityType || link.entityType === entityType;
 
 export const manageOperations = (
   operator: FilterOperators,
@@ -65,32 +63,46 @@ export const getTimestamp = (params: Record<string, any>) => {
 };
 
 export const validateCrosslinkingInteraction = (
-  anchorEl: null | HTMLElement,
   onCellClick: any,
   openModal: boolean,
   setOpenModal: any,
+  anchorEl: null | HTMLElement,
 ) => {
   const { crosslinkingInteraction } = useCrosslinkingInteraction();
 
+  const hoverIntentInteraction = {
+    onClickFunction: onCellClick,
+    onContextMenuFunction: null,
+    validation: Boolean(anchorEl),
+  };
+
+  const validation = openModal && Boolean(anchorEl);
+  const openModalCallback = useCallback(() => setOpenModal(true), [setOpenModal]);
+
+  const leftClickInteraction = {
+    onClickFunction: openModalCallback,
+    onContextMenuFunction: null,
+    validation,
+  };
+
+  const rightClickInteraction = {
+    onClickFunction: onCellClick,
+    onContextMenuFunction: openModalCallback,
+    validation,
+  };
+
   switch (crosslinkingInteraction) {
     case crosslinkingInteractionType.hoverIntent:
-      return { onClickFunction: onCellClick, onContextMenuFunction: null, validation: Boolean(anchorEl) };
+      return hoverIntentInteraction;
     case crosslinkingInteractionType.onClick:
-      return {
-        onClickFunction: () => setOpenModal(true),
-        onContextMenuFunction: null,
-        validation: openModal && Boolean(anchorEl),
-      };
+      return leftClickInteraction;
     case crosslinkingInteractionType.contextMenu:
-      document.oncontextmenu = function () {
+      document.oncontextmenu = function (e) {
+        e.preventDefault();
         return !openModal;
       };
-      return {
-        onClickFunction: onCellClick,
-        onContextMenuFunction: () => setOpenModal(true),
-        validation: openModal && Boolean(anchorEl),
-      };
+      return rightClickInteraction;
     default:
-      return { onClickFunction: onCellClick, onContextMenuFunction: null, validation: Boolean(anchorEl) };
+      return hoverIntentInteraction;
   }
 };

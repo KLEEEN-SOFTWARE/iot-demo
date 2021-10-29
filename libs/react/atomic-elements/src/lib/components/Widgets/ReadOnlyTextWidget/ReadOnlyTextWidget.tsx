@@ -1,9 +1,7 @@
-import React, { ReactElement } from 'react';
-
-import { Attribute } from '@kleeen/types';
 import { Loader } from '@kleeen/react/components';
+import { ReactElement } from 'react';
 import ReadOnlyText from '../../ReadOnlyText/ReadOnlyText';
-import { VizCommonParams } from '@kleeen/types';
+import { WidgetProps } from '@kleeen/types';
 import { makeStyles } from '@material-ui/core';
 import { useWidgetContext } from '@kleeen/react/hooks';
 
@@ -12,20 +10,8 @@ const useStyles = makeStyles({
     height: 'calc(var(--wh-5XL) - var(--wh-1XS) - var(--wh-6XS) - var(--wh-6XS))',
   },
 });
-interface ReadOnlyTextWidgetProps extends VizCommonParams {
-  attributes?: Attribute[];
-  taskName: string;
-  widgetId: string | number;
-  params: {
-    baseModel: string;
-    aggregatedByType?: string;
-    aggregatedBy?: string;
-    aggregation_attribute?: string;
-    aggregation?: string;
-  };
-}
 
-export function ReadOnlyTextWidget({ params, taskName, widgetId }: ReadOnlyTextWidgetProps): ReactElement {
+export function ReadOnlyTextWidget({ attributes, params, taskName, widgetId }: WidgetProps): ReactElement {
   const widgetData = useWidgetContext({ taskName, widgetId, params });
   const classes = useStyles();
 
@@ -35,7 +21,12 @@ export function ReadOnlyTextWidget({ params, taskName, widgetId }: ReadOnlyTextW
 
   return (
     <div className={classes.widgetContent}>
-      <ReadOnlyText context={widgetData}></ReadOnlyText>
+      <ReadOnlyText
+        attributes={attributes}
+        context={widgetData}
+        params={params}
+        widgetId={widgetId}
+      ></ReadOnlyText>
     </div>
   );
 }

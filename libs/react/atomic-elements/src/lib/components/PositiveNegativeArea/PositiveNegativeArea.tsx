@@ -2,6 +2,7 @@ import Highcharts from 'highcharts';
 import HighchartsReact from 'highcharts-react-official';
 import { Loader } from '@kleeen/react/components';
 import React from 'react';
+import { VisualizationWidgetProps } from '@kleeen/types';
 import { clone } from 'ramda';
 import { formatAxis } from '@kleeen/frontend/utils';
 import { generalBaseOptions } from '../generalBaseOptions';
@@ -14,14 +15,16 @@ const baseOptions: Highcharts.Options = merge({}, generalBaseOptions, {
   },
 } as Highcharts.Options);
 
-export const PositiveNegativeArea = (props: HighchartsReact.Props) => {
-  const results = props.context?.data?.results || [];
-  const format = props.context?.data?.format || {};
+export function PositiveNegativeArea({
+  context,
+  params,
+  ...props
+}: VisualizationWidgetProps & HighchartsReact.Props) {
+  const results = context?.data?.results || [];
+  const format = context?.data?.format || {};
   const { xAxis = {}, yAxis = {} } = format || {};
   const isResultsArray = Array.isArray(results[0]);
-  const [formatterGroupBy, formatterGroupByForTooltip, formatterValue] = useTextFormattersForViz(
-    props.params,
-  );
+  const [formatterGroupBy, formatterGroupByForTooltip, formatterValue] = useTextFormattersForViz(params);
 
   const xAxisLabel =
     xAxis?.type !== 'datetime'
@@ -146,7 +149,7 @@ export const PositiveNegativeArea = (props: HighchartsReact.Props) => {
   };
   const containerProps = { ...props.containerProps, style: { height: '100%', width: '100%' } };
 
-  if (props.context.isLoading) {
+  if (context.isLoading) {
     return <Loader />;
   }
 
@@ -158,6 +161,6 @@ export const PositiveNegativeArea = (props: HighchartsReact.Props) => {
       {...props}
     />
   );
-};
+}
 
 export default React.memo(PositiveNegativeArea);

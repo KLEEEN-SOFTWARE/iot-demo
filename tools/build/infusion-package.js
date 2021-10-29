@@ -52,3 +52,5 @@ writeFileSync(indexFile, indexFileContent, { encoding: 'utf-8' });
 
 console.log(`Wrote index.js to ${relative(resolve(__dirname, '..'), indexFile)}`);
 console.log(indexFileContent);
+
+require('./infusion-libs-package');

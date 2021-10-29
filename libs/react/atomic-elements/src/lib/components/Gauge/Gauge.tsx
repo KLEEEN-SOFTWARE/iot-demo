@@ -1,6 +1,6 @@
 import './Gauge.scss';
 
-import { ValuesProps, VizCommonParams } from '@kleeen/types';
+import { ValuesProps, VisualizationWidgetProps, VizCommonParams } from '@kleeen/types';
 import { clone, isEmpty, isNil, pathOr } from 'ramda';
 
 import Highcharts from 'highcharts';
@@ -23,21 +23,21 @@ function shouldHideLabel(formatType: string): boolean {
   return formatType && hideLabelFormatTypes.includes(formatType);
 }
 
-export const Gauge = ({
+export function Gauge({
   containerProps,
   context,
+  params,
   ...rest
-}: HighchartsReact.Props & VizCommonParams): JSX.Element => {
+}: VisualizationWidgetProps & HighchartsReact.Props & VizCommonParams): JSX.Element {
   if (context.isLoading) {
     return <Loader />;
   }
 
-  const beFormat = pathOr({}, ['data', 0, 'format'], context);
-  const ksFormat = pathOr({}, ['params', 'value', 'format'], rest);
+  const beFormat = pathOr({}, [0, 'format'], context.data);
+  const ksFormat = pathOr({}, ['format'], params.value);
   const format = isNil(beFormat) || isEmpty(beFormat) ? ksFormat : beFormat;
-  const results = pathOr([], ['data', 0, 'results'], context);
-  const transformation = pathOr({}, ['data', 0, 'transformation'], context);
-  const params = rest.params;
+  const results = pathOr([], [0, 'results'], context.data);
+  const transformation = pathOr({}, [0, 'transformation'], context.data);
 
   const options = getOptions({ results, format, params });
 
@@ -70,6 +70,6 @@ export const Gauge = ({
       )}
     </div>
   );
-};
+}
 
 export default React.memo(Gauge);

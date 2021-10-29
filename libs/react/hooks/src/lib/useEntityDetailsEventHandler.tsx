@@ -1,15 +1,11 @@
-export interface AttributeInputEvents {
-  id?: string;
-  onSave: () => any;
-  onCancel: () => void;
-}
+import { AttributeInputEvents, RegisterEvents } from '@kleeen/types';
 
 let configInputEventList: AttributeInputEvents[] = [];
 
 export const useEntityDetailsEventHandler = (): [
   AttributeInputEvents[],
   {
-    addEvent: (event: AttributeInputEvents) => void;
+    addEvent: RegisterEvents;
     clearEventList: () => void;
   },
 ] => {

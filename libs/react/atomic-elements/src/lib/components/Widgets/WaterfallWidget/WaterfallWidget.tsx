@@ -1,8 +1,6 @@
-import { GroupByProps, ValueProp, ValuesProps, VizCommonParams } from '@kleeen/types';
-
 import { Loader } from '@kleeen/react/components';
-import React from 'react';
 import { Waterfall } from '../../Waterfall/Waterfall';
+import { WidgetProps } from '@kleeen/types';
 import { makeStyles } from '@material-ui/core';
 import { useWidgetContext } from '@kleeen/react/hooks';
 
@@ -11,25 +9,8 @@ const useStyles = makeStyles({
     height: 'var(--card-viz-height-S)',
   },
 });
-export interface PositiveNegativeAreaWidgetProps extends VizCommonParams {
-  taskName: string;
-  widgetId: string | number;
-  params: {
-    baseModel: string;
-    aggregatedByType?: string;
-    aggregatedBy?: string;
-    aggregation_attribute?: string;
-    aggregation?: string;
-    groupBy?: GroupByProps;
-    value?: ValueProp | ValuesProps;
-  };
-}
 
-export const WaterfallWidget = ({
-  taskName,
-  widgetId,
-  params,
-}: PositiveNegativeAreaWidgetProps): JSX.Element => {
+export function WaterfallWidget({ taskName, widgetId, params }: WidgetProps): JSX.Element {
   const widgetData = useWidgetContext({
     taskName,
     widgetId,
@@ -46,6 +27,6 @@ export const WaterfallWidget = ({
       <Waterfall context={widgetData} params={params} widgetId={widgetId} />
     </div>
   );
-};
+}
 
 export default WaterfallWidget;

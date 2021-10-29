@@ -1,47 +1,47 @@
-import { ContextMenuProps, ContextMenuSectionItem, FormattedContextDataPoint } from './context-menu.model';
+import {
+  AggregationType,
+  ContextMenuDefaultSectionOrder,
+  ContextMenuInvestigationSectionOrder,
+} from '@kleeen/types';
+import { ContextMenuProps, FormattedContextDataPoint } from './context-menu.model';
 import { Menu, MenuTitle } from './contextual-menu.style';
 import { ReactNode, useEffect, useRef, useState } from 'react';
-import {
-  useCrossLinkingSections,
-  useDataPointsWithFormattedValue,
-  useFilterSections,
-  usePreviewSections,
-} from './hooks';
-import { useHoverIntent, useTheme } from '@kleeen/react/hooks';
+import { isSingleCardinalityDataPoint, isSingleCardinalityTransformation } from '@kleeen/frontend/utils';
+import { useHoverIntent, useIsInvestigation, useTheme } from '@kleeen/react/hooks';
 
-import { AggregationType } from '@kleeen/types';
-import { ContextMenuItemView } from './context-menu-item';
-import { ContextMenuSection } from './context-menu-section';
-import { DEFAULT_TRANSFORMATION_KEY_TO_USE } from './utils';
+import { contextMenuComponentBySection } from './components';
 import { isNilOrEmpty } from '@kleeen/common/utils';
-import { isSingleCardinalityTransformation } from '@kleeen/frontend/utils';
-import { path } from 'ramda';
+import { useDataPointsWithFormattedValue } from './hooks';
 
-export function KsContextMenu({ anchorEl, autoClose, dataPoints, handleClose }: ContextMenuProps) {
+export function KsContextMenu({
+  anchorEl,
+  autoClose,
+  dataPoints,
+  onClose,
+  widgetContextParams,
+  widgetId,
+}: ContextMenuProps) {
   const formattedDataPoints = useDataPointsWithFormattedValue({ dataPoints });
   const { ref } = useHoverIntent<HTMLUListElement>({
     delayOnEnter: 0,
     onMouseEnterFn: clearTimeOut,
-    onMouseLeaveFn: handleClose,
+    onMouseLeaveFn: onClose,
   });
   const timerRef = useRef(null);
   const [dataPointsToShow, setDataPointsToShow] = useState<FormattedContextDataPoint[]>([]);
-  const [menuSections, setMenuSections] = useState<ContextMenuSectionItem[]>([]);
   const [menuTitle, setMenuTitle] = useState<ReactNode>();
   const { themeClass } = useTheme();
+  const isInvestigationPage = useIsInvestigation();
 
-  const crossLinkSection = useCrossLinkingSections({ dataPointsToShow, handleClose });
-  const filterSections = useFilterSections({ dataPointsToShow, handleClose });
-  const previewSections = usePreviewSections({
-    dataPoints: formattedDataPoints,
-    dataPointsToShow,
-    handleClose,
-  });
+  // TODO: @cafe Include the preview option here as well
+  const sectionsToShow = isInvestigationPage
+    ? ContextMenuInvestigationSectionOrder
+    : ContextMenuDefaultSectionOrder;
 
   useEffect(() => {
     if (autoClose) {
       timerRef.current = setTimeout(() => {
-        handleClose();
+        onClose();
       }, 2000);
 
       return () => {
@@ -52,7 +52,6 @@ export function KsContextMenu({ anchorEl, autoClose, dataPoints, handleClose }: 
 
   useEffect(() => {
     if (isNilOrEmpty(dataPoints)) {
-      setDataPointsToShow([]);
       return;
     }
 
@@ -77,34 +76,13 @@ export function KsContextMenu({ anchorEl, autoClose, dataPoints, handleClose }: 
     }
 
     const [firstDataPoint] = dataPointsToShow;
-    // TODO @cafe THIS MUST BE REMOVED ONCE WE GET RID OF THE AGGREGATION VS TRANSFORMATION DILEMMA.
-    const { transformationKeyToUse = DEFAULT_TRANSFORMATION_KEY_TO_USE } = firstDataPoint;
-    const attributeTransformation = path<AggregationType>([transformationKeyToUse], firstDataPoint.attribute);
-    const isSingleCardinality = isSingleCardinalityTransformation(attributeTransformation);
+    const isSingleCardinality = isSingleCardinalityDataPoint(firstDataPoint);
 
-    const menuTitle = `${firstDataPoint.formattedValue} ${
+    const newMenuTitle = `${firstDataPoint.formattedValue} ${
       !isSingleCardinality ? firstDataPoint.attribute.name : ''
     }`;
-    setMenuTitle(menuTitle);
+    setMenuTitle(newMenuTitle);
   }, [dataPointsToShow?.length]);
-
-  useEffect(() => {
-    const sectionItems = [];
-
-    if (!isNilOrEmpty(crossLinkSection)) {
-      sectionItems.push(...crossLinkSection);
-    }
-
-    if (!isNilOrEmpty(filterSections)) {
-      sectionItems.push(...filterSections);
-    }
-
-    if (!isNilOrEmpty(previewSections)) {
-      sectionItems.push(...previewSections);
-    }
-
-    setMenuSections(sectionItems);
-  }, [crossLinkSection?.length, filterSections?.length, previewSections?.length]);
 
   function clearTimeOut() {
     if (timerRef.current) {
@@ -113,32 +91,38 @@ export function KsContextMenu({ anchorEl, autoClose, dataPoints, handleClose }: 
     }
   }
 
-  if (isNilOrEmpty(menuSections)) return null;
-
   return (
     <Menu
+      MenuListProps={{ ref }}
       anchorEl={anchorEl}
       anchorOrigin={{
         horizontal: 'center',
         vertical: 'center',
       }}
       className={themeClass}
+      data-testid="context-menu"
       getContentAnchorEl={null}
       id="context-menu"
-      onClose={handleClose}
+      onClose={onClose}
       open={Boolean(anchorEl)}
-      MenuListProps={{ ref }}
     >
       <MenuTitle>{menuTitle}</MenuTitle>
-      {menuSections.map((section) => {
-        const { menuItems } = section;
+      {sectionsToShow.map((sectionToShow) => {
+        const SectionComponent = contextMenuComponentBySection[sectionToShow];
+
+        if (isNilOrEmpty(SectionComponent)) {
+          return;
+        }
 
         return (
-          <ContextMenuSection section={section}>
-            {menuItems.map((item, index) => {
-              return <ContextMenuItemView index={index} item={item} />;
-            })}
-          </ContextMenuSection>
+          <SectionComponent
+            dataPoints={formattedDataPoints}
+            dataPointsToShow={dataPointsToShow}
+            handleClose={onClose}
+            key={sectionToShow}
+            widgetContextParams={widgetContextParams}
+            widgetId={widgetId}
+          />
         );
       })}
     </Menu>

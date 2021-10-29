@@ -1,9 +1,10 @@
 import { PayloadAction, PayloadActionCreator } from '@reduxjs/toolkit';
+import { UrlQueryParams, VizParams } from '@kleeen/types';
 
 export interface GetDataInput {
   widgetId: string;
-  params: Record<string, any> & { operationName: string };
-  paramsBasedOnRoute: any;
+  params: VizParams;
+  paramsBasedOnRoute: UrlQueryParams;
 }
 
 /**

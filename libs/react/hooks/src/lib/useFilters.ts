@@ -1,4 +1,4 @@
-import { IntervalDate, TimestampKey } from '@kleeen/types';
+import { FilterOperators, IntervalDate, TimestampKey } from '@kleeen/types';
 import {
   getFiltersInitialState,
   getFromValueOf,
@@ -14,18 +14,12 @@ import { useLocalStorage, useUserInfo } from '@kleeen/react/hooks';
 import { isNilOrEmpty } from '@kleeen/common/utils';
 import queryString from 'query-string';
 import { useHistory } from 'react-router';
-import useUrlQueryParams from './useUrlQueryParams';
-
-enum FilterOperators {
-  max = 'max',
-  min = 'min',
-  in = '_in',
-}
+import { useUrlQueryParams } from './use-url-query-params';
 
 interface FilterAdded {
   [FilterOperators.in]?: Array<string | number>;
-  [FilterOperators.min]?: number;
   [FilterOperators.max]?: number;
+  [FilterOperators.min]?: number;
 }
 
 interface FiltersAddedState {
@@ -39,7 +33,6 @@ export const areFiltersInUse = () => {
 };
 
 export const useFilters = (hasDateFilter = false) => {
-  // TODO: @cafe refactor this logic into a single hook (reuse in useFilterSections and useFilterItems variants)
   const queryParams = useUrlQueryParams({ useNestedObjects: true });
   const _user = useUserInfo();
   const userName = _user?.userInfo?.username;
@@ -107,7 +100,7 @@ export const useFilters = (hasDateFilter = false) => {
       setIsApplyWithoutTime(true);
     }
     if (isNilOrEmpty(Object.entries(paramsBasedOnRoute)) && !isNilOrEmpty(localStorageValue)) {
-      if (!hasDateFilter) applyFilterIntoUrl(localStorageValue);
+      applyFilterIntoUrl(localStorageValue);
       if (localStorageValue.Timestamp?.relativeDate) {
         setRelativeDate(localStorageValue.Timestamp.relativeDate);
       }
@@ -157,6 +150,9 @@ export const useFilters = (hasDateFilter = false) => {
     }
 
     const regExp = new RegExp(`${TimestampKey.key}`, 'gi');
+
+    // FIXME: Avoid this hack for cloning in the frontend.
+    // FIXME: `JSON.parse` throw an exception if it fails, so the whole could crash.
     const parsedFilters = JSON.parse(JSON.stringify(filtersAdded).replace(regExp, ''));
 
     return { timeFilters, parsedFilters };
@@ -167,6 +163,7 @@ export const useFilters = (hasDateFilter = false) => {
     const { Timestamp } = paramsBasedOnRoute;
     const possibleUrlTimestamp = Timestamp ? { Timestamp } : {};
     const filtersToApply = { ...possibleUrlTimestamp, ...parsedFilters };
+
     setLocalStorageValue(filtersToApply);
     applyFilterIntoUrl(filtersToApply);
     setIsApplyWithoutTime(true);
@@ -175,6 +172,7 @@ export const useFilters = (hasDateFilter = false) => {
   const handleTimestampFilter = () => {
     const { timeFilters } = getTimeAndCommonFilters();
     const filtersToApply = { ...paramsBasedOnRoute, ...timeFilters };
+
     setLocalStorageValue(filtersToApply);
     applyFilterIntoUrl(filtersToApply);
     setIsTimeApplyDisabled(true);
@@ -182,11 +180,11 @@ export const useFilters = (hasDateFilter = false) => {
 
   const handleFilter = (): void => {
     const { timeFilters, parsedFilters } = getTimeAndCommonFilters();
-
     const filtersToApply = {
       ...parsedFilters,
       ...timeFilters,
     };
+
     setLocalStorageValue(filtersToApply);
     applyFilterIntoUrl(filtersToApply);
     setIsApplyDisabled(true);
@@ -275,20 +273,20 @@ export const useFilters = (hasDateFilter = false) => {
   };
 
   return {
-    queryParams,
-    handleFilter,
-    removeValue,
     addFilter,
-    removeCategory,
-    isApplyDisabled,
-    filtersAdded,
-    setIsApplyDisabled,
     clearFilters,
     datePickerState,
+    filtersAdded,
+    handleFilter,
     handleFilterWithoutTimestamp,
     handleTimestampFilter,
-    isTimeApplyDisabled,
+    isApplyDisabled,
     isApplyWithoutTimeDisabled,
+    isTimeApplyDisabled,
+    queryParams,
+    removeCategory,
+    removeValue,
+    setIsApplyDisabled,
     setIsApplyWithoutTime,
   };
 };

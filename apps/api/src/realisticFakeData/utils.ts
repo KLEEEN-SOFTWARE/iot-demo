@@ -1,22 +1,35 @@
-import { DisplayMediaKapiTypeSupported, DisplayMediaType, IntervalDate } from '@kleeen/types';
-import { Entity, GenericEntityItem, GenericEntityItemNestedDisplayValue, PrimitiveTypes } from './types';
+import {
+  DisplayMediaKapiTypeSupported,
+  DisplayMediaType,
+  FakeDataEntity,
+  FilterQuery,
+  IntervalDate,
+  TemporalInterval,
+} from '@kleeen/types';
+import { Entity, FakeDataDataPoint, GenericEntityItemNestedDisplayValue, PrimitiveTypes } from './types';
+import { FakeDataSource, filterList } from './filters/filters';
 import moment, { DurationInputArg1, DurationInputArg2 } from 'moment';
 
 import { KapiDb } from '@kleeen/kleeen-api';
+import { Transformation } from '../utils';
 import codeCountries from './countryCode.json';
+import { cryptoRandom } from '@kleeen/backend/utils';
 import { isNilOrEmpty } from '@kleeen/common/utils';
 import kapiEntities from '../assets/entities.json';
 
 export const TIMESTAMP = 'timestamp';
 
 export const generateDisplayMediaByType = (dataType, displayValue, attribute) => {
+  const severityLevels = () => attribute?.format?.valueLabels || [];
+  const isSeverityObject = (severityObject) => severityObject.label === displayValue;
+
   switch (dataType) {
     case DisplayMediaKapiTypeSupported.Username:
     case DisplayMediaKapiTypeSupported.FullName:
     case DisplayMediaKapiTypeSupported.FirstName:
       return {
         type: DisplayMediaType.Src,
-        value: `https://fakeface.rest/thumb/view/${Math.floor(Math.random() * 1000)}`,
+        value: `https://fakeface.rest/thumb/view/${Math.floor(cryptoRandom() * 1000)}`,
       };
     case DisplayMediaKapiTypeSupported.City:
     case DisplayMediaKapiTypeSupported.Prime:
@@ -32,14 +45,10 @@ export const generateDisplayMediaByType = (dataType, displayValue, attribute) =>
         value: `https://www.countryflags.io/${displayValue}/shiny/64.png`,
       };
     case DisplayMediaKapiTypeSupported.SeverityLevel:
-      const severityLevels = attribute?.format?.valueLabels || [];
-      function isSeverityObject(severityObject) {
-        return severityObject.label === displayValue;
-      }
       return {
         type: DisplayMediaType.Svg,
         value: `https://raw.githubusercontent.com/KLEEEN-SOFTWARE/Kleeen-svgs/main/assets/severity-levels-svgs/severity-level-${
-          severityLevels?.find(isSeverityObject)?.value
+          severityLevels()?.find(isSeverityObject)?.value
         }of${attribute?.format?.valueLabels?.length}.svg`,
       };
     default:
@@ -75,7 +84,7 @@ export const toPropertyName = (maybeString?: string): string => {
 export const buildArrayOfNumbers = (length: number, minValue?: number, maxValue?: number): number[] =>
   Array.from(
     Array(length),
-    () => Math.floor(Math.random() * ((maxValue || 200) - (minValue || 0))) + (minValue || 0),
+    () => Math.floor(cryptoRandom() * ((maxValue || 200) - (minValue || 0))) + (minValue || 0),
   )
     .slice()
     .sort((a, b) => a - b);
@@ -141,40 +150,31 @@ const manageFilter = (value, row) => {
   return someWithDisplayValue || someWithId;
 };
 
-export const filterList = (list: GenericEntityItem[], entityName: string, filters: any = {}) => {
-  let filteredList = list;
-
-  const entitiesFiltered = Object.entries(filters).filter(
-    ([filter]) => filter.toLowerCase() === entityName.toLowerCase(),
-  );
-
-  if (Array.isArray(list) && Array.isArray(entitiesFiltered) && entitiesFiltered.length) {
-    filteredList = list.filter((row) => entitiesFiltered.every(([_, value]) => manageFilter(value, row)));
-  }
-
-  return filteredList;
-};
-
-function uniqByKeepFirst(list: GenericEntityItem[]): GenericEntityItem[] {
-  const seen = new Set();
-  return list.filter((item) => {
-    const displayValue = item.displayValue;
-    return seen.has(displayValue) ? false : seen.add(displayValue);
-  });
+interface GetDataListProps {
+  entityName: string;
+  filters: FilterQuery;
+  uniqueByDisplayValue?: boolean;
 }
 
-export const getDataList = (entityName: string, filters: any = {}, uniqueByDisplayValue?: boolean) => {
+export function getDataList({ entityName, filters, uniqueByDisplayValue }: GetDataListProps) {
   const list = KapiDb.listByName<GenericEntityItemNestedDisplayValue>(toEntityName(entityName));
+
   if (!list) throw `The entity [${entityName}] does not exists.`;
 
   const listWithoutDisplayValue = list.map((item) =>
     item.displayValue?.displayValue ? { ...item, displayValue: item.displayValue.displayValue } : item,
-  ) as GenericEntityItem[];
+  ) as FakeDataEntity[];
 
   const listWithoutDuplicates = uniqueByDisplayValue
     ? uniqByKeepFirst(listWithoutDisplayValue)
     : listWithoutDisplayValue;
-  const filteredList = filterList(listWithoutDuplicates, entityName, filters);
+
+  const filteredList = filterList({
+    entityName,
+    fakeDataSource: FakeDataSource.VisualizationData,
+    filters,
+    list: listWithoutDuplicates,
+  });
 
   const xorEntityType = (item, entityNameToUse): string =>
     item[`${entityNameToUse}Type`] ? item[`${entityNameToUse}Type`]?.displayValue : '';
@@ -186,7 +186,7 @@ export const getDataList = (entityName: string, filters: any = {}, uniqueByDispl
       $metadata: { entityType: xorEntityType(item, entityName) },
     })),
   };
-};
+}
 
 export const findEntityByName = (entityName: string, entities?): Entity | any => {
   const entityCollection = isNilOrEmpty(entities) ? kapiEntities : entities;
@@ -194,7 +194,7 @@ export const findEntityByName = (entityName: string, entities?): Entity | any =>
 };
 
 export const getRandomNumber = (from: number, adder = 0): number => {
-  return Math.floor(Math.random() * from + adder);
+  return Math.floor(cryptoRandom() * from + adder);
 };
 
 export const getStatisticalType = (entityName: string): string => {
@@ -236,3 +236,61 @@ export const wait = (ms: number) => {
     end = new Date().getTime();
   }
 };
+
+interface TransformGroupByProps {
+  groupBy: FakeDataDataPoint;
+  list: number[];
+}
+
+const TimeIntervalEpochModifier: { [key in TemporalInterval]: number } = {
+  [TemporalInterval.Second]: 1 * 1000,
+  [TemporalInterval.Minute]: 60 * 1000,
+  [TemporalInterval.Hour]: 3600 * 1000,
+  [TemporalInterval.Day]: 24 * 3600 * 1000,
+  [TemporalInterval.Week]: 7 * 24 * 3600 * 1000,
+  [TemporalInterval.Month]: 30 * 24 * 3600 * 1000,
+  [TemporalInterval.Quarter]: 90 * 24 * 3600 * 1000,
+  [TemporalInterval.Year]: 365 * 24 * 3600 * 1000,
+};
+
+const TimeIntervalGranularityPoints: { [key in TemporalInterval]: number } = {
+  [TemporalInterval.Second]: 50,
+  [TemporalInterval.Minute]: 30,
+  [TemporalInterval.Hour]: 24,
+  [TemporalInterval.Day]: 30,
+  [TemporalInterval.Week]: 15,
+  [TemporalInterval.Month]: 12,
+  [TemporalInterval.Quarter]: 8,
+  [TemporalInterval.Year]: 6,
+};
+
+export function transformGroupBy({ groupBy, list }: TransformGroupByProps): number[] {
+  if (
+    groupBy.type === PrimitiveTypes.Date &&
+    groupBy.transformation === Transformation.TemporalBucket &&
+    groupBy.bucket
+  ) {
+    const epochModifier =
+      TimeIntervalEpochModifier[groupBy.bucket?.interval] || TimeIntervalEpochModifier[TemporalInterval.Day]; // Default to hour
+    const epochModifierWithMagnitude = epochModifier * groupBy.bucket.magnitude;
+    const lastDate = list[list.length - 1];
+
+    const pointCount = TimeIntervalGranularityPoints[groupBy.bucket.interval];
+    return Array(...new Array(pointCount)).map((_, index) => {
+      const offset = pointCount - index + 1;
+      return lastDate - offset * epochModifierWithMagnitude;
+    });
+  }
+
+  return list;
+}
+
+//#region Private members
+function uniqByKeepFirst(list: FakeDataEntity[]): FakeDataEntity[] {
+  const seen = new Set();
+  return list.filter((item) => {
+    const displayValue = item.displayValue;
+    return seen.has(displayValue) ? false : seen.add(displayValue);
+  });
+}
+//#endregion

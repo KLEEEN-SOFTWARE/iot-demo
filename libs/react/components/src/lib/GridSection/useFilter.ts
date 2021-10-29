@@ -1,3 +1,4 @@
+import { isNilOrEmpty } from '@kleeen/common/utils';
 import { WidgetDataAttributes } from '@kleeen/types';
 import React from 'react';
 
@@ -13,7 +14,7 @@ const handleFilter = (
   column: string,
   searchValue: string,
 ) => {
-  let filterList = Object.entries(filters);
+  let filterList = Object.entries(filters).filter(([, filterValue]) => !isNilOrEmpty(filterValue));
   if (Array.isArray(list) && Array.isArray(filterList) && filterList.length) {
     let tempFilter;
     if (column !== FILTER_COLUMNS_VALUE) {
@@ -56,6 +57,8 @@ const handleFilter = (
       tempFilter = tempFilter.filter((q) => q && q.length > 0).map((q) => q[0]);
     }
     setRows(tempFilter);
+  } else {
+    if (Array.isArray(list)) setRows(list);
   }
 };
 
@@ -74,7 +77,6 @@ const useFilter = (list: Array<any>): [{ rows: Array<any> }, (column: string, va
         [column]: value,
       };
       handleFilter(list, setRows, newFilters, column, value);
-
       return newFilters;
     });
   };

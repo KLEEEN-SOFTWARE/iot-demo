@@ -1,3 +1,4 @@
+import { VizParams } from '@kleeen/types';
 import { formatAxis } from '@kleeen/frontend/utils';
 import merge from 'lodash.merge';
 import { microOptions } from './Micro';
@@ -7,7 +8,7 @@ import { useTextFormattersForViz } from '@kleeen/react/hooks';
 export const getOptions = (
   format: object,
   baseOptions: Highcharts.Options,
-  params: { groupBy: any; value: any },
+  params: VizParams,
   results: [],
 ) => {
   const type = pathOr('areaspline', ['chart', 'type'], format);

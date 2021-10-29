@@ -111,15 +111,15 @@ export function TransformToElement(props: TransformToElementProps): JSX.Element 
   const getColorPickerInput = (): JSX.Element => {
     return (
       <KsColorPicker
-        disabled={disabled}
-        label={attrLabel}
         defaultValue={inputValue}
+        disabled={disabled}
         formatType={formatType}
-        variant={!canAddValues && !disabled ? Variant.outlined : Variant.standard}
         handleOnChange={(newValue) => {
           setInputValue(newValue);
-          setSelectedOption && setSelectedOption(newValue);
+          setSelectedOption?.(newValue);
         }}
+        label={attrLabel}
+        variant={!canAddValues && !disabled ? Variant.outlined : Variant.standard}
       />
     );
   };

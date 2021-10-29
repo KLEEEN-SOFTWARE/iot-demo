@@ -1,88 +1,25 @@
 import './SnackBarSection.scss';
 
-import { KsButton as Button, KsSnackbarContainer } from '@kleeen/react/components';
-import { styled } from '@material-ui/core/styles';
-import { useTheme } from '@kleeen/react/hooks';
-import classnames from 'classnames';
+import { Action, DeleteDialogProps, bem } from './snack-bar-utils';
+import { Dialog, Paper, TypographyBold } from './styled-components';
+
+import { KsButton as Button } from '@kleeen/react/components';
 import DialogActions from '@material-ui/core/DialogActions';
 import DialogContent from '@material-ui/core/DialogContent';
 import DialogContentText from '@material-ui/core/DialogContentText';
 import DialogTitle from '@material-ui/core/DialogTitle';
 import Grid from '@material-ui/core/Grid';
-import MenuItem from '@material-ui/core/MenuItem';
-import MuiDialog from '@material-ui/core/Dialog';
-import MuiFormControl from '@material-ui/core/FormControl';
-import MuiInputLabel from '@material-ui/core/InputLabel';
-import MuiSelect from '@material-ui/core/Select';
-import MuiTooltip from '@material-ui/core/Tooltip';
 import MuiTypography from '@material-ui/core/Typography';
 import React from 'react';
+import { SelectedStatsSection } from './snack-bar-components';
 import Slide from '@material-ui/core/Slide';
 import Toolbar from '@material-ui/core/Toolbar';
-
-const bem = 'ks-snack-bar-section';
-
-const Paper = styled(KsSnackbarContainer)({
-  borderRadius: '0',
-});
-
-const TypographyBold = styled(MuiTypography)({
-  fontSize: 'var(--tx-M)',
-  fontWeight: 'bold',
-  left: 'auto',
-});
-
-const FormControl = styled(MuiFormControl)({
-  color: 'var(--alt-light-color)',
-});
-
-const InputLabel = styled(MuiInputLabel)({
-  color: 'var(--secondary-color)',
-  fontSize: 'var(--tx-M)',
-  left: 'auto',
-  '&.Mui-focused': {
-    color: 'var(--secondary-color-variant)',
-  },
-});
-
-const Select = styled(MuiSelect)({
-  '& fieldset': {
-    'border-color': 'var(--secondary-color)',
-  },
-  '&:hover': {
-    '& fieldset.MuiOutlinedInput-notchedOutline': {
-      'border-color': 'var(--secondary-color-variant)',
-    },
-  },
-  '&.Mui-focused': {
-    '& fieldset.MuiOutlinedInput-notchedOutline': {
-      'border-color': 'var(--secondary-color-variant)',
-    },
-    '& .MuiSelect-root': {
-      color: 'var(--secondary-color-variant)',
-    },
-  },
-  '& .MuiSelect-root': {
-    color: 'var(--secondary-color)',
-  },
-  '& svg': {
-    color: 'var(--secondary-color)',
-  },
-});
-
-const Dialog = styled(MuiDialog)({
-  '& Button': {
-    color: 'var(--secondary-color)',
-    background: 'var(--transparent)',
-    '&:hover': {
-      background: 'var(--transparent)',
-    },
-  },
-});
+import classnames from 'classnames';
+import { useTheme } from '@kleeen/react/hooks';
 
 export interface SnackBarSectionProps {
   actions: Action[];
-  entityActions: { [key: string]: Function };
+  entityActions: Record<string, (d: any) => void>;
   showSelectAndExecute?: boolean;
   selectedRows?: any[];
   entity?: string;
@@ -90,146 +27,6 @@ export interface SnackBarSectionProps {
   className?: string;
   setSelectedRows?: any;
 }
-
-interface DeleteDialogProps {
-  entity: string;
-  open: boolean;
-  entityActions: { [key: string]: Function };
-  selectedRows: any[];
-  setSelectedRows: any;
-  setOpen: React.Dispatch<React.SetStateAction<boolean>>;
-  clearOnClose?: boolean;
-  title?: string;
-  description?: string;
-}
-
-interface SelectedStatsSectionProps {
-  showSelectAndExecute: boolean;
-  actions: Action[];
-  setOpen: React.Dispatch<React.SetStateAction<boolean>>;
-}
-
-interface Action {
-  type: string;
-  label?: string;
-  func?: (params?: any) => any;
-  disabled?: boolean;
-  tooltip?: string;
-}
-
-enum ActionEnum {
-  DELETE = 'DELETE',
-  CUSTOM = 'CUSTOM',
-}
-
-// Select And Execute
-const SelectedStatsSection1 = (props: {
-  actions: Action[];
-  setOpen: React.Dispatch<React.SetStateAction<boolean>>;
-}) => {
-  return (
-    <>
-      <FormControl variant="outlined" className={classnames(bem, 'select-action-form')}>
-        <InputLabel id="select-action-label" className={classnames(`${bem}__label`, 'select-action-label')}>
-          Select Action
-        </InputLabel>
-        <Select
-          labelId="select-action-label"
-          id="select-action-label"
-          className={classnames(`${bem}__action`, 'select-action')}
-          label="Select Action"
-        >
-          <MenuItem value="delete">Delete</MenuItem>
-        </Select>
-        <MuiTypography
-          variant="caption"
-          display="block"
-          className={classnames(`${bem}__action-tip`, 'action-tip')}
-        >
-          Select an action to bulk perform
-        </MuiTypography>
-      </FormControl>
-      <Button
-        variant="contained"
-        color="primary"
-        className={classnames(`${bem}__cta`, 'action-button')}
-        onClick={() => {
-          console.log('GO');
-        }}
-      >
-        GO
-      </Button>
-    </>
-  );
-};
-
-// Multi button group
-const SelectedStatsSection2 = (props: {
-  actions: Action[];
-  setOpen: React.Dispatch<React.SetStateAction<boolean>>;
-}) => {
-  const handleClickOpen = () => {
-    props.setOpen(true);
-  };
-
-  return (
-    <>
-      {props.actions.map(({ type, label, func, disabled, tooltip = '' }, index) => {
-        switch (type) {
-          case ActionEnum.DELETE:
-            return (
-              <MuiTooltip key={`${label}-${index}`} title={tooltip} placement="top">
-                <span>
-                  <Button
-                    className={classnames(`${bem}__cta--delete`, 'multi-button')}
-                    color="primary"
-                    data-kleeen-analytics-attrs={`component:ActionsSection,action:${type.toLowerCase()}`}
-                    data-kleeen-analytics-name="click"
-                    data-kleeen-analytics-on="click"
-                    disabled={disabled}
-                    key={'delete'}
-                    onClick={handleClickOpen}
-                    variant="contained"
-                  >
-                    DELETE
-                  </Button>
-                </span>
-              </MuiTooltip>
-            );
-          case ActionEnum.CUSTOM:
-            return (
-              <MuiTooltip key={`${label}-${index}`} title={tooltip} placement="top">
-                <span>
-                  <Button
-                    className={classnames(`${bem}__cta--custom`, 'multi-button')}
-                    color="primary"
-                    data-kleeen-analytics-attrs={`component:ActionsSection,action:${type.toLowerCase()}`}
-                    data-kleeen-analytics-name="click"
-                    data-kleeen-analytics-on="click"
-                    data-testid={`${(label || '').toLowerCase()}-action`}
-                    disabled={disabled}
-                    key={label}
-                    onClick={func}
-                    variant="contained"
-                  >
-                    {label}
-                  </Button>
-                </span>
-              </MuiTooltip>
-            );
-        }
-      })}
-    </>
-  );
-};
-
-const SelectedStatsSection = ({ showSelectAndExecute, actions, setOpen }: SelectedStatsSectionProps) => {
-  return showSelectAndExecute ? (
-    <SelectedStatsSection1 actions={actions} setOpen={setOpen} />
-  ) : (
-    <SelectedStatsSection2 actions={actions} setOpen={setOpen} />
-  );
-};
 
 export const DeleteDialog = (props: DeleteDialogProps) => {
   const { themeClass } = useTheme();
@@ -290,7 +87,14 @@ export const SnackBarSection = (props: SnackBarSectionProps) => {
 
   return (
     <>
-      <Slide in={props.showSnackBar} mountOnEnter unmountOnExit direction="up" timeout={400}>
+      <Slide
+        in={props.showSnackBar}
+        mountOnEnter
+        unmountOnExit
+        direction="up"
+        timeout={400}
+        data-testid="snack-bar"
+      >
         <Paper
           className={classnames(
             props.className,

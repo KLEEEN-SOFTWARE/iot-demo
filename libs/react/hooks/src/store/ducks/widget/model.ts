@@ -1,16 +1,18 @@
+import { WidgetState, WidgetStateParamsGroupBy } from '@kleeen/types';
+
 import { PayloadAction } from '@reduxjs/toolkit';
 import { WidgetActions } from '../../types/actions';
-import { WidgetState } from './types';
 
 interface WidgetModel {
   initialState: WidgetState;
   reducers: Record<string, (state: WidgetState, action?: PayloadAction | any) => void>;
 }
 
-export const initialState = {
-  isLoading: false,
+export const initialState: WidgetState = {
   data: {},
   error: null,
+  params: {},
+  isLoading: false,
 };
 
 export const model: WidgetModel = {
@@ -54,6 +56,13 @@ export const model: WidgetModel = {
       const { response } = payload;
       state.error = response;
       state.isLoading = false;
+    },
+
+    getGroupBy(state: WidgetState) {
+      return state.params.groupBy;
+    },
+    setGroupBy(state: WidgetState, { payload }: PayloadAction<WidgetStateParamsGroupBy>): void {
+      state.params.groupBy = payload;
     },
   },
 };

@@ -2,7 +2,14 @@ import { KsListItem } from '../list-item';
 import { List } from '../list';
 import { SimpleListProps } from './SimpleList.model';
 
-export function SimpleList({ data, columns, hideHeader, listOptions, metadata }: SimpleListProps) {
+export function SimpleList({
+  data,
+  columns,
+  hideHeader,
+  listOptions,
+  listItemOptions,
+  metadata,
+}: SimpleListProps) {
   return (
     <List
       columns={columns}
@@ -10,8 +17,8 @@ export function SimpleList({ data, columns, hideHeader, listOptions, metadata }:
       hideHeader={hideHeader}
       sortBy={columns[0]?.name}
       ListItemComponent={KsListItem}
-      ListItemProps={{ columns, metadata }}
+      ListItemProps={{ columns, metadata, ...listItemOptions }}
       {...listOptions}
-    ></List>
+    />
   );
 }

@@ -8,79 +8,52 @@ import {
   RefreshControl,
 } from '@kleeen/react/components';
 import { Container, Title, Typography } from './DataViewControlSection.styles';
+import { DataViewControlSectionProps, UseActionsProps } from './DataViewControlSection.model';
 import { HeaderTitle, HeaderTitleEllipsis } from '../HeaderTitle';
 import { ReactElement, useState } from 'react';
-import { isEmpty, isNil } from 'ramda';
-import { isNilOrEmpty, sortByKeys } from '@kleeen/common/utils';
 import { useGetDisplayValue, useKleeenActions } from '@kleeen/react/hooks';
 
 import { Action } from '@kleeen/types';
-import { DataViewControlSectionProps } from './DataViewControlSection.model';
 import Grid from '@material-ui/core/Grid';
 import MuiTooltip from '@material-ui/core/Tooltip';
-import { ViewSwitcher } from './ViewSwitcher';
+import { ViewSwitcher } from './view-switcher';
 import classnames from 'classnames';
 import { isAddAction } from '@kleeen/render-utils';
+import { isNilOrEmpty } from '@kleeen/common/utils';
 
 const bem = 'ks-data-view-control-section';
 
-export function DataViewControlSection(props: DataViewControlSectionProps): ReactElement {
+export function DataViewControlSection(props: DataViewControlSectionProps): ReactElement | null {
   const {
+    actions,
+    currentView,
+    entityActions,
     objectValue,
-    onTabIndexChanged,
     results,
-    selectedOption,
+    setCurrentView,
     taskName,
     title,
     viewOptions = [],
   } = props;
   if (isNilOrEmpty(taskName)) {
-    throw new Error(`Value cannot be null. Parameter name: taskName`);
+    console.error('Value cannot be null. Parameter name: taskName. In the DataViewControlSection.');
+    return null;
   }
   const { refreshPage } = useKleeenActions(taskName);
-  const [actionPayload, setActionPayload] = useState({});
-  const [isConfirmationOpen, setIsConfirmationOpen] = useState(false);
-  const [isCustomOpen, setIsCustomOpen] = useState(false);
 
+  const {
+    dispatchAction,
+    getAddActions,
+    handleIsConfirmationOpenChange,
+    handleIsCustomOpenChange,
+    setIsCustomOpen,
+    setIsConfirmationOpen,
+    isConfirmationOpen,
+    isCustomOpen,
+  } = useActionsState({ entityActions, currentView, actions }); // TODO review how can we use useKsActionsManager here
   const { displayValue, format } = useGetDisplayValue({ objectValue, taskName });
-
-  const viewOptionsBySortOrder = sortByKeys(viewOptions, ['viewOrder', 'viewId']);
-
-  const getSelectedOption = () => {
-    const hastToChooseADefaultViewOption =
-      isNilOrEmpty(selectedOption) && !isNilOrEmpty(viewOptionsBySortOrder) && !isNil(onTabIndexChanged);
-
-    if (hastToChooseADefaultViewOption) {
-      const [defaultViewOption] = viewOptionsBySortOrder;
-      onTabIndexChanged(0, defaultViewOption);
-      return defaultViewOption;
-    }
-    return viewOptionsBySortOrder.find(
-      (viewOption) => selectedOption && viewOption.viewId === selectedOption.viewId,
-    );
-  };
-  // TODO: @cafe move this logic to a shared util and re-use it in HeaderAndSubSectionsComponent
-  const viewOptionProps = getSelectedOption();
-
   const addActions = getAddActions();
-  const entityName = isNilOrEmpty(viewOptionProps?.entityName) ? props.entity : viewOptionProps.entityName;
-
-  function dispatchAction({ action, payload }: { action: Action; payload: AddDialogPayload }): void {
-    const isCustomDialogOpen = isCustomOpen;
-    const needsConfirmation = action?.areYouSure;
-
-    if (isCustomDialogOpen && needsConfirmation) {
-      setActionPayload(payload);
-      setIsConfirmationOpen(true);
-    } else {
-      props.entityActions.addRequest(payload || actionPayload);
-    }
-  }
-
-  function getAddActions(): Action[] {
-    const localActions = isNilOrEmpty(viewOptionProps?.actions) ? props.actions : viewOptionProps.actions;
-    return (localActions || []).filter(isAddAction);
-  }
+  const entityName = isNilOrEmpty(currentView?.entityName) ? props.entity : currentView.entityName;
 
   function handleClick(action: Action): void {
     if (action?.component) {
@@ -90,30 +63,11 @@ export function DataViewControlSection(props: DataViewControlSectionProps): Reac
     }
   }
 
-  function handleIsConfirmationOpenChange(): void {
-    setIsConfirmationOpen(!isConfirmationOpen);
-  }
-
-  function handleIsCustomOpenChange(): void {
-    setIsCustomOpen(!isCustomOpen);
-  }
-
   return (
     <>
       <Container className={classnames(bem, 'dataview-control-section')} maxWidth="xl">
         <Grid alignItems="center" className={classnames(`${bem}__container`, 'main-container')} container>
-          {props.showAvatar && (
-            <Grid
-              alignItems="center"
-              className={classnames(`${bem}__avatar-container`)}
-              container
-              item
-              sm={2}
-              xs={4}
-            >
-              <AvatarSection />
-            </Grid>
-          )}
+          {/**TODO KSE3-4140 implement ks title here**/}
           <Grid
             className={classnames(`${bem}__typography`, 'typography-ellipsis')}
             container
@@ -143,7 +97,7 @@ export function DataViewControlSection(props: DataViewControlSectionProps): Reac
             )}
           </Grid>
         </Grid>
-        {viewOptionsBySortOrder.length > 1 && (
+        {viewOptions.length > 1 && (
           <Grid
             alignItems="center"
             className={classnames(`${bem}__options`, 'options')}
@@ -151,25 +105,22 @@ export function DataViewControlSection(props: DataViewControlSectionProps): Reac
             data-testid="view-switcher"
           >
             <ViewSwitcher
-              handleChangeTab={props.handleChangeTab}
-              onTabIndexChanged={props.onTabIndexChanged}
+              currentView={currentView}
+              setCurrentView={setCurrentView}
               showDropDown={props.showDropDown}
               taskName={taskName}
-              value={viewOptionsBySortOrder.indexOf(viewOptionProps)}
-              viewOptions={viewOptionsBySortOrder}
+              viewOptions={viewOptions}
             />
           </Grid>
         )}
-        <Grid className="actions" container alignItems="center">
+        <Grid alignItems="center" className="actions" container data-testid="page-actions">
           {!props.hideRefreshControl && (
             <>
               <RefreshControl onRefresh={refreshPage} taskName={taskName} />
               <KsAutoRefreshControl taskName={taskName} onRefresh={refreshPage} />
             </>
           )}
-          {!isEmpty(addActions) && (
-            <ActionsSection actions={addActions} entity={entityName} handleAddClick={handleClick} />
-          )}
+          <ActionsSection actions={addActions} entity={entityName} handleAddClick={handleClick} />
         </Grid>
       </Container>
       {addActions.map((action) => (
@@ -191,12 +142,46 @@ export function DataViewControlSection(props: DataViewControlSectionProps): Reac
   );
 }
 
-function AvatarSection(): JSX.Element {
-  return (
-    <svg xmlns="http://www.w3.org/2000/svg" width="100%" height="100%">
-      <rect id="blue_square" fill="#069" x="0" y="0" width="100%" height="100%" />
-    </svg>
-  );
+function useActionsState({ entityActions, currentView, actions }: UseActionsProps) {
+  const [actionPayload, setActionPayload] = useState({});
+  const [isConfirmationOpen, setIsConfirmationOpen] = useState(false);
+  const [isCustomOpen, setIsCustomOpen] = useState(false);
+
+  function dispatchAction({ action, payload }: { action: Action; payload: AddDialogPayload }): void {
+    const isCustomDialogOpen = isCustomOpen;
+    const needsConfirmation = action?.areYouSure;
+
+    if (isCustomDialogOpen && needsConfirmation) {
+      setActionPayload(payload);
+      setIsConfirmationOpen(true);
+    } else {
+      entityActions.addRequest(payload || actionPayload);
+    }
+  }
+
+  function getAddActions(): Action[] {
+    const localActions = isNilOrEmpty(currentView?.actions) ? actions : currentView.actions;
+    return (localActions || []).filter(isAddAction);
+  }
+
+  function handleIsConfirmationOpenChange(): void {
+    setIsConfirmationOpen(!isConfirmationOpen);
+  }
+
+  function handleIsCustomOpenChange(): void {
+    setIsCustomOpen(!isCustomOpen);
+  }
+
+  return {
+    dispatchAction,
+    getAddActions,
+    handleIsConfirmationOpenChange,
+    handleIsCustomOpenChange,
+    isConfirmationOpen,
+    isCustomOpen,
+    setIsConfirmationOpen,
+    setIsCustomOpen,
+  };
 }
 
 export default DataViewControlSection;

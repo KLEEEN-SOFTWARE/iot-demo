@@ -1,7 +1,7 @@
 import React, { Dispatch, SetStateAction, useContext, useEffect, useState } from 'react';
 
+import { KSAuth } from '@kleeen/auth';
 import { useLocalStorage } from './useLocalStorage';
-import useUserInfo from './useUserInfo';
 
 interface LocalizationContextProps {
   language: Language;
@@ -40,10 +40,26 @@ export const LocalizationContextProvider = ({
   children: React.ReactNode;
 }): React.ReactElement => {
   const [language, setLanguage] = useState<Language>(defaultLanguage);
-  const _user = useUserInfo();
-  const userName = _user?.userInfo?.username;
+  const [username, setUsername] = useState('');
 
-  const keyOfLanguageLocalStorage = getLanguagePreferencesStoreKey(userName);
+  /*
+  TODO: @Marimba the useUserInfo() was changed, for the reason that over-renders occur.
+  TODO: This solution solves the problems. But how to solve this must be investigated at a higher level.
+  */
+  useEffect(() => {
+    const getCurrentUser = async (): Promise<void> => {
+      try {
+        const response = await KSAuth.currentAuthenticatedUser();
+        setUsername(response?.username);
+      } catch (err) {
+        setUsername('');
+      }
+    };
+
+    getCurrentUser();
+  }, []);
+
+  const keyOfLanguageLocalStorage = getLanguagePreferencesStoreKey(username);
   const { localStorageValue: storedLanguage, setLocalStorageValue } = useLocalStorage(
     keyOfLanguageLocalStorage,
     defaultLanguage,

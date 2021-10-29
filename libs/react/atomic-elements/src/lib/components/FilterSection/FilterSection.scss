@@ -87,7 +87,16 @@
   }
 
   .categories-container {
-    max-height: calc(100% - var(--wh-3XL) - var(--pm-2XS));
+    max-height: calc(100% - var(--wh-2XL) - var(--wh-2XS));
+    overflow: hidden;
+
+    &:hover {
+      overflow: overlay;
+    }
+  }
+
+  .grid-date-filter-container ~ .categories-container {
+    max-height: calc(100% - var(--wh-4XL) - var(--pm-5XS) - var(--wh-1XS));
     overflow: hidden;
 
     &:hover {

@@ -6,8 +6,8 @@ import {
   FormatProps,
   GenericFunction,
   Row,
-  Translate,
   Sorting,
+  Translate,
   Widget,
 } from '@kleeen/types';
 
@@ -41,7 +41,7 @@ interface GridSectionProps {
   enableEditMode?: boolean;
   entity: { isLoading: boolean; data: any[]; format?: FormatProps };
   entityActions?: { [key: string]: GenericFunction };
-  entityId?: string;
+  entityId?: number;
   entityName: string;
   getMoreRows?: any;
   hasToolBar?: boolean;
@@ -60,20 +60,20 @@ interface GridSectionProps {
   sorting?: Sorting;
   setSorting?: (value: string) => void;
   taskName?: string;
-  translate?: Translate;
+  translate: Translate;
   widget?: Widget;
-  widgetId: string | number;
+  widgetId: string;
 }
 
-interface TableHeaderProps {
+interface GridSectionHeaderProps {
   attributes: Attribute[];
   handleChange: GenericFunction;
   hasActions: boolean;
-  localization: Localization;
+  localization?: Localization;
   onSort: GenericFunction;
   order: Order;
   orderBy: string;
-  widgetId: string | number;
+  widgetId?: string;
 }
 
-export { TableHeaderProps, GridSectionProps, Localization };
+export { GridSectionHeaderProps, GridSectionProps, Localization };

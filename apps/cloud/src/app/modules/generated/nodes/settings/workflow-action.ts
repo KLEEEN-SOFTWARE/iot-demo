@@ -5,6 +5,7 @@ export const workflowAction = [
     addModalAttributes: [
       {
         id: 120421,
+        isDisplayValue: true,
         name: 'node',
         label: 'Node',
         hasMany: false,
@@ -34,6 +35,7 @@ export const workflowAction = [
       },
       {
         id: 120422,
+        isDisplayValue: false,
         name: 'nodeOverallStatus',
         label: 'Node Overall Status',
         hasMany: false,
@@ -66,6 +68,7 @@ export const workflowAction = [
       },
       {
         id: 120423,
+        isDisplayValue: false,
         name: 'nodeStatus',
         label: 'Node Status',
         hasMany: false,
@@ -98,6 +101,7 @@ export const workflowAction = [
       },
       {
         id: 120424,
+        isDisplayValue: false,
         name: 'siteMap',
         label: 'Site Map',
         hasMany: false,

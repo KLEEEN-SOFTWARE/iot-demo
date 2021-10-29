@@ -108,4 +108,14 @@ export const useConfigInputStyles = makeStyles({
       },
     },
   },
+  inputLuError: {
+    color: 'var(--input-error-color)',
+    fontSize: 'var(--tx-M)',
+    marginTop: 'var(--pm-5XS)',
+    '& li': {
+      overflow: 'hidden',
+      textOverflow: 'ellipsis',
+      whiteSpace: 'nowrap',
+    },
+  },
 });

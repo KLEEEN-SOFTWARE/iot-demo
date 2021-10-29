@@ -1,10 +1,16 @@
+@mixin card-widget-single($width) {
+  grid-template-columns: var($width);
+
+  .card-widget {
+    width: var($width);
+  }
+}
+
 @mixin single-wide-column-media-query($max-width) {
   @media only screen and (max-width: $max-width) {
-    .card-section.single-wide-column {
-      grid-template-columns: var(--card-width-M);
-
-      .card-widget {
-        width: var(--card-width-M);
+    .card-section {
+      &.single-wide-column {
+        @include card-widget-single(--card-width-M);
       }
     }
   }
@@ -21,13 +27,9 @@
 
   &.single-wide-column {
     grid-auto-rows: auto;
-    grid-template-columns: var(--card-width-L);
     margin-bottom: var(--pm-1XL);
     row-gap: var(--pm-1XL);
-
-    .card-widget {
-      width: var(--card-width-L);
-    }
+    @include card-widget-single(--card-width-L);
   }
 
   .card-widget {
@@ -79,6 +81,14 @@
       padding: var(--pm-S) var(--pm-L);
       background: var(--card-content-bg-color);
       box-shadow: var(--card-content-shadow);
+    }
+  }
+}
+
+.ks-investigate__container {
+  .card-section {
+    &.single-wide-column {
+      @include card-widget-single(--wh-10XL);
     }
   }
 }

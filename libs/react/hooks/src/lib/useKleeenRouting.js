@@ -1,7 +1,7 @@
 import React, { Suspense, memo } from 'react';
 import { Redirect, Route, Switch } from 'react-router-dom';
 
-import { isReactNativeInfusion } from '@kleeen/common/utils';
+import { isReactNativeInfusion } from '@kleeen/frontend/utils';
 import { uuid } from '@kleeen/core-react';
 import { withDylo } from '../dylo/dylo-container';
 

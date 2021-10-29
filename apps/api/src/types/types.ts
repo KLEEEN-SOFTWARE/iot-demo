@@ -1,4 +1,4 @@
-import { CrossLinking, CrossLinkingMatrix } from '@kleeen/types';
+import { AccessControlPermission, CrossLinking, CrossLinkingMatrix, WorkflowFilter } from '@kleeen/types';
 
 import { Transformation } from '../utils';
 
@@ -27,6 +27,10 @@ export interface GetWidgetDataResult {
   };
   results: number[] | number[][];
   crossLinking?: CrossLinkingMatrix;
+}
+
+export interface WorkflowFiltersResults {
+  filters: WorkflowFilter[];
 }
 
 interface ListingItem {
@@ -89,6 +93,17 @@ export interface MultiTransFormationResults {
   };
   results: number[] | number[][];
   transformation: Transformation;
+}
+
+export interface FormatCheckResults {
+  isValid: boolean;
+  errors?: {
+    message: string;
+  }[];
+}
+
+export interface AccessControlCheckResults {
+  accessLevel: AccessControlPermission;
 }
 
 export interface AuthContext {

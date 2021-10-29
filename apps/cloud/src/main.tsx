@@ -1,6 +1,4 @@
-import '@kleeen/infusion';
-
-import { globalVariable, isReactNativeInfusion } from '@kleeen/common/utils';
+import { globalVariable, isReactNativeInfusion } from '@kleeen/frontend/utils';
 
 import { App } from './app';
 import ReactDOM from 'react-dom';

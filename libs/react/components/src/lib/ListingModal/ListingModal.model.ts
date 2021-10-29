@@ -6,6 +6,7 @@ export interface ListingModalSettings {
   format: FormatProps;
   isOpen: boolean;
   rowDisplayValue?: string;
+  widgetId?: string;
 }
 
 export interface ListingModalProps extends ListingModalSettings {

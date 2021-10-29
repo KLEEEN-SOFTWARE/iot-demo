@@ -1,4 +1,4 @@
-import { Action, AttributeProps, ParentProps, Translate } from '@kleeen/types';
+import { Action, AttributeProps, Maybe, ParentProps, Translate } from '@kleeen/types';
 import { MouseEvent, ReactNode } from 'react';
 
 import { DialogProps } from '../../dialog.model';
@@ -15,8 +15,11 @@ export interface AddDialogPayload {
 }
 
 export interface BaseAddDialogProps extends DialogProps {
-  action: Action;
-  attributes: AttributeProps[];
+  action: Maybe<Action>;
+  /**
+   * @deprecated use the action.addModalAttributes instead.
+   */
+  attributes?: AttributeProps[];
   onAction: (e: MouseEvent, payload: AddDialogPayload) => void;
   parent?: ParentProps;
   taskName: string;

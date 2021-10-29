@@ -1,10 +1,13 @@
+import { DataPoint, WidgetStateParams } from '@kleeen/types';
 import React, { useContext, useEffect, useState } from 'react';
-
-import { DataPoint } from '@kleeen/types';
+import { WorkflowProvider, WorkflowType, defaultWorkflowContextValues } from './useWorkflowProvider';
 
 interface MenuContextContext {
   e?: any;
   dataPoints: DataPoint[];
+  params?: WidgetStateParams;
+  widgetId?: string;
+  workflowData?: WorkflowType;
 }
 
 interface MenuContextProvider {
@@ -14,14 +17,17 @@ interface MenuContextProvider {
   setContextualToggle: (isOpen: boolean) => void;
 }
 
-const MenuContext = React.createContext<MenuContextProvider>({
+const defaultMenuContextValues: MenuContextProvider = {
   contextualToggle: false,
   context: {
     dataPoints: [],
+    workflowData: defaultWorkflowContextValues,
   },
   openMenu: (props) => props,
   setContextualToggle: (isOpen) => isOpen,
-});
+};
+
+const MenuContext = React.createContext<MenuContextProvider>(defaultMenuContextValues);
 
 const useAttributeContextMenu = () => {
   const menuContext = useContext(MenuContext);
@@ -31,38 +37,36 @@ const useAttributeContextMenu = () => {
 
 const AttributeContextMenuProvider = ({ children }) => {
   const [contextualToggle, setContextualToggle] = useState(false);
-  const [context, setContext] = useState<MenuContextContext>({
-    dataPoints: [],
-  });
+  const [context, setContext] = useState<MenuContextContext>(defaultMenuContextValues.context);
 
   useEffect(() => {
     if (!contextualToggle) {
-      setContext({
-        dataPoints: [],
-      });
+      setContext(defaultMenuContextValues.context);
     }
   }, [contextualToggle]);
 
   return (
-    <MenuContext.Provider
-      value={{
-        openMenu: ({ e, ...props }) => {
-          setContextualToggle(true);
+    <WorkflowProvider value={context.workflowData}>
+      <MenuContext.Provider
+        value={{
+          openMenu: ({ e, ...props }) => {
+            setContextualToggle(true);
 
-          if (context) {
-            setContext({
-              e,
-              ...props,
-            });
-          }
-        },
-        setContextualToggle,
-        contextualToggle,
-        context,
-      }}
-    >
-      {children}
-    </MenuContext.Provider>
+            if (context) {
+              setContext({
+                e,
+                ...props,
+              });
+            }
+          },
+          setContextualToggle,
+          contextualToggle,
+          context,
+        }}
+      >
+        {children}
+      </MenuContext.Provider>
+    </WorkflowProvider>
   );
 };
 

@@ -8,7 +8,7 @@ import { ContainerHeader } from '../ContainerHeader/ContainerHeader';
 import { EntityDetailsSectionProps } from '../../../EntityDetailsSection/EntityDetailsSection';
 import { OutContainerProps } from '../ContainerHeader/ContainerHeader.model';
 import { SummaryPanel } from '../../../summary-panel';
-import { TranslateProps } from '../../../../../types';
+import { TranslateProps } from '@kleeen/types';
 import { getUpdateRequestPayload } from '../../../../utils';
 
 export function ButtonSummary({

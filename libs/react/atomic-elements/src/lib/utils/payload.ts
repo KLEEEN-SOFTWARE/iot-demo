@@ -1,4 +1,4 @@
-import { AttributeInputEvents } from '@kleeen/react/hooks';
+import { AttributeInputEvents } from '@kleeen/types';
 import { UpdatePayload } from '@kleeen/react/components';
 
 export function getUpdateRequestPayload(attributeEventList: AttributeInputEvents[]): UpdatePayload {

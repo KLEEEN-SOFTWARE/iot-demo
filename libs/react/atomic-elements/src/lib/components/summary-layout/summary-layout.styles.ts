@@ -1,14 +1,5 @@
+import { SummaryLayoutStyleProps } from './summary-layout.model';
 import { makeStyles } from '@material-ui/core/styles';
-
-interface SummaryLayoutStyleProps {
-  columnCount: number;
-  columnGap: number;
-  containerPadding: number;
-  keyValuePadding: number;
-  keyWidth: number;
-  rowCount: number;
-  valueWidth: number;
-}
 
 const summaryLayoutPadding = ({ containerPadding }: SummaryLayoutStyleProps) =>
   `var(--pm-M) ${containerPadding / 3}px`;
@@ -17,10 +8,8 @@ export const useStyles = makeStyles({
   content: {
     columnGap: (props: SummaryLayoutStyleProps) => props.columnGap,
     display: 'grid',
-    gridAutoFlow: 'column',
-    gridTemplateRows: (props: SummaryLayoutStyleProps) => `repeat(${props.rowCount}, auto)`,
     gridTemplateColumns: ({ keyValuePadding, keyWidth, valueWidth }: SummaryLayoutStyleProps) =>
-      `repeat(auto-fill, ${keyWidth + valueWidth + keyValuePadding}px)`,
+      `repeat(auto-fit, ${keyWidth + valueWidth + keyValuePadding}px)`,
     rowGap: 'var(--pm-1XS)',
   },
   header: {
@@ -38,6 +27,20 @@ export const useStyles = makeStyles({
   summaryLayoutFromButtonSummary: {
     padding: summaryLayoutPadding,
     height: 'calc(100% - var(--wh-M))',
-    overflow: 'auto',
+
+    '& .error-widget': {
+      display: 'contents',
+      height: '100%',
+      maxWidth: 'calc(var(--wh-6XL) - var(--wh-M))',
+      width: 'auto',
+
+      '& #robot': {
+        width: '100%',
+        margin: 'auto',
+      },
+      '& .container-robot': {
+        height: 'auto',
+      },
+    },
   },
 });

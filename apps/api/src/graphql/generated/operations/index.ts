@@ -5,9 +5,22 @@ import { entityResolvers } from './entityResolvers';
 import { entitySchema } from './entitySchema';
 import { filterSchema } from './filterSchema';
 import { filtersResolvers } from './filterResolvers';
+import { formatCheckResolvers } from './formatCheckResolver';
+import { formatCheckSchema } from './formatCheckSchema';
 import { widgetResolvers } from './widgetResolvers';
 import { widgetSchema } from './widgetSchema';
 
-export const generatedResolvers: IResolvers[] = [filtersResolvers, entityResolvers, widgetResolvers];
+export const generatedResolvers: IResolvers[] = [
+  filtersResolvers,
+  formatCheckResolvers,
+  entityResolvers,
+  widgetResolvers,
+];
 
-export const generatedSchema: DocumentNode[] = [filterSchema, baseSchema, entitySchema, widgetSchema];
+export const generatedSchema: DocumentNode[] = [
+  filterSchema,
+  formatCheckSchema,
+  baseSchema,
+  entitySchema,
+  widgetSchema,
+];

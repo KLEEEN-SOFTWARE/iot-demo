@@ -16,7 +16,9 @@ export function Label({
   formatType,
   highlighted,
   transformation,
+  params,
   value,
+  widgetId,
 }: DisplayComponentProps) {
   const color = getColorForSeverityValues(value?.displayValue, format, transformation);
   const classes = useStyles();
@@ -38,7 +40,9 @@ export function Label({
             value,
           },
         ]}
+        params={params}
         transformationKeyToUse={TRANSFORMATION_KEY_TO_USE}
+        widgetId={widgetId}
       >
         {value?.displayMedia && (
           <div className={classes.displayMedia}>

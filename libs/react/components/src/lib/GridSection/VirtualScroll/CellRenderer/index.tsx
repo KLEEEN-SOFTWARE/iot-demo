@@ -1,4 +1,4 @@
-import { CellRendererProps } from './CellRenderer.model';
+import { allComponentEnum, CellRendererProps } from './CellRenderer.model';
 import DataViewRow from './DataViewRow';
 import EditDataView from './EditDataView';
 import React from 'react';
@@ -12,25 +12,58 @@ const allComponent: { [index: string]: any } = {
 
 export function CellRenderer({
   cellData,
+  cellInteraction,
   classes,
   columnIndex,
   columns,
-  typeOf,
   draggable,
   orderColumnName,
+  taskName,
+  typeOf,
+  widgetId,
   ...rest
 }: CellRendererProps): React.ReactElement {
   const index = typeOf(cellData);
+  const attr = columns[columnIndex].attr;
 
-  return allComponent[index]({
-    attr: columns[columnIndex].attr,
-    row: cellData,
-    idx: columnIndex,
+  const dataViewRowProps = {
+    actions: rest.actions,
+    attr,
+    cellFormatResults: rest.cellFormatResults,
+    cellInteraction,
+    deleteContainer: rest.deleteContainer,
+    deleteProcess: rest.deleteProcess,
+    displayColumnAttribute: rest.displayColumnAttribute,
     draggable,
+    hasActions: rest.hasActions,
+    idx: columnIndex,
+    isDeletable: rest.isDeletable,
+    localization: rest.localization,
+    openShowMoreModal: rest.openShowMoreModal,
     orderColumnName,
     props: columns[columnIndex].props,
+    row: cellData,
+    rowData: rest.rowData,
+    toggleDelete: rest.toggleDelete,
+    triggerCustomAction: rest.triggerCustomAction,
+  };
+
+  if (index === allComponentEnum.DataViewRow) {
+    return <DataViewRow {...dataViewRowProps} />;
+  }
+
+  return allComponent[index]({
+    attr,
+    cellInteraction,
+    draggable,
+    idx: columnIndex,
+    orderColumnName,
+    props: columns[columnIndex].props,
+    row: cellData,
+    taskName,
+    widgetId,
     ...rest,
   });
 }
 
-export default React.memo(CellRenderer);
+export default CellRenderer;

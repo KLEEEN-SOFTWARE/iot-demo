@@ -21,16 +21,16 @@ function DateIntervalBase(props: DateTimeIntervalProps): JSX.Element {
       year: fromValue.getFullYear(),
       month: fromValue.getMonth() + 1,
       day: fromValue.getDate(),
-      hours: fromValue.getHours(),
-      minutes: fromValue.getMinutes(),
+      hour: fromValue.getHours(),
+      minute: fromValue.getMinutes(),
       seconds: fromValue.getSeconds(),
     },
     to: {
       year: toValue.getFullYear(),
       month: toValue.getMonth() + 1,
       day: toValue.getDate(),
-      hours: toValue.getHours(),
-      minutes: toValue.getMinutes(),
+      hour: toValue.getHours(),
+      minute: toValue.getMinutes(),
       seconds: toValue.getSeconds(),
     },
   };
@@ -50,8 +50,8 @@ function DateIntervalBase(props: DateTimeIntervalProps): JSX.Element {
 
   const parserMoment = (date) => {
     const dateFormat = `${date?.year}-${parseValue(date?.month)}-${parseValue(date?.day)}T${parseValue(
-      date?.hours,
-    )}:${parseValue(date?.minutes)}`;
+      date?.hour,
+    )}:${parseValue(date?.minute)}`;
     return { dateFormat, moment: moment(dateFormat) };
   };
 
@@ -65,16 +65,16 @@ function DateIntervalBase(props: DateTimeIntervalProps): JSX.Element {
         year: dateToday.getFullYear(),
         month: dateToday.getMonth() + 1,
         day: dateToday.getDate(),
-        hours: dateToday.getHours(),
-        minutes: dateToday.getMinutes(),
+        hour: dateToday.getHours(),
+        minute: dateToday.getMinutes(),
         seconds: dateToday.getSeconds(),
       }).moment;
       const parsedMomentFrom = parserMoment({
         year: value.from.year,
         month: value.from.month + 1,
         day: value.from.day,
-        hours: dateToday.getHours(),
-        minutes: dateToday.getMinutes(),
+        hour: dateToday.getHours(),
+        minute: dateToday.getMinutes(),
         seconds: dateToday.getSeconds(),
       }).moment;
       if (moment(dateToday).isBefore(`${value.from.year}-${value.from.month + 1}-${value.from.day}`)) {

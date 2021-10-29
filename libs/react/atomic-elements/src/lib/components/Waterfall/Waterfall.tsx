@@ -10,6 +10,7 @@ import HighchartsMore from 'highcharts/highcharts-more';
 import HighchartsReact from 'highcharts-react-official';
 import { ILocalization } from './waterfallTypes';
 import { KUIConnect } from '@kleeen/core-react';
+import { VisualizationWidgetProps } from '@kleeen/types';
 import drilldown from 'highcharts/modules/drilldown';
 import { generalBaseOptions } from '../generalBaseOptions';
 import { getWaterfallTooltipOptions } from './tooltipOptions';
@@ -24,7 +25,14 @@ HighchartsMore(Highcharts);
 
 const SLICE_RESULTS_BY = 12;
 
-const WaterfallComponent = ({ translate, ...props }: HighchartsReact.Props): React.ReactElement => {
+function WaterfallComponent({
+  containerProps,
+  context,
+  params,
+  translate,
+  widgetId,
+  ...props
+}: VisualizationWidgetProps & HighchartsReact.Props): React.ReactElement {
   const [highChartUpdate, setHighChartUpdate] = useState({
     drillUp: null,
     drillUpButton: {},
@@ -33,15 +41,9 @@ const WaterfallComponent = ({ translate, ...props }: HighchartsReact.Props): Rea
     xAxis: [],
   });
 
-  const results = pathOr([], ['context', 'data', 'results'], props);
-  const getCategoricalXAxisCategories = pathOr(
-    [],
-    ['context', 'data', 'format', 'xAxis', 'categories'],
-    props,
-  );
-  const containerProps = pathOr({}, ['containerProps'], props);
+  const results = pathOr([], ['results'], context.data);
+  const getCategoricalXAxisCategories = pathOr([], ['format', 'xAxis', 'categories'], context.data);
   const sliceResultsBy = pathOr(SLICE_RESULTS_BY, ['sliceResultsBy'], props);
-  const widgetId = pathOr('', ['widgetId'], props);
 
   const backButtonRef = React.createRef<HTMLDivElement>();
 
@@ -77,7 +79,7 @@ const WaterfallComponent = ({ translate, ...props }: HighchartsReact.Props): Rea
       xAxisCategories,
       firstSliceOfResults,
       secondSliceOfResults,
-      props.params,
+      params,
     ),
     getWaterfallTooltipOptions(
       completedResults,
@@ -87,10 +89,10 @@ const WaterfallComponent = ({ translate, ...props }: HighchartsReact.Props): Rea
       localization,
       originalCategoryForOther,
       averageSecondSliceOfResults,
-      props.params,
+      params,
     ),
   );
-  if (props.context.isLoading) {
+  if (context.isLoading) {
     return <Loader />;
   }
   const backToClick = (): void => {
@@ -120,7 +122,7 @@ const WaterfallComponent = ({ translate, ...props }: HighchartsReact.Props): Rea
       />
     </div>
   );
-};
+}
 
 const Waterfall = React.memo(KUIConnect(({ translate }) => ({ translate }))(WaterfallComponent));
 export { Waterfall, Waterfall as default };

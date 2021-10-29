@@ -1,68 +1,48 @@
 import { KUIConnect, AccessControl } from '@kleeen/core-react';
 import { roleAccessKeyTag } from '@kleeen/common/utils';
+import { WorkflowProvider } from '@kleeen/react/hooks';
 import { useState } from 'react';
 import {
   EntireProductDomainLayoutStyle,
   DataViewControlSection,
-  DataViewDisplaySectionAtomic,
+  ViewsManager,
 } from '@kleeen/react/atomic-elements';
-import { viewOptions } from './settings/view-options';
 import { widgets } from './settings/widgets';
 
 function Workflow({ translate, ...props }) {
   const taskName = `system`;
-  const [selectedViewOption, setSelectedViewOption] = useState(widgets[0]);
-  const [cardsNumber, setCardsNumber] = useState(0);
-  const [selectedRows, setSelectedRows] = useState([]);
+  const workflowData = {
+    hasFilters: true,
+    taskName: 'system',
+    workflowId: 'dd2fec0a-f963-423f-93f5-e73664f03258',
+  };
   const [isFilterOpen, setIsFilterOpen] = useState(false);
   const classes = EntireProductDomainLayoutStyle();
   const workflowName = `System`;
-  function handleOnTabIndexChanged(newTabIndex, option) {
-    setSelectedViewOption(option);
-  }
 
   return (
     <AccessControl id={roleAccessKeyTag(`navigation.${taskName}`)}>
-      <div className={`${classes.entityBrowserTask} subhead-dynamic`}>
-        <div
-          className={
-            isFilterOpen
-              ? `${classes.entityBrowserAreaWithFilterSection} openFilterSection`
-              : `${classes.entityBrowserArea} browserArea`
-          }
-        >
-          <div
-            className={`${classes.gridPageIntro} ${cardsNumber > 0 ? `max-card-${cardsNumber}` : ''}`}
-            data-testid="page-intro"
-          >
-            <DataViewControlSection
-              hideRefreshControl
-              onTabIndexChanged={handleOnTabIndexChanged}
-              selectedOption={selectedViewOption}
-              setSelectedOption={setSelectedViewOption}
-              taskName={taskName}
-              title={workflowName}
-              viewOptions={viewOptions}
-            />
-          </div>
-          <div
-            className={`${classes.gridGridSection} ${
-              selectedRows.length > 0 && selectedViewOption.sortOrder === 0 ? classes.snackbar : ''
-            }`}
-            data-testid="content-section"
-          >
-            <DataViewDisplaySectionAtomic
-              widgets={widgets}
-              selectedOption={selectedViewOption}
-              selectedRows={selectedRows}
-              setCardsNumber={setCardsNumber}
-              setSelectedRows={setSelectedRows}
-              taskName={taskName}
-              value={selectedViewOption}
-            />
-          </div>
+      <WorkflowProvider value={workflowData}>
+        <div className={`${classes.entityBrowserTask} subhead-dynamic`}>
+          <ViewsManager
+            views={widgets}
+            SubHeader={DataViewControlSection}
+            subHeaderProps={{
+              hideRefreshControl: true,
+              taskName,
+              title: workflowName,
+            }}
+            containerClasses={
+              isFilterOpen
+                ? `${classes.entityBrowserAreaWithFilterSection} openFilterSection`
+                : `${classes.entityBrowserArea} browserArea`
+            }
+            pageIntroClasses={`${classes.gridPageIntro}`}
+            contentClasses={`${classes.gridGridSection}`}
+            taskName={taskName}
+          />
         </div>
-      </div>
+      </WorkflowProvider>
     </AccessControl>
   );
 }

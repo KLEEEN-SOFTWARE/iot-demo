@@ -14,6 +14,4 @@ export function generateStoreSlice(sliceName: string): any {
   return { actions, epics, slice: taskSlice };
 }
 
-export * from './types';
-
 export { WidgetInitialState };

@@ -67,6 +67,52 @@ Using `Angular-cli` it is needed to add it directly from `node_modules` to the b
 ],
 ```
 
+### Libraries
+
+These libraries are subset of components that the main app will need to successfully integrate the infusion app.
+If there is a change in the auth elements and/or infusion custom elements and there are no changes in you end product. There is a script to run just the libraries building and it takes less time to build.
+
+```
+npm run build:infusion:libs
+```
+
+#### Infusion core
+
+Now, the main end product and the custom infusion elements are being built separately to improve building time. In order to have the KS custom elements for infusion, it must be added the `@kleeen/infusion` library in the package.json, this should indicate the path where the `dist/libs/infusion` is located.
+This should look something like `"@kleeen/infusion": "file: ../dist/libs/infusion"`,
+
+This script will register the custom element you will need to integrate your workflow, login, etc to you main app.
+Once Infusion core package is already installed. It can be imported in your `Main.ts` or `index.ts` or any entry-point for your web app like this:
+
+```
+import '@kleeen/infusion';
+```
+
+#### Auth
+
+Add the `@kleeen/auth` library in the package.json, this should indicate the path where the `dist/libs/auth` is located.
+This should look something like `"@kleeen/auth": "file: ../dist/libs/auth"`,
+
+Inside the class, in which are the interactions of the session.
+The `Integrations.AuthenticationHandler` library must be extended, which will have the processes to start session, close it, among others.
+
+```
+import { Integrations } from "@kleeen/auth";
+
+export class AuthAngular extends Integrations.AuthenticationHandler {
+```
+
+Where the session validations are performed within a module, include the initialization of `KsAuth.configure`.
+
+```
+import { KSAuth } from "@kleeen/auth";
+
+constructor(angularFireAuth: AngularFireAuth) {
+  const authenticationHandler = new AuthAngular(angularFireAuth);
+  KSAuth.configure({ authenticationHandler });
+}
+```
+
 ### Assets
 
 Using `create-react-app` assests should be added to `webpack.config.js` file like this:

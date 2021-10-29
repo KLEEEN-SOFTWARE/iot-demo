@@ -13,18 +13,16 @@ import { KsHeader } from '../Header';
 
 function HeaderAndSubSectionsComponent({
   actionsProps,
+  currentView,
   filters,
-  handleChangeTab,
-  onTabIndexChanged,
   hideRefreshControl,
   objectValue,
-  slots,
+  setCurrentView,
   subTitle,
   taskName,
   title,
   translate,
   upText,
-  value,
   viewOptions,
   withDateFilter,
   withFilterSection,
@@ -35,17 +33,9 @@ function HeaderAndSubSectionsComponent({
   const { displayValue, format } = useGetDisplayValue({ objectValue, taskName });
 
   // TODO: @cafe move this logic to a shared util and re-use it in DataViewControlSection
-  const viewOption = viewOptions && viewOptions[value];
+  const viewOption = currentView;
   const orderedViewProps = sortByKeys(viewOptions, ['viewOrder', 'viewId']);
   const actions = isNilOrEmpty(actionsProps?.actions) ? viewOption?.actions : actionsProps.actions;
-  const props = {
-    objectValue,
-    slots,
-    taskName,
-    results: subTitle,
-    title,
-    onTabIndexChanged,
-  };
 
   const hasSubHeader = () =>
     orderedViewProps.length > 1 || withDateFilter || withFilterSection || withSummarySection;
@@ -68,11 +58,8 @@ function HeaderAndSubSectionsComponent({
       {hasSubHeader() && (
         <SubHeader>
           <ButtonSelect
-            handleChangeTab={handleChangeTab}
-            onTabIndexChanged={props.onTabIndexChanged}
-            taskName={taskName}
-            translate={translate}
-            value={value}
+            currentView={currentView}
+            setCurrentView={setCurrentView}
             viewOptions={orderedViewProps}
           />
           {withDateFilter && <ButtonDate translate={translate} hasDateFilter={true} />}

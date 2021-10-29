@@ -70,7 +70,7 @@ export const TextFormatter = ({
   hasDisplayMedia = false,
   cell,
 }: TextFormatterProps): JSX.Element => {
-  if (isNilOrEmpty(format)) return <>{children}</>;
+  if (isNilOrEmpty(format) || isNilOrEmpty(children)) return <>{children}</>;
 
   const [formatter] = useTextFormatter({ format, formatType, transformation });
 

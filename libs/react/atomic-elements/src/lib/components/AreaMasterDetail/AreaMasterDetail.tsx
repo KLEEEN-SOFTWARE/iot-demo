@@ -4,6 +4,7 @@ import { clone, pathOr } from 'ramda';
 import Highcharts from 'highcharts/highstock';
 import HighchartsReact from 'highcharts-react-official';
 import { Loader } from '@kleeen/react/components';
+import { VisualizationWidgetProps } from '@kleeen/types';
 import { generalBaseOptions } from '../generalBaseOptions';
 import { getOptions } from './options';
 import { isValidArray } from '@kleeen/common/utils';
@@ -17,9 +18,13 @@ const baseOptions: Highcharts.Options = merge({}, generalBaseOptions, {
   },
 } as Highcharts.Options);
 
-export const AreaMasterDetail = (props: HighchartsReact.Props) => {
-  const results = pathOr([], ['context', 'data', 'results'], props);
-  const format = pathOr({}, ['context', 'data', 'format'], props);
+export function AreaMasterDetail({
+  context,
+  params,
+  ...props
+}: VisualizationWidgetProps & HighchartsReact.Props) {
+  const results = pathOr([], ['results'], context.data);
+  const format = pathOr({}, ['format'], context.data);
   const xAxis = pathOr({}, ['xAxis'], format);
   const yAxis = pathOr({}, ['yAxis'], format);
   const containerProps = pathOr({}, ['containerProps'], props);
@@ -72,7 +77,7 @@ export const AreaMasterDetail = (props: HighchartsReact.Props) => {
     }
   }, [results]);
 
-  if (props.context.isLoading) {
+  if (context.isLoading) {
     return <Loader />;
   }
 
@@ -91,6 +96,6 @@ export const AreaMasterDetail = (props: HighchartsReact.Props) => {
       />
     </>
   ) : null;
-};
+}
 
 export default React.memo(AreaMasterDetail);

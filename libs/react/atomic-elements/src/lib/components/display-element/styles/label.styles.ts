@@ -6,7 +6,7 @@ export const useStyles = makeStyles(() => ({
   },
   label: {
     display: 'flex',
-    alignItems: 'center',
+    alignItems: 'flex-start',
     height: '100%',
     '&.highlighted': {
       color: 'hsla(var(--on-surface-color-hsl), 0.7)',
@@ -17,9 +17,8 @@ export const useStyles = makeStyles(() => ({
   },
   text: {
     height: '100%',
-    whiteSpace: 'nowrap',
-    overflow: 'hidden',
-    textOverflow: 'ellipsis',
+    wordWrap: 'break-word',
+    overflow: 'auto',
   },
   highlighted: {
     width: '100%',

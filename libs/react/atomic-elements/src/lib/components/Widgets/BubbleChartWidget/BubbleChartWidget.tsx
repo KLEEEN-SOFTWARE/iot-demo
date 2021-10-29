@@ -64,6 +64,9 @@ export function BubbleChartWidget({
             columns={listColumns}
             data={data}
             hideHeader={hideHeader}
+            listItemOptions={{
+              widgetId,
+            }}
             listOptions={{
               ListItemComponent: KsRankedListItem,
               sortBy: metadata?.valueColumnName,

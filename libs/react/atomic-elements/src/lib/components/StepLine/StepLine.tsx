@@ -1,22 +1,27 @@
-import React from 'react';
 import { clone, pathOr } from 'ramda';
 
 import Highcharts from 'highcharts';
 import HighchartsReact from 'highcharts-react-official';
 import { Loader } from '@kleeen/react/components';
+import React from 'react';
+import { VisualizationWidgetProps } from '@kleeen/types';
 import { generalBaseOptions } from '../generalBaseOptions';
 import { getOptions } from './options';
 
-export const StepLine = (props: HighchartsReact.Props): JSX.Element | null => {
-  const results = pathOr([], ['context', 'data', 'results'], props);
-  const format = pathOr({}, ['context', 'data', 'format'], props);
+export function StepLine({
+  containerProps,
+  context,
+  params,
+  ...props
+}: VisualizationWidgetProps & HighchartsReact.Props): JSX.Element | null {
+  const results = pathOr([], ['results'], context.data);
+  const format = pathOr({}, ['format'], context.data);
 
-  const containerProps = pathOr({}, ['containerProps'], props);
-  const options = getOptions(results, format, generalBaseOptions, props.params);
+  const options = getOptions(results, format, generalBaseOptions, params);
 
   const containerSettings = { ...containerProps, style: { height: '100%', width: '100%' } };
 
-  if (props.context.isLoading) {
+  if (context.isLoading) {
     return <Loader />;
   }
 
@@ -28,6 +33,6 @@ export const StepLine = (props: HighchartsReact.Props): JSX.Element | null => {
       containerProps={containerSettings}
     />
   ) : null;
-};
+}
 
 export default React.memo(StepLine);

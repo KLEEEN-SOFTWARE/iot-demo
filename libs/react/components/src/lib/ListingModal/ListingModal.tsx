@@ -1,16 +1,15 @@
-import { ListingModalProps, ListingModalSettings } from './ListingModal.model';
-
 import DialogContent from '@material-ui/core/DialogContent';
 import DialogTitle from '@material-ui/core/DialogTitle';
 import { listingModalStyles as KsDialog } from './ListingModal.style';
 import { Icon as KsIcon } from '../Icon';
+import { ListingModalProps } from './ListingModal.model';
 import { Loader } from '../Loader/Loader';
 import { SimpleList } from '../simpleList/';
 import { iconStyles } from './ListingModal.style';
 import { parseAttributes } from '@kleeen/frontend/utils';
 import { useTheme } from '@kleeen/react/hooks';
 
-function ListingModal({
+export function ListingModal({
   attribute,
   columnLabel,
   data,
@@ -18,6 +17,7 @@ function ListingModal({
   isOpen,
   onClose,
   rowDisplayValue,
+  widgetId,
 }: ListingModalProps) {
   const { themeClass } = useTheme();
   const iconClasses = iconStyles();
@@ -46,10 +46,16 @@ function ListingModal({
         <CloseButton />
       </DialogTitle>
       <DialogContent>
-        {parsedData ? <SimpleList data={parsedData} columns={parsedAttributes}></SimpleList> : <Loader />}
+        {parsedData ? (
+          <SimpleList
+            data={parsedData}
+            columns={parsedAttributes}
+            listItemOptions={{ widgetId }}
+          ></SimpleList>
+        ) : (
+          <Loader />
+        )}
       </DialogContent>
     </KsDialog>
   );
 }
-
-export { ListingModal, ListingModalSettings, ListingModalProps };

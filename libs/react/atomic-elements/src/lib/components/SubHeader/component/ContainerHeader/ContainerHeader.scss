@@ -16,14 +16,14 @@
   .container-header {
     height: 100%;
     display: inline-block;
-    
-    &.filter-header { 
+
+    &.filter-header {
       float: left;
-      &~.button-container-actions-header {
+      & ~ .button-container-actions-header {
         float: right;
       }
-    } 
-  } 
+    }
+  }
 
   .button-container-actions-header {
     height: 100%;
@@ -35,8 +35,8 @@
       margin: var(--pm-0);
       border-top-left-radius: var(--pm-0);
       border-bottom-left-radius: var(--pm-0);
-      border-top-right-radius: calc(var(--card-border-radius)-0px);
-      border-bottom-right-radius: calc(var(--card-border-radius)-0px);
+      border-top-right-radius: calc(var(--card-border-radius) - 0px);
+      border-bottom-right-radius: calc(var(--card-border-radius) - 0px);
       min-width: var(--wh-S);
       max-width: var(--wh-S);
 
@@ -55,9 +55,9 @@
         border-left: 1px solid var(--secondary-color);
       }
 
-      &.edit-on{
+      &.edit-on {
         button {
-          &:first-child{
+          &:first-child {
             background: var(--secondary-color);
             color: var(--on-secondary-color);
           }

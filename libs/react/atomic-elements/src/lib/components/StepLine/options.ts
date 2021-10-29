@@ -1,3 +1,4 @@
+import { VizParams } from '@kleeen/types';
 import { formatAxis } from '@kleeen/frontend/utils';
 import merge from 'lodash.merge';
 import { pathOr } from 'ramda';
@@ -7,7 +8,7 @@ export const getOptions = (
   results: [],
   format: Record<string, unknown>,
   baseOptions: Highcharts.Options,
-  params: { groupBy: any; value: any },
+  params: VizParams,
 ) => {
   const type = pathOr('area', ['chart', 'type'], format);
   const title = pathOr(null, ['title', 'text'], format);

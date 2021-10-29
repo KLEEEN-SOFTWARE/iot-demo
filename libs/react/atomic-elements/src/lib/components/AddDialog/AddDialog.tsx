@@ -1,8 +1,9 @@
-import { AttributeInputEvents, useEntityDetailsEventHandler, useTheme } from '@kleeen/react/hooks';
 import { BaseAddDialogProps, KsButton } from '@kleeen/react/components';
-import { Dialog as KsDialog, useStyles } from './AddDialog.styles';
 import { Key, MouseEvent, useEffect } from 'react';
+import { Dialog as KsDialog, useStyles } from './AddDialog.styles';
+import { useEntityDetailsEventHandler, useTheme } from '@kleeen/react/hooks';
 
+import { AttributeInputEvents } from '@kleeen/types';
 import DialogActions from '@material-ui/core/DialogActions';
 import DialogContent from '@material-ui/core/DialogContent';
 import DialogTitle from '@material-ui/core/DialogTitle';
@@ -20,9 +21,10 @@ type BuildEntityProps = {
 type EntityAndParamsType = {
   entity: string;
   params: { [key: string]: string };
+  hasErrors?: boolean;
 };
 
-type EntityByParamsType = Record<string, { [key: string]: string }>;
+type EntityByParamsType = Record<string, { [key: string]: string | boolean }>;
 
 const layoutProps = {
   keyWidth: 125,
@@ -57,6 +59,11 @@ export function AddDialog({
     const baseAttribute = attributes.find(({ isDisplayValue }) => isDisplayValue);
     const entityKey = baseAttribute?.params?.baseModel || attributes[0]?.params?.baseModel;
     const form = buildEntity({ attributeEventList, attributesIds: attributes.map(({ id }) => id) });
+    let hasErrors = false;
+    Object.keys(form).forEach((attr) => {
+      if (form[attr].hasErrors) hasErrors = true;
+    });
+    if (hasErrors) return;
 
     const isFormValid = Object.keys(form).includes(entityKey);
     const payload = {
@@ -91,7 +98,7 @@ export function AddDialog({
       </DialogTitle>
       <DialogContent>
         {attributes.map((attr) => (
-          <div className={classnames(`${bem}__form-group`, classes.formGroup)}>
+          <div key={attr.id} className={classnames(`${bem}__form-group`, classes.formGroup)}>
             <KeyValue
               key={attr.id}
               keyComponent={attr.label}
@@ -103,7 +110,7 @@ export function AddDialog({
                   registerEvents={registerEvents}
                   params={attr.params}
                   taskName={taskName}
-                  widgetId={attr.id}
+                  widgetId={`add_dialog_${attr.id}`}
                 />
               }
             />
@@ -135,7 +142,10 @@ function buildEntity({ attributeEventList, attributesIds }: BuildEntityProps): E
   const data = widgetsData.reduce((acc: EntityByParamsType, current: EntityAndParamsType) => {
     return {
       ...acc,
-      [current.entity]: current.params,
+      [current.entity]: {
+        ...current.params,
+        hasErrors: current.hasErrors,
+      },
     };
   }, {});
 

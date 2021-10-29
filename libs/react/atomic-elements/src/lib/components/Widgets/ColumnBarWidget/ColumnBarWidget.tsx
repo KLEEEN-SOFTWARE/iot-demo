@@ -1,8 +1,6 @@
-import { Attribute, GroupByProps, ValueProp, ValuesProps } from '@kleeen/types';
-
 import ColumnBar from '../../ColumnBar/ColumnBar';
 import { Loader } from '@kleeen/react/components';
-import React from 'react';
+import { WidgetProps } from '@kleeen/types';
 import { makeStyles } from '@material-ui/core';
 import { useWidgetContext } from '@kleeen/react/hooks';
 
@@ -11,29 +9,14 @@ const useStyles = makeStyles({
     height: 'calc(var(--wh-5XL) - var(--wh-1XS) - var(--wh-6XS) - var(--wh-6XS) + var(--wh-S))',
   },
 });
-interface ColumnBarWidgetProps {
-  taskName: string;
-  widgetId: string | number;
-  chartType: string;
-  attributes?: Attribute[];
-  params: {
-    baseModel: string;
-    aggregatedByType?: string;
-    aggregatedBy?: string;
-    aggregation_attribute?: string;
-    aggregation?: string;
-    groupBy?: GroupByProps;
-    value?: ValueProp | ValuesProps;
-  };
-}
 
-export const ColumnBarWidget = ({
+export function ColumnBarWidget({
   attributes,
   params,
   taskName,
   widgetId,
   chartType,
-}: ColumnBarWidgetProps): JSX.Element => {
+}: WidgetProps): JSX.Element {
   const widgetData = useWidgetContext({
     params,
     taskName,
@@ -53,9 +36,10 @@ export const ColumnBarWidget = ({
         params={params}
         subType={chartType}
         attributes={attributes}
+        widgetId={widgetId}
       />
     </div>
   );
-};
+}
 
 export default ColumnBarWidget;

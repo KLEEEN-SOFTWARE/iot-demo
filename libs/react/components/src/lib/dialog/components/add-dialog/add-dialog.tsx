@@ -1,60 +1,65 @@
 import { AddDialogProps, AttributesDialogMap } from './add-dialog.model';
 import { DialogActions, DialogContent, DialogTitle } from '@material-ui/core';
 import { KsDialog, useDialogStyles as useStyles } from '../../dialog.styles';
-import React, { MouseEvent, useEffect, useState } from 'react';
+import { MouseEvent, useEffect, useState } from 'react';
 
-import { AttributeProps } from '@kleeen/types';
 import { KsButton } from '../../../button';
 import capitalize from 'lodash.capitalize';
+import { isNilOrEmpty } from '@kleeen/common/utils';
 import { useTheme } from '@kleeen/react/hooks';
 
 export function KsAddDialog({
-  attributes,
+  action,
+  attributes: deprecatedAttributes,
   children,
+  className,
+  containerId,
   onAction,
   onClose,
   open,
   parent,
   title,
-  className,
-  containerId,
 }: AddDialogProps): JSX.Element {
   const [form, setForm] = useState({});
   const classes = useStyles();
   const { themeClass } = useTheme();
+  const attrs = isNilOrEmpty(action?.addModalAttributes) ? deprecatedAttributes : action?.addModalAttributes;
 
   useEffect(() => {
-    if (Array.isArray(attributes)) {
-      setForm(attributes.reduce(reduceAttributes, {}));
+    if (Array.isArray(attrs)) {
+      const attributesMap = attrs.reduce((acc: AttributesDialogMap, attribute) => {
+        acc[attribute.name] = `New ${attribute.name}`;
+
+        return acc;
+      }, {});
+      setForm(attributesMap);
+    }
+  }, [attrs]);
+
+  const onAdd = (e: MouseEvent): void => {
+    const entityKey = attrs?.[0]?.name;
+
+    if (!entityKey) {
+      console.error('The entityKey is empty for the add action.');
+      return;
     }
 
-    function reduceAttributes(acc: AttributesDialogMap, attribute: AttributeProps): AttributesDialogMap {
-      acc[attribute.name] = `New ${attribute.name}`;
-
-      return acc;
-    }
-  }, [attributes]);
-
-  function handleAction(e: MouseEvent): void {
     const payload = {
       entity: form,
       parent,
-      entityKey: attributes[0]?.name,
+      entityKey,
     };
 
     onAction(e, payload);
-  }
-
-  function handleClose(): void {
-    onClose();
-  }
+  };
 
   return (
     <KsDialog
       aria-labelledby="form-dialog-title"
       className={`${className} ${themeClass}`}
+      data-testid="add-dialog"
       maxWidth="md"
-      onClose={handleClose}
+      onClose={onClose}
       open={open}
     >
       <DialogTitle id="form-dialog-title" className={classes.dialogTitle}>
@@ -64,8 +69,10 @@ export function KsAddDialog({
         {children}
       </DialogContent>
       <DialogActions className={classes.dialogActions}>
-        <KsButton onClick={handleClose}>Cancel</KsButton>
-        <KsButton onClick={handleAction} color="primary">
+        <KsButton data-testid="add-dialog-cancel" onClick={onClose}>
+          Cancel
+        </KsButton>
+        <KsButton data-testid="add-dialog-add" onClick={onAdd} color="primary">
           {title}
         </KsButton>
       </DialogActions>

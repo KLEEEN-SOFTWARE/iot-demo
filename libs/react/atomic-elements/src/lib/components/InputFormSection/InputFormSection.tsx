@@ -70,17 +70,17 @@ export const InputFormSection = ({ ...props }: InputFormSectionProps): ReactElem
             canAddValues={isTextField}
             disabled={false}
             elementToUse="Field Can Add Values and Not Have Many"
+            errors={errors}
             format={{}}
             formatType={''}
+            helpText={helpText}
+            hideTitle={false}
+            inSummaryDetails={false}
             inputValue={value ? value : inputValue}
+            refValue={inputRef}
             setInputValue={onSetInputValue}
             setSelectedOption={setSelectedOption}
             statisticalType={StatisticalDataType.Data}
-            hideTitle={false}
-            inSummaryDetails={false}
-            refValue={inputRef}
-            errors={errors}
-            helpText={helpText}
           />
         )}
       </div>

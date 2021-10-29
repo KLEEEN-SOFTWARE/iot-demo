@@ -1,4 +1,11 @@
-import { Attribute, GroupByProps, ValueProp, ValuesProps, VizCommonParams } from '@kleeen/types';
+import {
+  Attribute,
+  GroupByProps,
+  ValueProp,
+  ValuesProps,
+  VisualizationWidgetProps,
+  VizCommonParams,
+} from '@kleeen/types';
 import React, { ReactElement } from 'react';
 import { generalBaseOptions, maxLabelLength, radialCrosshair, radialLegend } from '../generalBaseOptions';
 import { useCrossLinkingMenuOnViz, useTextFormattersForViz } from '@kleeen/react/hooks';
@@ -28,25 +35,25 @@ const baseOptions: Highcharts.Options = merge({}, generalBaseOptions, {
   },
 });
 interface VizCommonProps extends VizCommonParams {
-  context: any; //WidgetState;
   attributes: Attribute[];
   base?: string;
   containerProps?: { [key: string]: any };
+  context: any; //WidgetState;
+  widgetId?: string;
 }
 
-export const PolarArea = (props: VizCommonProps): ReactElement => {
-  const results = props.context.data?.results || [];
-  const format = props.context.data?.format || {};
+export function PolarArea(props: VisualizationWidgetProps & VizCommonProps): ReactElement {
+  const { context, params } = props;
+  const results = context.data?.results || [];
+  const format = context.data?.format || {};
   const { xAxis = {}, yAxis = {} } = format || {};
   const { crossLinking, openMenuIfCrossLink } = useCrossLinkingMenuOnViz(props, { xAxis, yAxis });
 
   const formattedResults = formatRadialResults(results, xAxis, true, crossLinking, yAxis);
   // TODO: prefix and suffix
 
-  const { groupBy } = props.params;
-  const [formatterGroupBy, formatterGroupByForTooltip, formatterValue] = useTextFormattersForViz(
-    props.params as { groupBy: GroupByProps; value: ValueProp | ValuesProps },
-  );
+  const { groupBy } = params;
+  const [formatterGroupBy, formatterGroupByForTooltip, formatterValue] = useTextFormattersForViz(params);
 
   const options = {
     ...baseOptions,
@@ -90,7 +97,7 @@ export const PolarArea = (props: VizCommonProps): ReactElement => {
   };
   const containerProps = { ...props.containerProps, style: { height: '100%', width: '100%' } };
 
-  if (props.context.isLoading) {
+  if (context.isLoading) {
     return <Loader />;
   }
 
@@ -102,6 +109,6 @@ export const PolarArea = (props: VizCommonProps): ReactElement => {
       {...props}
     />
   );
-};
+}
 
 export default React.memo(PolarArea);

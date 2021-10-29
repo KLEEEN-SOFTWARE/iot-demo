@@ -32,7 +32,7 @@ export function usePreviewPanel() {
 
 export function PreviewPanelLayoutProvider({ children }: { children: ReactElement }) {
   const [isPreviewOpen, setPreviewOpen] = useState(false);
-  const [previewTitle, setPreviewTitle] = useState(null);
+  const [previewTitle, setPreviewTitle] = useState<ReactElement>(null);
   const [previewWidgets, setPreviewWidgets] = useState<Widget[]>([]);
 
   function closePreviewPanel() {
@@ -41,7 +41,7 @@ export function PreviewPanelLayoutProvider({ children }: { children: ReactElemen
     setPreviewTitle(null);
   }
 
-  function openPreviewPanel(title) {
+  function openPreviewPanel(title: ReactElement) {
     setPreviewOpen(true);
     setPreviewTitle(title);
   }

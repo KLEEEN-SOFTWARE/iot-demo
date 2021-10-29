@@ -1,7 +1,7 @@
 import './CardSection02.scss';
 
-import { CardTitle } from './components/CardTitle';
 import { CardWidgetProps } from './CardWidget.model';
+import { WidgetHeader } from './components/widget-header/widget-header';
 import classnames from 'classnames';
 
 const bem = 'ks-card-widget-02';
@@ -16,7 +16,7 @@ export const CardWidget02 = ({
 }: CardWidgetProps): JSX.Element => {
   return (
     <div className={classnames(bem, 'card-widget', { disabled })}>
-      {!hideTitle && <CardTitle title={title} icon={icon} />}
+      {!hideTitle && <WidgetHeader title={title} icon={icon} />}
       <div className={classnames(`${bem}__content`, 'content')}>
         {children}
         {widgetSelector}

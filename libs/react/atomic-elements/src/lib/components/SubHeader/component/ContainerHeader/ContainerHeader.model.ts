@@ -1,7 +1,7 @@
 import React, { ReactElement } from 'react';
 
 import { FiltersAddedState } from '../../../FilterSection/FilterSection.model';
-import { TranslateProps } from '../../../../../types';
+import { TranslateProps } from '@kleeen/types';
 
 export interface ContainerProps extends TranslateProps {
   className?: string;

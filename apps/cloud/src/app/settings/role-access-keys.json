@@ -79,25 +79,19 @@
     "CHILDREN": {
       "VIEWS": {
         "CHILDREN": {
-          "SITEMAPLIST": {
+          "SENSORS": {
             "PERMISSIONS": {
               "ADMIN": "SHOW",
               "GUEST": "SHOW"
             }
           },
-          "SITESTATUSLIST": {
+          "OVERVIEW": {
             "PERMISSIONS": {
               "ADMIN": "SHOW",
               "GUEST": "SHOW"
             }
           },
-          "SENSORLIST": {
-            "PERMISSIONS": {
-              "ADMIN": "SHOW",
-              "GUEST": "SHOW"
-            }
-          },
-          "NODELIST": {
+          "NODES": {
             "PERMISSIONS": {
               "ADMIN": "SHOW",
               "GUEST": "SHOW"
@@ -110,7 +104,14 @@
   "NODES": {
     "CHILDREN": {
       "VIEWS": {
-        "CHILDREN": {}
+        "CHILDREN": {
+          "TABLEOFNODE": {
+            "PERMISSIONS": {
+              "ADMIN": "SHOW",
+              "GUEST": "SHOW"
+            }
+          }
+        }
       }
     }
   },
@@ -137,13 +138,30 @@
             }
           }
         }
+      },
+      "VIEWS": {
+        "CHILDREN": {
+          "CONFIGURATION": {
+            "PERMISSIONS": {
+              "ADMIN": "SHOW",
+              "GUEST": "SHOW"
+            }
+          }
+        }
       }
     }
   },
   "SITES": {
     "CHILDREN": {
       "VIEWS": {
-        "CHILDREN": {}
+        "CHILDREN": {
+          "SITEMAP": {
+            "PERMISSIONS": {
+              "ADMIN": "SHOW",
+              "GUEST": "SHOW"
+            }
+          }
+        }
       }
     }
   },
@@ -191,7 +209,7 @@
       },
       "VIEWS": {
         "CHILDREN": {
-          "DASHBOARD": {
+          "SITEMAP": {
             "PERMISSIONS": {
               "ADMIN": "SHOW",
               "GUEST": "SHOW"
@@ -204,7 +222,14 @@
   "SENSORS": {
     "CHILDREN": {
       "VIEWS": {
-        "CHILDREN": {}
+        "CHILDREN": {
+          "TABLEOFSENSOR": {
+            "PERMISSIONS": {
+              "ADMIN": "SHOW",
+              "GUEST": "SHOW"
+            }
+          }
+        }
       }
     }
   },
@@ -324,18 +349,6 @@
       },
       "VIEWS": {
         "CHILDREN": {
-          "SENSORLIST": {
-            "PERMISSIONS": {
-              "ADMIN": "SHOW",
-              "GUEST": "SHOW"
-            }
-          },
-          "SITEMAPLIST": {
-            "PERMISSIONS": {
-              "ADMIN": "SHOW",
-              "GUEST": "SHOW"
-            }
-          },
           "DASHBOARD": {
             "PERMISSIONS": {
               "ADMIN": "SHOW",
@@ -384,18 +397,6 @@
       },
       "VIEWS": {
         "CHILDREN": {
-          "NODELIST": {
-            "PERMISSIONS": {
-              "ADMIN": "SHOW",
-              "GUEST": "SHOW"
-            }
-          },
-          "SITEMAPLIST": {
-            "PERMISSIONS": {
-              "ADMIN": "SHOW",
-              "GUEST": "SHOW"
-            }
-          },
           "DASHBOARD": {
             "PERMISSIONS": {
               "ADMIN": "SHOW",

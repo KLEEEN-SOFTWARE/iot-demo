@@ -1,8 +1,7 @@
-import React, { ReactElement } from 'react';
-
 import Gauge from '../../Gauge/Gauge';
-import { GaugeWidgetProps } from './GaugeWidget.model';
 import { Loader } from '@kleeen/react/components';
+import { ReactElement } from 'react';
+import { WidgetProps } from '@kleeen/types';
 import { makeStyles } from '@material-ui/core';
 import { useWidgetContext } from '@kleeen/react/hooks';
 
@@ -12,7 +11,7 @@ const useStyles = makeStyles({
   },
 });
 
-export function GaugeWidget({ params, taskName, widgetId }: GaugeWidgetProps): ReactElement {
+export function GaugeWidget({ attributes, params, taskName, widgetId }: WidgetProps): ReactElement {
   const widgetData = useWidgetContext({ taskName, widgetId, params });
   const classes = useStyles();
 
@@ -22,7 +21,7 @@ export function GaugeWidget({ params, taskName, widgetId }: GaugeWidgetProps): R
 
   return (
     <div className={classes.widgetContent}>
-      <Gauge context={widgetData} params={params} />
+      <Gauge attributes={attributes} context={widgetData} params={params} widgetId={widgetId} />
     </div>
   );
 }

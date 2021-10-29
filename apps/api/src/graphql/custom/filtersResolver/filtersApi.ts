@@ -1,12 +1,11 @@
 import { RESTDataSource, RequestOptions } from 'apollo-datasource-rest';
 
-/* eslint @typescript-eslint/camelcase: 0, @typescript-eslint/no-unused-vars: 0 */
 import { GetFiltersArgs } from '../../../types';
 
 export class FiltersApi extends RESTDataSource {
   constructor() {
     super();
-    this.baseURL = 'http://localhost:3030/';
+    this.baseURL = 'https://localhost:3030/';
   }
 
   willSendRequest(request: RequestOptions) {

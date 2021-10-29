@@ -113,10 +113,14 @@ const FilterAutocomplete = ({
 
   return (
     <KsAutocomplete
-      options={optionsFormatted}
+      disableClearable={false}
       filterSelectedOptions
       forcePopupIcon={false}
-      disableClearable={false}
+      noOptionsText={translate('app.subHeader.filterSection.noOptions')}
+      options={optionsFormatted}
+      PaperComponent={({ children }) => (
+        <KsMenuContainer className={`${themeClass} ${classes.menu}`}>{children}</KsMenuContainer>
+      )}
       renderInput={(params) => (
         <TextField
           helperText={!noHelperText ? translate('app.filterSection.helperText') : ''}
@@ -127,10 +131,9 @@ const FilterAutocomplete = ({
           {...textFieldProps}
         />
       )}
-      PaperComponent={({ children }) => (
-        <KsMenuContainer className={`${themeClass} ${classes.menu}`}>{children}</KsMenuContainer>
-      )}
-      noOptionsText={translate('app.subHeader.filterSection.noOptions')}
+      renderOption={(option: { displayName?: string; name: string }) => {
+        return <>{option.displayName || option.name}</>;
+      }}
       {...restProps}
     />
   );

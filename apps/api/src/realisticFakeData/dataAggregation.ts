@@ -18,7 +18,7 @@ export const getListingData = (input: DataListingArgs): GetListingDataResults | 
 };
 
 export const getListingDataNoAggregations = (input: DataListingArgs): GetListingDataResults | any => {
-  return ListingData.getListingData(input, false);
+  return ListingData.getListingData(input);
 };
 
 export const getWidgetData: GetWidgetData = (input: DataAggregationArgs): GetWidgetDataResult | any => {

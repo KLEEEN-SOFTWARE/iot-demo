@@ -1,27 +1,29 @@
 import './donut-variant.scss';
 
-import { clone, pathOr } from 'ramda';
 import { HighchartsLegendClickEvent, drillUp, getRadialSharedOptions, showDrillUpButton } from '../../utils';
 import { KsButton, Loader } from '@kleeen/react/components';
-import { KUIConnect } from '@kleeen/core-react';
-import { useRadialDataParser } from '../../hooks/useRadialDataParser';
-import { vizColors } from '../generalBaseOptions';
-import classnames from 'classnames';
-import drilldown from 'highcharts/modules/drilldown';
+import { clone, pathOr } from 'ramda';
+
 import Highcharts from 'highcharts';
 import HighchartsReact from 'highcharts-react-official';
-import merge from 'lodash.merge';
+import { KUIConnect } from '@kleeen/core-react';
 import React from 'react';
+import { VisualizationWidgetProps } from '@kleeen/types';
+import classnames from 'classnames';
+import drilldown from 'highcharts/modules/drilldown';
+import merge from 'lodash.merge';
+import { useRadialDataParser } from '../../hooks/useRadialDataParser';
+import { vizColors } from '../generalBaseOptions';
 
 const bem = 'ks-donut-variant';
 
 drilldown(Highcharts);
 
-function DonutVariantBase(props: HighchartsReact.Props): React.ReactElement {
+function DonutVariantBase(props: VisualizationWidgetProps & HighchartsReact.Props): React.ReactElement {
+  const { context } = props;
   const parsedRadialData = useRadialDataParser(props);
 
-  const isLoading = pathOr(true, ['context', 'isLoading']);
-  if (isLoading(props)) {
+  if (context.isLoading) {
     return <Loader />;
   }
 

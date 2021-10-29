@@ -1,29 +1,26 @@
 import { KUIConnect, AccessControl } from '@kleeen/core-react';
 import { roleAccessKeyTag } from '@kleeen/common/utils';
-import { useState } from 'react';
+import { WorkflowProvider, useKleeenActions, useUrlQueryParams } from '@kleeen/react/hooks';
 import {
   CollectionLayoutStyle,
   DataViewControlSection,
+  ViewsManager,
   getRowsCountFromFirstTable,
-  DataViewDisplaySectionAtomic,
 } from '@kleeen/react/atomic-elements';
-import { useKleeenActions, useUrlQueryParams } from '@kleeen/react/hooks';
-import { viewOptions } from './settings/view-options';
-import { workflowAction } from './settings/workflow-action';
-import { attributesOnCreate } from './settings/attributes-on-create';
 import { widgets } from './settings/widgets';
+import { workflowAction } from './settings/workflow-action';
 
 function Workflow({ translate, ...props }) {
   const taskName = `sensors`;
+  const workflowData = {
+    hasFilters: false,
+    taskName: 'sensors',
+    workflowId: 'ccd4b585-b8d5-4315-817f-bae7060c22e5',
+    entity: 'Sensor',
+  };
   const entity = `Sensor`;
-  const [selectedViewOption, setSelectedViewOption] = useState(widgets[0]);
-  const [cardsNumber, setCardsNumber] = useState(0);
-  const [selectedRows, setSelectedRows] = useState([]);
   const classes = CollectionLayoutStyle();
   const workflowName = `Sensors`;
-  function handleOnTabIndexChanged(newTabIndex, option) {
-    setSelectedViewOption(option);
-  }
   const objectFocus = `sensor`;
   const sensorActions = useKleeenActions(taskName);
   const paramsBasedOnRoute = useUrlQueryParams();
@@ -31,48 +28,30 @@ function Workflow({ translate, ...props }) {
 
   return (
     <AccessControl id={roleAccessKeyTag(`navigation.${taskName}`)}>
-      <div className={`${classes.entityBrowserTask} subhead-dynamic`}>
-        <div className={`${classes.entityBrowserArea} browserArea`}>
-          <div
-            className={`${classes.gridPageIntro} ${cardsNumber > 0 ? `max-card-${cardsNumber}` : ''}`}
-            data-testid="page-intro"
-          >
-            <DataViewControlSection
-              actions={workflowAction}
-              attributes={attributesOnCreate}
-              entity={entity}
-              entityActions={sensorActions}
-              hideRefreshControl
-              objectValue={objectFocus}
-              onTabIndexChanged={handleOnTabIndexChanged}
-              parent={currentEntity}
-              results={`${getRowsCountFromFirstTable(widgets)} Count of ${entity}`}
-              selectedOption={selectedViewOption}
-              setSelectedOption={setSelectedViewOption}
-              taskName={taskName}
-              title={workflowName}
-              viewOptions={viewOptions}
-            />
-          </div>
-          <div
-            className={`${classes.gridGridSection} ${
-              selectedRows.length > 0 && selectedViewOption.sortOrder === 0 ? classes.snackbar : ''
-            }`}
-            data-testid="content-section"
-          >
-            <DataViewDisplaySectionAtomic
-              widgets={widgets}
-              entityName={entity}
-              selectedOption={selectedViewOption}
-              selectedRows={selectedRows}
-              setCardsNumber={setCardsNumber}
-              setSelectedRows={setSelectedRows}
-              taskName={taskName}
-              value={selectedViewOption}
-            />
-          </div>
+      <WorkflowProvider value={workflowData}>
+        <div className={`${classes.entityBrowserTask} subhead-dynamic`}>
+          <ViewsManager
+            views={widgets}
+            SubHeader={DataViewControlSection}
+            subHeaderProps={{
+              actions: workflowAction,
+              entity,
+              entityActions: sensorActions,
+              hideRefreshControl: true,
+              objectValue: objectFocus,
+              parent: currentEntity,
+              taskName,
+              title: workflowName,
+              results: `${getRowsCountFromFirstTable(widgets)} Count of ${entity}`,
+            }}
+            containerClasses={`${classes.entityBrowserArea} browserArea`}
+            pageIntroClasses={`${classes.gridPageIntro}`}
+            contentClasses={`${classes.gridGridSection}`}
+            entityName={entity}
+            taskName={taskName}
+          />
         </div>
-      </div>
+      </WorkflowProvider>
     </AccessControl>
   );
 }

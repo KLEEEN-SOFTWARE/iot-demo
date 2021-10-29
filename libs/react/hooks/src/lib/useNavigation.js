@@ -1,4 +1,4 @@
-import { globalVariable } from '@kleeen/common/utils';
+import { globalVariable } from '@kleeen/frontend/utils';
 import { useHistory } from 'react-router';
 
 export function useNavigation() {
@@ -11,11 +11,11 @@ export function navigationInit(router) {
 
   globalVariable('router', router);
   globalVariable('navigate', navigationRouterData);
+
   return navigationRouterData;
 }
 
-//#region Private Members
-
+//#region Private members
 function navigationRouter(router) {
   const navigation = (path, preserveQueryParams = false) => {
     if (preserveQueryParams && router.location.search) {
@@ -26,5 +26,4 @@ function navigationRouter(router) {
 
   return navigation;
 }
-
 //#endregion

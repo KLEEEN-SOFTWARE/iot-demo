@@ -23,12 +23,12 @@ export const Paper = styled(KsMenuContainer)({
     padding: 'var(--pm-5XS) var(--pm-1XS) var(--pm-6XS)',
   },
   '& .MuiAutocomplete-option': {
-    padding: 'var(--pm-4XS) var(--pm-1XS)',
     fontSize: 'var(--tx-M)',
+    padding: 'var(--pm-4XS) var(--pm-1XS)',
   },
   '& .MuiAutocomplete-noOptions': {
     color: 'var(--on-surface-color)',
-    padding: 'var(--pm-4XS) var(--pm-1XS)',
     fontSize: 'var(--tx-M)',
+    padding: 'var(--pm-4XS) var(--pm-1XS)',
   },
 });
